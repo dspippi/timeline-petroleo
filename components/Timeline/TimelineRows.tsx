@@ -78,12 +78,12 @@ export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Prop
   const rows = useMemo<RowItem[]>(() => {
     const grouped = groupEventsByRegion(events);
     const items: RowItem[] = [];
-    for (const [region, countries] of grouped) {
+    Array.from(grouped.entries()).forEach(([region, countries]) => {
       items.push({ kind: "region-header", region });
-      for (const [country, evts] of countries) {
+      Array.from(countries.entries()).forEach(([country, evts]) => {
         items.push({ kind: "country-row", country, events: evts });
-      }
-    }
+      });
+    });
     return items;
   }, [events]);
 
