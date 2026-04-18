@@ -134,7 +134,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         className="shrink-0 overflow-x-hidden overflow-y-hidden bg-[#f5f3ee] border-b border-black/[0.06]"
         style={{ height: 28 }}
       >
-        <div style={{ width: scale.totalWidthPx, minWidth: scale.totalWidthPx, position: "relative", height: 28 }}>
+        <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative", height: 28 }}>
           {yearTicks.map(({ year, x }) => (
             <div
               key={year}
@@ -157,7 +157,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         onScroll={handleScroll}
         onWheel={handleWheel}
       >
-        <div style={{ width: scale.totalWidthPx, minWidth: scale.totalWidthPx, position: "relative" }}>
+        <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative" }}>
           <TimelineRows events={events} scale={scale} onEventClick={onEventClick} onTypeFilter={onTypeFilter} />
           <GuideOverlay scale={scale} />
         </div>

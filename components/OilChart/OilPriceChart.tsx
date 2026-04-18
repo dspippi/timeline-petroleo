@@ -97,8 +97,8 @@ export const OilPriceChart = memo(function OilPriceChart({
     );
   }
 
-  // Domain uses (totalWidthPx - LABEL_WIDTH) so that 1 data pixel = 1 SVG pixel
-  const xDomain: [number, number] = [0, scale.totalWidthPx - LABEL_WIDTH];
+  // SVG width = totalWidthPx + LABEL_WIDTH; plot area = totalWidthPx → 1:1 pixel mapping
+  const xDomain: [number, number] = [0, scale.totalWidthPx];
 
   return (
     <div
@@ -107,7 +107,7 @@ export const OilPriceChart = memo(function OilPriceChart({
       style={{ height: 120 }}
       onScroll={onScroll}
     >
-      <div style={{ width: scale.totalWidthPx, height: 120, position: "relative" }}>
+      <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, height: 120, position: "relative" }}>
 
         {/* "No data" zone — diagonal stripes before first price data point */}
         {noDataEndPx > 0 && (
@@ -136,7 +136,7 @@ export const OilPriceChart = memo(function OilPriceChart({
         )}
 
         <LineChart
-          width={scale.totalWidthPx}
+          width={scale.totalWidthPx + LABEL_WIDTH}
           height={120}
           data={data}
           onMouseMove={handleMouseMove as (e: unknown) => void}

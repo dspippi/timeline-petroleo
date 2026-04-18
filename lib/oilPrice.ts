@@ -1,14 +1,12 @@
 import { OilPrice } from "@/types";
-import { parseISO, isValid, fromUnixTime } from "date-fns";
+import { parseISO, isValid } from "date-fns";
 
 let _cache: OilPrice[] | null = null;
 
-async function loadFallback(): Promise<OilPrice[]> {
-  const fallback = (await import("@/data/oil-prices-fallback.json")).default as {
-    date: string;
-    price: number;
-  }[];
-  return fallback
+function parseJsonPrices(
+  rows: { date: string; price: number }[]
+): OilPrice[] {
+  return rows
     .map((d) => {
       const date = parseISO(d.date);
       if (!isValid(date)) return null;
@@ -17,84 +15,67 @@ async function loadFallback(): Promise<OilPrice[]> {
     .filter((x): x is OilPrice => x !== null);
 }
 
+async function loadBase(): Promise<OilPrice[]> {
+  const [hist, fallback] = await Promise.all([
+    import("@/data/oil-prices-historical.json").then((m) => m.default as { date: string; price: number }[]),
+    import("@/data/oil-prices-fallback.json").then((m) => m.default as { date: string; price: number }[]),
+  ]);
+  // Historical covers 1960–1986, fallback covers 1987–present
+  return [...parseJsonPrices(hist), ...parseJsonPrices(fallback)];
+}
+
+async function fetchEia2025Plus(): Promise<OilPrice[]> {
+  const apiKey = process.env.NEXT_PUBLIC_EIA_API_KEY;
+  if (!apiKey) return [];
+  try {
+    const url =
+      `https://api.eia.gov/v2/petroleum/pri/spt/data/` +
+      `?api_key=${apiKey}` +
+      `&frequency=monthly` +
+      `&data[0]=value` +
+      `&facets[series][]=RBRTE` +
+      `&start=2025-01` +
+      `&sort[0][column]=period` +
+      `&sort[0][direction]=asc` +
+      `&offset=0&length=120`;
+
+    const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    if (!res.ok) return [];
+    const json = await res.json();
+    const rows: { period: string; value: string }[] = json?.response?.data ?? [];
+    return rows
+      .map((d) => {
+        const date = parseISO(d.period + "-01");
+        const price = parseFloat(d.value);
+        if (!isValid(date) || isNaN(price)) return null;
+        return { date, price } as OilPrice;
+      })
+      .filter((x): x is OilPrice => x !== null);
+  } catch {
+    return [];
+  }
+}
+
 export async function getOilPrices(): Promise<OilPrice[]> {
   if (_cache) return _cache;
 
-  // In browser context, Yahoo Finance is blocked by CORS and EIA requires a key.
-  // Use the static fallback immediately for instant, reliable loading.
+  // Browser: use static data immediately (no CORS issues)
   if (typeof window !== "undefined") {
-    _cache = await loadFallback();
+    _cache = await loadBase();
     return _cache;
   }
 
-  // Server context: try live APIs first.
+  // Server: combine static base with live EIA data for 2025+
+  const [base, live] = await Promise.all([loadBase(), fetchEia2025Plus()]);
 
-  // 1. Try EIA API (requires API key in .env.local)
-  const apiKey = process.env.NEXT_PUBLIC_EIA_API_KEY;
-  if (apiKey) {
-    try {
-      const url =
-        `https://api.eia.gov/v2/petroleum/pri/spt/data/` +
-        `?api_key=${apiKey}` +
-        `&frequency=monthly` +
-        `&data[0]=value` +
-        `&facets[series][]=RBRTE` +
-        `&sort[0][column]=period` +
-        `&sort[0][direction]=asc` +
-        `&offset=0&length=5000`;
-
-      const res = await fetch(url);
-      if (res.ok) {
-        const json = await res.json();
-        const rows: { period: string; value: string }[] = json?.response?.data ?? [];
-        const parsed = rows
-          .map((d) => {
-            const date = parseISO(d.period + "-01");
-            const price = parseFloat(d.value);
-            if (!isValid(date) || isNaN(price)) return null;
-            return { date, price } as OilPrice;
-          })
-          .filter((x): x is OilPrice => x !== null);
-        if (parsed.length > 0) {
-          _cache = parsed;
-          return _cache;
-        }
-      }
-    } catch {
-      // Fall through
-    }
+  if (live.length === 0) {
+    _cache = base;
+    return _cache;
   }
 
-  // 2. Try Yahoo Finance (server-side only — no CORS restriction)
-  try {
-    const now = Math.floor(Date.now() / 1000);
-    const start = 536457600; // 1987-01-01
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/BZ%3DF?interval=1mo&period1=${start}&period2=${now}`;
-    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
-    if (res.ok) {
-      const json = await res.json();
-      const result = json?.chart?.result?.[0];
-      const timestamps: number[] = result?.timestamp ?? [];
-      const closes: number[] = result?.indicators?.quote?.[0]?.close ?? [];
-      if (timestamps.length > 10) {
-        const parsed = timestamps
-          .map((t, i) => {
-            const price = closes[i];
-            if (price == null || isNaN(price)) return null;
-            return { date: fromUnixTime(t), price: Math.round(price * 100) / 100 } as OilPrice;
-          })
-          .filter((x): x is OilPrice => x !== null);
-        if (parsed.length > 0) {
-          _cache = parsed;
-          return _cache;
-        }
-      }
-    }
-  } catch {
-    // Fall through to static fallback
-  }
-
-  // 3. Static JSON fallback
-  _cache = await loadFallback();
+  // Merge: keep all base data, append live 2025+ points not already in base
+  const lastBaseDate = base[base.length - 1]?.date.getTime() ?? 0;
+  const newPoints = live.filter((p) => p.date.getTime() > lastBaseDate);
+  _cache = [...base, ...newPoints];
   return _cache;
 }
