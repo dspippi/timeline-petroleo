@@ -27,13 +27,13 @@ export const FilterPanel = memo(function FilterPanel({
   activeCount,
 }: Props) {
   const countries = useMemo(
-    () => [...new Set(allEvents.map((e) => e.country))].sort(),
+    () => Array.from(new Set(allEvents.map((e) => e.country))).sort(),
     [allEvents]
   );
 
   const companies = useMemo(
     () =>
-      [...new Set(allEvents.map((e) => e.company).filter(Boolean) as string[])].sort(),
+      Array.from(new Set(allEvents.map((e) => e.company).filter(Boolean) as string[])).sort(),
     [allEvents]
   );
 
