@@ -1,0 +1,42 @@
+"use client";
+
+import { createContext, useContext, useState, useCallback, ReactNode } from "react";
+
+export interface Settings {
+  rowHeight: number;
+  markerSize: number;
+  compressionRatio: number;
+  showEventLabels: boolean;
+}
+
+export const DEFAULT_SETTINGS: Settings = {
+  rowHeight: 72,
+  markerSize: 14,
+  compressionRatio: 0.06,
+  showEventLabels: true,
+};
+
+interface SettingsContextValue {
+  settings: Settings;
+  updateSettings: (patch: Partial<Settings>) => void;
+}
+
+const SettingsContext = createContext<SettingsContextValue | null>(null);
+
+export function SettingsProvider({ children }: { children: ReactNode }) {
+  const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
+  const updateSettings = useCallback((patch: Partial<Settings>) => {
+    setSettings((s) => ({ ...s, ...patch }));
+  }, []);
+  return (
+    <SettingsContext.Provider value={{ settings, updateSettings }}>
+      {children}
+    </SettingsContext.Provider>
+  );
+}
+
+export function useSettings() {
+  const ctx = useContext(SettingsContext);
+  if (!ctx) throw new Error("useSettings must be used inside SettingsProvider");
+  return ctx;
+}

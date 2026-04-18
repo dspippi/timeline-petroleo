@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #f5f3ee;
+  --bg-secondary: #ffffff;
+  --text-primary: #1c1c2e;
+}
+
+html, body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent horizontal overflow on mobile */
+  overflow-x: hidden;
+}
+
+/* Use dynamic viewport height so mobile browser chrome doesn't clip the app */
+.h-dvh { height: 100dvh; }
+
+/* Scrollbar styling */
+.timeline-scroll::-webkit-scrollbar { height: 4px; width: 4px; }
+.timeline-scroll::-webkit-scrollbar-track { background: #ece9e2; }
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.18);
+  border-radius: 999px;
+}
+.timeline-scroll::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
+
+/* Touch scrolling */
+.timeline-scroll {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+.no-select { user-select: none; }
