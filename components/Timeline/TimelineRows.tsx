@@ -96,14 +96,14 @@ export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Prop
   }
 
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       {rows.map((row, i) => {
         if (row.kind === "region-header") {
           return (
             <div
               key={`region-${row.region}`}
               className="flex items-center border-b border-black/[0.04] bg-[#f5f3ee]"
-              style={{ height: REGION_HEADER_HEIGHT }}
+              style={{ height: REGION_HEADER_HEIGHT, width: "100%" }}
             >
               <div
                 className="sticky left-0 z-10 bg-[#f5f3ee] px-2 flex items-center"
@@ -130,7 +130,7 @@ export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Prop
                 ? "bg-amber-50 border-l-2 border-l-amber-400"
                 : "bg-white hover:bg-gray-50/80"
             }`}
-            style={{ height: totalRowHeight }}
+            style={{ height: totalRowHeight, width: "100%" }}
           >
             {/* Country label — sticky left, spans full height */}
             <div

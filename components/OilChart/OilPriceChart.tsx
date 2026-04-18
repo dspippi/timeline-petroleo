@@ -14,6 +14,7 @@ import { OilPrice, TimelineScale } from "@/types";
 import { useTimelineSync } from "@/context/TimelineSyncContext";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { LABEL_WIDTH } from "@/components/Timeline/TimelineRows";
 
 interface Props {
   prices: OilPrice[];
@@ -27,6 +28,11 @@ interface ChartPoint {
   price: number;
   date: Date;
 }
+
+// margin.left = LABEL_WIDTH - Y_AXIS_WIDTH so that the plot area starts at exactly LABEL_WIDTH
+// This aligns the chart x=0 with the timeline event area left edge (1:1 pixel mapping)
+const Y_AXIS_WIDTH = 40;
+const CHART_MARGIN_LEFT = LABEL_WIDTH - Y_AXIS_WIDTH; // = 72
 
 const CustomTooltip = ({
   active,
@@ -53,6 +59,7 @@ export const OilPriceChart = memo(function OilPriceChart({
 }: Props) {
   const { hoveredDate, setHoveredDate } = useTimelineSync();
 
+  // x = scale.toPixel(date) — used directly as chart coordinate (plot area starts at LABEL_WIDTH via margin)
   const data = useMemo<ChartPoint[]>(
     () =>
       prices.map((p) => ({
@@ -78,6 +85,10 @@ export const OilPriceChart = memo(function OilPriceChart({
 
   const hoveredX = hoveredDate ? scale.toPixel(hoveredDate) : null;
 
+  // "No data" zone: from scale pixel 0 (domainStart) to first price data point
+  const noDataEndPx =
+    prices.length > 0 ? scale.toPixel(prices[0].date) : 0;
+
   if (prices.length === 0) {
     return (
       <div className="shrink-0 h-28 flex items-center justify-center border-b border-black/[0.07] bg-gray-50">
@@ -86,21 +97,51 @@ export const OilPriceChart = memo(function OilPriceChart({
     );
   }
 
+  // Domain uses (totalWidthPx - LABEL_WIDTH) so that 1 data pixel = 1 SVG pixel
+  const xDomain: [number, number] = [0, scale.totalWidthPx - LABEL_WIDTH];
+
   return (
     <div
       ref={scrollRef}
-      className="timeline-scroll shrink-0 overflow-x-auto border-b border-black/[0.07] bg-white"
+      className="timeline-scroll shrink-0 overflow-x-auto border-b border-black/[0.07] bg-white relative"
       style={{ height: 120 }}
       onScroll={onScroll}
     >
-      <div style={{ width: scale.totalWidthPx, height: 120 }}>
+      <div style={{ width: scale.totalWidthPx, height: 120, position: "relative" }}>
+
+        {/* "No data" zone — diagonal stripes before first price data point */}
+        {noDataEndPx > 0 && (
+          <div
+            className="absolute top-0 bottom-0 z-10 pointer-events-none overflow-hidden"
+            style={{
+              left: LABEL_WIDTH,
+              width: noDataEndPx,
+            }}
+          >
+            {/* Diagonal stripe pattern via CSS */}
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(0,0,0,0.035) 5px, rgba(0,0,0,0.035) 6px)",
+              }}
+            />
+            <span
+              className="absolute text-[9px] font-medium whitespace-nowrap"
+              style={{ bottom: 6, left: 6, color: "rgba(0,0,0,0.18)" }}
+            >
+              sem dados disponíveis
+            </span>
+          </div>
+        )}
+
         <LineChart
           width={scale.totalWidthPx}
           height={120}
           data={data}
           onMouseMove={handleMouseMove as (e: unknown) => void}
           onMouseLeave={handleMouseLeave}
-          margin={{ top: 8, right: 16, bottom: 4, left: 44 }}
+          margin={{ top: 8, right: 0, bottom: 4, left: CHART_MARGIN_LEFT }}
         >
           <CartesianGrid
             strokeDasharray="2 4"
@@ -110,7 +151,7 @@ export const OilPriceChart = memo(function OilPriceChart({
           <XAxis
             dataKey="x"
             type="number"
-            domain={[0, scale.totalWidthPx]}
+            domain={xDomain}
             hide
           />
           <YAxis
@@ -119,7 +160,7 @@ export const OilPriceChart = memo(function OilPriceChart({
             tickFormatter={(v: number) => `$${v}`}
             tickLine={false}
             axisLine={false}
-            width={40}
+            width={Y_AXIS_WIDTH}
           />
           <Tooltip content={<CustomTooltip />} cursor={false} />
           <Line
