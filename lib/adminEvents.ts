@@ -13,7 +13,8 @@ const VALID_TYPES = new Set<EventType>(["war", "discovery", "policy", "company",
 // ── Raw file access ────────────────────────────────────────────────────────────
 
 export function readRawEvents(): string {
-  return fs.readFileSync(EVENTS_PATH, "utf-8");
+  const raw = fs.readFileSync(EVENTS_PATH, "utf-8");
+  return raw.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
 export function writeRawEvents(text: string): void {
