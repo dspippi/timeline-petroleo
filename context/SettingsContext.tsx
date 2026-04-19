@@ -5,14 +5,12 @@ import { createContext, useContext, useState, useCallback, ReactNode } from "rea
 export interface Settings {
   rowHeight: number;
   markerSize: number;
-  compressionRatio: number;
   showEventLabels: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
   rowHeight: 72,
   markerSize: 14,
-  compressionRatio: 0.06,
   showEventLabels: true,
 };
 

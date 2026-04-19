@@ -44,8 +44,8 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
   const [domainStart, domainEnd] = useMemo(() => getDefaultDomain(allEvents), [allEvents]);
   const scale = useMemo(
-    () => buildScale(domainStart, domainEnd, pxPerDay, allEvents, settings.compressionRatio),
-    [domainStart, domainEnd, pxPerDay, allEvents, settings.compressionRatio]
+    () => buildScale(domainStart, domainEnd, pxPerDay),
+    [domainStart, domainEnd, pxPerDay]
   );
 
   // Fit zoom on first mount

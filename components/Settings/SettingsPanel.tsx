@@ -69,8 +69,6 @@ export function SettingsPanel({ open, onClose, anchorRef }: Props) {
 
   if (!open) return null;
 
-  const compressionPct = Math.round((1 - settings.compressionRatio) * 100);
-
   return (
     <div
       ref={panelRef}
@@ -107,32 +105,6 @@ export function SettingsPanel({ open, onClose, anchorRef }: Props) {
         unit="px"
         onChange={(v) => updateSettings({ markerSize: v })}
       />
-
-      <div className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between">
-          <span className="text-[11px] font-medium text-gray-600">
-            Compressão temporal
-          </span>
-          <span className="text-[11px] font-mono text-gray-400">
-            {compressionPct}%
-          </span>
-        </div>
-        <input
-          type="range"
-          min={2}
-          max={100}
-          step={2}
-          value={compressionPct}
-          onChange={(e) =>
-            updateSettings({ compressionRatio: (100 - Number(e.target.value)) / 100 })
-          }
-          className="w-full h-1.5 rounded-full appearance-none cursor-pointer accent-amber-500"
-        />
-        <div className="flex justify-between text-[9px] text-gray-300">
-          <span>Mínima</span>
-          <span>Máxima</span>
-        </div>
-      </div>
 
       <label className="flex items-center gap-2 cursor-pointer">
         <input
