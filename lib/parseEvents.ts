@@ -19,7 +19,9 @@ export function parseEvents(): OilEvent[] {
 
   // Each event block starts with --- on its own line.
   // Split on lines that are ONLY "---", then each chunk is "frontmatter\n---\nbody".
-  const chunks = raw
+  // Normalize CRLF to LF first to handle files edited on Windows.
+  const normalized = raw.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  const chunks = normalized
     .split(/(?:^|\n)---\n/)
     .map((s) => s.trim())
     .filter(Boolean);
