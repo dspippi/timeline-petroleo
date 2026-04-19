@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { TimelineSyncProvider } from "@/context/TimelineSyncContext";
@@ -16,7 +16,12 @@ export const metadata: Metadata = {
   title: "Timeline do Petróleo",
   description:
     "Visualização interativa da geopolítica do petróleo e correlação com preços históricos do Brent.",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
