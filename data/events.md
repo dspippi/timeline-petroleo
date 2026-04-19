@@ -74,7 +74,7 @@ id: murex-suez-transit-1892
 title: Murex Atravessa Suez: Nascimento da Shell
 start_date: 22-07-1892
 country: Egito
-region: África
+region: Oriente Médio
 type: policy
 wikipedia: https://en.wikipedia.org/wiki/SS_Murex
 O petroleiro a granel Murex, de Marcus Samuel, atravessa o Canal de Suez, revolucionando a logística global e marcando o nascimento prático da Shell.
@@ -675,7 +675,7 @@ A Petrobras eleva os preços do diesel em R$ 0,38 por litro como reflexo direto 
 id: brent-peak-ormuz-blockade-2026
 title: Brent em US$ 120: Pânico no Mercado
 start_date: 21-03-2026
-country: Global
+country: Irã
 region: Oriente Médio
 type: crisis
 Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global.
