@@ -120,6 +120,10 @@ export const EventMarker = memo(function EventMarker({
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical" as React.CSSProperties["WebkitBoxOrient"],
                 overflow: "hidden",
+                backgroundColor: "rgba(255,255,255,0.75)",
+                backdropFilter: "blur(2px)",
+                borderRadius: 3,
+                padding: "1px 3px",
               }}
             >
               {event.title}

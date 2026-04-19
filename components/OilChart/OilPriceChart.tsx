@@ -7,7 +7,6 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
-  CartesianGrid,
   Tooltip,
 } from "recharts";
 import { OilPrice, TimelineScale } from "@/types";
@@ -32,9 +31,9 @@ interface ChartPoint {
 // Plot area starts at exactly LABEL_WIDTH from the left edge of the SVG.
 // The Recharts YAxis is hidden; we render our own sticky Y-axis overlay instead.
 const Y_PRICE_DOMAIN: [number, number] = [0, 160];
-const Y_PRICE_TICKS = [20, 40, 60, 80, 100, 120, 140, 160];
-const CHART_HEIGHT = 88;
-const CHART_MARGIN = { top: 8, right: 0, bottom: 4, left: LABEL_WIDTH };
+const Y_PRICE_TICKS = [40, 80, 120, 160];
+const CHART_HEIGHT = 130;
+const CHART_MARGIN = { top: 10, right: 0, bottom: 6, left: LABEL_WIDTH };
 
 /** Convert a price value to its Y pixel coordinate within the chart */
 function priceToY(price: number): number {
