@@ -1,13 +1,13 @@
 ---
 id: bissell-oil-inspection-1853
-title: Primeiras Prospecções de Óleo (Bissell)
+title: "Primeiras Prospecções de Óleo (Bissell)"
 start_date: 01-05-1853
 country: Estados Unidos
 region: América do Norte
 type: discovery
 wikipedia: https://en.wikipedia.org/wiki/George_Bissell
+---
 George Bissell realiza a primeira inspeção técnica em nascentes de petróleo na Pensilvânia, vislumbrando o potencial comercial do produto como combustível e iluminante.
-.
 ---
 id: drake-well-titusville-1859
 title: Poço Drake: Início da Era do Petróleo
