@@ -4,19 +4,13 @@ export const MIN_PX_PER_DAY = 0.04;
 export const DEFAULT_PX_PER_DAY = 1.8;
 export const MAX_PX_PER_DAY = 25;
 
-/** @deprecated kept for signature compatibility only — linear scale ignores these */
-export const DEFAULT_compressionRatio = 1;
 
 const MS_PER_DAY = 86_400_000;
 
 export function buildScale(
   domainStart: Date,
   domainEnd: Date,
-  pxPerDay: number,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _events: { start_date: Date; end_date?: Date }[] = [],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _compressionRatio: number = 1
+  pxPerDay: number
 ): TimelineScale {
   const domainStartMs = domainStart.getTime();
   const domainEndMs   = domainEnd.getTime();

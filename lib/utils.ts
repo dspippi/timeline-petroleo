@@ -36,20 +36,3 @@ export function groupEventsByRegion(
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
-
-export function findNearestPrice(
-  prices: { date: Date; price: number }[],
-  target: Date
-): { date: Date; price: number } | null {
-  if (prices.length === 0) return null;
-  let best = prices[0];
-  let bestDelta = Math.abs(target.getTime() - best.date.getTime());
-  for (const p of prices) {
-    const delta = Math.abs(target.getTime() - p.date.getTime());
-    if (delta < bestDelta) {
-      bestDelta = delta;
-      best = p;
-    }
-  }
-  return best;
-}
