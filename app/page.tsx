@@ -25,7 +25,7 @@ export default function HomePage() {
         </div>
         <div className="ml-auto hidden lg:block">
           <span className="text-[10px] text-gray-300 font-mono">
-            Hover para sincronizar · Ctrl+Scroll ou botões para zoom
+            Ctrl+Scroll ou botões para zoom
           </span>
         </div>
       </header>

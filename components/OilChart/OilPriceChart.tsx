@@ -29,10 +29,18 @@ interface ChartPoint {
   date: Date;
 }
 
-// margin.left = LABEL_WIDTH - Y_AXIS_WIDTH so that the plot area starts at exactly LABEL_WIDTH
-// This aligns the chart x=0 with the timeline event area left edge (1:1 pixel mapping)
-const Y_AXIS_WIDTH = 40;
-const CHART_MARGIN_LEFT = LABEL_WIDTH - Y_AXIS_WIDTH; // = 72
+// Plot area starts at exactly LABEL_WIDTH from the left edge of the SVG.
+// The Recharts YAxis is hidden; we render our own sticky Y-axis overlay instead.
+const Y_PRICE_DOMAIN: [number, number] = [0, 160];
+const Y_PRICE_TICKS = [20, 40, 60, 80, 100, 120, 140, 160];
+const CHART_HEIGHT = 88;
+const CHART_MARGIN = { top: 8, right: 0, bottom: 4, left: LABEL_WIDTH };
+
+/** Convert a price value to its Y pixel coordinate within the chart */
+function priceToY(price: number): number {
+  const plotH = CHART_HEIGHT - CHART_MARGIN.top - CHART_MARGIN.bottom;
+  return CHART_MARGIN.top + plotH * (1 - price / Y_PRICE_DOMAIN[1]);
+}
 
 const CustomTooltip = ({
   active,
@@ -91,7 +99,7 @@ export const OilPriceChart = memo(function OilPriceChart({
 
   if (prices.length === 0) {
     return (
-      <div className="shrink-0 h-[88px] flex items-center justify-center border-b border-black/[0.07] bg-gray-50">
+      <div className="shrink-0 flex items-center justify-center border-b border-black/[0.07] bg-gray-50" style={{ height: CHART_HEIGHT }}>
         <span className="text-gray-400 text-xs">Carregando dados de preço…</span>
       </div>
     );
@@ -104,81 +112,109 @@ export const OilPriceChart = memo(function OilPriceChart({
     <div
       ref={scrollRef}
       className="timeline-scroll shrink-0 overflow-x-auto border-b border-black/[0.07] bg-white relative"
-      style={{ height: 88 }}
+      style={{ height: CHART_HEIGHT }}
       onScroll={onScroll}
     >
-      <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, height: 120, position: "relative" }}>
+      <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, height: CHART_HEIGHT, position: "relative" }}>
 
-        {/* "No data" zone — diagonal stripes before first price data point */}
-        {noDataEndPx > 0 && (
-          <div
-            className="absolute top-0 bottom-0 z-10 pointer-events-none overflow-hidden"
-            style={{
-              left: LABEL_WIDTH,
-              width: noDataEndPx,
-            }}
-          >
-            {/* Diagonal stripe pattern via CSS */}
+        {/* Chart — absolutely positioned so the sticky Y-axis can sit on top */}
+        <div style={{ position: "absolute", inset: 0 }}>
+
+          {/* "No data" zone — diagonal stripes before first price data point */}
+          {noDataEndPx > 0 && (
             <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(0,0,0,0.035) 5px, rgba(0,0,0,0.035) 6px)",
-              }}
-            />
-            <span
-              className="absolute text-[9px] font-medium whitespace-nowrap"
-              style={{ bottom: 6, left: 6, color: "rgba(0,0,0,0.18)" }}
+              className="absolute top-0 bottom-0 pointer-events-none overflow-hidden"
+              style={{ left: LABEL_WIDTH, width: noDataEndPx, zIndex: 5 }}
             >
-              sem dados disponíveis
-            </span>
-          </div>
-        )}
-
-        <LineChart
-          width={scale.totalWidthPx + LABEL_WIDTH}
-          height={88}
-          data={data}
-          onMouseMove={handleMouseMove as (e: unknown) => void}
-          onMouseLeave={handleMouseLeave}
-          margin={{ top: 8, right: 0, bottom: 4, left: CHART_MARGIN_LEFT }}
-        >
-          <CartesianGrid
-            strokeDasharray="2 4"
-            stroke="rgba(0,0,0,0.06)"
-            vertical={false}
-          />
-          <XAxis
-            dataKey="x"
-            type="number"
-            domain={xDomain}
-            hide
-          />
-          <YAxis
-            domain={["auto", "auto"]}
-            tick={{ fill: "#9ca3af", fontSize: 9, fontFamily: "monospace" }}
-            tickFormatter={(v: number) => `$${v}`}
-            tickLine={false}
-            axisLine={false}
-            width={Y_AXIS_WIDTH}
-          />
-          <Tooltip content={<CustomTooltip />} cursor={false} />
-          <Line
-            type="monotone"
-            dataKey="price"
-            stroke="#d97706"
-            dot={false}
-            strokeWidth={2}
-            isAnimationActive={false}
-          />
-          {hoveredX !== null && (
-            <ReferenceLine
-              x={hoveredX}
-              stroke="rgba(0,0,0,0.3)"
-              strokeDasharray="3 3"
-            />
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(0,0,0,0.035) 5px, rgba(0,0,0,0.035) 6px)",
+                }}
+              />
+              <span
+                className="absolute text-[9px] font-medium whitespace-nowrap"
+                style={{ bottom: 6, left: 6, color: "rgba(0,0,0,0.18)" }}
+              >
+                sem dados disponíveis
+              </span>
+            </div>
           )}
-        </LineChart>
+
+          <LineChart
+            width={scale.totalWidthPx + LABEL_WIDTH}
+            height={CHART_HEIGHT}
+            data={data}
+            onMouseMove={handleMouseMove as (e: unknown) => void}
+            onMouseLeave={handleMouseLeave}
+            margin={CHART_MARGIN}
+          >
+            <XAxis dataKey="x" type="number" domain={xDomain} hide />
+            <YAxis domain={Y_PRICE_DOMAIN} ticks={Y_PRICE_TICKS} hide />
+            <Tooltip content={<CustomTooltip />} cursor={false} />
+            {/* Horizontal reference lines every $20 */}
+            {Y_PRICE_TICKS.map((price) => (
+              <ReferenceLine
+                key={price}
+                y={price}
+                stroke="rgba(0,0,0,0.10)"
+                strokeWidth={1}
+              />
+            ))}
+            <Line
+              type="monotone"
+              dataKey="price"
+              stroke="#d97706"
+              dot={false}
+              strokeWidth={2}
+              isAnimationActive={false}
+            />
+            {hoveredX !== null && (
+              <ReferenceLine
+                x={hoveredX}
+                stroke="rgba(0,0,0,0.3)"
+                strokeDasharray="3 3"
+              />
+            )}
+          </LineChart>
+        </div>
+
+        {/* Sticky Y-axis overlay — stays pinned to left edge while scrolling horizontally */}
+        <div
+          className="pointer-events-none"
+          style={{
+            position: "sticky",
+            left: 0,
+            top: 0,
+            width: LABEL_WIDTH,
+            height: CHART_HEIGHT,
+            zIndex: 20,
+            background: "white",
+            borderRight: "1px solid rgba(0,0,0,0.05)",
+          }}
+        >
+          {Y_PRICE_TICKS.map((price) => {
+            const y = priceToY(price);
+            return (
+              <div
+                key={price}
+                className="absolute"
+                style={{
+                  right: 6,
+                  top: y - 5,
+                  fontSize: 9,
+                  fontFamily: "monospace",
+                  color: "#9ca3af",
+                  lineHeight: 1,
+                  userSelect: "none",
+                }}
+              >
+                ${price}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

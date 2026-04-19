@@ -185,27 +185,6 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       />
 
       <EventCard event={selectedEvent} onClose={() => setSelectedEvent(null)} />
-
-      {/* ── Footer ── */}
-      <footer className="shrink-0 border-t border-black/[0.07] bg-[#f5f3ee] px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[10px] text-gray-400 font-semibold tracking-wide">
-            Desenvolvido por{" "}
-            <span className="text-gray-600 font-bold">Diogo S. P. Calegari</span>
-          </span>
-          <span className="hidden sm:inline text-gray-300">·</span>
-          <a
-            href="mailto:timelinedopetroleo@gmail.com"
-            className="hidden sm:inline text-[10px] text-amber-600 hover:text-amber-800 transition-colors"
-          >
-            timelinedopetroleo@gmail.com
-          </a>
-        </div>
-        <p className="text-[9.5px] text-gray-400 leading-relaxed sm:border-l sm:border-black/[0.08] sm:pl-4">
-          Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada —
-          podem conter imprecisões de cunho didático. O autor não se responsabiliza pelo uso das informações aqui apresentadas.
-        </p>
-      </footer>
     </div>
   );
 }

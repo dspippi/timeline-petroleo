@@ -7,6 +7,7 @@ import { MIN_PX_PER_DAY, MAX_PX_PER_DAY, DEFAULT_PX_PER_DAY } from "@/lib/timeli
 import { clamp } from "@/lib/utils";
 import { TimelineRows, LABEL_WIDTH } from "./TimelineRows";
 import { GuideOverlay } from "./GuideOverlay";
+import { EventLinesOverlay } from "./EventLinesOverlay";
 import { SettingsPanel } from "@/components/Settings/SettingsPanel";
 import { getYear } from "date-fns";
 
@@ -158,9 +159,34 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         onWheel={handleWheel}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative" }}>
+          <EventLinesOverlay events={events} scale={scale} />
           <TimelineRows events={events} scale={scale} onEventClick={onEventClick} onTypeFilter={onTypeFilter} />
           <GuideOverlay scale={scale} />
         </div>
+
+        {/* Footer — visible only when scrolled to the bottom */}
+        <footer
+          className="border-t border-black/[0.07] bg-[#f5f3ee] px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
+          style={{ position: "sticky", left: 0, width: "100vw" }}
+        >
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-[10px] text-gray-400 font-semibold tracking-wide">
+              Desenvolvido por{" "}
+              <span className="text-gray-600 font-bold">Diogo S. P. Calegari</span>
+            </span>
+            <span className="hidden sm:inline text-gray-300">·</span>
+            <a
+              href="mailto:timelinedopetroleo@gmail.com"
+              className="hidden sm:inline text-[10px] text-amber-600 hover:text-amber-800 transition-colors"
+            >
+              timelinedopetroleo@gmail.com
+            </a>
+          </div>
+          <p className="text-[9.5px] text-gray-400 leading-relaxed sm:border-l sm:border-black/[0.08] sm:pl-4">
+            Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada —
+            podem conter imprecisões de cunho didático. O autor não se responsabiliza pelo uso das informações aqui apresentadas.
+          </p>
+        </footer>
       </div>
     </div>
   );

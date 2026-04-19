@@ -143,6 +143,10 @@ export const EventMarker = memo(function EventMarker({
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical" as React.CSSProperties["WebkitBoxOrient"],
                 overflow: "hidden",
+                backgroundColor: "rgba(255,255,255,0.82)",
+                backdropFilter: "blur(2px)",
+                borderRadius: 3,
+                padding: "1px 3px",
               }}
             >
               {event.title}
@@ -170,36 +174,57 @@ export const EventMarker = memo(function EventMarker({
   const pinTop = laneH * lane + laneH * 0.3 - pinSize / 2;
   const labelTop = laneH * lane + laneH * 0.3 + pinSize / 2 + 4;
 
-  return (
-    <div
-      className="absolute cursor-pointer"
-      style={{ left: x - LABEL_MAX_WIDTH / 2, width: LABEL_MAX_WIDTH, top: 0, bottom: 0 }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={() => onClick(event)}
-    >
-      {/* Diamond */}
-      <div
-        className="absolute transition-all"
-        style={{
-          left: LABEL_MAX_WIDTH / 2 - pinSize / 2,
-          top: pinTop,
-          width: pinSize,
-          height: pinSize,
-          transform: "rotate(45deg)",
-          backgroundColor: color,
-          boxShadow: isHovered ? `0 0 10px ${color}` : `0 0 4px ${color}88`,
-        }}
-      />
+  // Tight hitbox — only the diamond + small padding, not the full label width
+  const hitPad = 10;
+  const hitLeft = x - pinSize / 2 - hitPad;
+  const hitWidth = pinSize + hitPad * 2;
+  const hitTop = pinTop - hitPad;
+  const hitHeight = pinSize + hitPad * 2;
 
-      {/* Label below diamond */}
+  return (
+    <>
+      {/* Hover / click hitbox — tight around diamond only */}
+      <div
+        className="absolute cursor-pointer"
+        style={{ left: hitLeft, top: hitTop, width: hitWidth, height: hitHeight, zIndex: 10 }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => onClick(event)}
+      >
+        {/* Diamond — positioned relative to the hitbox */}
+        <div
+          className="absolute transition-all"
+          style={{
+            left: hitPad,
+            top: hitPad,
+            width: pinSize,
+            height: pinSize,
+            transform: "rotate(45deg)",
+            backgroundColor: color,
+            boxShadow: isHovered ? `0 0 10px ${color}` : `0 0 4px ${color}88`,
+          }}
+        />
+
+        {tooltipVisible && (
+          <HoverTooltip
+            event={event}
+            x={tooltipPos.x}
+            y={tooltipPos.y}
+            onMouseEnter={cancelHideTooltip}
+            onMouseLeave={startHideTooltip}
+            onTypeClick={onTypeFilter}
+          />
+        )}
+      </div>
+
+      {/* Label — pointer-events-none, positioned independently, above event lines */}
       {settings.showEventLabels && (
         <div
-          className="absolute w-full pointer-events-none px-0.5"
-          style={{ top: labelTop }}
+          className="absolute pointer-events-none"
+          style={{ left: x - LABEL_MAX_WIDTH / 2, width: LABEL_MAX_WIDTH, top: labelTop, zIndex: 2 }}
         >
           <p
-            className="text-center leading-tight"
+            className="text-center leading-tight mx-auto"
             style={{
               fontSize: LABEL_FONT_SIZE,
               fontWeight: 600,
@@ -209,23 +234,16 @@ export const EventMarker = memo(function EventMarker({
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical" as React.CSSProperties["WebkitBoxOrient"],
               overflow: "hidden",
+              backgroundColor: "rgba(255,255,255,0.82)",
+              backdropFilter: "blur(2px)",
+              borderRadius: 3,
+              padding: "1px 3px",
             }}
           >
             {event.title}
           </p>
         </div>
       )}
-
-      {tooltipVisible && (
-        <HoverTooltip
-          event={event}
-          x={tooltipPos.x}
-          y={tooltipPos.y}
-          onMouseEnter={cancelHideTooltip}
-          onMouseLeave={startHideTooltip}
-          onTypeClick={onTypeFilter}
-        />
-      )}
-    </div>
+    </>
   );
 });

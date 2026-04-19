@@ -171,7 +171,23 @@ export function listEvents(): OilEvent[] {
   const events: OilEvent[] = [];
   for (const chunk of chunks) {
     try {
-      const { data, content } = matter(`---\n${chunk}`);
+      // Support Format A (inner --- separator) and Format B (body after YAML fields, "." terminator)
+      let matterStr: string;
+      if (chunk.includes("\n---\n") || chunk.startsWith("---\n")) {
+        matterStr = `---\n${chunk}`;
+      } else {
+        const lines = chunk.split("\n");
+        const yamlLines: string[] = [];
+        const bodyLines: string[] = [];
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (trimmed === "." || trimmed === "") continue;
+          if (/^[a-zA-Z_][\w-]*:/.test(trimmed)) yamlLines.push(line);
+          else bodyLines.push(line);
+        }
+        matterStr = `---\n${yamlLines.join("\n")}\n---\n${bodyLines.join("\n")}`;
+      }
+      const { data, content } = matter(matterStr);
       if (!data.id || !data.title) continue;
       const start_date = parseDateField(data.start_date);
       if (!start_date) continue;

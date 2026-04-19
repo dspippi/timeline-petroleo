@@ -28,8 +28,34 @@ export function parseEvents(): OilEvent[] {
 
   for (const chunk of chunks) {
     try {
-      // gray-matter expects "---\nfrontmatter\n---\nbody"
-      const { data, content } = matter(`---\n${chunk}`);
+      // Support two formats:
+      // Format A (original): "field: val\n---\nbody text"  — inner --- separates YAML from body
+      // Format B (user-edited): "field: val\nbody text\n." — body follows YAML fields directly, "." as terminator
+      let matterStr: string;
+
+      if (chunk.includes("\n---\n") || chunk.startsWith("---\n")) {
+        // Format A: inner --- present — use as-is
+        matterStr = `---\n${chunk}`;
+      } else {
+        // Format B: separate YAML lines (key: value) from body text
+        const lines = chunk.split("\n");
+        const yamlLines: string[] = [];
+        const bodyLines: string[] = [];
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (trimmed === "." || trimmed === "") continue; // skip terminators and blank lines
+          if (/^[a-zA-Z_][\w-]*:/.test(trimmed)) {
+            yamlLines.push(line);
+          } else {
+            bodyLines.push(line);
+          }
+        }
+
+        matterStr = `---\n${yamlLines.join("\n")}\n---\n${bodyLines.join("\n")}`;
+      }
+
+      const { data, content } = matter(matterStr);
 
       if (!data.id || !data.title) continue;
 

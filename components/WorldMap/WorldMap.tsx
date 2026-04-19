@@ -91,13 +91,13 @@ export const WorldMap = memo(function WorldMap({
   );
 
   if (!mounted) return (
-    <div className="shrink-0 rounded-xl border border-black/10 bg-white shadow-sm" style={{ width: 150, height: 115 }} />
+    <div className="shrink-0 rounded-xl border border-black/10 bg-white shadow-sm" style={{ width: 135, height: 104 }} />
   );
 
   return (
     <div
       className="shrink-0 rounded-xl overflow-hidden border border-black/10 bg-white shadow-sm"
-      style={{ width: 150 }}
+      style={{ width: 135 }}
     >
       <div className="px-3 pt-2 pb-1 text-[9px] text-gray-400 uppercase tracking-widest font-semibold">
         Mapa — clique para filtrar
