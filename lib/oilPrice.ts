@@ -17,10 +17,10 @@ function parseJsonPrices(
 
 async function loadBase(): Promise<OilPrice[]> {
   const [hist, fallback] = await Promise.all([
-    import("@/data/oil-prices-historical.json").then((m) => m.default as { date: string; price: number }[]),
+    import("@/data/oil-prices-owid-historical.json").then((m) => m.default as { date: string; price: number }[]),
     import("@/data/oil-prices-fallback.json").then((m) => m.default as { date: string; price: number }[]),
   ]);
-  // Historical covers 1960–1986, fallback covers 1987–present
+  // OWID covers 1861–1986 (annual→monthly, $/barrel); fallback covers 1987–present (monthly Brent)
   return [...parseJsonPrices(hist), ...parseJsonPrices(fallback)];
 }
 

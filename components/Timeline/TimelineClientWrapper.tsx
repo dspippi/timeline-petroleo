@@ -49,8 +49,9 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     [domainStart, domainEnd, pxPerDay]
   );
 
-  // Fit zoom on first mount
+  // Fit zoom on first mount, then scroll both panels to the end
   const hasFit = useRef(false);
+  const hasScrolled = useRef(false);
   useEffect(() => {
     if (hasFit.current || scale.totalWidthPx === 0) return;
     const containerWidth = timelineScrollRef.current?.clientWidth ?? 0;
@@ -58,6 +59,22 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       hasFit.current = true;
       setPxPerDay(clamp(pxPerDay * containerWidth / scale.totalWidthPx, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
     }
+  }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (hasScrolled.current || !hasFit.current || scale.totalWidthPx === 0) return;
+    requestAnimationFrame(() => {
+      if (timelineScrollRef.current) {
+        timelineScrollRef.current.scrollLeft = timelineScrollRef.current.scrollWidth;
+      }
+      if (chartScrollRef.current && timelineScrollRef.current) {
+        // Chart uses overflow-x:hidden — sync its scrollLeft from timeline (authoritative)
+        chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
+      }
+      // Use timeline scrollLeft as source of truth (chart may silently clamp to 0)
+      setChartScrollLeft(timelineScrollRef.current?.scrollLeft ?? 0);
+      hasScrolled.current = true;
+    });
   }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const countriesWithEvents = useMemo(
@@ -68,18 +85,23 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const timelineScrollRef = useRef<HTMLDivElement>(null);
   const chartScrollRef = useRef<HTMLDivElement>(null);
   const isSyncing = useRef(false);
+  const [chartScrollLeft, setChartScrollLeft] = useState(0);
 
   const handleTimelineScroll = useCallback(() => {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
-    chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
+    const sl = timelineScrollRef.current.scrollLeft;
+    chartScrollRef.current.scrollLeft = sl;
+    setChartScrollLeft(sl);
     isSyncing.current = false;
   }, []);
 
   const handleChartScroll = useCallback(() => {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
-    timelineScrollRef.current.scrollLeft = chartScrollRef.current.scrollLeft;
+    const sl = chartScrollRef.current.scrollLeft;
+    timelineScrollRef.current.scrollLeft = sl;
+    setChartScrollLeft(sl);
     isSyncing.current = false;
   }, []);
 
@@ -175,6 +197,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
           scale={scale}
           scrollRef={chartScrollRef}
           onScroll={handleChartScroll}
+          chartScrollLeft={chartScrollLeft}
         />
       )}
 

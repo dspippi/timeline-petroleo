@@ -24,6 +24,9 @@ export async function middleware(request: NextRequest) {
   const isAdminRoute = pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
   if (!isAdminRoute) return NextResponse.next();
 
+  // In development, skip auth entirely — admin is a local editing tool
+  if (process.env.NODE_ENV === "development") return NextResponse.next();
+
   if (PUBLIC_ADMIN_PATHS.some((p) => pathname.startsWith(p))) {
     return NextResponse.next();
   }

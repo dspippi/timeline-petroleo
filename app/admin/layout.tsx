@@ -4,6 +4,7 @@ import { LogoutButton } from "./LogoutButton";
 export const metadata = { title: "Admin — Timeline do Petróleo" };
 
 const isVercel = process.env.VERCEL === "1";
+const isLocal = process.env.NODE_ENV === "development";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -36,6 +37,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <LogoutButton />
         </div>
       </header>
+
+      {/* Local mode banner */}
+      {isLocal && (
+        <div className="shrink-0 bg-emerald-50 border-b border-emerald-200 px-4 py-2 flex items-center gap-3">
+          <span className="text-emerald-600 text-sm">●</span>
+          <div className="text-xs text-emerald-800">
+            <span className="font-semibold">Modo Local</span> — alterações são salvas diretamente em{" "}
+            <code className="bg-emerald-100 px-1 rounded font-mono">data/events.md</code>.
+            Após editar, faça <code className="bg-emerald-100 px-1 rounded font-mono">git commit</code> e envie para o GitHub.
+          </div>
+        </div>
+      )}
 
       {/* Vercel read-only warning */}
       {isVercel && (

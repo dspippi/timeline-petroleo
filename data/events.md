@@ -1,4 +1,5 @@
 ---
+
 id: bissell-oil-inspection-1853
 title: Primeiras Prospecções de Óleo (Bissell)
 start_date: 01-05-1853
@@ -239,7 +240,7 @@ start_date: 21-01-1939
 country: Brasil
 region: América do Sul
 type: discovery
-wikipedia: https://pt.wikipedia.org/wiki/Hist%C3%B3ria_do_petr%C3%B3leo_no_Brasil
+wikipedia: https://pt.wikipedia.org/wiki/Petr%C3%B3leo_no_Brasil
 O petróleo jorra pela primeira vez em território brasileiro na Bahia, validando a tese de que o país possuía hidrocarbonetos exploráveis.
 .
 ---
@@ -289,7 +290,7 @@ title: Crise do Canal de Suez
 start_date: 29-10-1956
 end_date: 07-11-1956
 country: Egito
-region: África
+region: Oriente Médio
 type: war
 wikipedia: https://en.wikipedia.org/wiki/Suez_Crisis
 A nacionalização do canal e a invasão europeia interrompem o suprimento para a Europa, expondo a dependência energética do Ocidente ao óleo árabe.
@@ -498,7 +499,7 @@ start_date: 01-09-2006
 country: Brasil
 region: América do Sul
 type: discovery
-wikipedia: https://pt.wikipedia.org/wiki/Camada_pr%C3%A9-sal_do_Brasil
+wikipedia: https://pt.wikipedia.org/wiki/Camada_pr%C3%A9-sal
 A Petrobras anuncia gigantescas reservas sob a camada de sal na Bacia de Santos, elevando o Brasil ao patamar das maiores reservas do mundo.
 .
 ---
@@ -680,4 +681,4 @@ region: Oriente Médio
 type: crisis
 Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global.
 .
----
+
