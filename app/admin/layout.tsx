@@ -3,6 +3,8 @@ import { LogoutButton } from "./LogoutButton";
 
 export const metadata = { title: "Admin — Timeline do Petróleo" };
 
+const isVercel = process.env.VERCEL === "1";
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#f5f3ee] flex flex-col">
@@ -34,6 +36,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <LogoutButton />
         </div>
       </header>
+
+      {/* Vercel read-only warning */}
+      {isVercel && (
+        <div className="shrink-0 bg-amber-50 border-b border-amber-200 px-4 py-2.5 flex items-start gap-3">
+          <span className="text-amber-500 text-base leading-none mt-0.5">⚠️</span>
+          <div className="text-xs text-amber-800 leading-relaxed">
+            <span className="font-bold">Você está no ambiente de produção (Vercel).</span>{" "}
+            O sistema de arquivos é somente leitura — qualquer alteração feita aqui{" "}
+            <span className="font-semibold">não será salva</span> permanentemente.{" "}
+            Para editar os eventos de forma definitiva, use o painel admin no seu computador local
+            e depois envie as alterações para o GitHub.
+          </div>
+        </div>
+      )}
 
       <main className="flex-1 p-6">
         {children}

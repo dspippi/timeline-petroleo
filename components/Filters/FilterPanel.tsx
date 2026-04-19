@@ -38,7 +38,7 @@ export const FilterPanel = memo(function FilterPanel({
   );
 
   return (
-    <div className="flex-1 flex flex-col gap-2 overflow-y-auto min-w-0 pr-1">
+    <div className="flex-1 flex flex-col gap-2 overflow-hidden min-w-0 pr-1">
       {/* Header */}
       <div className="flex items-center gap-2 shrink-0">
         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.12em]">

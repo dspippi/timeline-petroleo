@@ -1,581 +1,678 @@
 ---
-id: opec-founded-1960
-title: Fundação da OPEP
-start_date: 14-09-1960
-country: Iraq
-region: Middle East
-type: policy
-wikipedia: https://en.wikipedia.org/wiki/OPEC
----
-A Organização dos Países Exportadores de Petróleo (OPEP) foi fundada em Bagdá por Irã, Iraque, Kuwait, Arábia Saudita e Venezuela. Criada para coordenar as políticas petrolíferas e garantir preços estáveis para os países produtores, a OPEP se tornaria a principal força de regulação do mercado global de petróleo.
-
----
-id: suez-crisis-1956
-title: Crise do Canal de Suez
-start_date: 29-10-1956
-end_date: 07-11-1956
-country: Egypt
-region: Africa
-type: war
-wikipedia: https://en.wikipedia.org/wiki/Suez_Crisis
----
-A nacionalização do Canal de Suez pelo Egito levou à invasão britânica, francesa e israelense, interrompendo o fornecimento de petróleo do Oriente Médio para a Europa. O evento demonstrou pela primeira vez a vulnerabilidade do abastecimento energético ocidental e a importância geopolítica do petróleo árabe.
-
----
-id: six-day-war-1967
-title: Guerra dos Seis Dias
-start_date: 05-06-1967
-end_date: 10-06-1967
-country: Israel
-region: Middle East
-type: war
-wikipedia: https://en.wikipedia.org/wiki/Six-Day_War
----
-O conflito entre Israel e uma coalizão árabe liderada pelo Egito, Jordânia e Síria resultou em uma breve suspensão das exportações de petróleo árabe para os EUA e Reino Unido. Embora o embargo tenha durado pouco, o episódio apontou o petróleo como arma geopolítica potencial, prefigurando a crise de 1973.
-
----
-id: campos-basin-discovery-1974
-title: Descoberta da Bacia de Campos
-start_date: 01-01-1974
-country: Brasil
-region: South America
+id: bissell-oil-inspection-1853
+title: Primeira Inspeção de Fontes de Óleo na Pensilvânia
+start_date: 01-05-1853
+country: Estados Unidos
+region: América do Norte
 type: discovery
-company: Petrobras
-wikipedia: https://en.wikipedia.org/wiki/Campos_Basin
+wikipedia: https://en.wikipedia.org/wiki/George_Bissell
+George Bissell realiza a primeira inspeção técnica em nascentes de petróleo na Pensilvânia, vislumbrando o potencial comercial do produto como combustível e iluminante
+.
 ---
-A Petrobras descobriu petróleo na Bacia de Campos, no litoral do Rio de Janeiro, marcando o início da exploração offshore em águas profundas no Brasil. A descoberta transformou o país em produtor significativo e abriu caminho para décadas de desenvolvimento tecnológico em exploração submarina.
-
+id: drake-well-titusville-1859
+title: Perfuração do Primeiro Poço de Petróleo (Drake)
+start_date: 27-08-1859
+country: Estados Unidos
+region: América do Norte
+type: discovery
+wikipedia: https://en.wikipedia.org/wiki/Drake_Well
+Edwin Drake perfura o primeiro poço artesiano de petróleo em Titusville, Pensilvânia, marcando o início da indústria petrolífera moderna ao provar a viabilidade da extração comercial do subsolo
+.
 ---
-id: opec-oil-embargo-1973
-title: Embargo de Petróleo da OPEP
-start_date: 17-10-1973
-end_date: 18-03-1974
-country: Saudi Arabia
-region: Middle East
+id: us-civil-war-impact-1861
+title: Guerra Civil Americana e a Demanda por Energia
+start_date: 12-04-1861
+end_date: 09-04-1865
+country: Estados Unidos
+region: América do Norte
+type: war
+wikipedia: https://en.wikipedia.org/wiki/American_Civil_War
+O conflito impulsiona a demanda industrial e consolida o mercado interno de querosene para iluminação, elevando o petróleo ao status de recurso estratégico nos EUA
+.
+---
+id: standard-oil-foundation-1870
+title: Fundação da Standard Oil Company
+start_date: 10-01-1870
+country: Estados Unidos
+region: América do Norte
+type: company
+wikipedia: https://en.wikipedia.org/wiki/Standard_Oil
+John D. Rockefeller funda a empresa em Cleveland, iniciando uma estratégia de integração e logística que criaria o primeiro monopólio global do refino e transporte
+.
+---
+id: baku-oil-opening-1873
+title: Abertura do Petróleo de Baku ao Capital Privado
+start_date: 01-01-1873
+country: Rússia
+region: Europa
+type: discovery
+wikipedia: https://en.wikipedia.org/wiki/Baku_oil_industry
+O governo russo abre a exploração na região do Cáucaso, atraindo investidores como a família Nobel, que introduziram navios-tanque e oleodutos para exportação
+.
+---
+id: edison-electric-light-1882
+title: Invenção da Lâmpada Elétrica de Edison
+start_date: 04-09-1882
+country: Estados Unidos
+region: América do Norte
+type: discovery
+wikipedia: https://en.wikipedia.org/wiki/Incandescent_light_bulb
+Thomas Edison demonstra a viabilidade da luz elétrica em Nova York, criando a primeira grande ameaça existencial ao mercado de querosene, então o principal produto do petróleo
+.
+---
+id: royal-dutch-sumatra-1885
+title: Descoberta de Petróleo em Sumatra pela Royal Dutch
+start_date: 01-01-1885
+country: Indonésia
+region: Ásia
+type: discovery
+wikipedia: https://en.wikipedia.org/wiki/Royal_Dutch_Shell
+A Royal Dutch descobre óleo nas Índias Orientais Holandesas, estabelecendo-se como uma força capaz de competir com a Standard Oil nos mercados asiáticos
+.
+---
+id: murex-suez-transit-1892
+title: Travessia do Navio Murex pelo Canal de Suez
+start_date: 22-07-1892
+country: Egito
+region: África
 type: policy
-wikipedia: https://en.wikipedia.org/wiki/1973_oil_crisis
+O petroleiro a granel Murex, de Marcus Samuel, atravessa Suez, revolucionando a logística global e marcando o nascimento prático da Shell
+.
 ---
-Os membros árabes da OPEP proclamaram um embargo de petróleo contra os EUA, Países Baixos, Portugal, Rodésia e África do Sul em retaliação ao apoio a Israel durante a Guerra do Yom Kippur. O preço do petróleo quadruplicou, gerando o primeiro grande choque global de energia e recessão nas economias industrializadas.
+id: ford-first-car-1896
+title: Henry Ford Constrói seu Primeiro Carro
+start_date: 04-06-1896
+country: Estados Unidos
+region: América do Norte
+type: discovery
+wikipedia: https://en.wikipedia.org/wiki/Henry_Ford
+A invenção do automóvel por Ford sinaliza a futura transição do mercado de querosene para o de gasolina, criando um novo mercado massivo para derivados
+.
+---
+id: brazil-early-surveys-1897
+title: Primeiras Sondagens Exploratórias no Brasil
+start_date: 01-01-1897
+end_date: 31-12-1915
+country: Brasil
+region: América do Sul
+type: discovery
+Ocorrem as primeiras buscas geológicas e perfurações formais no território brasileiro, motivadas pela necessidade de encontrar fontes internas de energia
+.
 
 ---
-id: petrobras-petro-nacional-1953
-title: Criação da Petrobras
+id: spindletop-texas-gusher-1901
+title: O Jorro de Spindletop no Texas
+start_date: 10-01-1901
+country: Estados Unidos
+region: América do Norte
+type: discovery
+wikipedia: https://en.wikipedia.org/wiki/Spindletop
+A gigantesca descoberta no Texas inaugura a era do petróleo abundante e barato, dando origem a gigantes como Texaco e Gulf Oil
+.
+---
+id: darcy-persian-concession-1901
+title: Concessão D'Arcy na Pérsia
+start_date: 28-05-1901
+country: Irã
+region: Oriente Médio
+type: policy
+wikipedia: https://en.wikipedia.org/wiki/D%27Arcy_Concession
+William Knox D'Arcy obtém direitos exclusivos para explorar petróleo na Pérsia, o que levaria à criação da Anglo-Persian Oil Company (futura BP)
+.
+---
+id: standard-oil-dissolution-1911
+title: Dissolvimento do Truste da Standard Oil
+start_date: 15-05-1911
+country: Estados Unidos
+region: América do Norte
+type: policy
+wikipedia: https://en.wikipedia.org/wiki/Standard_Oil_Co._of_New_Jersey_v._United_States
+A Suprema Corte dos EUA ordena o desmembramento do monopólio de Rockefeller em 34 empresas separadas, incluindo as futuras Exxon, Mobil e Chevron
+.
+---
+id: churchill-navy-conversion-1911
+title: Churchill e a Conversão da Marinha Real ao Petróleo
+start_date: 25-10-1911
+country: Reino Unido
+region: Europa
+type: policy
+Winston Churchill decide converter a frota britânica do carvão para o petróleo para garantir superioridade técnica, vinculando a defesa nacional ao suprimento externo de óleo
+.
+---
+id: wwi-mechanized-warfare-1914
+title: Primeira Guerra Mundial e a Mecanização do Combate
+start_date: 28-07-1914
+end_date: 11-11-1918
+country: Global
+region: Global
+type: war
+wikipedia: https://en.wikipedia.org/wiki/World_War_I
+A Grande Guerra demonstrou que o petróleo era "o sangue da vitória" com a introdução em larga escala de tanques, aviões e caminhões no campo de batalha
+.
+---
+id: bolshevik-revolution-nationalization-1917
+title: Revolução Russa e Nacionalização do Petróleo
+start_date: 07-11-1917
+country: Rússia
+region: Europa
+type: war
+wikipedia: https://en.wikipedia.org/wiki/Russian_Revolution
+Os bolcheviques tomam o poder e nacionalizam toda a indústria russa, alterando drasticamente o fluxo de óleo para o Ocidente
+.
+---
+id: venezuela-la-rosa-discovery-1922
+title: Descoberta de Los Barroso na Venezuela
+start_date: 14-12-1922
+country: Venezuela
+region: América do Sul
+type: discovery
+O jorro massivo de óleo no poço de La Rosa inicia oficialmente o boom petrolífero venezuelano, tornando o país um dos maiores exportadores mundiais
+.
+---
+id: teapot-dome-scandal-1924
+title: Escândalo de Teapot Dome
+start_date: 01-01-1924
+country: Estados Unidos
+region: América do Norte
+type: crisis
+wikipedia: https://en.wikipedia.org/wiki/Teapot_Dome_scandal
+A revelação de corrupção no arrendamento de reservas navais de petróleo abala o governo dos EUA e impulsiona novas regulações federais no setor
+.
+---
+id: achnacarry-agreement-1928
+title: Acordo de Achnacarry (O Cartel das Sete Irmãs)
+start_date: 17-09-1928
+country: Reino Unido
+region: Europa
+type: policy
+wikipedia: https://en.wikipedia.org/wiki/Achnacarry_Agreement
+As maiores companhias petrolíferas reúnem-se secretamente na Escócia para tentar cartelizar o mercado global, buscando estabilizar preços e controlar a oferta
+.
+---
+id: great-depression-oil-crisis-1929
+title: Grande Depressão e Colapso da Demanda
+start_date: 29-10-1929
+end_date: 31-12-1939
+country: Global
+region: Global
+type: crisis
+wikipedia: https://en.wikipedia.org/wiki/Great_Depression
+A quebra da bolsa derruba o consumo mundial de combustíveis, gerando um excedente que forçou o fechamento de inúmeras produtoras independentes
+.
+---
+id: saudi-concession-socal-1933
+title: Concessão Saudita para a Socal
+start_date: 29-05-1933
+country: Arábia Saudita
+region: Oriente Médio
+type: policy
+O Rei Ibn Saud concede direitos de exploração à Standard of California, marcando o início da participação americana na Arábia Saudita
+.
+
+---
+id: mexico-oil-nationalization-1938
+title: Nacionalização do Petróleo no México (Pemex)
+start_date: 18-03-1938
+country: México
+region: América do Norte
+type: policy
+wikipedia: https://en.wikipedia.org/wiki/Mexican_oil_expropriation
+O presidente Lázaro Cárdenas expropria as petroleiras estrangeiras e funda a Pemex, tornando-se um marco do nacionalismo energético na América Latina
+.
+---
+id: brazil-cnp-creation-1938
+title: Criação do Conselho Nacional do Petróleo (CNP)
+start_date: 29-04-1938
+country: Brasil
+region: América do Sul
+type: policy
+Getúlio Vargas estabelece o órgão regulador para centralizar a política energética e nacionalizar as riquezas do subsolo brasileiro
+.
+---
+id: brazil-lobato-discovery-1939
+title: Primeiro Jorro de Petróleo no Brasil (Lobato)
+start_date: 21-01-1939
+country: Brasil
+region: América do Sul
+type: discovery
+O petróleo jorra pela primeira vez em território brasileiro na Bahia, validando a tese de que o país possuía hidrocarbonetos exploráveis
+.
+---
+id: wwii-fuel-war-1939
+title: II Guerra Mundial: A Guerra da Octanagem
+start_date: 01-09-1939
+end_date: 02-09-1945
+country: Global
+region: Global
+type: war
+wikipedia: https://en.wikipedia.org/wiki/World_War_II
+O conflito foi decidido pela logística de combustível; a superioridade produtiva dos Aliados (EUA) asfixiou as forças alemãs e japonesas
+.
+---
+id: fgv-creation-brazil-1944
+title: Criação da Fundação Getulio Vargas (FGV)
+start_date: 20-12-1944
+country: Brasil
+region: América do Sul
+type: policy
+A instituição é criada para contribuir com o desenvolvimento econômico e social do Brasil por meio da pesquisa e educação
+.
+---
+id: saudi-fifty-fifty-agreement-1950
+title: Acordo de Partilha de Lucros 50/50 na Arábia Saudita
+start_date: 30-12-1950
+country: Arábia Saudita
+region: Oriente Médio
+type: policy
+A Aramco aceita dividir lucros igualmente com o governo saudita, modelo que redefiniu as relações entre nações soberanas e companhias multinacionais
+.
+---
+id: iran-nationalization-mossadegh-1951
+title: Nacionalização do Petróleo no Irã por Mossadegh
+start_date: 01-05-1951
+country: Irã
+region: Oriente Médio
+type: policy
+wikipedia: https://en.wikipedia.org/wiki/Mohammad_Mosaddegh
+O primeiro-ministro iraniano expropria a Anglo-Iranian Oil Company, gerando uma crise diplomática e levando ao golpe de 1953
+.
+---
+id: petrobras-creation-monopoly-1953
+title: Criação da Petrobras e Monopólio Estatal
 start_date: 03-10-1953
 country: Brasil
-region: South America
+region: América do Sul
 type: company
-company: Petrobras
 wikipedia: https://en.wikipedia.org/wiki/Petrobras
+Vargas sanciona a Lei nº 2.004, instituindo o monopólio estatal sobre a exploração e refino, sob o lema "O Petróleo é Nosso"
+.
 ---
-A Petróleo Brasileiro S.A. (Petrobras) foi criada pelo governo de Getúlio Vargas com o monopólio estatal sobre a exploração, refino e transporte de petróleo no Brasil. A empresa tornou-se símbolo do desenvolvimentismo nacional e um dos maiores players do setor energético mundial.
-
+id: suez-canal-crisis-1956
+title: Crise do Canal de Suez
+start_date: 29-10-1956
+country: Egito
+region: África
+type: war
+wikipedia: https://en.wikipedia.org/wiki/Suez_Crisis
+A nacionalização do canal e a invasão europeia interrompem o suprimento para a Europa, expondo a dependência energética do Ocidente ao óleo árabe
+.
 ---
-id: iranian-revolution-1979
-title: Revolução Iraniana
-start_date: 01-02-1979
-end_date: 11-02-1979
-country: Iran
-region: Middle East
+id: opec-founded-baghdad-1960
+title: Fundação da OPEP
+start_date: 14-09-1960
+country: Iraque
+region: Oriente Médio
 type: policy
+wikipedia: https://en.wikipedia.org/wiki/OPEC
+Irã, Iraque, Kuwait, Arábia Saudita e Venezuela fundam a organização para coordenar políticas petrolíferas e garantir preços estáveis aos países produtores
+.
+---
+id: oil-surpasses-coal-global-1964
+title: Petróleo Supera o Carvão como Fonte Primária
+start_date: 01-01-1964
+country: Global
+region: Global
+type: discovery
+O petróleo torna-se o combustível mais utilizado no mundo em conteúdo energético, consolidando a era moderna dependente de hidrocarbonetos
+.
+---
+id: six-day-war-embargo-1967
+title: Guerra dos Seis Dias e Embargo Árabe
+start_date: 05-06-1967
+country: Israel
+region: Oriente Médio
+type: war
+wikipedia: https://en.wikipedia.org/wiki/Six-Day_War
+O conflito eleva tensões e gera uma breve suspensão das exportações para os EUA e Reino Unido, prefigurando o uso do petróleo como arma política
+.
+---
+id: north-sea-oil-discovery-1969
+title: Descoberta de Petróleo no Mar do Norte
+start_date: 23-12-1969
+country: Noruega
+region: Europa
+type: discovery
+wikipedia: https://en.wikipedia.org/wiki/North_Sea_oil
+A descoberta de grandes reservas na plataforma Ocean Viking transforma o Reino Unido e a Noruega em produtores de peso fora do controle da OPEP
+.
+---
+id: us-peak-conventional-production-1970
+title: Pico da Produção Convencional nos EUA
+start_date: 01-11-1970
+country: Estados Unidos
+region: América do Norte
+type: crisis
+wikipedia: https://en.wikipedia.org/wiki/Peak_oil
+A produção doméstica americana começa a declinar, transferindo o equilíbrio de poder do mercado mundial para os países da OPEP
+.
+---
+id: first-oil-shock-opec-1973
+title: Primeiro Choque do Petróleo
+start_date: 17-10-1973
+end_date: 18-03-1974
+country: Arábia Saudita
+region: Oriente Médio
+type: crisis
+wikipedia: https://en.wikipedia.org/wiki/1973_oil_crisis
+Em retaliação ao apoio a Israel, membros árabes impõem um embargo que quadruplica o preço do barril, gerando recessão e forçando busca por eficiência energética
+.
+---
+id: campos-basin-garoupa-discovery-1974
+title: Descoberta da Bacia de Campos (Garoupa)
+start_date: 01-01-1974
+country: Brasil
+region: América do Sul
+type: discovery
+wikipedia: https://en.wikipedia.org/wiki/Campos_Basin
+A Petrobras descobre óleo em águas profundas no Rio de Janeiro, iniciando a trajetória tecnológica que levaria o Brasil à autossuficiência
+.
+---
+id: proalcool-program-brazil-1975
+title: Lançamento do Proálcool no Brasil
+start_date: 14-11-1975
+country: Brasil
+region: América do Sul
+type: policy
+wikipedia: https://en.wikipedia.org/wiki/Ethanol_fuel_in_Brazil
+Resposta estratégica do governo brasileiro ao choque do petróleo, incentivando a produção de etanol de cana para substituir a gasolina
+.
+---
+id: iranian-revolution-second-shock-1979
+title: Revolução Iraniana e Segundo Choque
+start_date: 01-02-1979
+country: Irã
+region: Oriente Médio
+type: crisis
 wikipedia: https://en.wikipedia.org/wiki/Iranian_Revolution
+A queda do Xá interrompe o fornecimento iraniano, fazendo os preços dobrarem novamente e provocando pânico energético global
+.
 ---
-A Revolução Islâmica derrubou o Xá Mohammad Reza Pahlavi e instalou a República Islâmica sob o aiatolá Khomeini. A interrupção na produção iraniana de petróleo desencadeou o segundo choque do petróleo, com preços dobrando em 1979–1980 e provocando recessão global.
-
----
-id: iran-iraq-war-1980
-title: Guerra Irã-Iraque
+id: iran-iraq-war-oil-impact-1980
+title: Início da Guerra Irã-Iraque
 start_date: 22-09-1980
 end_date: 20-08-1988
-country: Iran
-region: Middle East
+country: Irã
+region: Oriente Médio
 type: war
 wikipedia: https://en.wikipedia.org/wiki/Iran%E2%80%93Iraq_War
+O conflito de oito anos devasta as infraestruturas petrolíferas de ambos os países e mantém o mercado em instabilidade permanente
+.
 ---
-O Iraque, sob Saddam Hussein, invadiu o Irã, iniciando um conflito de oito anos que devastou a infraestrutura petrolífera de ambos os países. A guerra manteve o mercado de petróleo em permanente instabilidade e custou mais de um milhão de vidas, com impactos duradouros na capacidade produtiva da região.
-
+id: nymex-oil-futures-trading-1983
+title: Lançamento de Contratos de Futuro na NYMEX
+start_date: 30-03-1983
+country: Estados Unidos
+region: América do Norte
+type: policy
+wikipedia: https://en.wikipedia.org/wiki/New_York_Mercantile_Exchange
+O petróleo passa a ser negociado como commodity financeira em bolsa, retirando o poder absoluto da OPEP na definição de preços
+.
 ---
-id: oil-price-collapse-1986
-title: Colapso do Preço do Petróleo
+id: oil-price-collapse-market-war-1986
+title: Colapso do Preço do Petróleo de 1986
 start_date: 01-01-1986
-end_date: 31-07-1986
-country: Saudi Arabia
-region: Middle East
+country: Arábia Saudita
+region: Oriente Médio
 type: crisis
 wikipedia: https://en.wikipedia.org/wiki/1980s_oil_glut
+A Arábia Saudita inunda o mercado para recuperar sua fatia de mercado, derrubando o barril para menos de US$ 10 e devastando economias exportadoras
+.
 ---
-A Arábia Saudita aumentou drasticamente sua produção para defender sua participação de mercado, provocando um colapso do preço do petróleo de US$30 para menos de US$10 por barril. O evento destruiu economias dependentes de petróleo, incluindo a URSS, México e Nigéria, e demonstrou o poder da Arábia Saudita como swing producer.
-
----
-id: exxon-valdez-1989
-title: Desastre do Exxon Valdez
+id: exxon-valdez-spill-1989
+title: Desastre Ambiental do Exxon Valdez
 start_date: 24-03-1989
-country: United States
-region: North America
+country: Estados Unidos
+region: América do Norte
 type: crisis
-company: ExxonMobil
 wikipedia: https://en.wikipedia.org/wiki/Exxon_Valdez_oil_spill
+O derramamento maciço no Alasca provoca reformas profundas na regulação de segurança marítima e aumenta o escrutínio ambiental sobre o setor
+.
 ---
-O navio Exxon Valdez derramou aproximadamente 37.000 toneladas de petróleo no Prince William Sound, no Alasca, causando um dos maiores desastres ambientais marinhos da história. O acidente levou a reformas regulatórias profundas na indústria petrolífera americana e aumentou o escrutínio ambiental global.
-
----
-id: gulf-war-1990
+id: gulf-war-iraq-kuwait-1990
 title: Guerra do Golfo
 start_date: 02-08-1990
 end_date: 28-02-1991
-country: Iraq
-region: Middle East
+country: Iraque
+region: Oriente Médio
 type: war
 wikipedia: https://en.wikipedia.org/wiki/Gulf_War
+A invasão do Kuwait por Saddam Hussein ameaça as reservas mundiais e culmina na queima de centenas de poços kuwaitianos pelas tropas em retirada
+.
 ---
-O Iraque invadiu o Kuwait, ameaçando um quinto das reservas mundiais de petróleo. A coalizão liderada pelos EUA expulsou as forças iraquianas, mas o conflito derrubou e depois elevou os preços do petróleo dramaticamente. O Iraque incendiou mais de 600 poços kuwaitianos ao recuar, provocando uma crise ambiental sem precedentes.
-
+id: petrobras-monopoly-end-1995
+title: Fim do Monopólio da Petrobras no Brasil
+start_date: 09-11-1995
+country: Brasil
+region: América do Sul
+type: policy
+A Emenda Constitucional nº 9 permite a abertura do setor brasileiro à concorrência com outras empresas nacionais e estrangeiras
+.
 ---
-id: venezuela-pdvsa-strike-2002
-title: Greve Geral da PDVSA
+id: anp-regulatory-creation-1997
+title: Criação da Agência Nacional do Petróleo (ANP)
+start_date: 06-08-1997
+country: Brasil
+region: América do Sul
+type: policy
+wikipedia: https://en.wikipedia.org/wiki/Ag%C3%AAncia_Nacional_do_Petr%C3%B3leo,_G%C3%A1s_Natural_e_Biocombust%C3%ADveis
+A Lei nº 9.478 institui a agência para regular o mercado aberto e organizar as rodadas de licitação no Brasil
+.
+---
+id: mitchell-shale-gas-success-1998
+title: Mitchell Energy Quebra o Código do Shale
+start_date: 01-01-1998
+country: Estados Unidos
+region: América do Norte
+type: discovery
+O sucesso da técnica de "slick water fracturing" em shale gas no Texas prepara o terreno para a futura revolução do óleo de xisto
+.
+---
+id: pdvsa-strike-crisis-2002
+title: Greve Geral da PDVSA na Venezuela
 start_date: 02-12-2002
 end_date: 02-02-2003
 country: Venezuela
-region: South America
+region: América do Sul
 type: crisis
-company: PDVSA
 wikipedia: https://en.wikipedia.org/wiki/2002%E2%80%9303_Venezuelan_general_strike
+Uma paralisação política contra Hugo Chávez destrói a capacidade técnica da estatal e marca o início do declínio produtivo venezuelano
+.
 ---
-Uma greve geral contra o governo Chávez paralisou a estatal PDVSA por dois meses, reduzindo a produção venezuelana de 3 milhões para menos de 200 mil barris por dia. O evento marcou o início do declínio da indústria petrolífera venezuelana e reforçou a instabilidade política do país.
-
----
-id: asian-financial-crisis-1997
-title: Crise Financeira Asiática
-start_date: 01-07-1997
-end_date: 31-12-1998
-country: Thailand
-region: Asia
-type: crisis
-wikipedia: https://en.wikipedia.org/wiki/1997_Asian_financial_crisis
----
-O colapso financeiro que começou na Tailândia se espalhou pela Ásia, destruindo a demanda regional por petróleo. O preço do barril despencou de US$20 para menos de US$10 em 1998, o nível mais baixo em décadas, forçando a OPEP a cortes de produção de emergência.
-
----
-id: russia-yukos-affair-2003
-title: Caso Yukos e Prisão de Khodorkovsky
-start_date: 25-10-2003
-country: Russia
-region: Europe
-type: company
-company: Yukos
-wikipedia: https://en.wikipedia.org/wiki/Yukos
----
-A prisão do oligarca Mikhail Khodorkovsky e o desmembramento da Yukos, então maior empresa petrolífera russa, marcaram a renacionalização de facto do setor energético russo. O evento sinalizou a estratégia do Kremlin de usar o petróleo e o gás como instrumentos de política externa.
-
----
-id: iraq-war-2003
-title: Invasão do Iraque
+id: iraq-invasion-instability-2003
+title: Invasão do Iraque pelos Estados Unidos
 start_date: 20-03-2003
-end_date: 01-05-2003
-country: Iraq
-region: Middle East
+country: Iraque
+region: Oriente Médio
 type: war
 wikipedia: https://en.wikipedia.org/wiki/2003_invasion_of_Iraq
+A queda de Saddam Hussein desestrutura o setor petrolífero iraquiano, mantendo a oferta instável por mais de uma década
+.
 ---
-A invasão liderada pelos EUA derrubou Saddam Hussein e desestruturou a produção petrolífera iraquiana por anos. A instabilidade pós-invasão, o surgimento de insurgências e a destruição de infraestrutura mantiveram o Iraque abaixo de seu potencial produtivo por mais de uma década, contribuindo para a alta de preços dos anos 2000.
-
----
-id: pre-sal-discovery-2006
-title: Descoberta do Pré-Sal
+id: pre-sal-major-discovery-2006
+title: Descoberta das Reservas do Pré-Sal no Brasil
 start_date: 01-09-2006
 country: Brasil
-region: South America
+region: América do Sul
 type: discovery
-company: Petrobras
-wikipedia: https://en.wikipedia.org/wiki/Pre-salt_layer_(Brazil)
+wikipedia: https://en.wikipedia.org/wiki/Pre-salt_layer
+A Petrobras anuncia gigantescas reservas sob a camada de sal na Bacia de Santos, elevando o Brasil ao patamar das maiores reservas do mundo
+.
 ---
-A Petrobras anunciou a descoberta de gigantescas reservas de petróleo abaixo de uma camada de sal no fundo do Atlântico, a mais de 7 km de profundidade. O pré-sal posicionou o Brasil entre as maiores reservas comprovadas do mundo e desencadeou um debate nacional sobre soberania, royalties e o novo marco regulatório do petróleo.
-
----
-id: oil-price-peak-2008
-title: Pico Histórico do Petróleo — US$147
+id: historic-oil-price-peak-2008
+title: Pico Histórico do Preço Nominal (US$ 147)
 start_date: 11-07-2008
-country: United States
-region: North America
+country: Global
+region: Global
 type: crisis
 wikipedia: https://en.wikipedia.org/wiki/2000s_energy_crisis
+Impulsionado pela demanda chinesa e especulação, o petróleo atinge seu ápice histórico antes do tombo causado pela crise financeira de 2008
+.
 ---
-O preço do barril Brent atingiu US$147,50, o maior valor histórico nominal, impulsionado pela demanda chinesa, especulação financeira e tensões geopolíticas. Meses depois, com a crise financeira global, o preço despencou para menos de US$40, demonstrando a volatilidade extrema do mercado petrolífero.
-
----
-id: global-financial-crisis-2008
-title: Crise Financeira Global
-start_date: 15-09-2008
-end_date: 31-03-2009
-country: United States
-region: North America
-type: crisis
-wikipedia: https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008
----
-A quebra do Lehman Brothers desencadeou a maior crise financeira desde 1929, destruindo a demanda por petróleo. Em seis meses, o barril caiu de US$147 para US$32, arrasto de toda a economia global. A crise expôs a interdependência entre os mercados financeiros e o setor energético.
-
----
-id: deepwater-horizon-2010
-title: Desastre da Deepwater Horizon
+id: deepwater-horizon-blowout-2010
+title: Desastre da Deepwater Horizon no Golfo do México
 start_date: 20-04-2010
 end_date: 19-09-2010
-country: United States
-region: North America
+country: Estados Unidos
+region: América do Norte
 type: crisis
-company: BP
 wikipedia: https://en.wikipedia.org/wiki/Deepwater_Horizon_oil_spill
+A explosão da plataforma da BP libera milhões de barris no oceano e força uma revisão global nos protocolos de segurança offshore
+.
 ---
-A explosão da plataforma Deepwater Horizon, da BP, no Golfo do México, matou 11 trabalhadores e liberou 4,9 milhões de barris de petróleo — o maior derramamento marinho da história. O desastre custou à BP mais de US$65 bilhões e provocou revisões profundas na regulação de perfuração offshore em águas profundas.
-
----
-id: arab-spring-libya-2011
-title: Primavera Árabe — Líbia
-start_date: 17-02-2011
-end_date: 23-10-2011
-country: Libya
-region: Africa
-type: war
-wikipedia: https://en.wikipedia.org/wiki/Libyan_Civil_War_(2011)
----
-A guerra civil na Líbia interrompeu quase toda a produção do país (1,6 mb/d), contribuindo para elevar os preços do Brent acima de US$115. A OTAN interviu militarmente, Gaddafi foi morto, mas a instabilidade persistiu por anos, mantendo a produção líbia irregular e o país fragmentado.
-
----
-id: shale-revolution-usa-2010
-title: Revolução do Shale nos EUA
-start_date: 01-01-2010
-end_date: 31-12-2015
-country: United States
-region: North America
-type: discovery
-wikipedia: https://en.wikipedia.org/wiki/Shale_revolution
----
-O avanço do fraturamento hidráulico (fracking) e da perfuração horizontal transformou os EUA no maior produtor de petróleo do mundo. A produção americana saltou de 5 mb/d em 2008 para mais de 12 mb/d em 2019, redefinindo o equilíbrio global de poder energético e tornando obsoleta a dependência americana do petróleo do Oriente Médio.
-
----
-id: opec-price-war-2014
-title: Guerra de Preços da OPEP
-start_date: 27-11-2014
-end_date: 31-12-2016
-country: Saudi Arabia
-region: Middle East
+id: brazil-sharing-law-presal-2010
+title: Novo Marco Regulatório (Lei de Partilha) no Brasil
+start_date: 22-12-2010
+country: Brasil
+region: América do Sul
 type: policy
-wikipedia: https://en.wikipedia.org/wiki/2014%E2%80%9316_oil_glut
+A Lei nº 12.351 institui o regime de partilha para o pré-sal e cria o Fundo Social para educação e saúde
+.
 ---
-A OPEP, liderada pela Arábia Saudita, recusou-se a cortar a produção apesar do excesso global, derrubando o Brent de US$115 para menos de US$30 em 18 meses. A estratégia visava eliminar produtores de shale americanos de alto custo, mas acabou sacrificando as finanças dos próprios países da OPEP.
-
----
-id: lava-jato-petrobras-2014
-title: Operação Lava Jato
+id: lava-jato-corruption-scandal-2014
+title: Início da Operação Lava Jato
 start_date: 17-03-2014
 end_date: 05-02-2021
 country: Brasil
-region: South America
+region: América do Sul
 type: crisis
-company: Petrobras
 wikipedia: https://en.wikipedia.org/wiki/Operation_Car_Wash
+A investigação revela esquemas bilionários de corrupção na Petrobras, resultando em perda de valor de mercado e paralisia de investimentos
+.
 ---
-A maior operação anticorrupção da história brasileira revelou um esquema bilionário de desvios na Petrobras envolvendo empreiteiras, partidos políticos e executivos. A empresa perdeu mais de US$100 bilhões em valor de mercado, paralisou investimentos no pré-sal e desencadeou a mais grave crise política do Brasil democrático.
-
+id: opec-shale-price-war-2014
+title: Guerra de Preços da OPEP contra o Shale Americano
+start_date: 27-11-2014
+end_date: 31-12-2016
+country: Arábia Saudita
+region: Oriente Médio
+type: crisis
+wikipedia: https://en.wikipedia.org/wiki/2014%E2%80%9316_oil_glut
+A OPEP recusa-se a cortar produção para eliminar concorrentes de alto custo (shale), gerando um colapso prolongado de preços
+.
 ---
-id: paris-agreement-2015
-title: Acordo de Paris
+id: paris-agreement-climate-2015
+title: Assinatura do Acordo de Paris (COP21)
 start_date: 12-12-2015
-country: France
-region: Europe
+country: França
+region: Europa
 type: policy
 wikipedia: https://en.wikipedia.org/wiki/Paris_Agreement
+Compromisso global para limitar o aquecimento, sinalizando o início do fim da era fóssil e acelerando a transição energética
+.
 ---
-196 países assinaram o Acordo de Paris, comprometendo-se a limitar o aquecimento global a 1,5–2°C acima dos níveis pré-industriais. O tratado sinalizou o fim da era do petróleo a longo prazo e acelerou os investimentos em energia renovável, iniciando o debate sobre o conceito de "peak demand" — pico da demanda por petróleo.
-
----
-id: opec-plus-agreement-2016
-title: Acordo OPEP+
+id: opec-plus-alliance-2016
+title: Formação da Aliança OPEP+
 start_date: 30-11-2016
-country: Austria
-region: Europe
+country: Áustria
+region: Europa
 type: policy
 wikipedia: https://en.wikipedia.org/wiki/OPEC%2B
+A OPEP e a Rússia formam uma parceria histórica para gerir o mercado global diante do avanço da produção americana
+.
 ---
-A OPEP formou uma aliança histórica com a Rússia e outros dez países não-membros, criando a OPEP+. O grupo concordou em cortar a produção em 1,8 mb/d, estabilizando os preços. A parceria saudita-russa redefiniu a governança do mercado petrolífero global para os anos seguintes.
-
----
-id: us-iran-nuclear-deal-withdrawal-2018
+id: us-withdrawal-iran-deal-2018
 title: EUA Abandonam Acordo Nuclear com Irã
 start_date: 08-05-2018
-country: United States
-region: North America
+country: Estados Unidos
+region: América do Norte
 type: policy
 wikipedia: https://en.wikipedia.org/wiki/United_States_withdrawal_from_the_Joint_Comprehensive_Plan_of_Action
+A administração Trump reimpõe sanções severas, removendo cerca de 2,5 milhões de barris por dia do mercado mundial
+.
 ---
-O presidente Trump retirou os EUA do acordo nuclear de 2015 (JCPOA) e reimpos sanções ao Irã, removendo cerca de 2,5 mb/d do mercado mundial. O movimento elevou o preço do Brent e agravou as tensões no Golfo Pérsico, incluindo ataques a navios-tanque e a instalações sauditas da Aramco.
-
----
-id: saudi-aramco-ipo-2019
-title: IPO da Saudi Aramco
-start_date: 11-12-2019
-country: Saudi Arabia
-region: Middle East
-type: company
-company: Saudi Aramco
-wikipedia: https://en.wikipedia.org/wiki/Saudi_Aramco
----
-A Saudi Aramco realizou o maior IPO da história, levantando US$25,6 bilhões e atingindo uma avaliação de US$1,7 trilhão na bolsa de Riade. O evento marcou a abertura parcial da maior empresa de petróleo do mundo ao mercado de capitais, embora o governo saudita tenha mantido 98% do controle.
-
----
-id: aramco-drone-attack-2019
-title: Ataque de Drones às Instalações da Aramco
+id: aramco-drone-missile-attack-2019
+title: Ataque de Drones às Instalações da Aramco (Abqaiq)
 start_date: 14-09-2019
-country: Saudi Arabia
-region: Middle East
+country: Arábia Saudita
+region: Oriente Médio
 type: war
-company: Saudi Aramco
 wikipedia: https://en.wikipedia.org/wiki/2019_Abqaiq%E2%80%93Khurais_attack
+Ataques aéreos interrompem temporariamente 5% da oferta global em um único dia, gerando o maior choque instantâneo de oferta da história
+.
 ---
-Drones e mísseis atacaram as instalações de processamento de Abqaiq e Khurais da Aramco, interrompendo temporariamente 5,7 mb/d — 5% da oferta global. O maior choque de oferta em um único dia da história causou um salto de 15% no preço do petróleo. Os Houthis do Iêmen reivindicaram o ataque; o Ocidente apontou o Irã.
-
----
-id: covid-oil-crash-2020
-title: Colapso do Petróleo na COVID-19
-start_date: 20-03-2020
-end_date: 30-04-2020
-country: United States
-region: North America
+id: negative-oil-price-covid-2020
+title: O Dia do Preço Negativo do Petróleo (WTI)
+start_date: 20-04-2020
+country: Estados Unidos
+region: América do Norte
 type: crisis
 wikipedia: https://en.wikipedia.org/wiki/2020_Russia%E2%80%93Saudi_Arabia_oil_price_war
+Colapso da demanda pela pandemia e falta de armazenamento levam o petróleo WTI a fechar em -US$ 37,63
+.
 ---
-A pandemia de COVID-19 destruiu a demanda global por petróleo enquanto Rússia e Arábia Saudita travavam uma guerra de preços. Em 20 de abril de 2020, o WTI (West Texas Intermediate) fechou em -US$37,63 por barril — o único preço negativo da história —, pois os compradores pagavam para se livrar de contratos sem espaço para armazenar o petróleo.
-
----
-id: opec-plus-historic-cut-2020
-title: Corte Histórico de Produção da OPEP+
-start_date: 12-04-2020
-country: Austria
-region: Europe
-type: policy
-wikipedia: https://en.wikipedia.org/wiki/April_2020_OPEC%2B_agreement
----
-Diante do colapso da demanda pela COVID-19, a OPEP+ acordou o maior corte de produção da história: 9,7 mb/d por dois meses, equivalente a quase 10% da oferta mundial. O acordo envolveu negociações tensas entre Rússia e Arábia Saudita e foi crucial para estabilizar os preços, embora não tenha impedido o WTI negativo.
-
----
-id: russia-ukraine-war-2022
-title: Invasão Russa da Ucrânia
-start_date: 24-02-2022
-country: Russia
-region: Europe
-type: war
-wikipedia: https://en.wikipedia.org/wiki/Russian_invasion_of_Ukraine
----
-A invasão em larga escala da Ucrânia pela Rússia desencadeou a maior crise energética europeia desde 1973. O Brent ultrapassou US$130, os preços do gás natural europeu explodiram, e o Ocidente impôs sanções ao petróleo russo. A Europa acelerou a diversificação de suas fontes energéticas e o debate sobre soberania energética.
-
----
-id: us-spr-release-2022
-title: Liberação Histórica da Reserva Estratégica dos EUA
-start_date: 31-03-2022
-end_date: 31-10-2022
-country: United States
-region: North America
-type: policy
-wikipedia: https://en.wikipedia.org/wiki/Strategic_Petroleum_Reserve_(United_States)
----
-O governo Biden liberou 180 milhões de barris da Reserva Estratégica de Petróleo dos EUA — a maior liberação da história —, coordenada com aliados da IEA, para conter os preços após a invasão da Ucrânia. A operação aliviou temporariamente os preços, mas deixou a reserva americana em seu nível mais baixo desde 1984.
-
----
-id: opec-plus-cuts-2023
-title: Cortes Surpresa da OPEP+
-start_date: 02-04-2023
-end_date: 31-12-2023
-country: Saudi Arabia
-region: Middle East
-type: policy
-wikipedia: https://en.wikipedia.org/wiki/OPEC%2B
----
-A Arábia Saudita e aliados da OPEP+ anunciaram cortes voluntários surpresa de 1,66 mb/d em abril de 2023, seguidos por cortes adicionais em junho e julho. A estratégia buscava defender o preço do petróleo acima de US$80, sinalizando que o bloco priorizava receitas a curto prazo em detrimento da participação de mercado.
-
----
-id: brazil-pre-sal-record-2023
-title: Brasil Atinge Recorde de Produção no Pré-Sal
-start_date: 01-06-2023
-country: Brasil
-region: South America
-type: discovery
-company: Petrobras
-wikipedia: https://en.wikipedia.org/wiki/Pre-salt_layer_(Brazil)
----
-A produção do pré-sal brasileiro atingiu o recorde de 3,1 milhões de barris por dia de equivalente petróleo, representando mais de 75% da produção total do país. O Brasil consolidou-se como o maior produtor do Atlântico Sul e entre os dez maiores do mundo, com reservas que garantem produção por décadas.
-
----
-id: venezuela-oil-boom-2000
-title: Boom Petrolífero Venezuelano e Chavismo
-start_date: 01-01-2000
-end_date: 31-12-2012
-country: Venezuela
-region: South America
-type: policy
-company: PDVSA
-wikipedia: https://en.wikipedia.org/wiki/Hugo_Ch%C3%A1vez
----
-Com o petróleo acima de US$100 por barril, Hugo Chávez usou as receitas da PDVSA para financiar programas sociais e projeção regional (Petrocaribe, ALBA). A dependência excessiva do petróleo e a politização da PDVSA criaram as condições para o colapso econômico que se seguiu à queda dos preços em 2014.
-
----
-id: nord-stream-sabotage-2022
-title: Sabotagem dos Gasodutos Nord Stream
-start_date: 26-09-2022
-country: Russia
-region: Europe
-type: war
-wikipedia: https://en.wikipedia.org/wiki/Nord_Stream_pipeline_sabotage
----
-Explosões submarinas danificaram os gasodutos Nord Stream 1 e 2 no Mar Báltico, destruindo a principal rota de exportação de gás natural russo para a Alemanha. O ataque, atribuído a múltiplos suspeitos ainda não confirmados, simbolizou o fim definitivo da dependência energética europeia da Rússia.
-
----
-id: nigeria-oil-theft-crisis-2022
-title: Crise de Roubo de Petróleo na Nigéria
-start_date: 01-01-2022
-end_date: 31-12-2022
-country: Nigeria
-region: Africa
-type: crisis
-company: NNPC
-wikipedia: https://en.wikipedia.org/wiki/Niger_Delta_conflict
----
-A Nigéria perdeu mais de 400 mil barris por dia para o roubo e vandalismo de oleodutos no Delta do Níger em 2022, incapaz de cumprir sua cota da OPEP. A crise expôs a desindustrialização do setor, a corrupção endêmica e os conflitos persistentes na região produtora, reduzindo a influência nigeriana na OPEP.
-
----
-id: iran-nuclear-program-2006
-title: Programa Nuclear Iraniano e Sanções
-start_date: 01-01-2006
-end_date: 14-07-2015
-country: Iran
-region: Middle East
-type: policy
-wikipedia: https://en.wikipedia.org/wiki/Iran_nuclear_deal_framework
----
-A escalada do programa nuclear iraniano levou à imposição de sanções internacionais progressivas que removeram 1–2 mb/d do mercado mundial. As negociações culminaram no acordo JCPOA de 2015, que permitiu o retorno do petróleo iraniano ao mercado. As sanções demonstraram o poder do Ocidente de usar o acesso ao sistema financeiro como arma contra exportadores de petróleo.
-
----
-id: colombia-oil-discovery-2000
-title: Expansão da Produção Colombiana
-start_date: 01-01-2000
-end_date: 31-12-2015
-country: Colombia
-region: South America
-type: discovery
-wikipedia: https://en.wikipedia.org/wiki/Petroleum_industry_in_Colombia
----
-Após décadas de conflito com as FARC que impediam a exploração, a Colômbia expandiu significativamente sua produção petrolífera, atingindo o pico de 1 mb/d em 2013. O petróleo se tornou o principal produto de exportação colombiano, financiando o crescimento econômico e as negociações de paz.
-
----
-id: china-national-oil-expansion-2000
-title: Expansão Global das NOCs Chinesas
-start_date: 01-01-2000
-end_date: 31-12-2015
-country: China
-region: Asia
-type: company
-company: CNPC
-wikipedia: https://en.wikipedia.org/wiki/China_National_Petroleum_Corporation
----
-As empresas nacionais de petróleo da China (CNPC, CNOOC, Sinopec) expandiram agressivamente suas operações para África, América Latina e Oriente Médio, investindo centenas de bilhões de dólares para garantir acesso a recursos energéticos. A estratégia refletia a crescente demanda chinesa por energia e a ambição de projeção geopolítica global.
-
----
-id: mexico-energy-reform-2013
-title: Reforma Energética do México
-start_date: 20-12-2013
-country: Mexico
-region: North America
-type: policy
-company: Pemex
-wikipedia: https://en.wikipedia.org/wiki/Mexican_energy_reform
----
-O presidente Enrique Peña Nieto aprovou uma reforma constitucional que encerrou o monopólio de 75 anos da Pemex, abrindo o setor petrolífero mexicano ao capital privado e estrangeiro. A reforma, revertida parcialmente pelo governo López Obrador a partir de 2018, buscava revigorar a produção em queda e modernizar a infraestrutura energética.
-
----
-id: angola-opec-member-2007
-title: Angola Torna-se Membro da OPEP
-start_date: 01-01-2007
-country: Angola
-region: Africa
-type: policy
-wikipedia: https://en.wikipedia.org/wiki/Angola_and_the_OPEC
----
-Angola ingressou na OPEP, tornando-se o segundo maior produtor de petróleo africano. Com produção de cerca de 1,7 mb/d, o país africano representou a crescente relevância da África subsaariana no mercado global e a expansão do bloco além de sua base original no Oriente Médio e Venezuela.
-
----
-id: kashagan-field-production-2013
-title: Início da Produção de Kashagan
-start_date: 11-09-2013
-country: Kazakhstan
-region: Asia
-type: discovery
-wikipedia: https://en.wikipedia.org/wiki/Kashagan_Field
----
-O campo Kashagan, no Mar Cáspio, começou a produzir petróleo após décadas de desenvolvimento e custos que ultrapassaram US$50 bilhões, tornando-o o projeto petrolífero mais caro da história. Com reservas estimadas em 38 bilhões de barris, o Cazaquistão emergiu como um dos maiores produtores da região caspiana.
-
----
-id: brazil-new-oil-framework-2010
-title: Novo Marco Regulatório do Petróleo no Brasil
-start_date: 22-12-2010
-country: Brasil
-region: South America
-type: policy
-company: Petrobras
-wikipedia: https://en.wikipedia.org/wiki/Pre-salt_layer_(Brazil)
----
-O Brasil aprovou a Lei nº 12.351, criando o regime de partilha de produção para o pré-sal, com a Petrobras como operadora obrigatória com mínimo de 30% em cada bloco. A lei também criou o Fundo Social, destinando parte das receitas do pré-sal a educação e saúde. O modelo refletia a percepção do petróleo como recurso estratégico nacional.
-
----
-id: us-becomes-largest-producer-2018
-title: EUA Tornam-se o Maior Produtor de Petróleo do Mundo
-start_date: 01-09-2018
-country: United States
-region: North America
-type: discovery
-wikipedia: https://en.wikipedia.org/wiki/Shale_revolution
----
-Pela primeira vez desde 1973, os EUA ultrapassaram a Arábia Saudita e a Rússia para se tornarem o maior produtor de petróleo bruto do mundo, atingindo mais de 11 mb/d. O feito foi resultado direto da revolução do shale e transformou os EUA de maior importador para exportador líquido de energia.
-
----
-id: houthi-red-sea-attacks-2023
-title: Ataques Houthis no Mar Vermelho
-start_date: 19-10-2023
-end_date: 31-12-2024
-country: Yemen
-region: Middle East
-type: war
-wikipedia: https://en.wikipedia.org/wiki/Houthi_Red_Sea_campaign
----
-Os Houthis do Iêmen iniciaram ataques sistemáticos a navios comerciais no Mar Vermelho em solidariedade ao Hamas na Guerra de Gaza. O bloqueio efetivo do estreito de Bab-el-Mandeb forçou dezenas de empresas de navegação a desviar rotas pelo Cabo da Boa Esperança, elevando custos de frete e prêmios de risco, com impacto moderado nos preços do petróleo.
-
----
-id: israel-hamas-war-2023
-title: Guerra Israel-Hamas
-start_date: 07-10-2023
-country: Israel
-region: Middle East
-type: war
-wikipedia: https://en.wikipedia.org/wiki/Israel%E2%80%93Hamas_war
----
-O ataque do Hamas em 7 de outubro de 2023 e a subsequente ofensiva israelense em Gaza elevaram os prêmios de risco geopolítico no Oriente Médio. O conflito ameaçou se expandir para o Líbano e o Irã, com potencial para interromper o fluxo de petróleo pelo Estreito de Ormuz — gargalo por onde passa 20% do petróleo mundial.
-
----
-id: venezuela-oil-collapse-2018
-title: Colapso da Produção Petrolífera Venezuelana
-start_date: 01-01-2018
-end_date: 31-12-2020
-country: Venezuela
-region: South America
-type: crisis
-company: PDVSA
-wikipedia: https://en.wikipedia.org/wiki/Economic_crisis_in_Venezuela
----
-A produção da PDVSA desabou de 2,3 mb/d em 2015 para menos de 400 mil barris por dia em 2020, o nível mais baixo em décadas, decorrente de desinvestimento, corrupção, fuga de talentos e sanções americanas. O país com as maiores reservas provadas do mundo tornou-se importador de derivados de petróleo.
-
----
-id: iea-net-zero-report-2021
-title: Relatório Net Zero da IEA
+id: iea-net-zero-roadmap-2021
+title: Relatório Net Zero by 2050 da IEA
 start_date: 18-05-2021
-country: France
-region: Europe
+country: França
+region: Europa
 type: policy
 wikipedia: https://en.wikipedia.org/wiki/Net_Zero_by_2050
+A Agência Internacional de Energia conclui que não deve haver novos investimentos em exploração fóssil para manter as metas climáticas
+.
 ---
-A Agência Internacional de Energia publicou o relatório "Net Zero by 2050", concluindo que não há necessidade de novos campos de petróleo e gás se o mundo quiser atingir neutralidade de carbono até 2050. O documento marcou uma virada histórica de um órgão criado para garantir segurança energética aos países consumidores.
+id: russia-ukraine-energy-crisis-2022
+title: Invasão da Ucrânia e Crise Energética Europeia
+start_date: 24-02-2022
+country: Rússia
+region: Europa
+type: war
+wikipedia: https://en.wikipedia.org/wiki/Russian_invasion_of_Ukraine
+O conflito provoca sanções massivas ao petróleo russo e reconfigura as rotas globais de energia, elevando o Brent acima de US$ 100
+.
+---
+id: nord-stream-sabotage-2022
+title: Sabotagem nos Gasodutos Nord Stream
+start_date: 26-09-2022
+country: Rússia
+region: Europa
+type: war
+wikipedia: https://en.wikipedia.org/wiki/Nord_Stream_pipeline_sabotage
+Explosões submarinas destroem a principal rota de gás russo para a Alemanha, encerrando a dependência energética alemã de Moscou
+.
+---
+id: pre-sal-production-record-2023
+title: Recorde de Produção no Pré-Sal Brasileiro
+start_date: 01-06-2023
+country: Brasil
+region: América do Sul
+type: discovery
+O pré-sal atinge a marca de 3,1 milhões de bpd, consolidando o Brasil como o maior produtor do Atlântico Sul
+.
+---
+id: houthi-red-sea-shipping-attacks-2023
+title: Ataques Houthis no Mar Vermelho
+start_date: 19-10-2023
+country: Iêmen
+region: Oriente Médio
+type: war
+wikipedia: https://en.wikipedia.org/wiki/Houthi_Red_Sea_campaign
+O bloqueio do estreito de Bab-el-Mandeb força o desvio de rotas de petroleiros pelo Cabo da Boa Esperança, elevando custos logísticos
+.
+---
+id: operation-epic-fury-iran-2026
+title: Início da Operação Fúria Épica
+start_date: 28-02-2026
+country: Irã
+region: Oriente Médio
+type: war
+Ataque militar coordenado pelos EUA e Israel contra o Irã culmina no bloqueio físico quase total do Estreito de Ormuz
+.
+---
+id: brazil-diesel-adjustment-crisis-2026
+title: Reajuste do Diesel no Brasil pela Crise Global
+start_date: 14-03-2026
+country: Brasil
+region: América do Sul
+type: crisis
+A Petrobras eleva os preços do diesel em R$ 0,38 por litro como reflexo direto da disparada internacional causada pela guerra no Golfo
+.
+---
+id: brent-peak-ormuz-blockade-2026
+title: Brent Atinge US$ 120 e Pânico Global
+start_date: 21-03-2026
+country: Global
+region: Oriente Médio
+type: crisis
+Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global
+.
+---

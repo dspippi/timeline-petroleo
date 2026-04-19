@@ -140,7 +140,7 @@ export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Prop
               style={{ width: LABEL_WIDTH, height: totalRowHeight }}
             >
               <span
-                className={`text-[11px] font-semibold truncate transition-colors leading-tight ${
+                className={`text-[12px] font-bold truncate transition-colors leading-tight ${
                   brasil
                     ? "text-amber-700"
                     : "text-gray-500 group-hover:text-gray-700"

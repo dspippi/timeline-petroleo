@@ -21,13 +21,13 @@ html, body {
 .h-dvh { height: 100dvh; }
 
 /* Scrollbar styling */
-.timeline-scroll::-webkit-scrollbar { height: 4px; width: 4px; }
+.timeline-scroll::-webkit-scrollbar { height: 8px; width: 4px; }
 .timeline-scroll::-webkit-scrollbar-track { background: #ece9e2; }
 .timeline-scroll::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.18);
+  background: rgba(0,0,0,0.22);
   border-radius: 999px;
 }
-.timeline-scroll::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
+.timeline-scroll::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.38); }
 
 /* Touch scrolling */
 .timeline-scroll {

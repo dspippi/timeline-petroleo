@@ -91,7 +91,7 @@ export const OilPriceChart = memo(function OilPriceChart({
 
   if (prices.length === 0) {
     return (
-      <div className="shrink-0 h-28 flex items-center justify-center border-b border-black/[0.07] bg-gray-50">
+      <div className="shrink-0 h-[88px] flex items-center justify-center border-b border-black/[0.07] bg-gray-50">
         <span className="text-gray-400 text-xs">Carregando dados de preço…</span>
       </div>
     );
@@ -104,7 +104,7 @@ export const OilPriceChart = memo(function OilPriceChart({
     <div
       ref={scrollRef}
       className="timeline-scroll shrink-0 overflow-x-auto border-b border-black/[0.07] bg-white relative"
-      style={{ height: 120 }}
+      style={{ height: 88 }}
       onScroll={onScroll}
     >
       <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, height: 120, position: "relative" }}>
@@ -137,7 +137,7 @@ export const OilPriceChart = memo(function OilPriceChart({
 
         <LineChart
           width={scale.totalWidthPx + LABEL_WIDTH}
-          height={120}
+          height={88}
           data={data}
           onMouseMove={handleMouseMove as (e: unknown) => void}
           onMouseLeave={handleMouseLeave}
