@@ -20,7 +20,7 @@ export default function HomePage() {
             Timeline do Petróleo
           </h1>
           <p className="text-[10px] text-gray-400 mt-0.5 tracking-wide uppercase">
-            Geopolítica energética · 1950–2024
+            Geopolítica energética
           </p>
         </div>
         <div className="ml-auto hidden lg:block">
