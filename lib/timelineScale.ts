@@ -36,9 +36,11 @@ export function buildScale(
 export function getDefaultDomain(
   events: { start_date: Date; end_date?: Date }[]
 ): [Date, Date] {
+  const now = new Date();
+  const futureYear = now.getFullYear() + 4;
+
   if (events.length === 0) {
-    const now = new Date();
-    return [new Date(now.getFullYear() - 10, 0, 1), now];
+    return [new Date(now.getFullYear() - 10, 0, 1), new Date(futureYear, 11, 31)];
   }
   const dates = events.flatMap((e) =>
     e.end_date ? [e.start_date, e.end_date] : [e.start_date]
@@ -48,6 +50,7 @@ export function getDefaultDomain(
   const min = new Date(minMs);
   const max = new Date(maxMs);
   min.setFullYear(min.getFullYear() - 2);
-  max.setFullYear(max.getFullYear() + 2);
+  // Domain end: always at least current year + 4
+  max.setFullYear(Math.max(max.getFullYear() + 2, futureYear));
   return [min, max];
 }

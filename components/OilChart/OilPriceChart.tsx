@@ -32,10 +32,12 @@ interface ChartPoint {
 // The Recharts YAxis is hidden; we render our own sticky Y-axis overlay instead.
 const Y_PRICE_DOMAIN: [number, number] = [0, 160];
 const Y_PRICE_TICKS = [40, 80, 120, 160];
-const CHART_HEIGHT = 130;
-const CHART_MARGIN = { top: 10, right: 0, bottom: 6, left: LABEL_WIDTH };
+// No horizontal scrollbar: the container uses overflow-x:hidden and is scrolled
+// programmatically in sync with the timeline. CHART_HEIGHT is the sole height constant.
+const CHART_HEIGHT = 99; // ≈ 117 × 0.85 — 15% smaller than previous 117px
+const CHART_MARGIN = { top: 8, right: 0, bottom: 4, left: LABEL_WIDTH };
 
-/** Convert a price value to its Y pixel coordinate within the chart */
+/** Convert a price value to its Y pixel coordinate within the chart SVG */
 function priceToY(price: number): number {
   const plotH = CHART_HEIGHT - CHART_MARGIN.top - CHART_MARGIN.bottom;
   return CHART_MARGIN.top + plotH * (1 - price / Y_PRICE_DOMAIN[1]);
@@ -110,7 +112,7 @@ export const OilPriceChart = memo(function OilPriceChart({
   return (
     <div
       ref={scrollRef}
-      className="timeline-scroll shrink-0 overflow-x-auto border-b border-black/[0.07] bg-white relative"
+      className="shrink-0 overflow-x-hidden border-b border-black/[0.07] bg-white relative"
       style={{ height: CHART_HEIGHT }}
       onScroll={onScroll}
     >

@@ -34,6 +34,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const { pxPerDay, setPxPerDay } = useTimelineSync();
   const { settings } = useSettings();
   const [showChart, setShowChart] = useState(true);
+  const [showControls, setShowControls] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<OilEvent | null>(null);
   const [controlsOpen, setControlsOpen] = useState(false);
 
@@ -85,59 +86,62 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-[#f5f3ee]">
 
-      {/* ── Controls: desktop always visible / mobile collapsible ── */}
-      <div className="shrink-0 border-b border-black/[0.07] bg-white">
+      {/* ── Controls: desktop toggleable / mobile collapsible ── */}
+      {showControls && (
+        <div className="shrink-0 border-b border-black/[0.07] bg-white">
 
-        {/* Mobile toggle row */}
-        <div className="flex items-center gap-2 px-3 py-2 md:hidden">
-          <button
-            onClick={() => setControlsOpen((o) => !o)}
-            className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <svg
-              className={`w-4 h-4 transition-transform ${controlsOpen ? "rotate-180" : ""}`}
-              fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"
+          {/* Mobile toggle row */}
+          <div className="flex items-center gap-2 px-3 py-2 md:hidden">
+            <button
+              onClick={() => setControlsOpen((o) => !o)}
+              className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-            Mapa e Filtros
-          </button>
-          {activeCount > 0 && (
-            <span className="ml-1 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-semibold">
-              {activeCount}
-            </span>
-          )}
-          <div className="ml-auto flex items-center gap-3">
-            <Toggle enabled={showChart} onChange={setShowChart} label="Brent" />
+              <svg
+                className={`w-4 h-4 transition-transform ${controlsOpen ? "rotate-180" : ""}`}
+                fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+              Mapa e Filtros
+            </button>
+            {activeCount > 0 && (
+              <span className="ml-1 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-semibold">
+                {activeCount}
+              </span>
+            )}
+            <div className="ml-auto flex items-center gap-3">
+              <Toggle enabled={showChart} onChange={setShowChart} label="Brent" />
+            </div>
           </div>
-        </div>
 
-        {/* Collapsible panel — always open on desktop, toggleable on mobile */}
-        <div className={`${controlsOpen ? "block" : "hidden"} md:block`}>
-          <div className="flex flex-col md:flex-row gap-3 p-3 overflow-hidden">
-            {/* Map — hidden on small mobile, visible from sm up */}
-            <div className="hidden sm:block shrink-0">
-              <WorldMap
-                countriesWithEvents={countriesWithEvents}
-                activeCountries={filters.countries}
-                onCountryClick={toggleCountry}
+          {/* Collapsible panel — always open on desktop, toggleable on mobile */}
+          <div className={`${controlsOpen ? "block" : "hidden"} md:block`}>
+            <div className="flex flex-col md:flex-row gap-3 p-3 overflow-hidden">
+              {/* Map — hidden on small mobile, visible from sm up */}
+              <div className="hidden sm:block shrink-0">
+                <WorldMap
+                  countriesWithEvents={countriesWithEvents}
+                  activeCountries={filters.countries}
+                  onCountryClick={toggleCountry}
+                />
+              </div>
+              <FilterPanel
+                allEvents={allEvents}
+                filters={filters}
+                onToggleCountry={toggleCountry}
+                onToggleType={toggleType}
+                onToggleCompany={toggleCompany}
+                onClearAll={clearAll}
+                activeCount={activeCount}
               />
             </div>
-            <FilterPanel
-              allEvents={allEvents}
-              filters={filters}
-              onToggleCountry={toggleCountry}
-              onToggleType={toggleType}
-              onToggleCompany={toggleCompany}
-              onClearAll={clearAll}
-              activeCount={activeCount}
-            />
           </div>
         </div>
-      </div>
+      )}
 
       {/* ── Toolbar (desktop only — on mobile it's inside the toggle row) ── */}
       <div className="shrink-0 hidden md:flex items-center gap-4 px-4 py-2 border-b border-black/[0.07] bg-white/80">
+        <Toggle enabled={showControls} onChange={setShowControls} label="Mapa e Filtros" />
         <Toggle enabled={showChart} onChange={setShowChart} label="Preço Brent (USD/barril)" />
         <span className="text-[11px] text-gray-400 ml-auto">
           {filteredEvents.length} de {allEvents.length} eventos
