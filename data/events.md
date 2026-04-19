@@ -59,7 +59,7 @@ start_date: 04-09-1882
 country: Estados Unidos
 region: América do Norte
 type: discovery
-wikipedia: https://en.wikipedia.org/wiki/Incandescent_light_bulb
+wikipedia: https://en.wikipedia.org/wiki/Pearl_Street_Station
 Thomas Edison inaugura a usina Pearl Street em Nova York, fornecendo eletricidade a comércios e residências e criando a primeira grande ameaça ao mercado de querosene, então o principal produto do petróleo.
 .
 ---
@@ -156,7 +156,7 @@ start_date: 25-10-1911
 country: Reino Unido
 region: Europa
 type: policy
-wikipedia: https://en.wikipedia.org/wiki/Winston_Churchill
+wikipedia: https://en.wikipedia.org/wiki/Oil_fuel_in_the_Royal_Navy
 Churchill é nomeado Primeiro Lord do Almirantado em 25 de outubro de 1911 e passa a defender a conversão da frota ao petróleo; a Comissão Real sobre Combustíveis é criada em 1912 e a política é formalizada em 1913, vinculando a defesa nacional ao suprimento externo de óleo.
 .
 ---
@@ -188,7 +188,7 @@ country: Venezuela
 region: América do Sul
 type: discovery
 company: Caribbean Petroleum Company
-wikipedia: https://en.wikipedia.org/wiki/Petroleum_industry_in_Venezuela
+wikipedia: https://en.wikipedia.org/wiki/Barroso_2_well
 O jorro massivo de óleo no poço Los Barrosos No. 2, no campo La Rosa próximo ao Lago Maracaibo, produzindo 100.000 barris/dia, inicia oficialmente o boom petrolífero venezuelano, tornando o país um dos maiores exportadores mundiais.
 .
 ---
@@ -232,7 +232,7 @@ country: Arábia Saudita
 region: Oriente Médio
 type: policy
 company: Standard Oil of California; Saudi Aramco
-wikipedia: https://en.wikipedia.org/wiki/Aramco
+wikipedia: https://en.wikipedia.org/wiki/History_of_Saudi_Arabian_oil
 O Rei Ibn Saud concede direitos de exploração à Standard of California, marcando o início da participação americana na Arábia Saudita.
 .
 ---
@@ -285,7 +285,7 @@ country: Arábia Saudita
 region: Oriente Médio
 type: policy
 company: Saudi Aramco
-wikipedia: https://en.wikipedia.org/wiki/Saudi_Aramco
+wikipedia: https://en.wikipedia.org/wiki/50/50_profit-sharing_agreement
 A Aramco aceita dividir lucros igualmente com o governo saudita, modelo que redefiniu as relações entre nações soberanas e companhias multinacionais.
 .
 ---
@@ -318,6 +318,7 @@ country: Brasil
 region: América do Sul
 type: policy
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Walter_Link
 A Petrobras recruta o geólogo americano Walter Link para estruturar sua área de Exploração e Produção. Diante da ausência de cursos de geologia no país, a empresa contratou a Universidade Stanford para formar seus primeiros engenheiros e geólogos, estabelecendo um padrão de excelência técnica que se tornaria valor central da companhia.
 .
 ---
@@ -339,6 +340,7 @@ country: Brasil
 region: América do Sul
 type: policy
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Petroleum_exploration_in_Brazil
 Walter Link apresenta diagnóstico concluindo que as bacias terrestres brasileiras não teriam petróleo em volumes suficientes para o país. Ele recomendou o investimento na exploração offshore e em países árabes, mas foi duramente criticado por movimentos nacionalistas — paradoxalmente, sua tese sobre o offshore seria comprovada décadas depois com o pré-sal.
 .
 ---
@@ -358,7 +360,7 @@ start_date: 01-01-1964
 country: Global
 region: Global
 type: discovery
-wikipedia: https://en.wikipedia.org/wiki/World_energy_supply_and_consumption
+wikipedia: https://en.wikipedia.org/wiki/Energy_transition
 O petróleo torna-se o combustível mais utilizado no mundo em conteúdo energético, consolidando a era moderna dependente de hidrocarbonetos.
 .
 ---
@@ -401,7 +403,7 @@ start_date: 01-11-1970
 country: Estados Unidos
 region: América do Norte
 type: crisis
-wikipedia: https://en.wikipedia.org/wiki/Peak_oil
+wikipedia: https://en.wikipedia.org/wiki/Hubbert_peak_theory
 A produção doméstica americana começa a declinar, transferindo o equilíbrio de poder do mercado mundial para os países da OPEP.
 .
 ---
@@ -444,6 +446,7 @@ country: Iraque
 region: Oriente Médio
 type: discovery
 company: Braspetro; Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Majnoon_Oil_Field
 A Braspetro, subsidiária internacional da Petrobras, descobre no Iraque o Campo de Majnoon, um dos maiores reservatórios do mundo. Com a iminência da guerra Irã-Iraque, o contrato foi renegociado em 1979 e a Petrobras deixou de ser concessionária para atuar como prestadora de serviços, perdendo participação no megacampo.
 .
 ---
@@ -475,7 +478,7 @@ start_date: 30-03-1983
 country: Estados Unidos
 region: América do Norte
 type: policy
-wikipedia: https://en.wikipedia.org/wiki/New_York_Mercantile_Exchange
+wikipedia: https://en.wikipedia.org/wiki/West_Texas_Intermediate
 O petróleo WTI passa a ser negociado como commodity financeira na NYMEX, retirando o poder absoluto da OPEP na definição de preços e inaugurando a era do petróleo como ativo financeiro.
 .
 ---
@@ -497,6 +500,7 @@ country: Brasil
 region: América do Sul
 type: policy
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Petrobras
 A Petrobras cria o Programa de Capacitação Tecnológica em Águas Profundas (Procap) para superar o desafio de produzir petróleo em lâminas d'água superiores a 1.000 metros. O programa resultou em centenas de inovações e patentes, consolidando a liderança mundial da empresa em águas profundas e ultraprofundas.
 .
 ---
@@ -529,6 +533,7 @@ country: Estados Unidos
 region: América do Norte
 type: policy
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Offshore_Technology_Conference
 A Petrobras vence o prêmio da Offshore Technology Conference (OTC) — o "Oscar do petróleo" — pelo desenvolvimento de tecnologias de produção em águas ultraprofundas no Campo de Marlim, na Bacia de Campos. O reconhecimento internacional validou a aposta feita pelo programa Procap.
 .
 ---
@@ -571,6 +576,7 @@ country: Brasil
 region: América do Sul
 type: company
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Henri_Philippe_Reichstul
 Sob a presidência de Henri Philippe Reichstul, a Petrobras inicia profunda modernização administrativa: pela primeira vez divulga planos estratégicos e de negócios anuais, adota contabilidade padrão internacional e busca distanciar-se das interferências políticas diretas do governo federal.
 .
 ---
@@ -581,6 +587,7 @@ country: Brasil
 region: América do Sul
 type: crisis
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/P-36_oil_platform
 Três explosões na plataforma P-36, na Bacia de Campos, causam a morte de onze trabalhadores e o naufrágio daquela que era a maior unidade de produção do mundo. O acidente gerou crise de imagem global e forçou a empresa a investir massivamente em segurança operacional (Programa Pégaso).
 .
 ---
@@ -603,6 +610,7 @@ country: Brasil
 region: América do Sul
 type: policy
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Energy_policy_of_Brazil
 Com a posse do governo Lula, a Petrobras passa a exigir elevados percentuais de conteúdo nacional na construção de plataformas e navios em estaleiros brasileiros, usando a estatal como motor de industrialização e geração de empregos no país.
 .
 ---
@@ -623,6 +631,7 @@ country: Estados Unidos
 region: América do Norte
 type: company
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Pasadena_Refining_System
 A Petrobras adquire 50% da refinaria de Pasadena (Texas) por US$ 359 milhões — dezessete vezes o valor pago pela sócia belga Astra pelo ativo inteiro um ano antes. O negócio, aprovado com pareceres técnicos incompletos, tornaria-se símbolo de má gestão e corrupção investigado na Operação Lava Jato.
 .
 ---
@@ -644,6 +653,7 @@ country: Brasil
 region: América do Sul
 type: company
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Petrobras
 Impulsionada pela euforia do pré-sal e pelo barril acima de US$ 135, a Petrobras atinge valor de mercado de US$ 309 bilhões, tornando-se a segunda empresa de capital aberto mais valiosa das Américas, atrás apenas da ExxonMobil.
 .
 ---
@@ -675,6 +685,7 @@ country: Brasil
 region: América do Sul
 type: company
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Initial_public_offering
 A Petrobras realiza oferta pública de ações que arrecada US$ 70 bilhões — a maior da história mundial até então. Cerca de US$ 42,5 bilhões foram transferidos à União em troca do direito de explorar 5 bilhões de barris do pré-sal (Cessão Onerosa), permitindo ao governo ampliar seu controle acionário sobre a empresa.
 .
 ---
@@ -822,6 +833,7 @@ country: Brasil
 region: América do Sul
 type: discovery
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/B%C3%BAzios_oil_field
 O campo de Búzios, operado pela Petrobras no pré-sal da Bacia de Santos, atinge a marca histórica de 1 milhão de barris por dia, tornando-se o segundo campo do Brasil a superar esse patamar produtivo, feito anteriormente alcançado apenas pelo campo de Tupi (Lula).
 .
 ---
@@ -832,6 +844,7 @@ country: Brasil
 region: América do Sul
 type: company
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/B%C3%BAzios_oil_field
 A plataforma P-78, integrante do projeto Búzios 6, inicia produção no pré-sal da Bacia de Santos, cumprindo o plano estratégico da Petrobras para 2025 e reforçando o campo de Búzios como principal motor do crescimento da produção brasileira.
 .
 ---
@@ -842,6 +855,7 @@ country: Brasil
 region: América do Sul
 type: crisis
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Foz_do_Amazonas_Basin
 Ocorre um vazamento de 18 mil litros de fluido sintético durante a perfuração do poço Morpho, na Bacia da Foz do Amazonas. A ANP autoriza a retomada das atividades após 35 dias, condicionada a novas exigências de segurança e após aplicação de multa de R$ 2,5 milhões pelo Ibama.
 .
 ---
@@ -861,6 +875,7 @@ country: Brasil
 region: América do Sul
 type: crisis
 company: Petrobras
+wikipedia: https://en.wikipedia.org/wiki/Petroleum_pricing
 A Petrobras eleva os preços do diesel em R$ 0,38 por litro como reflexo direto da disparada internacional causada pela guerra no Golfo.
 .
 ---
@@ -870,5 +885,6 @@ start_date: 21-03-2026
 country: Irã
 region: Oriente Médio
 type: crisis
+wikipedia: https://en.wikipedia.org/wiki/Strait_of_Hormuz
 Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global.
 .
