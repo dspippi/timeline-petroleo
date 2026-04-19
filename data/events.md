@@ -1,5 +1,4 @@
 ---
-
 id: bissell-oil-inspection-1853
 title: Primeiras Prospecções de Óleo (Bissell)
 start_date: 01-05-1853
@@ -473,15 +472,16 @@ O sucesso da técnica de slick water fracturing em shale gas no Texas prepara o 
 .
 ---
 id: pdvsa-strike-crisis-2002
-title: Greve Geral da PDVSA
+title: "Greve Geral da PDVSA"
 start_date: 02-12-2002
 end_date: 02-02-2003
 country: Venezuela
 region: América do Sul
 type: crisis
+company: PDVSA
 wikipedia: https://en.wikipedia.org/wiki/2002%E2%80%9303_Venezuelan_general_strike
+---
 Uma paralisação política contra Hugo Chávez destrói a capacidade técnica da estatal e marca o início do declínio produtivo venezuelano.
-.
 ---
 id: iraq-invasion-instability-2003
 title: Invasão Americana do Iraque
@@ -681,4 +681,14 @@ region: Oriente Médio
 type: crisis
 Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global.
 .
-
+---
+id: criacao-da-royal-dutch-shell-1907
+title: "Criação da Royal Dutch Shell"
+start_date: 01-04-1907
+country: Reino Unido
+region: Europe
+type: company
+company: Royal Dutch Shell
+wikipedia: https://en.wikipedia.org/wiki/Shell_plc
+---
+A fusão entre a Royal Dutch Petroleum Company (Holanda) e a Shell Transport and Trading Company (Reino Unido) ocorreu em 1907, criando a Royal Dutch Shell, uma das maiores empresas de energia do mundo.
