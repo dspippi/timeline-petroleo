@@ -33,8 +33,8 @@ Preencha os campos e salve. As alterações vão direto para o arquivo `data/eve
 Quando terminar todas as edições, rode no terminal:
 
 ```bash
-git add data/events.md
-git commit -m "Atualiza eventos"
+git add data/
+git commit -m "Update events and categories"
 git push
 ```
 
