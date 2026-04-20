@@ -5,10 +5,9 @@
 import fs from "fs";
 import path from "path";
 import { format } from "date-fns";
-import { OilEvent, EventType, EVENT_TYPES } from "@/types";
+import { OilEvent, EventType } from "@/types";
 
 const EVENTS_PATH = path.join(process.cwd(), "data", "events.json");
-const VALID_TYPES = new Set<EventType>(EVENT_TYPES);
 
 // ── Raw file access ────────────────────────────────────────────────────────────
 
@@ -90,7 +89,7 @@ function inputToStored(ev: AdminEventInput): StoredEvent {
     end_date: ev.end_date || null,
     country: ev.country,
     region: ev.region,
-    type: VALID_TYPES.has(ev.type) ? ev.type : "policy",
+    type: ev.type,
     company: ev.company || null,
     wikipedia: ev.wikipedia || null,
     description: ev.description.trim(),
@@ -126,15 +125,21 @@ export function deleteEvent(id: string): void {
   writeAll(events);
 }
 
+/** Parse "YYYY-MM-DD" as local midnight (avoids UTC timezone shift). */
+function parseLocalDate(s: string): Date {
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+
 export function listEvents(): OilEvent[] {
   const stored = readAll();
   const events: OilEvent[] = [];
 
   for (const item of stored) {
     if (!item.id || !item.title || !item.start_date) continue;
-    const start_date = new Date(item.start_date);
+    const start_date = parseLocalDate(item.start_date);
     if (isNaN(start_date.getTime())) continue;
-    const end_date = item.end_date ? new Date(item.end_date) : undefined;
+    const end_date = item.end_date ? parseLocalDate(item.end_date) : undefined;
 
     events.push({
       id: item.id,
@@ -143,7 +148,7 @@ export function listEvents(): OilEvent[] {
       end_date: end_date && !isNaN(end_date.getTime()) ? end_date : undefined,
       country: item.country ?? "Unknown",
       region: item.region ?? "Other",
-      type: VALID_TYPES.has(item.type as EventType) ? (item.type as EventType) : "policy",
+      type: item.type as EventType,
       company: item.company ?? undefined,
       wikipedia: item.wikipedia ?? undefined,
       description: item.description ?? "",

@@ -23,5 +23,10 @@
     "id": "crisis",
     "label": "Crise",
     "color": "#f97316"
+  },
+  {
+    "id": "tecnologia",
+    "label": "Tecnologia",
+    "color": "#a855f7"
   }
 ]

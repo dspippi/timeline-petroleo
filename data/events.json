@@ -1,35 +1,35 @@
 [
   {
     "id": "bissell-oil-inspection-1854",
-    "title": "Primeiras Prospecções de Óleo (Bissell)",
-    "start_date": "1854-09-01",
+    "title": "Primeiras Prospecções nos EUA (Bissell)",
+    "start_date": "1854-08-31",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
     "type": "discovery",
     "company": "Pennsylvania Rock Oil Company",
-    "wikipedia": "https://en.wikipedia.org/wiki/George_Bissell",
+    "wikipedia": "https://en.wikipedia.org/wiki/George_Bissell_(industrialist)",
     "description": "George Bissell funda a Pennsylvania Rock Oil Company e encomenda análise científica do óleo da Pensilvânia ao Prof. Benjamin Silliman Jr., comprovando seu potencial como combustível e iluminante."
   },
   {
     "id": "drake-well-titusville-1859",
     "title": "Poço Drake: Início da Era do Petróleo",
-    "start_date": "1859-08-27",
+    "start_date": "1859-08-26",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
     "type": "discovery",
     "company": "Seneca Oil Company",
     "wikipedia": "https://en.wikipedia.org/wiki/Drake_Well",
-    "description": "Edwin Drake perfura o primeiro poço artesiano de petróleo em Titusville, Pensilvânia, marcando o início da indústria petrolífera moderna."
+    "description": "Edwin Drake perfura o primeiro poço de petróleo em Titusville, Pensilvânia, marcando o início da indústria petrolífera moderna."
   },
   {
     "id": "us-civil-war-impact-1861",
     "title": "Guerra Civil Americana",
-    "start_date": "1861-04-12",
-    "end_date": "1865-04-09",
+    "start_date": "1861-04-11",
+    "end_date": "1865-04-08",
     "country": "Estados Unidos",
-    "region": "América do Norte",
+    "region": "North America",
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/American_Civil_War",
@@ -38,59 +38,59 @@
   {
     "id": "standard-oil-foundation-1870",
     "title": "Fundação da Standard Oil",
-    "start_date": "1870-01-10",
+    "start_date": "1870-01-09",
     "end_date": null,
     "country": "Estados Unidos",
-    "region": "América do Norte",
+    "region": "North America",
     "type": "company",
     "company": "Standard Oil",
     "wikipedia": "https://en.wikipedia.org/wiki/Standard_Oil",
-    "description": "John D. Rockefeller funda a empresa em Cleveland, iniciando uma estratégia de integração e logística que criaria o primeiro monopólio global do refino e transporte."
+    "description": "John D. Rockefeller funda a empresa em Cleveland, iniciando uma estratégia de integração e logística que criaria o primeiro monopólio global do refino e transporte. Em 1882 surge o Standard Oil Trust."
   },
   {
     "id": "baku-oil-opening-1872",
     "title": "Boom Petrolífero de Baku",
-    "start_date": "1872-01-01",
+    "start_date": "1871-12-30",
     "end_date": null,
     "country": "Azerbaijão",
-    "region": "Europa",
+    "region": "Asia",
     "type": "discovery",
-    "company": null,
+    "company": "Branobel",
     "wikipedia": "https://en.wikipedia.org/wiki/Baku_oil_boom",
     "description": "O governo russo aboliu o monopólio czarista e abriu a exploração em Baku em 1872, atraindo investidores como a família Nobel, que a partir de 1874 introduziram refinarias, oleodutos e navios-tanque para exportação."
   },
   {
-    "id": "edison-electric-light-1882",
-    "title": "Luz Elétrica Ameaça o Mercado de Querosene",
-    "start_date": "1882-09-04",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "discovery",
-    "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/Pearl_Street_Station",
-    "description": "Thomas Edison inaugura a usina Pearl Street em Nova York, fornecendo eletricidade a comércios e residências e criando a primeira grande ameaça ao mercado de querosene, então o principal produto do petróleo."
-  },
-  {
     "id": "royal-dutch-sumatra-1885",
-    "title": "Petróleo em Sumatra (Royal Dutch)",
+    "title": "Petróleo na Sumatra",
     "start_date": "1885-01-01",
     "end_date": null,
     "country": "Indonésia",
-    "region": "Ásia",
+    "region": "Asia",
     "type": "discovery",
     "company": "Royal Dutch Company",
-    "wikipedia": "https://en.wikipedia.org/wiki/Royal_Dutch_Company",
+    "wikipedia": "https://en.wikipedia.org/wiki/Pangkalan_Brandan",
     "description": "Aeilko Jans Zijlker descobre óleo em Langkat, Sumatra (Índias Orientais Holandesas) em 1885; a Royal Dutch Company é fundada em 1890 para desenvolver o campo, estabelecendo-se como força capaz de competir com a Standard Oil nos mercados asiáticos."
   },
   {
+    "id": "brazil-early-surveys-1897",
+    "title": "Primeira Sondagem de Petróleo no Brasil",
+    "start_date": "1892-01-01",
+    "end_date": null,
+    "country": "Brasil",
+    "region": "South America",
+    "type": "discovery",
+    "company": null,
+    "wikipedia": "https://pt.wikipedia.org/wiki/Petr%C3%B3leo_no_Brasil",
+    "description": "Ocorrem as primeiras buscas geológicas e perfurações formais no território brasileiro, motivadas pela necessidade de encontrar fontes internas de energia. A primeira registrada foi em Bofete (SP) liderada pelo fazendeiro Eugênio Ferreira de Camargo, atingindo 488 metros e encontrando apenas traços de petróleo, sem viabilidade econômica."
+  },
+  {
     "id": "murex-suez-transit-1892",
-    "title": "Murex Atravessa Suez: Nascimento da Shell",
-    "start_date": "1892-08-24",
+    "title": "Petroleiro Murex Atravessa o Suez",
+    "start_date": "1892-08-18",
     "end_date": null,
     "country": "Egito",
     "region": "Oriente Médio",
-    "type": "policy",
+    "type": "tecnologia",
     "company": "Shell Transport and Trading",
     "wikipedia": "https://en.wikipedia.org/wiki/SS_Murex",
     "description": "O petroleiro a granel Murex, de Marcus Samuel, atravessa o Canal de Suez em 24 de agosto de 1892, sendo o primeiro navio-tanque de carga a granel a fazê-lo, revolucionando a logística global e marcando o nascimento prático da Shell."
@@ -98,58 +98,46 @@
   {
     "id": "ford-first-car-1896",
     "title": "Ford e o Primeiro Automóvel",
-    "start_date": "1896-06-04",
+    "start_date": "1896-06-03",
     "end_date": null,
     "country": "Estados Unidos",
-    "region": "América do Norte",
+    "region": "North America",
     "type": "discovery",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Ford_Quadricycle",
     "description": "O automóvel de Ford sinaliza a futura transição do mercado de querosene para o de gasolina, criando um novo mercado massivo para derivados de petróleo."
   },
   {
-    "id": "brazil-early-surveys-1897",
-    "title": "Primeiras Sondagens de Petróleo no Brasil",
-    "start_date": "1897-01-01",
-    "end_date": "1915-12-31",
-    "country": "Brasil",
-    "region": "América do Sul",
-    "type": "discovery",
-    "company": null,
-    "wikipedia": "https://pt.wikipedia.org/wiki/Hist%C3%B3ria_do_petr%C3%B3leo_no_Brasil",
-    "description": "Ocorrem as primeiras buscas geológicas e perfurações formais no território brasileiro, motivadas pela necessidade de encontrar fontes internas de energia."
-  },
-  {
     "id": "spindletop-texas-gusher-1901",
-    "title": "Spindletop: Petróleo em Abundância",
+    "title": "Spindletop-Texas: Petróleo em Abundância",
     "start_date": "1901-01-10",
     "end_date": null,
     "country": "Estados Unidos",
-    "region": "América do Norte",
+    "region": "North America",
     "type": "discovery",
     "company": "Gulf Oil; Texaco",
     "wikipedia": "https://en.wikipedia.org/wiki/Spindletop",
-    "description": "A gigantesca descoberta no Texas inaugura a era do petróleo abundante e barato, dando origem a gigantes como Texaco e Gulf Oil."
+    "description": "A gigantesca descoberta no Texas inaugura a era do petróleo abundante e barato, dando origem a gigantes como Texaco e Gulf Oil. O \"gusher\" jorrou 100.000 bpd por 9 dias, sem nenhum controle."
   },
   {
     "id": "darcy-persian-concession-1901",
     "title": "Concessão D'Arcy na Pérsia",
-    "start_date": "1901-05-28",
+    "start_date": "1901-05-27",
     "end_date": null,
     "country": "Irã",
     "region": "Oriente Médio",
     "type": "policy",
-    "company": "Anglo-Persian Oil Company",
+    "company": "Anglo-Persian Oil Company; British Petroleum",
     "wikipedia": "https://en.wikipedia.org/wiki/D%27Arcy_Concession",
     "description": "William Knox D'Arcy obtém direitos exclusivos para explorar petróleo na Pérsia, o que levaria à criação da Anglo-Persian Oil Company, futura BP."
   },
   {
     "id": "criacao-da-royal-dutch-shell-1907",
     "title": "Criação da Royal Dutch Shell",
-    "start_date": "1907-04-23",
+    "start_date": "1907-04-22",
     "end_date": null,
     "country": "Reino Unido",
-    "region": "Europa",
+    "region": "Europe",
     "type": "company",
     "company": "Royal Dutch Shell",
     "wikipedia": "https://en.wikipedia.org/wiki/Shell_plc",
@@ -158,47 +146,47 @@
   {
     "id": "standard-oil-dissolution-1911",
     "title": "Desmembramento da Standard Oil",
-    "start_date": "1911-05-15",
+    "start_date": "1911-05-12",
     "end_date": null,
     "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "policy",
-    "company": "Standard Oil",
+    "region": "North America",
+    "type": "company",
+    "company": "Standard Oil;Standard Oil of New Jersey;Standard Oil of New York;Standard Oil of California;Standard Oil of Indiana;Standard Oil of Ohio;Continental Oil;Atlantic Refining",
     "wikipedia": "https://en.wikipedia.org/wiki/Standard_Oil_Co._of_New_Jersey_v._United_States",
     "description": "A Suprema Corte dos EUA ordena o desmembramento do monopólio de Rockefeller em 34 empresas, incluindo as futuras Exxon, Mobil e Chevron."
   },
   {
     "id": "churchill-navy-conversion-1911",
     "title": "Royal Navy Adota Petróleo",
-    "start_date": "1911-10-25",
+    "start_date": "1912-04-01",
     "end_date": null,
     "country": "Reino Unido",
-    "region": "Europa",
-    "type": "policy",
+    "region": "Europe",
+    "type": "tecnologia",
     "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/Oil_fuel_in_the_Royal_Navy",
+    "wikipedia": null,
     "description": "Churchill é nomeado Primeiro Lord do Almirantado em 25 de outubro de 1911 e passa a defender a conversão da frota ao petróleo; a Comissão Real sobre Combustíveis é criada em 1912 e a política é formalizada em 1913, vinculando a defesa nacional ao suprimento externo de óleo."
   },
   {
     "id": "wwi-mechanized-warfare-1914",
     "title": "1ª Guerra Mundial",
-    "start_date": "1914-07-28",
-    "end_date": "1918-11-11",
+    "start_date": "1914-07-27",
+    "end_date": "1918-11-10",
     "country": "Global",
-    "region": "Global",
+    "region": "Other",
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/World_War_I",
-    "description": "A Grande Guerra demonstrou que o petróleo era o sangue da vitória, com a introdução em larga escala de tanques, aviões e caminhões no campo de batalha."
+    "description": "A Grande Guerra demonstrou que o petróleo era o sangue da vitória, com a introdução de tanques, aviões e caminhões no campo de batalha."
   },
   {
     "id": "bolshevik-revolution-nationalization-1917",
     "title": "Revolução Russa: Petróleo Nacionalizado",
-    "start_date": "1917-11-07",
-    "end_date": null,
+    "start_date": "1917-03-08",
+    "end_date": "1922-10-25",
     "country": "Rússia",
-    "region": "Europa",
-    "type": "war",
+    "region": "Asia",
+    "type": "policy",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Russian_Revolution",
     "description": "Os bolcheviques tomam o poder e nacionalizam toda a indústria russa, alterando drasticamente o fluxo de óleo para o Ocidente."
@@ -206,10 +194,10 @@
   {
     "id": "teapot-dome-scandal-1922",
     "title": "Escândalo de Teapot Dome",
-    "start_date": "1922-04-01",
-    "end_date": "1924-12-31",
+    "start_date": "1922-03-31",
+    "end_date": "1924-12-30",
     "country": "Estados Unidos",
-    "region": "América do Norte",
+    "region": "North America",
     "type": "crisis",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Teapot_Dome_scandal",
@@ -218,59 +206,59 @@
   {
     "id": "venezuela-la-rosa-discovery-1922",
     "title": "Jorro de Los Barrosos, Venezuela",
-    "start_date": "1922-12-14",
+    "start_date": "1922-12-13",
     "end_date": null,
     "country": "Venezuela",
     "region": "América do Sul",
     "type": "discovery",
     "company": "Caribbean Petroleum Company",
-    "wikipedia": "https://en.wikipedia.org/wiki/Barroso_2_well",
+    "wikipedia": "https://en.wikipedia.org/wiki/History_of_the_Venezuelan_oil_industry",
     "description": "O jorro massivo de óleo no poço Los Barrosos No. 2, no campo La Rosa próximo ao Lago Maracaibo, produzindo 100.000 barris/dia, inicia oficialmente o boom petrolífero venezuelano, tornando o país um dos maiores exportadores mundiais."
   },
   {
     "id": "achnacarry-agreement-1928",
-    "title": "Acordo de Achnacarry (As Sete Irmãs)",
-    "start_date": "1928-09-17",
+    "title": "Acordo de Achnacarry (Semente das Sete Irmãs)",
+    "start_date": "1928-09-16",
     "end_date": null,
     "country": "Reino Unido",
-    "region": "Europa",
+    "region": "Europe",
     "type": "policy",
     "company": "Standard Oil; Royal Dutch Shell; Anglo-Persian Oil Company",
-    "wikipedia": "https://en.wikipedia.org/wiki/Achnacarry_Agreement",
-    "description": "As maiores companhias petrolíferas reúnem-se secretamente na Escócia para cartelizar o mercado global, estabilizando preços e controlando a oferta."
+    "wikipedia": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/agreement",
+    "description": "Ou As-Is Agreement: As maiores companhias petrolíferas reúnem-se secretamente na Escócia para cartelizar o mercado global, estabilizando preços e controlando a oferta."
   },
   {
     "id": "great-depression-oil-crisis-1929",
     "title": "Grande Depressão",
-    "start_date": "1929-10-29",
-    "end_date": "1939-12-31",
+    "start_date": "1929-10-28",
+    "end_date": "1939-12-30",
     "country": "Global",
-    "region": "Global",
+    "region": "North America",
     "type": "crisis",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Great_Depression",
-    "description": "A quebra da bolsa derruba o consumo mundial de combustíveis, gerando um excedente que forçou o fechamento de inúmeras produtoras independentes."
+    "description": "A quebra da bolsa derruba o consumo mundial de combustíveis, gerando um excedente que forçou o fechamento de inúmeras produtoras independentes nos EUA."
   },
   {
     "id": "saudi-concession-socal-1933",
     "title": "Primeira Concessão na Arábia Saudita",
-    "start_date": "1933-05-29",
+    "start_date": "1933-05-27",
     "end_date": null,
     "country": "Arábia Saudita",
     "region": "Oriente Médio",
     "type": "policy",
     "company": "Standard Oil of California; Saudi Aramco",
     "wikipedia": "https://en.wikipedia.org/wiki/History_of_Saudi_Arabian_oil",
-    "description": "O Rei Ibn Saud concede direitos de exploração à Standard of California, marcando o início da participação americana na Arábia Saudita."
+    "description": "O Rei Ibn Saud concede direitos de exploração à Standard of California (SoCal), marcando o início da participação americana na Arábia Saudita."
   },
   {
     "id": "mexico-oil-nationalization-1938",
     "title": "Nacionalização do Petróleo no México",
-    "start_date": "1938-03-18",
+    "start_date": "1938-03-17",
     "end_date": null,
     "country": "México",
-    "region": "América do Norte",
-    "type": "policy",
+    "region": "North America",
+    "type": "company",
     "company": "Pemex",
     "wikipedia": "https://en.wikipedia.org/wiki/Mexican_oil_expropriation",
     "description": "O presidente Lázaro Cárdenas expropria as petroleiras estrangeiras em 18 de março de 1938; a Pemex é criada por decreto separado em 7 de junho de 1938, tornando-se um marco do nacionalismo energético na América Latina."
@@ -281,19 +269,19 @@
     "start_date": "1938-04-29",
     "end_date": null,
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "South America",
     "type": "policy",
     "company": null,
     "wikipedia": "https://pt.wikipedia.org/wiki/Conselho_Nacional_do_Petr%C3%B3leo",
-    "description": "Getúlio Vargas estabelece o órgão regulador para centralizar a política energética e nacionalizar as riquezas do subsolo brasileiro."
+    "description": "Getúlio Vargas estabelece o Conselho Nacional do Petróleo, órgão regulador para centralizar a política energética e nacionalizar as riquezas do subsolo brasileiro."
   },
   {
     "id": "brazil-lobato-discovery-1939",
     "title": "Primeiro Petróleo do Brasil (Lobato)",
-    "start_date": "1939-01-21",
+    "start_date": "1939-01-20",
     "end_date": null,
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "South America",
     "type": "discovery",
     "company": null,
     "wikipedia": "https://pt.wikipedia.org/wiki/Petr%C3%B3leo_no_Brasil",
@@ -305,11 +293,11 @@
     "start_date": "1939-09-01",
     "end_date": "1945-09-02",
     "country": "Global",
-    "region": "Global",
+    "region": "Other",
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/World_War_II",
-    "description": "O conflito foi decidido pela logística de combustível; a superioridade produtiva dos Aliados asfixiou as forças alemãs e japonesas."
+    "description": "O conflito foi decidido pela logística de combustível; a superioridade produtiva dos Aliados asfixiou as forças alemãs e japonesas. Petróleo se consolidou como recurso estratégico."
   },
   {
     "id": "saudi-fifty-fifty-agreement-1950",
@@ -320,7 +308,7 @@
     "region": "Oriente Médio",
     "type": "policy",
     "company": "Saudi Aramco",
-    "wikipedia": "https://en.wikipedia.org/wiki/50/50_profit-sharing_agreement",
+    "wikipedia": "https://www.nytimes.com/1951/01/03/archives/saudi-arabia-gets-half-u-s-oil-profit-ibn-saud-and-aramco-agree-to.html",
     "description": "A Aramco aceita dividir lucros igualmente com o governo saudita, modelo que redefiniu as relações entre nações soberanas e companhias multinacionais."
   },
   {
@@ -353,11 +341,11 @@
     "start_date": "1955-01-01",
     "end_date": null,
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "South America",
     "type": "policy",
     "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Walter_Link",
-    "description": "A Petrobras recruta o geólogo americano Walter Link para estruturar sua área de Exploração e Produção. Diante da ausência de cursos de geologia no país, a empresa contratou a Universidade Stanford para formar seus primeiros engenheiros e geólogos, estabelecendo um padrão de excelência técnica que se tornaria valor central da companhia."
+    "wikipedia": "https://en.wikipedia.org/wiki/Walter_K._Link",
+    "description": "A Petrobras recruta o geólogo americano Walter Link da Standard Oil of New Jersey para estruturar sua área de Exploração e Produção. Diante da ausência de cursos de geologia no país, a empresa contratou a Universidade Stanford para formar seus primeiros engenheiros e geólogos, estabelecendo um padrão de excelência técnica que se tornaria valor central da companhia."
   },
   {
     "id": "suez-canal-crisis-1956",
@@ -369,7 +357,7 @@
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Suez_Crisis",
-    "description": "A nacionalização do canal e a invasão europeia interrompem o suprimento para a Europa, expondo a dependência energética do Ocidente ao óleo árabe."
+    "description": "A nacionalização do canal e a invasão europeia interrompem o suprimento para a Europa, expondo a dependência energética do Ocidente ao óleo árabe e iniciando a decadência do império britânico no mundo."
   },
   {
     "id": "link-report-1960",
@@ -377,11 +365,11 @@
     "start_date": "1960-08-29",
     "end_date": null,
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "South America",
     "type": "policy",
     "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Petroleum_exploration_in_Brazil",
-    "description": "Walter Link apresenta diagnóstico concluindo que as bacias terrestres brasileiras não teriam petróleo em volumes suficientes para o país. Ele recomendou o investimento na exploração offshore e em países árabes, mas foi duramente criticado por movimentos nacionalistas — paradoxalmente, sua tese sobre o offshore seria comprovada décadas depois com o pré-sal."
+    "wikipedia": "https://web.archive.org/web/20110706160745/http://www.eliezer.ninhodanatureza.nom.br/02/03/03b/01.htm",
+    "description": "Walter Link apresenta diagnóstico concluindo que as bacias terrestres brasileiras não teriam petróleo em volumes suficientes para o país. Ele recomendou o investimento na exploração offshore e em países árabes, mas foi duramente criticado por movimentos nacionalistas — paradoxalmente, sua tese sobre o offshore seria comprovada décadas depois na Bacia de Campos."
   },
   {
     "id": "opec-founded-baghdad-1960",
@@ -393,7 +381,7 @@
     "type": "policy",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/OPEC",
-    "description": "Irã, Iraque, Kuwait, Arábia Saudita e Venezuela fundam a organização em Bagdá para coordenar políticas petrolíferas e garantir preços estáveis aos países produtores."
+    "description": "Irã, Iraque, Kuwait, Arábia Saudita e Venezuela fundam a organização em Bagdá para coordenar políticas petrolíferas e garantir preços estáveis aos países produtores. O movimento realizado pelo venezuelano Juan Pablo Pérez Alfonzo e o saudita Abdullah Tariki foi o início da real organização das nações exportadoras para assegurar sua soberania do Petróleo."
   },
   {
     "id": "oil-surpasses-coal-global-1964",
@@ -402,7 +390,7 @@
     "end_date": null,
     "country": "Global",
     "region": "Global",
-    "type": "discovery",
+    "type": "tecnologia",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Energy_transition",
     "description": "O petróleo torna-se o combustível mais utilizado no mundo em conteúdo energético, consolidando a era moderna dependente de hidrocarbonetos."
@@ -417,23 +405,23 @@
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Six-Day_War",
-    "description": "O conflito eleva tensões e gera uma breve suspensão das exportações para EUA e Reino Unido, prefigurando o uso do petróleo como arma política."
+    "description": "Também conhecida como Guerra de Junho de 1967, Guerra Árabe-Israelense de 1967 ou ainda Terceira Guerra Árabe-Israelense. O conflito eleva tensões e gera uma breve suspensão das exportações para EUA e Reino Unido, prefigurando o uso do petróleo como arma política."
   },
   {
     "id": "offshore-guaricema-discovery-1968",
-    "title": "Primeira Descoberta de Petróleo no Mar (Guaricema)",
+    "title": "Primeira Descoberta de Petróleo no Mar do Brasil (Guaricema)",
     "start_date": "1968-06-01",
     "end_date": null,
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "South America",
     "type": "discovery",
     "company": "Petrobras",
     "wikipedia": "https://pt.wikipedia.org/wiki/Campo_de_Guaricema",
-    "description": "Após anos de buscas frustradas em terra, a Petrobras descobre o Campo de Guaricema no litoral de Sergipe, marcando o início da exploração marítima no Brasil. Embora de pequeno porte, a descoberta provou a viabilidade técnica da produção offshore e abriu o caminho para as grandes conquistas da Bacia de Campos."
+    "description": "Após anos de buscas frustradas em terra, a Petrobras descobre o Campo de Guaricema no litoral de Sergipe. Embora de pequeno porte, a descoberta provou a viabilidade técnica da produção offshore e abriu o caminho para as grandes conquistas da Bacia de Campos."
   },
   {
     "id": "north-sea-oil-discovery-1969",
-    "title": "Petróleo no Mar do Norte",
+    "title": "Ekofisk: Descoberto Petróleo no Mar do Norte",
     "start_date": "1969-12-23",
     "end_date": null,
     "country": "Noruega",
@@ -444,33 +432,21 @@
     "description": "A Phillips Petroleum descobre o campo Ekofisk na plataforma Ocean Viking e notifica oficialmente o governo norueguês em 23 de dezembro de 1969, transformando Reino Unido e Noruega em produtores de peso fora do controle da OPEP."
   },
   {
-    "id": "us-peak-conventional-production-1970",
-    "title": "Pico da Produção Americana",
-    "start_date": "1970-11-01",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "crisis",
-    "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/Hubbert_peak_theory",
-    "description": "A produção doméstica americana começa a declinar, transferindo o equilíbrio de poder do mercado mundial para os países da OPEP."
-  },
-  {
     "id": "first-oil-shock-opec-1973",
-    "title": "Primeiro Choque do Petróleo",
-    "start_date": "1973-10-17",
-    "end_date": "1974-03-18",
-    "country": "Arábia Saudita",
+    "title": "Guerra do Yom Kippur",
+    "start_date": "1973-10-06",
+    "end_date": null,
+    "country": "Israel",
     "region": "Oriente Médio",
-    "type": "crisis",
+    "type": "war",
     "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/1973_oil_crisis",
-    "description": "Em retaliação ao apoio a Israel na Guerra do Yom Kippur, membros árabes da OPEP impõem um embargo que quadruplica o preço do barril, gerando recessão e forçando busca por eficiência energética."
+    "wikipedia": "https://en.wikipedia.org/wiki/Yom_Kippur_War",
+    "description": "Também conhecida como Guerra Árabe-Israelense de 1973 ou Quarta guerra Árabe-Israelense, a guerra do Yom Kippur motivou o embargo árabe e cortes na produção como \"arma política\", quadruplicando o preço do petróleo em três meses. O evento transferiu o controle do mercado para os países produtores, gerando recessão global e impulsionando a busca por eficiência e fontes alternativas, como o programa Proálcool no Brasil. Este evento marca o 1º choque do Petróleo."
   },
   {
     "id": "campos-basin-garoupa-discovery-1974",
-    "title": "Descoberta da Bacia de Campos",
-    "start_date": "1974-01-01",
+    "title": "Descoberta da Bacia de Campos (Garoupa)",
+    "start_date": "1974-11-01",
     "end_date": null,
     "country": "Brasil",
     "region": "América do Sul",
@@ -485,9 +461,9 @@
     "start_date": "1975-11-14",
     "end_date": null,
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "South America",
     "type": "policy",
-    "company": null,
+    "company": "Petrobras",
     "wikipedia": "https://pt.wikipedia.org/wiki/Pro%C3%A1lcool",
     "description": "Resposta estratégica do governo brasileiro ao choque do petróleo, incentivando a produção de etanol de cana para substituir a gasolina. A Petrobras foi encarregada de toda a logística de compra e distribuição do combustível."
   },
@@ -500,7 +476,7 @@
     "region": "Oriente Médio",
     "type": "discovery",
     "company": "Braspetro; Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Majnoon_Oil_Field",
+    "wikipedia": "https://pt.wikipedia.org/wiki/Ilha_Majnoon",
     "description": "A Braspetro, subsidiária internacional da Petrobras, descobre no Iraque o Campo de Majnoon, um dos maiores reservatórios do mundo. Com a iminência da guerra Irã-Iraque, o contrato foi renegociado em 1979 e a Petrobras deixou de ser concessionária para atuar como prestadora de serviços, perdendo participação no megacampo."
   },
   {
@@ -513,7 +489,19 @@
     "type": "crisis",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Iranian_Revolution",
-    "description": "A queda do Xá e o retorno de Khomeini em 1º de fevereiro de 1979 interrompem o fornecimento iraniano, fazendo os preços dobrarem novamente e provocando pânico energético global."
+    "description": "A queda do Xá e o retorno de Khomeini em 1º de fevereiro de 1979 interrompem o fornecimento iraniano de Petróleo, fazendo os preços dobrarem novamente e provocando pânico energético global."
+  },
+  {
+    "id": "oil-price-collapse-market-war-1986",
+    "title": "Colapso do Petróleo (1986)",
+    "start_date": "1980-01-01",
+    "end_date": "1986-12-31",
+    "country": "Global",
+    "region": "Other",
+    "type": "crisis",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/1980s_oil_glut",
+    "description": "A queda da demanda e o aumento de produção geram um excedente de Petróleo no mundo. De forma ainda mais drástica, Arábia Saudita abandona os cortes e inunda o mercado para recuperar sua fatia de mercado, derrubando o barril para menos de US$ 10 e devastando economias exportadoras."
   },
   {
     "id": "iran-iraq-war-oil-impact-1980",
@@ -525,43 +513,19 @@
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Iran%E2%80%93Iraq_War",
-    "description": "O conflito de oito anos devasta as infraestruturas petrolíferas de ambos os países e mantém o mercado em instabilidade permanente."
+    "description": "O conflito de oito anos devasta as infraestruturas petrolíferas de ambos os países e mantém o mercado em instabilidade permanente. Apesar de tudo, o mundo operava em superávit de Petróleo e o impacto nos preços foi pequeno."
   },
   {
     "id": "nymex-oil-futures-trading-1983",
-    "title": "Futuros de Petróleo na NYMEX",
+    "title": "Petróleo negociado na NYMEX (WTI)",
     "start_date": "1983-03-30",
     "end_date": null,
     "country": "Estados Unidos",
-    "region": "América do Norte",
+    "region": "North America",
     "type": "policy",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/West_Texas_Intermediate",
-    "description": "O petróleo WTI passa a ser negociado como commodity financeira na NYMEX, retirando o poder absoluto da OPEP na definição de preços e inaugurando a era do petróleo como ativo financeiro."
-  },
-  {
-    "id": "oil-price-collapse-market-war-1986",
-    "title": "Colapso do Petróleo (1986)",
-    "start_date": "1986-01-01",
-    "end_date": "1986-07-31",
-    "country": "Arábia Saudita",
-    "region": "Oriente Médio",
-    "type": "crisis",
-    "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/1980s_oil_glut",
-    "description": "A Arábia Saudita abandona os cortes e inunda o mercado para recuperar sua fatia de mercado, derrubando o barril para menos de US$ 10 e devastando economias exportadoras."
-  },
-  {
-    "id": "procap-launch-1986",
-    "title": "Lançamento do Programa Procap",
-    "start_date": "1986-01-01",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América do Sul",
-    "type": "policy",
-    "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Petrobras",
-    "description": "A Petrobras cria o Programa de Capacitação Tecnológica em Águas Profundas (Procap) para superar o desafio de produzir petróleo em lâminas d'água superiores a 1.000 metros. O programa resultou em centenas de inovações e patentes, consolidando a liderança mundial da empresa em águas profundas e ultraprofundas."
+    "description": "O petróleo WTI passa a ser negociado em contratos futuros como commodity financeira na NYMEX, retirando o poder absoluto da OPEP na definição de preços e inaugurando a era do petróleo como ativo financeiro."
   },
   {
     "id": "exxon-valdez-spill-1989",
@@ -585,35 +549,23 @@
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Gulf_War",
-    "description": "A invasão do Kuwait por Saddam Hussein ameaça as reservas mundiais e culmina na queima de centenas de poços kuwaitianos pelas tropas em retirada."
-  },
-  {
-    "id": "otc-award-marlim-1992",
-    "title": "Petrobras Recebe Prêmio OTC por Marlim",
-    "start_date": "1992-05-01",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "policy",
-    "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Offshore_Technology_Conference",
-    "description": "A Petrobras vence o prêmio da Offshore Technology Conference (OTC) — o \"Oscar do petróleo\" — pelo desenvolvimento de tecnologias de produção em águas ultraprofundas no Campo de Marlim, na Bacia de Campos. O reconhecimento internacional validou a aposta feita pelo programa Procap."
+    "description": "A invasão do Kuwait por Saddam Hussein ameaça as reservas mundiais e culmina na queima de centenas de poços kuwaitianos pelas tropas em retirada. O impacto foi o 3º choque do petróleo."
   },
   {
     "id": "petrobras-monopoly-end-1995",
-    "title": "Abertura do Mercado Petrolífero Brasileiro",
+    "title": "Fim do Monopólio da Petrobras",
     "start_date": "1995-11-09",
     "end_date": null,
     "country": "Brasil",
     "region": "América do Sul",
     "type": "policy",
     "company": "Petrobras",
-    "wikipedia": "https://pt.wikipedia.org/wiki/Emenda_Constitucional_n%C2%BA_9_(Brasil)",
-    "description": "A Emenda Constitucional nº 9 permite a abertura do setor brasileiro à concorrência com outras empresas nacionais e estrangeiras."
+    "wikipedia": "https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc09.htm",
+    "description": "A Emenda Constitucional nº 9 marca o fim do monopólio da Petrobras no Brasil e permite a abertura do setor brasileiro à concorrência com outras empresas nacionais e estrangeiras. Embora não haja monopólio, as bacias sedimentares continuam sob controle da União. Essa foi a base para a Lei do Petróleo de 1997."
   },
   {
     "id": "anp-regulatory-creation-1997",
-    "title": "Criação da ANP",
+    "title": "Lei do Petróleo e a Criação da ANP",
     "start_date": "1997-08-06",
     "end_date": null,
     "country": "Brasil",
@@ -625,38 +577,26 @@
   },
   {
     "id": "mitchell-shale-gas-success-1998",
-    "title": "Mitchell Energy e o Fraturamento Hidráulico",
+    "title": "Fraturamento Hidráulico e o Shale Gas",
     "start_date": "1998-01-01",
     "end_date": null,
     "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "discovery",
+    "region": "North America",
+    "type": "tecnologia",
     "company": "Mitchell Energy & Development",
     "wikipedia": "https://en.wikipedia.org/wiki/Mitchell_Energy_%26_Development",
     "description": "O sucesso da técnica de slick water fracturing em shale gas no Texas prepara o terreno para a futura revolução do óleo de xisto."
   },
   {
-    "id": "management-restructuring-1999",
-    "title": "Modernização da Gestão (Presidência Reichstul)",
-    "start_date": "1999-03-01",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América do Sul",
-    "type": "company",
-    "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Henri_Philippe_Reichstul",
-    "description": "Sob a presidência de Henri Philippe Reichstul, a Petrobras inicia profunda modernização administrativa: pela primeira vez divulga planos estratégicos e de negócios anuais, adota contabilidade padrão internacional e busca distanciar-se das interferências políticas diretas do governo federal."
-  },
-  {
     "id": "p36-platform-accident-2001",
-    "title": "Naufrágio da Plataforma P-36",
+    "title": "Naufrágio da P-36",
     "start_date": "2001-03-15",
     "end_date": null,
     "country": "Brasil",
     "region": "América do Sul",
     "type": "crisis",
     "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/P-36_oil_platform",
+    "wikipedia": "https://pt.wikipedia.org/wiki/Plataforma_P-36",
     "description": "Três explosões na plataforma P-36, na Bacia de Campos, causam a morte de onze trabalhadores e o naufrágio daquela que era a maior unidade de produção do mundo. O acidente gerou crise de imagem global e forçou a empresa a investir massivamente em segurança operacional (Programa Pégaso)."
   },
   {
@@ -668,20 +608,8 @@
     "region": "América do Sul",
     "type": "crisis",
     "company": "PDVSA",
-    "wikipedia": "https://en.wikipedia.org/wiki/2002%E2%80%9303_Venezuelan_general_strike",
+    "wikipedia": "https://en.wikipedia.org/wiki/2002%E2%80%932003_Venezuelan_general_strike",
     "description": "Uma paralisação política contra Hugo Chávez destrói a capacidade técnica da estatal e marca o início do declínio produtivo venezuelano."
-  },
-  {
-    "id": "local-content-policy-2003",
-    "title": "Fortalecimento da Política de Conteúdo Nacional",
-    "start_date": "2003-01-01",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América do Sul",
-    "type": "policy",
-    "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Energy_policy_of_Brazil",
-    "description": "Com a posse do governo Lula, a Petrobras passa a exigir elevados percentuais de conteúdo nacional na construção de plataformas e navios em estaleiros brasileiros, usando a estatal como motor de industrialização e geração de empregos no país."
   },
   {
     "id": "iraq-invasion-instability-2003",
@@ -696,48 +624,24 @@
     "description": "A queda de Saddam Hussein desestrutura o setor petrolífero iraquiano, mantendo a oferta instável por mais de uma década."
   },
   {
-    "id": "pasadena-purchase-2006",
-    "title": "Compra da Refinaria de Pasadena",
-    "start_date": "2006-02-01",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "company",
-    "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Pasadena_Refining_System",
-    "description": "A Petrobras adquire 50% da refinaria de Pasadena (Texas) por US$ 359 milhões — dezessete vezes o valor pago pela sócia belga Astra pelo ativo inteiro um ano antes. O negócio, aprovado com pareceres técnicos incompletos, tornaria-se símbolo de má gestão e corrupção investigado na Operação Lava Jato."
-  },
-  {
     "id": "pre-sal-major-discovery-2007",
     "title": "Descoberta do Pré-Sal (Tupi/Lula)",
     "start_date": "2007-11-08",
     "end_date": null,
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "South America",
     "type": "discovery",
     "company": "Petrobras",
     "wikipedia": "https://pt.wikipedia.org/wiki/Camada_pr%C3%A9-sal",
     "description": "A Petrobras anuncia publicamente em novembro de 2007 a gigantesca descoberta do campo Tupi (atual Lula) na Bacia de Santos, com estimativas de 5 a 8 bilhões de barris, elevando o Brasil ao patamar das maiores reservas do mundo."
   },
   {
-    "id": "historic-market-value-2008",
-    "title": "Petrobras Torna-se 2ª Empresa Mais Valiosa das Américas",
-    "start_date": "2008-05-22",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América do Sul",
-    "type": "company",
-    "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Petrobras",
-    "description": "Impulsionada pela euforia do pré-sal e pelo barril acima de US$ 135, a Petrobras atinge valor de mercado de US$ 309 bilhões, tornando-se a segunda empresa de capital aberto mais valiosa das Américas, atrás apenas da ExxonMobil."
-  },
-  {
     "id": "historic-oil-price-peak-2008",
-    "title": "Petróleo Bate US$ 147 o Barril",
+    "title": "Choque de Demanda da China",
     "start_date": "2008-07-11",
     "end_date": null,
-    "country": "Global",
-    "region": "Global",
+    "country": "China",
+    "region": "Asia",
     "type": "crisis",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/2000s_energy_crisis",
@@ -749,7 +653,7 @@
     "start_date": "2010-04-20",
     "end_date": null,
     "country": "Estados Unidos",
-    "region": "América do Norte",
+    "region": "North America",
     "type": "crisis",
     "company": "BP",
     "wikipedia": "https://en.wikipedia.org/wiki/Deepwater_Horizon_oil_spill",
@@ -764,7 +668,7 @@
     "region": "América do Sul",
     "type": "company",
     "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Initial_public_offering",
+    "wikipedia": "https://www.bbc.com/portuguese/noticias/2010/09/100901_entenda_presal_fp_rc",
     "description": "A Petrobras realiza oferta pública de ações que arrecada US$ 70 bilhões — a maior da história mundial até então. Cerca de US$ 42,5 bilhões foram transferidos à União em troca do direito de explorar 5 bilhões de barris do pré-sal (Cessão Onerosa), permitindo ao governo ampliar seu controle acionário sobre a empresa."
   },
   {
@@ -773,10 +677,10 @@
     "start_date": "2010-12-22",
     "end_date": null,
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "North America",
     "type": "policy",
     "company": "Petrobras",
-    "wikipedia": "https://pt.wikipedia.org/wiki/Camada_pr%C3%A9-sal_do_Brasil",
+    "wikipedia": "https://pt.wikipedia.org/wiki/Camada_pr%C3%A9-sal",
     "description": "A Lei nº 12.351 institui o regime de partilha para o pré-sal e cria o Fundo Social para educação e saúde."
   },
   {
@@ -785,7 +689,7 @@
     "start_date": "2014-03-17",
     "end_date": "2021-02-05",
     "country": "Brasil",
-    "region": "América do Sul",
+    "region": "North America",
     "type": "crisis",
     "company": "Petrobras",
     "wikipedia": "https://pt.wikipedia.org/wiki/Opera%C3%A7%C3%A3o_Lava_Jato",
@@ -800,7 +704,7 @@
     "region": "Oriente Médio",
     "type": "crisis",
     "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/2014%E2%80%9316_oil_glut",
+    "wikipedia": "https://jornaleconomico.sapo.pt/noticias/fracking-ha-10-anos-opep-e-os-eua-entravam-em-guerra-de-precos/",
     "description": "A OPEP recusa-se a cortar produção para eliminar concorrentes de alto custo, gerando um colapso prolongado de preços."
   },
   {
@@ -809,7 +713,7 @@
     "start_date": "2015-12-12",
     "end_date": null,
     "country": "França",
-    "region": "Europa",
+    "region": "Europe",
     "type": "policy",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Paris_Agreement",
@@ -817,27 +721,15 @@
   },
   {
     "id": "opec-plus-alliance-2016",
-    "title": "OPEP+ é Formada",
+    "title": "OPEP+ é formada",
     "start_date": "2016-11-30",
     "end_date": null,
     "country": "Áustria",
     "region": "Europa",
     "type": "policy",
     "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/OPEC%2B",
-    "description": "A OPEP e a Rússia formam uma parceria histórica para gerir o mercado global diante do avanço da produção americana."
-  },
-  {
-    "id": "us-withdrawal-iran-deal-2018",
-    "title": "EUA Retiram-se do Acordo Nuclear com Irã",
-    "start_date": "2018-05-08",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "policy",
-    "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/United_States_withdrawal_from_the_Joint_Comprehensive_Plan_of_Action",
-    "description": "A administração Trump reimpõe sanções severas, removendo cerca de 2,5 milhões de barris por dia do mercado mundial."
+    "wikipedia": "https://pt.wikipedia.org/wiki/Organiza%C3%A7%C3%A3o_dos_Pa%C3%ADses_Exportadores_de_Petr%C3%B3leo",
+    "description": "A OPEP e a Rússia formam uma parceria histórica para gerir o mercado global diante do avanço da produção americana. Uma série de países não membros da OPEP também participa das iniciativas da organização, como cortes voluntários de fornecimento, a fim de vincular ainda mais os objetivos políticos entre a OPEP e os não membros. Este agrupamento flexível de países, conhecido como OPEP+, inclui Azerbaijão, Bahrein, Brunei, Brasil, Cazaquistão, Malásia, México, Omã, Rússia, Sudão do Sul e Sudão."
   },
   {
     "id": "aramco-drone-missile-attack-2019",
@@ -850,6 +742,18 @@
     "company": "Saudi Aramco",
     "wikipedia": "https://en.wikipedia.org/wiki/2019_Abqaiq%E2%80%93Khurais_attack",
     "description": "Ataques aéreos interrompem temporariamente 5% da oferta global em um único dia, o maior choque instantâneo de oferta da história."
+  },
+  {
+    "id": "pandemia-de-covid-19-2020",
+    "title": "Pandemia de COVID-19",
+    "start_date": "2020-03-11",
+    "end_date": "2023-05-05",
+    "country": "Global",
+    "region": "Other",
+    "type": "crisis",
+    "company": null,
+    "wikipedia": "https://pt.wikipedia.org/wiki/Pandemia_de_COVID-19",
+    "description": "Início da maior pandemia dos tempos modernos, com impacto severo na redução da demanda energética em virtude dos lockdowns promovidos."
   },
   {
     "id": "negative-oil-price-covid-2020",
@@ -881,11 +785,11 @@
     "start_date": "2022-02-24",
     "end_date": null,
     "country": "Rússia",
-    "region": "Europa",
+    "region": "Europe",
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Russian_invasion_of_Ukraine",
-    "description": "O conflito provoca sanções massivas ao petróleo russo e reconfigura as rotas globais de energia, elevando o Brent acima de US$ 100."
+    "description": "O conflito provoca sanções massivas ao petróleo russo e reconfigura as rotas globais de energia, elevando o Brent acima de US$ 100 e gerando alto impacto no marcado de Gás Natural."
   },
   {
     "id": "nord-stream-sabotage-2022",
@@ -898,30 +802,6 @@
     "company": "Nord Stream AG",
     "wikipedia": "https://en.wikipedia.org/wiki/Nord_Stream_pipeline_sabotage",
     "description": "Explosões submarinas no Mar Báltico destroem os gasodutos Nord Stream 1 e 2, encerrando a principal rota de gás russo para a Europa e a dependência energética alemã de Moscou."
-  },
-  {
-    "id": "pre-sal-production-record-2023",
-    "title": "Recorde do Pré-Sal Brasileiro",
-    "start_date": "2023-06-01",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América do Sul",
-    "type": "discovery",
-    "company": "Petrobras",
-    "wikipedia": "https://pt.wikipedia.org/wiki/Camada_pr%C3%A9-sal_do_Brasil",
-    "description": "O pré-sal atinge a marca de 3,1 milhões de bpd, consolidando o Brasil como o maior produtor do Atlântico Sul."
-  },
-  {
-    "id": "houthi-red-sea-shipping-attacks-2023",
-    "title": "Ataques Houthis no Mar Vermelho",
-    "start_date": "2023-10-19",
-    "end_date": null,
-    "country": "Iêmen",
-    "region": "Oriente Médio",
-    "type": "war",
-    "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/Houthi_Red_Sea_campaign",
-    "description": "O bloqueio do estreito de Bab-el-Mandeb força o desvio de rotas de petroleiros pelo Cabo da Boa Esperança, elevando custos logísticos."
   },
   {
     "id": "buzios-record-1million-2025",
@@ -944,20 +824,8 @@
     "region": "América do Sul",
     "type": "company",
     "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/B%C3%BAzios_oil_field",
+    "wikipedia": "https://agencia.petrobras.com.br/w/petrobras-inicia-produ%C3%A7%C3%A3o-de-b%C3%BAzios-6",
     "description": "A plataforma P-78, integrante do projeto Búzios 6, inicia produção no pré-sal da Bacia de Santos, cumprindo o plano estratégico da Petrobras para 2025 e reforçando o campo de Búzios como principal motor do crescimento da produção brasileira."
-  },
-  {
-    "id": "morpho-leak-vazamento-2026",
-    "title": "Vazamento no Poço Morpho e Retomada das Operações",
-    "start_date": "2026-01-01",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América do Sul",
-    "type": "crisis",
-    "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Foz_do_Amazonas_Basin",
-    "description": "Ocorre um vazamento de 18 mil litros de fluido sintético durante a perfuração do poço Morpho, na Bacia da Foz do Amazonas. A ANP autoriza a retomada das atividades após 35 dias, condicionada a novas exigências de segurança e após aplicação de multa de R$ 2,5 milhões pelo Ibama."
   },
   {
     "id": "operation-epic-fury-iran-2026",
@@ -969,19 +837,7 @@
     "type": "war",
     "company": null,
     "wikipedia": null,
-    "description": "Ataque militar coordenado pelos EUA e Israel contra o Irã culmina no bloqueio físico quase total do Estreito de Ormuz."
-  },
-  {
-    "id": "brazil-diesel-adjustment-crisis-2026",
-    "title": "Reajuste do Diesel no Brasil",
-    "start_date": "2026-03-14",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América do Sul",
-    "type": "crisis",
-    "company": "Petrobras",
-    "wikipedia": "https://en.wikipedia.org/wiki/Petroleum_pricing",
-    "description": "A Petrobras eleva os preços do diesel em R$ 0,38 por litro como reflexo direto da disparada internacional causada pela guerra no Golfo."
+    "description": "Ataque militar coordenado pelos EUA e Israel contra o Irã culmina no bloqueio físico quase total do Estreito de Ormuz, gerando um grande choque na oferta de Petróleo, principalmente para a Ásia."
   },
   {
     "id": "brent-peak-ormuz-blockade-2026",
