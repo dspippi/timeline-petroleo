@@ -1,6 +1,9 @@
-export type EventType = "war" | "discovery" | "policy" | "company" | "crisis";
+// EventType is now an open string to support user-defined categories.
+// The actual list of valid types is stored in data/categories.json.
+export type EventType = string;
 
-export const EVENT_TYPES: readonly EventType[] = ["war", "discovery", "policy", "company", "crisis"];
+/** @deprecated Use listCategories() server-side or useCategories() client-side instead. */
+export const EVENT_TYPES: readonly string[] = ["war", "discovery", "policy", "company", "crisis"];
 
 export interface OilEvent {
   id: string;

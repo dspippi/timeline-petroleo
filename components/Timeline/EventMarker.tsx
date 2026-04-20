@@ -2,9 +2,9 @@
 
 import { memo, useCallback, useRef, useState } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
-import { EVENT_TYPE_COLORS } from "@/lib/colorMap";
 import { useTimelineSync } from "@/context/TimelineSyncContext";
 import { useSettings } from "@/context/SettingsContext";
+import { useCategories } from "@/context/CategoriesContext";
 import { HoverTooltip } from "./HoverTooltip";
 
 interface Props {
@@ -29,18 +29,16 @@ export const EventMarker = memo(function EventMarker({
   onClick,
   onTypeFilter,
 }: Props) {
-  const { setHoveredDate, hoveredDate } = useTimelineSync();
+  const { setHoveredDate } = useTimelineSync();
   const { settings } = useSettings();
-  const color = EVENT_TYPE_COLORS[event.type];
+  const { getColor } = useCategories();
+  const color = getColor(event.type);
   const x = scale.toPixel(event.start_date);
   const isInterval = !!event.end_date;
   const barWidth = isInterval ? scale.toPixel(event.end_date!) - x : 0;
 
-  const isHovered =
-    hoveredDate !== null &&
-    Math.abs(hoveredDate.getTime() - event.start_date.getTime()) < 15 * 86_400_000;
-
   // Tooltip hover state with grace-period delay so user can move mouse into the tooltip
+  const [isHovered, setIsHovered] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const leaveTimerRef = useRef<ReturnType<typeof setTimeout>>();
@@ -62,6 +60,7 @@ export const EventMarker = memo(function EventMarker({
   const handleMouseEnter = useCallback(
     (e: React.MouseEvent) => {
       showTooltip(e.clientX, e.clientY);
+      setIsHovered(true);
       setHoveredDate(event.start_date);
     },
     [event.start_date, setHoveredDate, showTooltip]
@@ -69,6 +68,7 @@ export const EventMarker = memo(function EventMarker({
 
   const handleMouseLeave = useCallback(() => {
     startHideTooltip();
+    setIsHovered(false);
     setHoveredDate(null);
   }, [setHoveredDate, startHideTooltip]);
 
@@ -84,7 +84,7 @@ export const EventMarker = memo(function EventMarker({
     return (
       <div
         className="absolute cursor-pointer"
-        style={{ left: x, top: 0, bottom: 0, width: w }}
+        style={{ left: x, top: barTop, height: barHeight, width: w }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={() => onClick(event)}
@@ -93,7 +93,7 @@ export const EventMarker = memo(function EventMarker({
         <div
           className="absolute rounded-sm transition-all"
           style={{
-            top: barTop,
+            top: 0,
             height: barHeight,
             left: 0,
             right: 0,
@@ -107,7 +107,7 @@ export const EventMarker = memo(function EventMarker({
         {showInlineLabel && (
           <div
             className="absolute flex items-center overflow-hidden pointer-events-none"
-            style={{ top: barTop, height: barHeight, left: 5, right: 5 }}
+            style={{ top: 0, height: barHeight, left: 5, right: 5 }}
           >
             <span
               className="leading-tight"
@@ -135,7 +135,7 @@ export const EventMarker = memo(function EventMarker({
         {!showInlineLabel && (
           <div
             className="absolute pointer-events-none flex items-center"
-            style={{ left: w + 4, top: barTop, height: barHeight, width: LABEL_MAX_WIDTH }}
+            style={{ left: w + 4, top: 0, height: barHeight, width: LABEL_MAX_WIDTH }}
           >
             <span
               className="leading-tight"

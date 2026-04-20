@@ -15,14 +15,11 @@ import { LABEL_WIDTH } from "@/components/Timeline/TimelineRows";
 import { OilPriceChart } from "@/components/OilChart/OilPriceChart";
 import { EventCard } from "@/components/EventCard/EventCard";
 import { Toggle } from "@/components/ui/Toggle";
-import { EVENT_TYPE_LABELS, EVENT_TYPE_COLORS } from "@/lib/colorMap";
-import { EventType } from "@/types";
+import { useCategories } from "@/context/CategoriesContext";
 
 interface Props {
   serializedEvents: SerializedOilEvent[];
 }
-
-const EVENT_TYPES = Object.keys(EVENT_TYPE_LABELS) as EventType[];
 
 export function TimelineClientWrapper({ serializedEvents }: Props) {
   const allEvents = useMemo<OilEvent[]>(
@@ -37,6 +34,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
   const { pxPerDay, setPxPerDay } = useTimelineSync();
   const { settings } = useSettings();
+  const { categories } = useCategories();
   const [showChart, setShowChart] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<OilEvent | null>(null);
 
@@ -63,17 +61,19 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
   const hasFit = useRef(false);
   const hasScrolled = useRef(false);
-  useEffect(() => {
-    if (hasFit.current || scale.totalWidthPx === 0) return;
-    const containerWidth = timelineScrollRef.current?.clientWidth ?? 0;
-    if (containerWidth > 0) {
-      hasFit.current = true;
-      setPxPerDay(clamp(pxPerDay * (containerWidth - LABEL_WIDTH) / scale.totalWidthPx, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
-    }
-  }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
+  const [chartReady, setChartReady] = useState(false);
 
   useEffect(() => {
-    if (hasScrolled.current || !hasFit.current || scale.totalWidthPx === 0) return;
+    if (scale.totalWidthPx === 0) return;
+    if (!hasFit.current) {
+      const containerWidth = timelineScrollRef.current?.clientWidth ?? 0;
+      if (containerWidth > 0) {
+        hasFit.current = true;
+        setPxPerDay(clamp(pxPerDay * (containerWidth - LABEL_WIDTH) / scale.totalWidthPx, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+      }
+      return; // aguarda re-render com escala ajustada
+    }
+    if (hasScrolled.current) return;
     requestAnimationFrame(() => {
       if (timelineScrollRef.current) {
         timelineScrollRef.current.scrollLeft = timelineScrollRef.current.scrollWidth;
@@ -83,6 +83,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       }
       setChartScrollLeft(timelineScrollRef.current?.scrollLeft ?? 0);
       hasScrolled.current = true;
+      requestAnimationFrame(() => setChartReady(true));
     });
   }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -127,10 +128,10 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     [allEvents]
   );
 
-  const typeOptions = EVENT_TYPES.map((t) => ({
-    value: t,
-    label: EVENT_TYPE_LABELS[t],
-    color: EVENT_TYPE_COLORS[t],
+  const typeOptions = categories.map((cat) => ({
+    value: cat.id,
+    label: cat.label,
+    color: cat.color,
   }));
 
   const countryOptions = countries.map((c) => ({ value: c, label: c }));
@@ -188,13 +189,15 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
       {/* Chart */}
       {showChart && (
-        <OilPriceChart
-          prices={prices}
-          scale={scale}
-          scrollRef={chartScrollRef}
-          onScroll={handleChartScroll}
-          chartScrollLeft={chartScrollLeft}
-        />
+        <div style={{ opacity: chartReady ? 1 : 0, transition: "opacity 0.12s" }}>
+          <OilPriceChart
+            prices={prices}
+            scale={scale}
+            scrollRef={chartScrollRef}
+            onScroll={handleChartScroll}
+            chartScrollLeft={chartScrollLeft}
+          />
+        </div>
       )}
 
       {/* Timeline */}

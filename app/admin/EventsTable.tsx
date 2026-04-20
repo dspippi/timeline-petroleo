@@ -3,13 +3,14 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { OilEvent, EventType, EVENT_TYPES } from "@/types";
-import { EVENT_TYPE_COLORS, EVENT_TYPE_LABELS } from "@/lib/colorMap";
+import { OilEvent, EventType } from "@/types";
+import { useCategories } from "@/context/CategoriesContext";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export function EventsTable({ events }: { events: OilEvent[] }) {
   const router = useRouter();
+  const { categories, getColor, getLabel } = useCategories();
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<EventType | "">("");
   const [deleting, setDeleting] = useState<string | null>(null);
@@ -54,8 +55,8 @@ export function EventsTable({ events }: { events: OilEvent[] }) {
           className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
         >
           <option value="">Todos os tipos</option>
-          {EVENT_TYPES.map((t) => (
-            <option key={t} value={t}>{EVENT_TYPE_LABELS[t]}</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>{cat.label}</option>
           ))}
         </select>
         <Link
@@ -94,7 +95,7 @@ export function EventsTable({ events }: { events: OilEvent[] }) {
               </tr>
             )}
             {filtered.map((event) => {
-              const color = EVENT_TYPE_COLORS[event.type];
+              const color = getColor(event.type);
               return (
                 <tr key={event.id} className="border-b border-black/[0.04] hover:bg-gray-50/80 group">
                   <td className="px-4 py-3 font-medium text-gray-800 max-w-[280px] truncate">
@@ -105,7 +106,7 @@ export function EventsTable({ events }: { events: OilEvent[] }) {
                       className="inline-flex items-center gap-1.5 text-xs font-semibold px-2 py-0.5 rounded-full"
                       style={{ backgroundColor: color + "22", color }}
                     >
-                      {EVENT_TYPE_LABELS[event.type]}
+                      {getLabel(event.type)}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-gray-600">{event.country}</td>

@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { TimelineSyncProvider } from "@/context/TimelineSyncContext";
 import { SettingsProvider } from "@/context/SettingsContext";
+import { CategoriesProvider } from "@/context/CategoriesContext";
+import { listCategories } from "@/lib/categories";
 
 // Plus Jakarta Sans is the closest Google Font to Aptos (Microsoft's humanist sans-serif)
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -29,12 +31,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const categories = listCategories();
+
   return (
     <html lang="pt-BR" className={plusJakartaSans.variable}>
       <body className={`${plusJakartaSans.className} antialiased`}>
-        <SettingsProvider>
-          <TimelineSyncProvider>{children}</TimelineSyncProvider>
-        </SettingsProvider>
+        <CategoriesProvider initialCategories={categories}>
+          <SettingsProvider>
+            <TimelineSyncProvider>{children}</TimelineSyncProvider>
+          </SettingsProvider>
+        </CategoriesProvider>
       </body>
     </html>
   );

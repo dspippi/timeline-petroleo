@@ -22,6 +22,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/events/new" className="text-gray-500 hover:text-gray-900 transition-colors">
             + Novo
           </Link>
+          <Link href="/admin/categories" className="text-gray-500 hover:text-gray-900 transition-colors">
+            Categorias
+          </Link>
           <Link href="/admin/raw" className="text-gray-500 hover:text-gray-900 transition-colors">
             Editor de Texto
           </Link>

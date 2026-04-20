@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { OilEvent } from "@/types";
-import { EVENT_TYPE_COLORS, EVENT_TYPE_LABELS } from "@/lib/colorMap";
 import { formatEventDate, isBrasil } from "@/lib/utils";
+import { useCategories } from "@/context/CategoriesContext";
 
 interface Props {
   event: OilEvent | null;
@@ -11,6 +11,7 @@ interface Props {
 }
 
 export function EventCard({ event, onClose }: Props) {
+  const { getColor, getLabel } = useCategories();
   return (
     <AnimatePresence>
       {event && (
@@ -36,7 +37,7 @@ export function EventCard({ event, onClose }: Props) {
             {/* Top accent */}
             <div
               className="h-1 w-full rounded-t-2xl"
-              style={{ backgroundColor: EVENT_TYPE_COLORS[event.type] }}
+              style={{ backgroundColor: getColor(event.type) }}
             />
 
             <div className="p-6">
@@ -46,12 +47,12 @@ export function EventCard({ event, onClose }: Props) {
                   <span
                     className="text-[11px] font-semibold px-2 py-0.5 rounded-full"
                     style={{
-                      backgroundColor: EVENT_TYPE_COLORS[event.type] + "18",
-                      color: EVENT_TYPE_COLORS[event.type],
-                      border: `1px solid ${EVENT_TYPE_COLORS[event.type]}44`,
+                      backgroundColor: getColor(event.type) + "18",
+                      color: getColor(event.type),
+                      border: `1px solid ${getColor(event.type)}44`,
                     }}
                   >
-                    {EVENT_TYPE_LABELS[event.type]}
+                    {getLabel(event.type)}
                   </span>
                   <span className="text-[11px] text-gray-400 px-2 py-0.5 rounded-full border border-gray-200">
                     {event.region}

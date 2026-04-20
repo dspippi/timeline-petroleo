@@ -22,7 +22,7 @@ interface Props {
 }
 
 export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onTypeFilter }: Props) {
-  const { setPxPerDay, pxPerDay } = useTimelineSync();
+  const { setPxPerDay, pxPerDay, setHoveredDate } = useTimelineSync();
   const yearAxisRef = useRef<HTMLDivElement>(null);
   const settingsBtnRef = useRef<HTMLButtonElement>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -42,15 +42,29 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   }, [scrollRef]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!dragState.current || !scrollRef.current) return;
-    const dx = e.clientX - dragState.current.startX;
-    const dy = e.clientY - dragState.current.startY;
-    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragState.current.moved = true;
-    scrollRef.current.scrollLeft = dragState.current.startScrollLeft - dx;
-    scrollRef.current.scrollTop = dragState.current.startScrollTop - dy;
-    if (yearAxisRef.current) yearAxisRef.current.scrollLeft = scrollRef.current.scrollLeft;
-    onScroll();
-  }, [scrollRef, onScroll]);
+    // Drag-to-pan
+    if (dragState.current && scrollRef.current) {
+      const dx = e.clientX - dragState.current.startX;
+      const dy = e.clientY - dragState.current.startY;
+      if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragState.current.moved = true;
+      scrollRef.current.scrollLeft = dragState.current.startScrollLeft - dx;
+      scrollRef.current.scrollTop = dragState.current.startScrollTop - dy;
+      if (yearAxisRef.current) yearAxisRef.current.scrollLeft = scrollRef.current.scrollLeft;
+      onScroll();
+    }
+    // Hover → date for price chart
+    if (scrollRef.current) {
+      const rect = scrollRef.current.getBoundingClientRect();
+      const plotX = e.clientX - rect.left + scrollRef.current.scrollLeft - LABEL_WIDTH;
+      if (plotX >= 0) setHoveredDate(scale.toDate(plotX));
+    }
+  }, [scrollRef, onScroll, scale, setHoveredDate]);
+
+  const handleMouseLeave = useCallback(() => {
+    dragState.current = null;
+    setIsDragging(false);
+    setHoveredDate(null);
+  }, [setHoveredDate]);
 
   const handleMouseUp = useCallback(() => {
     dragState.current = null;
@@ -216,7 +230,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative" }}>
           <EventLinesOverlay events={events} scale={scale} />

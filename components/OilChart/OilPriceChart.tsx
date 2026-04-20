@@ -7,7 +7,6 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
-  Tooltip,
 } from "recharts";
 import { OilPrice, TimelineScale } from "@/types";
 import { useTimelineSync } from "@/context/TimelineSyncContext";
@@ -88,22 +87,6 @@ function niceYAxis(minP: number, maxP: number): { domain: [number, number]; tick
   return { domain: [lo, hi], ticks };
 }
 
-const CustomTooltip = ({
-  active,
-  payload,
-}: {
-  active?: boolean;
-  payload?: { payload: ChartPoint }[];
-}) => {
-  if (!active || !payload?.length) return null;
-  const d = payload[0].payload;
-  return (
-    <div className="bg-white border border-gray-200 shadow-md rounded px-2 py-1 text-xs">
-      <div className="font-semibold text-amber-700">${d.price.toFixed(2)}/bbl</div>
-      <div className="text-gray-400">{format(d.date, "MMM yyyy", { locale: ptBR })}</div>
-    </div>
-  );
-};
 
 export const OilPriceChart = memo(function OilPriceChart({
   prices,
@@ -116,22 +99,12 @@ export const OilPriceChart = memo(function OilPriceChart({
   const [activeShock, setActiveShock] = useState<number | null>(null);
 
   const { yDomain, yTicks } = useMemo(() => {
-    const cw = scrollRef.current?.clientWidth ?? 800;
-    const startPx = chartScrollLeft;
-    const endPx = chartScrollLeft + cw;
-
-    const visible = prices.filter((p) => {
-      const x = scale.toPixel(p.date) + LABEL_WIDTH;
-      return x >= startPx && x <= endPx;
-    });
-
-    if (visible.length < 2) return { yDomain: [0, 160] as [number, number], yTicks: [40, 80, 120, 160] };
-
-    const minP = Math.min(...visible.map((p) => p.price));
-    const maxP = Math.max(...visible.map((p) => p.price));
+    if (prices.length === 0) return { yDomain: [0, 160] as [number, number], yTicks: [40, 80, 120, 160] };
+    const minP = Math.min(...prices.map((p) => p.price));
+    const maxP = Math.max(...prices.map((p) => p.price));
     const { domain, ticks } = niceYAxis(minP, maxP);
     return { yDomain: domain, yTicks: ticks };
-  }, [chartScrollLeft, prices, scale, scrollRef]);
+  }, [prices]);
 
   // Normalize prices to [0,1] within yDomain so Recharts uses a fixed domain and always repositions correctly
   const data = useMemo<ChartPoint[]>(() => {
@@ -234,7 +207,6 @@ export const OilPriceChart = memo(function OilPriceChart({
           >
             <XAxis dataKey="x" type="number" domain={xDomain} hide />
             <YAxis domain={[0, 1]} hide allowDataOverflow />
-            <Tooltip content={<CustomTooltip />} cursor={false} />
             <Line
               type="monotone"
               dataKey="yNorm"
