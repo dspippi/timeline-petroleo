@@ -1,7 +1,8 @@
 "use client";
 
+import { memo } from "react";
 import { TimelineScale } from "@/types";
-import { useTimelineSync } from "@/context/TimelineSyncContext";
+import { useHoveredDate } from "@/context/TimelineSyncContext";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { LABEL_WIDTH } from "./TimelineRows";
@@ -10,8 +11,8 @@ interface Props {
   scale: TimelineScale;
 }
 
-export function GuideOverlay({ scale }: Props) {
-  const { hoveredDate } = useTimelineSync();
+export const GuideOverlay = memo(function GuideOverlay({ scale }: Props) {
+  const hoveredDate = useHoveredDate();
   if (!hoveredDate) return null;
 
   const x = scale.toPixel(hoveredDate) + LABEL_WIDTH;
@@ -28,4 +29,4 @@ export function GuideOverlay({ scale }: Props) {
       </div>
     </div>
   );
-}
+});

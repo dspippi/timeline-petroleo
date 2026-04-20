@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useRef, useState } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
-import { useTimelineSync } from "@/context/TimelineSyncContext";
+import { useSetHoveredDate } from "@/context/TimelineSyncContext";
 import { useSettings } from "@/context/SettingsContext";
 import { useCategories } from "@/context/CategoriesContext";
 import { HoverTooltip } from "./HoverTooltip";
@@ -29,7 +29,7 @@ export const EventMarker = memo(function EventMarker({
   onClick,
   onTypeFilter,
 }: Props) {
-  const { setHoveredDate } = useTimelineSync();
+  const setHoveredDate = useSetHoveredDate();
   const { settings } = useSettings();
   const { getColor } = useCategories();
   const color = getColor(event.type);

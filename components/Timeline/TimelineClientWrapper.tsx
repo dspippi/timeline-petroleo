@@ -7,7 +7,7 @@ import { buildScale, getDefaultDomain, MIN_PX_PER_DAY, MAX_PX_PER_DAY } from "@/
 import { clamp } from "@/lib/utils";
 import { useFilters } from "@/hooks/useFilters";
 import { useOilPrices } from "@/hooks/useOilPrices";
-import { useTimelineSync } from "@/context/TimelineSyncContext";
+import { usePxPerDay, useSetPxPerDay } from "@/context/TimelineSyncContext";
 import { useSettings } from "@/context/SettingsContext";
 import { FilterDropdown } from "@/components/Filters/FilterDropdown";
 import { Timeline } from "@/components/Timeline/Timeline";
@@ -32,7 +32,8 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     [serializedEvents]
   );
 
-  const { pxPerDay, setPxPerDay } = useTimelineSync();
+  const pxPerDay    = usePxPerDay();
+  const setPxPerDay = useSetPxPerDay();
   const { settings } = useSettings();
   const { categories } = useCategories();
   const [showChart, setShowChart] = useState(true);
@@ -71,54 +72,43 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         hasFit.current = true;
         setPxPerDay(clamp(pxPerDay * (containerWidth - LABEL_WIDTH) / scale.totalWidthPx, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
       }
-      return; // aguarda re-render com escala ajustada
+      return;
     }
     if (hasScrolled.current) return;
     requestAnimationFrame(() => {
       if (timelineScrollRef.current) {
         timelineScrollRef.current.scrollLeft = timelineScrollRef.current.scrollWidth;
       }
-      setChartScrollLeft(timelineScrollRef.current?.scrollLeft ?? 0);
+      if (chartScrollRef.current && timelineScrollRef.current) {
+        chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
+      }
       hasScrolled.current = true;
       requestAnimationFrame(() => setChartReady(true));
     });
   }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // O chart carrega prices de forma assíncrona: quando chegam, o scrollRef é
-  // montado e precisamos sincronizar o scroll com a posição da timeline.
+  // When chart prices arrive asynchronously, sync its scroll to the timeline.
   useEffect(() => {
     if (prices.length === 0 || !chartScrollRef.current || !timelineScrollRef.current) return;
     chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
   }, [prices.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const timelineScrollRef = useRef<HTMLDivElement>(null);
-  const chartScrollRef = useRef<HTMLDivElement>(null);
-  const isSyncing = useRef(false);
-  const [chartScrollLeft, setChartScrollLeft] = useState(0);
-  const chartScrollTimer = useRef<ReturnType<typeof setTimeout>>();
+  const chartScrollRef    = useRef<HTMLDivElement>(null);
+  const isSyncing         = useRef(false);
 
-  // DOM sync é imediato; React state update é debounced para evitar
-  // re-render do OilPriceChart a cada frame de scroll/drag.
-  const scheduleChartScrollUpdate = useCallback((sl: number) => {
-    clearTimeout(chartScrollTimer.current);
-    chartScrollTimer.current = setTimeout(() => setChartScrollLeft(sl), 120);
-  }, []);
-
+  // Pure DOM scroll sync — no React state, no re-renders, runs every scroll frame.
   const handleTimelineScroll = useCallback(() => {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
-    const sl = timelineScrollRef.current.scrollLeft;
-    chartScrollRef.current.scrollLeft = sl;
-    scheduleChartScrollUpdate(sl);
+    chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
     isSyncing.current = false;
-  }, [scheduleChartScrollUpdate]);
+  }, []);
 
   const handleChartScroll = useCallback(() => {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
-    const sl = chartScrollRef.current.scrollLeft;
-    timelineScrollRef.current.scrollLeft = sl;
-    scheduleChartScrollUpdate(sl);
+    timelineScrollRef.current.scrollLeft = chartScrollRef.current.scrollLeft;
     isSyncing.current = false;
   }, []);
 
@@ -199,7 +189,6 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
             scale={scale}
             scrollRef={chartScrollRef}
             onScroll={handleChartScroll}
-            chartScrollLeft={chartScrollLeft}
           />
         </div>
       )}

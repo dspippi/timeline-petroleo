@@ -2,7 +2,7 @@
 
 import { RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
-import { useTimelineSync } from "@/context/TimelineSyncContext";
+import { usePxPerDay, useSetPxPerDay, useSetHoveredDate } from "@/context/TimelineSyncContext";
 import { MIN_PX_PER_DAY, MAX_PX_PER_DAY, DEFAULT_PX_PER_DAY } from "@/lib/timelineScale";
 import { clamp } from "@/lib/utils";
 import { TimelineRows, LABEL_WIDTH } from "./TimelineRows";
@@ -22,8 +22,12 @@ interface Props {
 }
 
 export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onTypeFilter }: Props) {
-  const { setPxPerDay, pxPerDay, setHoveredDate } = useTimelineSync();
-  const yearAxisRef = useRef<HTMLDivElement>(null);
+  const pxPerDay       = usePxPerDay();
+  const setPxPerDay    = useSetPxPerDay();
+  const setHoveredDate = useSetHoveredDate();
+  const yearAxisRef    = useRef<HTMLDivElement>(null);
+  // rAF handle for throttling hover date updates to one per frame
+  const hoverRafRef = useRef<number | null>(null);
   const settingsBtnRef = useRef<HTMLButtonElement>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
@@ -42,21 +46,27 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   }, [scrollRef]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    // Drag-to-pan
+    // Drag-to-pan — direct DOM manipulation, no React state, runs every frame
     if (dragState.current && scrollRef.current) {
       const dx = e.clientX - dragState.current.startX;
       const dy = e.clientY - dragState.current.startY;
       if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragState.current.moved = true;
       scrollRef.current.scrollLeft = dragState.current.startScrollLeft - dx;
-      scrollRef.current.scrollTop = dragState.current.startScrollTop - dy;
+      scrollRef.current.scrollTop  = dragState.current.startScrollTop  - dy;
       if (yearAxisRef.current) yearAxisRef.current.scrollLeft = scrollRef.current.scrollLeft;
       onScroll();
     }
-    // Hover → date for price chart
-    if (scrollRef.current) {
-      const rect = scrollRef.current.getBoundingClientRect();
-      const plotX = e.clientX - rect.left + scrollRef.current.scrollLeft - LABEL_WIDTH;
-      if (plotX >= 0) setHoveredDate(scale.toDate(plotX));
+    // Hover → date for price chart — throttled to one rAF per frame
+    if (scrollRef.current && hoverRafRef.current === null) {
+      const clientX = e.clientX;
+      hoverRafRef.current = requestAnimationFrame(() => {
+        hoverRafRef.current = null;
+        const el = scrollRef.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const plotX = clientX - rect.left + el.scrollLeft - LABEL_WIDTH;
+        if (plotX >= 0) setHoveredDate(scale.toDate(plotX));
+      });
     }
   }, [scrollRef, onScroll, scale, setHoveredDate]);
 

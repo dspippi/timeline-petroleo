@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 import { OilEvent, TimelineScale } from "@/types";
-import { EVENT_TYPE_COLORS } from "@/lib/colorMap";
+import { useCategories } from "@/context/CategoriesContext";
 import { LABEL_WIDTH } from "./TimelineRows";
 
 interface Props {
@@ -10,24 +10,31 @@ interface Props {
   scale: TimelineScale;
 }
 
+// Single SVG with one <line> per event instead of one <div> per event.
+// Drastically reduces the browser's layout work during scroll and repaint.
 export const EventLinesOverlay = memo(function EventLinesOverlay({ events, scale }: Props) {
+  const { getColor } = useCategories();
+  const totalWidth = scale.totalWidthPx + LABEL_WIDTH;
+
   return (
-    <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+    <svg
+      className="absolute inset-0 pointer-events-none"
+      style={{ zIndex: 1, width: totalWidth, height: "100%" }}
+      preserveAspectRatio="none"
+    >
       {events.map((event) => {
         const x = scale.toPixel(event.start_date) + LABEL_WIDTH;
-        const color = EVENT_TYPE_COLORS[event.type];
         return (
-          <div
+          <line
             key={event.id}
-            className="absolute top-0 bottom-0"
-            style={{
-              left: x,
-              width: 1,
-              background: color + "40", // ~25% opacity
-            }}
+            x1={x} y1="0"
+            x2={x} y2="100%"
+            stroke={getColor(event.type)}
+            strokeOpacity={0.25}
+            strokeWidth={1}
           />
         );
       })}
-    </div>
+    </svg>
   );
 });

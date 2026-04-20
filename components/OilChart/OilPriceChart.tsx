@@ -1,15 +1,9 @@
 "use client";
 
 import { memo, useCallback, RefObject, useMemo, useState } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  ReferenceLine,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis } from "recharts";
 import { OilPrice, TimelineScale } from "@/types";
-import { useTimelineSync } from "@/context/TimelineSyncContext";
+import { useHoveredDate, useSetHoveredDate } from "@/context/TimelineSyncContext";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { LABEL_WIDTH } from "@/components/Timeline/TimelineRows";
@@ -22,14 +16,14 @@ interface OilShock {
 }
 
 const OIL_SHOCKS: OilShock[] = [
-  { id: 1, name: "Embargo Árabe", date: new Date(1973, 9, 17), effect: "up" },
-  { id: 2, name: "Revolução Iraniana", date: new Date(1979, 0, 16), effect: "up" },
-  { id: 3, name: "Crise do Golfo", date: new Date(1990, 7, 2), effect: "up" },
-  { id: 4, name: "Pico de 2008", date: new Date(2008, 6, 3), effect: "up" },
-  { id: 5, name: "Colapso do Xisto", date: new Date(2014, 5, 20), effect: "down" },
-  { id: 6, name: "COVID-19", date: new Date(2020, 3, 20), effect: "down" },
-  { id: 7, name: "Guerra Rússia-Ucrânia", date: new Date(2022, 1, 24), effect: "up" },
-  { id: 8, name: "Estreito de Hormuz", date: new Date(2026, 2, 1), effect: "up" },
+  { id: 1, name: "Embargo Árabe",        date: new Date(1973, 9, 17),  effect: "up" },
+  { id: 2, name: "Revolução Iraniana",   date: new Date(1979, 0, 16),  effect: "up" },
+  { id: 3, name: "Crise do Golfo",       date: new Date(1990, 7, 2),   effect: "up" },
+  { id: 4, name: "Pico de 2008",         date: new Date(2008, 6, 3),   effect: "up" },
+  { id: 5, name: "Colapso do Xisto",     date: new Date(2014, 5, 20),  effect: "down" },
+  { id: 6, name: "COVID-19",             date: new Date(2020, 3, 20),  effect: "down" },
+  { id: 7, name: "Guerra Rússia-Ucrânia",date: new Date(2022, 1, 24),  effect: "up" },
+  { id: 8, name: "Estreito de Hormuz",   date: new Date(2026, 2, 1),   effect: "up" },
 ];
 
 function findPriceAt(prices: OilPrice[], targetDate: Date): number | null {
@@ -39,10 +33,7 @@ function findPriceAt(prices: OilPrice[], targetDate: Date): number | null {
   let minDiff = Infinity;
   for (const p of prices) {
     const diff = Math.abs(p.date.getTime() - targetMs);
-    if (diff < minDiff) {
-      minDiff = diff;
-      closest = p;
-    }
+    if (diff < minDiff) { minDiff = diff; closest = p; }
   }
   if (minDiff > 180 * 86_400_000) return null;
   return closest?.price ?? null;
@@ -53,18 +44,15 @@ interface Props {
   scale: TimelineScale;
   scrollRef: RefObject<HTMLDivElement>;
   onScroll: () => void;
-  chartScrollLeft: number;
 }
 
 interface ChartPoint {
   x: number;
   price: number;
-  yNorm: number; // price normalized to [0,1] within yDomain — drives Line position in Recharts
+  yNorm: number;
   date: Date;
 }
 
-// Plot area starts at exactly LABEL_WIDTH from the left edge of the SVG.
-// The Recharts YAxis is hidden; we render our own sticky Y-axis overlay instead.
 const CHART_HEIGHT = 99;
 const CHART_MARGIN = { top: 8, right: 0, bottom: 4, left: LABEL_WIDTH };
 
@@ -87,15 +75,76 @@ function niceYAxis(minP: number, maxP: number): { domain: [number, number]; tick
   return { domain: [lo, hi], ticks };
 }
 
+// ── ChartHoverOverlay ─────────────────────────────────────────────────────────
+// Isolated component: only re-renders when hoveredDate changes (~60fps).
+// Keeps Recharts completely out of the hot path.
+interface HoverOverlayProps {
+  prices: OilPrice[];
+  yDomain: [number, number];
+  scale: TimelineScale;
+}
 
+const ChartHoverOverlay = memo(function ChartHoverOverlay({ prices, yDomain, scale }: HoverOverlayProps) {
+  const hoveredDate = useHoveredDate();
+  if (!hoveredDate) return null;
+
+  const hoveredX    = scale.toPixel(hoveredDate);
+  const hoveredPrice = findPriceAt(prices, hoveredDate);
+
+  return (
+    <>
+      {/* Vertical reference line */}
+      <div
+        className="absolute top-0 bottom-0 pointer-events-none"
+        style={{ left: hoveredX + LABEL_WIDTH, width: 1, background: "rgba(0,0,0,0.25)", zIndex: 10 }}
+      />
+
+      {/* Price bubble */}
+      {hoveredPrice !== null && (
+        <div
+          className="pointer-events-none absolute"
+          style={{
+            left: hoveredX + LABEL_WIDTH,
+            top: priceToY(hoveredPrice, yDomain),
+            zIndex: 18,
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              bottom: "calc(100% + 5px)",
+              left: "50%",
+              transform: "translateX(-50%)",
+              background: "white",
+              border: "1px solid rgba(0,0,0,0.12)",
+              borderRadius: 6,
+              padding: "3px 7px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <div className="font-semibold text-amber-700" style={{ fontSize: 11 }}>
+              ${hoveredPrice.toFixed(2)}/bbl
+            </div>
+            <div className="text-gray-400" style={{ fontSize: 10 }}>
+              {format(hoveredDate, "MMM yyyy", { locale: ptBR })}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+});
+
+// ── Main chart (heavy Recharts component) ─────────────────────────────────────
+// Does NOT subscribe to hoveredDate → only re-renders when prices or scale change.
 export const OilPriceChart = memo(function OilPriceChart({
   prices,
   scale,
   scrollRef,
   onScroll,
-  chartScrollLeft,
 }: Props) {
-  const { hoveredDate, setHoveredDate } = useTimelineSync();
+  const setHoveredDate = useSetHoveredDate();
   const [activeShock, setActiveShock] = useState<number | null>(null);
 
   const { yDomain, yTicks } = useMemo(() => {
@@ -106,51 +155,37 @@ export const OilPriceChart = memo(function OilPriceChart({
     return { yDomain: domain, yTicks: ticks };
   }, [prices]);
 
-  // Normalize prices to [0,1] within yDomain so Recharts uses a fixed domain and always repositions correctly
   const data = useMemo<ChartPoint[]>(() => {
     const [lo, hi] = yDomain;
     const range = Math.max(hi - lo, 1);
     return prices.map((p) => ({
-      x: scale.toPixel(p.date),
+      x:     scale.toPixel(p.date),
       price: p.price,
       yNorm: (p.price - lo) / range,
-      date: p.date,
+      date:  p.date,
     }));
   }, [prices, scale, yDomain]);
 
   const handleMouseMove = useCallback(
     (e: { activePayload?: { payload: ChartPoint }[] }) => {
-      if (e?.activePayload?.[0]) {
-        setHoveredDate(e.activePayload[0].payload.date);
-      }
+      if (e?.activePayload?.[0]) setHoveredDate(e.activePayload[0].payload.date);
     },
     [setHoveredDate]
   );
 
-  const handleMouseLeave = useCallback(() => {
-    setHoveredDate(null);
-  }, [setHoveredDate]);
-
-  const hoveredX = hoveredDate ? scale.toPixel(hoveredDate) : null;
-  const hoveredPrice = hoveredDate ? findPriceAt(prices, hoveredDate) : null;
+  const handleMouseLeave = useCallback(() => setHoveredDate(null), [setHoveredDate]);
 
   const shockMarkers = useMemo(() =>
     OIL_SHOCKS.flatMap((shock) => {
       const price = findPriceAt(prices, shock.date);
       if (price === null) return [];
-      return [{
-        ...shock,
-        price,
-        x: scale.toPixel(shock.date) + LABEL_WIDTH,
-        y: priceToY(price, yDomain),
-      }];
+      return [{ ...shock, price, x: scale.toPixel(shock.date) + LABEL_WIDTH, y: priceToY(price, yDomain) }];
     }),
     [prices, scale, yDomain]
   );
 
-  // "No data" zone: from scale pixel 0 (domainStart) to first price data point
-  const noDataEndPx =
-    prices.length > 0 ? scale.toPixel(prices[0].date) : 0;
+  const noDataEndPx = prices.length > 0 ? scale.toPixel(prices[0].date) : 0;
+  const xDomain: [number, number] = [0, scale.totalWidthPx];
 
   if (prices.length === 0) {
     return (
@@ -159,9 +194,6 @@ export const OilPriceChart = memo(function OilPriceChart({
       </div>
     );
   }
-
-  // SVG width = totalWidthPx + LABEL_WIDTH; plot area = totalWidthPx → 1:1 pixel mapping
-  const xDomain: [number, number] = [0, scale.totalWidthPx];
 
   return (
     <div
@@ -172,10 +204,10 @@ export const OilPriceChart = memo(function OilPriceChart({
     >
       <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, height: CHART_HEIGHT, position: "relative" }}>
 
-        {/* Chart — absolutely positioned so the sticky Y-axis can sit on top */}
+        {/* Chart */}
         <div style={{ position: "absolute", inset: 0 }}>
 
-          {/* "No data" zone — diagonal stripes before first price data point */}
+          {/* "No data" zone */}
           {noDataEndPx > 0 && (
             <div
               className="absolute top-0 bottom-0 pointer-events-none overflow-hidden"
@@ -197,6 +229,7 @@ export const OilPriceChart = memo(function OilPriceChart({
             </div>
           )}
 
+          {/* Recharts — no longer re-renders on hover */}
           <LineChart
             width={scale.totalWidthPx + LABEL_WIDTH}
             height={CHART_HEIGHT}
@@ -215,66 +248,26 @@ export const OilPriceChart = memo(function OilPriceChart({
               strokeWidth={2}
               isAnimationActive={false}
             />
-            {hoveredX !== null && (
-              <ReferenceLine
-                x={hoveredX}
-                stroke="rgba(0,0,0,0.3)"
-                strokeDasharray="3 3"
-              />
-            )}
           </LineChart>
         </div>
 
-        {/* Hovered price bubble — visible from timeline hover too */}
-        {hoveredX !== null && hoveredPrice !== null && (
-          <div
-            className="pointer-events-none absolute"
-            style={{
-              left: hoveredX + LABEL_WIDTH,
-              top: priceToY(hoveredPrice, yDomain),
-              transform: "translate(-50%, -calc(100% + 6px))",
-              zIndex: 18,
-            }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                bottom: "calc(100% + 5px)",
-                left: "50%",
-                transform: "translateX(-50%)",
-                background: "white",
-                border: "1px solid rgba(0,0,0,0.12)",
-                borderRadius: 6,
-                padding: "3px 7px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <div className="font-semibold text-amber-700" style={{ fontSize: 11 }}>
-                ${hoveredPrice.toFixed(2)}/bbl
-              </div>
-              <div className="text-gray-400" style={{ fontSize: 10 }}>
-                {format(hoveredDate!, "MMM yyyy", { locale: ptBR })}
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Hover overlay — lightweight component that re-renders at 60fps */}
+        <ChartHoverOverlay prices={prices} yDomain={yDomain} scale={scale} />
 
         {/* Oil shock markers */}
         {shockMarkers.map((shock) => {
-          const isUp = shock.effect === "up";
-          const color = isUp ? "#dc2626" : "#2563eb";
+          const isUp    = shock.effect === "up";
+          const color   = isUp ? "#dc2626" : "#2563eb";
           const isActive = activeShock === shock.id;
           const tooltipBelow = shock.y < 32;
           const size = 18;
-
           return (
             <div
               key={shock.id}
               style={{
                 position: "absolute",
                 left: shock.x - size / 2,
-                top: shock.y - size / 2,
+                top:  shock.y - size / 2,
                 width: size,
                 height: size,
                 cursor: "pointer",
@@ -290,47 +283,32 @@ export const OilPriceChart = memo(function OilPriceChart({
               onMouseLeave={() => setActiveShock(null)}
             >
               <svg width={size} height={size} viewBox="0 0 18 18" overflow="visible">
-                {/* Diamond */}
-                <path
-                  d="M9 1 L17 9 L9 17 L1 9 Z"
-                  fill={color}
-                  stroke="white"
-                  strokeWidth="1.5"
-                  opacity={isActive ? 1 : 0.88}
-                />
-                {/* Arrow */}
+                <path d="M9 1 L17 9 L9 17 L1 9 Z" fill={color} stroke="white" strokeWidth="1.5" opacity={isActive ? 1 : 0.88} />
                 {isUp
                   ? <path d="M9 5.5 L12.5 11 L5.5 11 Z" fill="white" />
                   : <path d="M9 12.5 L12.5 7 L5.5 7 Z" fill="white" />
                 }
               </svg>
-
               {isActive && (
-                <div
-                  style={{
-                    position: "absolute",
-                    ...(tooltipBelow
-                      ? { top: "calc(100% + 5px)" }
-                      : { bottom: "calc(100% + 5px)" }),
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    background: "rgba(15,15,15,0.88)",
-                    color: "white",
-                    fontSize: 10,
-                    fontWeight: 500,
-                    padding: "3px 7px",
-                    borderRadius: 4,
-                    whiteSpace: "nowrap",
-                    pointerEvents: "none",
-                    borderLeft: `2px solid ${color}`,
-                    lineHeight: 1.4,
-                    zIndex: 99,
-                  }}
-                >
+                <div style={{
+                  position: "absolute",
+                  ...(tooltipBelow ? { top: "calc(100% + 5px)" } : { bottom: "calc(100% + 5px)" }),
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  background: "rgba(15,15,15,0.88)",
+                  color: "white",
+                  fontSize: 10,
+                  fontWeight: 500,
+                  padding: "3px 7px",
+                  borderRadius: 4,
+                  whiteSpace: "nowrap",
+                  pointerEvents: "none",
+                  borderLeft: `2px solid ${color}`,
+                  lineHeight: 1.4,
+                  zIndex: 99,
+                }}>
                   {shock.name}
-                  <span style={{ color: color, marginLeft: 4 }}>
-                    {isUp ? "▲" : "▼"}
-                  </span>
+                  <span style={{ color, marginLeft: 4 }}>{isUp ? "▲" : "▼"}</span>
                   <div style={{ color: "#d97706", fontSize: 9, marginTop: 2, fontWeight: 600 }}>
                     ${shock.price.toFixed(2)}/bbl
                   </div>
@@ -340,40 +318,29 @@ export const OilPriceChart = memo(function OilPriceChart({
           );
         })}
 
-        {/* Sticky Y-axis overlay — stays pinned to left edge while scrolling horizontally */}
+        {/* Sticky Y-axis overlay */}
         <div
           className="pointer-events-none"
           style={{
-            position: "sticky",
-            left: 0,
-            top: 0,
-            width: LABEL_WIDTH,
-            height: CHART_HEIGHT,
-            zIndex: 20,
-            background: "white",
+            position: "sticky", left: 0, top: 0,
+            width: LABEL_WIDTH, height: CHART_HEIGHT,
+            zIndex: 20, background: "white",
             borderRight: "1px solid rgba(0,0,0,0.05)",
           }}
         >
-          {yTicks.map((price) => {
-            const y = priceToY(price, yDomain);
-            return (
-              <div
-                key={price}
-                className="absolute"
-                style={{
-                  right: 6,
-                  top: y - 5,
-                  fontSize: 9,
-                  fontFamily: "monospace",
-                  color: "#9ca3af",
-                  lineHeight: 1,
-                  userSelect: "none",
-                }}
-              >
-                ${price}
-              </div>
-            );
-          })}
+          {yTicks.map((price) => (
+            <div
+              key={price}
+              className="absolute"
+              style={{
+                right: 6, top: priceToY(price, yDomain) - 5,
+                fontSize: 9, fontFamily: "monospace",
+                color: "#9ca3af", lineHeight: 1, userSelect: "none",
+              }}
+            >
+              ${price}
+            </div>
+          ))}
         </div>
       </div>
     </div>
