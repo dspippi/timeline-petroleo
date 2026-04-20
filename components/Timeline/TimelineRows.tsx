@@ -114,7 +114,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
               style={{ height: REGION_HEADER_HEIGHT, width: "100%" }}
             >
               <div
-                className="sticky left-0 z-10 bg-[#f5f3ee] px-2 flex items-center"
+                className="sm:sticky left-0 z-10 bg-[#f5f3ee] px-2 flex items-center"
                 style={{ width: LABEL_WIDTH }}
               >
                 <span className="text-[9px] font-bold text-gray-400 uppercase tracking-[0.15em]">
@@ -142,7 +142,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
           >
             {/* Country label — sticky left, spans full height */}
             <div
-              className={`sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-black/[0.05] ${
+              className={`sm:sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-black/[0.05] ${
                 brasil ? "bg-amber-50" : "bg-white group-hover:bg-gray-50/80"
               }`}
               style={{ width: LABEL_WIDTH, height: totalRowHeight }}
