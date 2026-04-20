@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { OilEvent, EventType } from "@/types";
@@ -8,19 +8,69 @@ import { useCategories } from "@/context/CategoriesContext";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
+type SortKey = "title" | "type" | "country" | "start_date" | "company";
+type SortDir = "asc" | "desc";
+
+function SortIcon({ active, dir }: { active: boolean; dir: SortDir }) {
+  return (
+    <span className={`inline-block ml-1 ${active ? "text-amber-500" : "text-gray-300"}`}>
+      {active && dir === "desc" ? "↓" : "↑"}
+    </span>
+  );
+}
+
 export function EventsTable({ events }: { events: OilEvent[] }) {
   const router = useRouter();
   const { categories, getColor, getLabel } = useCategories();
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState<EventType | "">("");
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [sortKey, setSortKey] = useState<SortKey>("start_date");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
 
-  const filtered = events.filter((e) => {
-    const q = search.toLowerCase();
-    const matchSearch = !q || e.title.toLowerCase().includes(q) || e.country.toLowerCase().includes(q);
-    const matchType = !typeFilter || e.type === typeFilter;
-    return matchSearch && matchType;
-  });
+  function handleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir("asc");
+    }
+  }
+
+  const filtered = useMemo(() => {
+    const result = events.filter((e) => {
+      const q = search.toLowerCase();
+      const matchSearch = !q || e.title.toLowerCase().includes(q) || e.country.toLowerCase().includes(q);
+      const matchType = !typeFilter || e.type === typeFilter;
+      return matchSearch && matchType;
+    });
+
+    result.sort((a, b) => {
+      let av: string = "";
+      let bv: string = "";
+      if (sortKey === "start_date") {
+        av = a.start_date ?? "";
+        bv = b.start_date ?? "";
+      } else if (sortKey === "title") {
+        av = a.title.toLowerCase();
+        bv = b.title.toLowerCase();
+      } else if (sortKey === "type") {
+        av = getLabel(a.type).toLowerCase();
+        bv = getLabel(b.type).toLowerCase();
+      } else if (sortKey === "country") {
+        av = a.country.toLowerCase();
+        bv = b.country.toLowerCase();
+      } else if (sortKey === "company") {
+        av = (a.company ?? "").toLowerCase();
+        bv = (b.company ?? "").toLowerCase();
+      }
+      if (av < bv) return sortDir === "asc" ? -1 : 1;
+      if (av > bv) return sortDir === "asc" ? 1 : -1;
+      return 0;
+    });
+
+    return result;
+  }, [events, search, typeFilter, sortKey, sortDir, getLabel]);
 
   const handleDelete = useCallback(async (id: string, title: string) => {
     if (!confirm(`Excluir "${title}"?`)) return;
@@ -78,11 +128,19 @@ export function EventsTable({ events }: { events: OilEvent[] }) {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-black/[0.06] text-left">
-              <th className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Título</th>
-              <th className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Tipo</th>
-              <th className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">País</th>
-              <th className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Data</th>
-              <th className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Empresa</th>
+              {(["title", "type", "country", "start_date", "company"] as SortKey[]).map((key, i) => {
+                const labels: Record<SortKey, string> = { title: "Título", type: "Tipo", country: "País", start_date: "Data", company: "Empresa" };
+                return (
+                  <th
+                    key={key}
+                    onClick={() => handleSort(key)}
+                    className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide cursor-pointer select-none hover:text-gray-600 transition-colors"
+                  >
+                    {labels[key]}
+                    <SortIcon active={sortKey === key} dir={sortDir} />
+                  </th>
+                );
+              })}
               <th className="px-4 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-24">Ações</th>
             </tr>
           </thead>

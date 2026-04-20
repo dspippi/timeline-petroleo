@@ -1,7 +1,7 @@
 "use client";
 
 import { OilEvent, EventType } from "@/types";
-import { EVENT_TYPE_COLORS, EVENT_TYPE_LABELS } from "@/lib/colorMap";
+import { useCategories } from "@/context/CategoriesContext";
 
 interface Props {
   event: OilEvent;
@@ -13,8 +13,9 @@ interface Props {
 }
 
 export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeClick }: Props) {
-  const color = EVENT_TYPE_COLORS[event.type];
-  const typeLabel = EVENT_TYPE_LABELS[event.type];
+  const { getColor, getLabel } = useCategories();
+  const color = getColor(event.type);
+  const typeLabel = getLabel(event.type);
   const startYear = event.start_date.getFullYear();
   const endYear = event.end_date ? ` — ${event.end_date.getFullYear()}` : "";
 

@@ -1,7 +1,27 @@
 [
-  { "id": "war",       "label": "Guerra / Conflito",    "color": "#ef4444" },
-  { "id": "discovery", "label": "Descoberta",            "color": "#22c55e" },
-  { "id": "policy",    "label": "Política / Embargo",    "color": "#3b82f6" },
-  { "id": "company",   "label": "Evento Corporativo",    "color": "#f59e0b" },
-  { "id": "crisis",    "label": "Crise Econômica",       "color": "#a855f7" }
+  {
+    "id": "war",
+    "label": "Conflito",
+    "color": "#ef4444"
+  },
+  {
+    "id": "discovery",
+    "label": "Descoberta / Produção",
+    "color": "#22c55e"
+  },
+  {
+    "id": "policy",
+    "label": "Política / Embargo",
+    "color": "#3b82f6"
+  },
+  {
+    "id": "company",
+    "label": "Corporações",
+    "color": "#6b7280"
+  },
+  {
+    "id": "crisis",
+    "label": "Crise",
+    "color": "#f97316"
+  }
 ]
