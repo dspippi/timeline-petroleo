@@ -78,14 +78,18 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       if (timelineScrollRef.current) {
         timelineScrollRef.current.scrollLeft = timelineScrollRef.current.scrollWidth;
       }
-      if (chartScrollRef.current && timelineScrollRef.current) {
-        chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
-      }
       setChartScrollLeft(timelineScrollRef.current?.scrollLeft ?? 0);
       hasScrolled.current = true;
       requestAnimationFrame(() => setChartReady(true));
     });
   }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // O chart carrega prices de forma assíncrona: quando chegam, o scrollRef é
+  // montado e precisamos sincronizar o scroll com a posição da timeline.
+  useEffect(() => {
+    if (prices.length === 0 || !chartScrollRef.current || !timelineScrollRef.current) return;
+    chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
+  }, [prices.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const timelineScrollRef = useRef<HTMLDivElement>(null);
   const chartScrollRef = useRef<HTMLDivElement>(null);
