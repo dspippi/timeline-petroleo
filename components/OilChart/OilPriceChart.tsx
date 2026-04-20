@@ -4,6 +4,7 @@ import { memo, useCallback, RefObject, useMemo, useState } from "react";
 import { LineChart, Line, XAxis, YAxis } from "recharts";
 import { OilPrice, TimelineScale } from "@/types";
 import { useHoveredDate, useSetHoveredDate } from "@/context/TimelineSyncContext";
+import { useDarkMode } from "@/context/SettingsContext";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { LABEL_WIDTH } from "@/components/Timeline/TimelineRows";
@@ -86,6 +87,7 @@ interface HoverOverlayProps {
 
 const ChartHoverOverlay = memo(function ChartHoverOverlay({ prices, yDomain, scale }: HoverOverlayProps) {
   const hoveredDate = useHoveredDate();
+  const darkMode = useDarkMode();
   if (!hoveredDate) return null;
 
   const hoveredX    = scale.toPixel(hoveredDate);
@@ -96,18 +98,14 @@ const ChartHoverOverlay = memo(function ChartHoverOverlay({ prices, yDomain, sca
       {/* Vertical reference line */}
       <div
         className="absolute top-0 bottom-0 pointer-events-none"
-        style={{ left: hoveredX + LABEL_WIDTH, width: 1, background: "rgba(0,0,0,0.25)", zIndex: 10 }}
+        style={{ left: hoveredX + LABEL_WIDTH, width: 1, background: darkMode ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.25)", zIndex: 10 }}
       />
 
       {/* Price bubble */}
       {hoveredPrice !== null && (
         <div
           className="pointer-events-none absolute"
-          style={{
-            left: hoveredX + LABEL_WIDTH,
-            top: priceToY(hoveredPrice, yDomain),
-            zIndex: 18,
-          }}
+          style={{ left: hoveredX + LABEL_WIDTH, top: priceToY(hoveredPrice, yDomain), zIndex: 18 }}
         >
           <div
             style={{
@@ -115,18 +113,18 @@ const ChartHoverOverlay = memo(function ChartHoverOverlay({ prices, yDomain, sca
               bottom: "calc(100% + 5px)",
               left: "50%",
               transform: "translateX(-50%)",
-              background: "white",
-              border: "1px solid rgba(0,0,0,0.12)",
+              background: darkMode ? "#1a1b26" : "white",
+              border: darkMode ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.12)",
               borderRadius: 6,
               padding: "3px 7px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.24)",
               whiteSpace: "nowrap",
             }}
           >
-            <div className="font-semibold text-amber-700" style={{ fontSize: 11 }}>
+            <div className="font-semibold text-amber-600" style={{ fontSize: 11 }}>
               ${hoveredPrice.toFixed(2)}/bbl
             </div>
-            <div className="text-gray-400" style={{ fontSize: 10 }}>
+            <div style={{ fontSize: 10, color: darkMode ? "#5a5c70" : "#9ca3af" }}>
               {format(hoveredDate, "MMM yyyy", { locale: ptBR })}
             </div>
           </div>
@@ -145,7 +143,9 @@ export const OilPriceChart = memo(function OilPriceChart({
   onScroll,
 }: Props) {
   const setHoveredDate = useSetHoveredDate();
+  const darkMode = useDarkMode();
   const [activeShock, setActiveShock] = useState<number | null>(null);
+  const [tooltipPos, setTooltipPos] = useState<{ x: number; anchorY: number; above: boolean } | null>(null);
 
   const { yDomain, yTicks } = useMemo(() => {
     if (prices.length === 0) return { yDomain: [0, 160] as [number, number], yTicks: [40, 80, 120, 160] };
@@ -186,20 +186,22 @@ export const OilPriceChart = memo(function OilPriceChart({
 
   const noDataEndPx = prices.length > 0 ? scale.toPixel(prices[0].date) : 0;
   const xDomain: [number, number] = [0, scale.totalWidthPx];
+  const activeShockData = activeShock !== null ? (shockMarkers.find((s) => s.id === activeShock) ?? null) : null;
 
   if (prices.length === 0) {
     return (
-      <div className="shrink-0 flex items-center justify-center border-b border-black/[0.07] bg-gray-50" style={{ height: CHART_HEIGHT }}>
-        <span className="text-gray-400 text-xs">Carregando dados de preço…</span>
+      <div className="shrink-0 flex items-center justify-center border-b border-black/[0.07] dark:border-white/[0.06] bg-gray-50 dark:bg-[#13141d]" style={{ height: CHART_HEIGHT }}>
+        <span className="text-gray-400 dark:text-[#3a3c50] text-xs">Carregando dados de preço…</span>
       </div>
     );
   }
 
   return (
+    <>
     <div
       ref={scrollRef}
-      className="shrink-0 overflow-x-hidden border-b border-black/[0.07] bg-white relative"
-      style={{ height: CHART_HEIGHT }}
+      className="shrink-0 overflow-x-hidden border-b border-black/[0.07] dark:border-white/[0.06] relative"
+      style={{ height: CHART_HEIGHT, background: darkMode ? "#13141d" : "white" }}
       onScroll={onScroll}
     >
       <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, height: CHART_HEIGHT, position: "relative" }}>
@@ -216,13 +218,14 @@ export const OilPriceChart = memo(function OilPriceChart({
               <div
                 className="absolute inset-0"
                 style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(0,0,0,0.035) 5px, rgba(0,0,0,0.035) 6px)",
+                  backgroundImage: darkMode
+                    ? "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(255,255,255,0.03) 5px, rgba(255,255,255,0.03) 6px)"
+                    : "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(0,0,0,0.035) 5px, rgba(0,0,0,0.035) 6px)",
                 }}
               />
               <span
                 className="absolute text-[9px] font-medium whitespace-nowrap"
-                style={{ bottom: 6, left: 6, color: "rgba(0,0,0,0.18)" }}
+                style={{ bottom: 6, left: 6, color: darkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.18)" }}
               >
                 sem dados disponíveis
               </span>
@@ -279,8 +282,16 @@ export const OilPriceChart = memo(function OilPriceChart({
                 transition: "filter 0.15s ease, transform 0.15s ease",
                 transform: isActive ? "scale(1.25)" : "scale(1)",
               }}
-              onMouseEnter={() => setActiveShock(shock.id)}
-              onMouseLeave={() => setActiveShock(null)}
+              onMouseEnter={(e) => {
+                setActiveShock(shock.id);
+                const rect = e.currentTarget.getBoundingClientRect();
+                setTooltipPos({
+                  x: rect.left + rect.width / 2,
+                  anchorY: tooltipBelow ? rect.bottom : rect.top,
+                  above: !tooltipBelow,
+                });
+              }}
+              onMouseLeave={() => { setActiveShock(null); setTooltipPos(null); }}
             >
               <svg width={size} height={size} viewBox="0 0 18 18" overflow="visible">
                 <path d="M9 1 L17 9 L9 17 L1 9 Z" fill={color} stroke="white" strokeWidth="1.5" opacity={isActive ? 1 : 0.88} />
@@ -289,31 +300,6 @@ export const OilPriceChart = memo(function OilPriceChart({
                   : <path d="M9 12.5 L12.5 7 L5.5 7 Z" fill="white" />
                 }
               </svg>
-              {isActive && (
-                <div style={{
-                  position: "absolute",
-                  ...(tooltipBelow ? { top: "calc(100% + 5px)" } : { bottom: "calc(100% + 5px)" }),
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "rgba(15,15,15,0.88)",
-                  color: "white",
-                  fontSize: 10,
-                  fontWeight: 500,
-                  padding: "3px 7px",
-                  borderRadius: 4,
-                  whiteSpace: "nowrap",
-                  pointerEvents: "none",
-                  borderLeft: `2px solid ${color}`,
-                  lineHeight: 1.4,
-                  zIndex: 99,
-                }}>
-                  {shock.name}
-                  <span style={{ color, marginLeft: 4 }}>{isUp ? "▲" : "▼"}</span>
-                  <div style={{ color: "#d97706", fontSize: 9, marginTop: 2, fontWeight: 600 }}>
-                    ${shock.price.toFixed(2)}/bbl
-                  </div>
-                </div>
-              )}
             </div>
           );
         })}
@@ -324,8 +310,8 @@ export const OilPriceChart = memo(function OilPriceChart({
           style={{
             position: "sticky", left: 0, top: 0,
             width: LABEL_WIDTH, height: CHART_HEIGHT,
-            zIndex: 20, background: "white",
-            borderRight: "1px solid rgba(0,0,0,0.05)",
+            zIndex: 20, background: darkMode ? "#13141d" : "white",
+            borderRight: darkMode ? "1px solid rgba(255,255,255,0.05)" : "1px solid rgba(0,0,0,0.05)",
           }}
         >
           {yTicks.map((price) => (
@@ -335,7 +321,7 @@ export const OilPriceChart = memo(function OilPriceChart({
               style={{
                 right: 6, top: priceToY(price, yDomain) - 5,
                 fontSize: 9, fontFamily: "monospace",
-                color: "#9ca3af", lineHeight: 1, userSelect: "none",
+                color: darkMode ? "#3a3c50" : "#9ca3af", lineHeight: 1, userSelect: "none",
               }}
             >
               ${price}
@@ -344,5 +330,36 @@ export const OilPriceChart = memo(function OilPriceChart({
         </div>
       </div>
     </div>
+
+    {activeShockData !== null && tooltipPos !== null && (
+      <div style={{
+        position: "fixed",
+        left: tooltipPos.x,
+        ...(tooltipPos.above
+          ? { top: tooltipPos.anchorY - 5, transform: "translateX(-50%) translateY(-100%)" }
+          : { top: tooltipPos.anchorY + 5, transform: "translateX(-50%)" }
+        ),
+        background: "rgba(15,15,15,0.88)",
+        color: "white",
+        fontSize: 10,
+        fontWeight: 500,
+        padding: "3px 7px",
+        borderRadius: 4,
+        whiteSpace: "nowrap",
+        pointerEvents: "none",
+        borderLeft: `2px solid ${activeShockData.effect === "up" ? "#dc2626" : "#2563eb"}`,
+        lineHeight: 1.4,
+        zIndex: 9999,
+      }}>
+        {activeShockData.name}
+        <span style={{ color: activeShockData.effect === "up" ? "#dc2626" : "#2563eb", marginLeft: 4 }}>
+          {activeShockData.effect === "up" ? "▲" : "▼"}
+        </span>
+        <div style={{ color: "#d97706", fontSize: 9, marginTop: 2, fontWeight: 600 }}>
+          ${activeShockData.price.toFixed(2)}/bbl
+        </div>
+      </div>
+    )}
+    </>
   );
 });

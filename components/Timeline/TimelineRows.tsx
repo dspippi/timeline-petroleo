@@ -97,7 +97,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
 
   if (rows.length === 0) {
     return (
-      <div className="flex items-center justify-center h-32 text-gray-400 text-sm">
+      <div className="flex items-center justify-center h-32 text-gray-400 dark:text-[#3a3c50] text-sm">
         Nenhum evento corresponde aos filtros selecionados.
       </div>
     );
@@ -110,18 +110,18 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
           return (
             <div
               key={`region-${row.region}`}
-              className="flex items-center border-b border-black/[0.04] bg-[#f5f3ee]"
+              className="flex items-center border-b border-black/[0.04] dark:border-white/[0.04] bg-[#f5f3ee] dark:bg-[#0d0e14]"
               style={{ height: REGION_HEADER_HEIGHT, width: "100%" }}
             >
               <div
-                className="sm:sticky left-0 z-10 bg-[#f5f3ee] px-2 flex items-center"
+                className="sm:sticky left-0 z-10 bg-[#f5f3ee] dark:bg-[#0d0e14] px-2 flex items-center"
                 style={{ width: LABEL_WIDTH }}
               >
-                <span className="text-[9px] font-bold text-gray-400 uppercase tracking-[0.15em]">
+                <span className="text-[9px] font-bold text-gray-400 dark:text-[#2a2c40] uppercase tracking-[0.15em]">
                   {row.region}
                 </span>
               </div>
-              <div className="flex-1 h-px bg-black/[0.05]" />
+              <div className="flex-1 h-px bg-black/[0.05] dark:bg-white/[0.04]" />
             </div>
           );
         }
@@ -133,25 +133,25 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
         return (
           <div
             key={`country-${row.country}-${i}`}
-            className={`relative flex items-stretch border-b border-black/[0.04] group ${
+            className={`relative flex items-stretch border-b border-black/[0.04] dark:border-white/[0.04] group ${
               brasil
-                ? "bg-amber-50 border-l-2 border-l-amber-400"
-                : "bg-white hover:bg-gray-50/80"
+                ? "bg-amber-50 dark:bg-[#1a1200] border-l-2 border-l-amber-400 dark:border-l-amber-700"
+                : "bg-white dark:bg-[#13141d] hover:bg-gray-50/80 dark:hover:bg-white/[0.03]"
             }`}
             style={{ height: totalRowHeight, width: "100%" }}
           >
             {/* Country label — sticky left, spans full height */}
             <div
-              className={`sm:sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-black/[0.05] ${
-                brasil ? "bg-amber-50" : "bg-white group-hover:bg-gray-50/80"
+              className={`sm:sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-black/[0.05] dark:border-white/[0.04] ${
+                brasil ? "bg-amber-50 dark:bg-[#1a1200]" : "bg-white dark:bg-[#13141d] group-hover:bg-gray-50/80 dark:group-hover:bg-white/[0.03]"
               }`}
               style={{ width: LABEL_WIDTH, height: totalRowHeight }}
             >
               <span
                 className={`text-[12px] font-bold truncate transition-colors leading-tight ${
                   brasil
-                    ? "text-amber-700"
-                    : "text-gray-500 group-hover:text-gray-700"
+                    ? "text-amber-700 dark:text-amber-600"
+                    : "text-gray-500 dark:text-[#4a4c60] group-hover:text-gray-700 dark:group-hover:text-[#8a8ca0]"
                 }`}
               >
                 {row.country}

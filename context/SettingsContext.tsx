@@ -6,12 +6,14 @@ export interface Settings {
   rowHeight: number;
   markerSize: number;
   showEventLabels: boolean;
+  darkMode: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
   rowHeight: 52,
   markerSize: 11,
   showEventLabels: true,
+  darkMode: false,
 };
 
 interface SettingsContextValue {
@@ -37,4 +39,9 @@ export function useSettings() {
   const ctx = useContext(SettingsContext);
   if (!ctx) throw new Error("useSettings must be used inside SettingsProvider");
   return ctx;
+}
+
+export function useDarkMode() {
+  const { settings } = useSettings();
+  return settings.darkMode;
 }

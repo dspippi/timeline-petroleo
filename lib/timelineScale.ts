@@ -7,6 +7,9 @@ export const MAX_PX_PER_DAY = 25;
 
 const MS_PER_DAY = 86_400_000;
 
+// Extra blank space at both edges so labels at the timeline boundaries aren't clipped
+const TIMELINE_EDGE_PX = 300;
+
 export function buildScale(
   domainStart: Date,
   domainEnd: Date,
@@ -15,19 +18,16 @@ export function buildScale(
   const domainStartMs = domainStart.getTime();
   const domainEndMs   = domainEnd.getTime();
   const totalDays     = (domainEndMs - domainStartMs) / MS_PER_DAY;
-  const totalWidthPx  = Math.max(Math.ceil(totalDays * pxPerDay), 1);
+  const totalWidthPx  = Math.max(Math.ceil(totalDays * pxPerDay), 1) + 2 * TIMELINE_EDGE_PX;
 
   function toPixel(date: Date): number {
     const ms = date.getTime();
-    if (ms <= domainStartMs) return 0;
-    if (ms >= domainEndMs)   return totalWidthPx;
-    return Math.round(((ms - domainStartMs) / MS_PER_DAY) * pxPerDay);
+    return TIMELINE_EDGE_PX + Math.round(((ms - domainStartMs) / MS_PER_DAY) * pxPerDay);
   }
 
   function toDate(pixel: number): Date {
-    if (pixel <= 0)            return new Date(domainStartMs);
-    if (pixel >= totalWidthPx) return new Date(domainEndMs);
-    return new Date(Math.round(domainStartMs + (pixel / pxPerDay) * MS_PER_DAY));
+    const adjustedPx = pixel - TIMELINE_EDGE_PX;
+    return new Date(Math.round(domainStartMs + (adjustedPx / pxPerDay) * MS_PER_DAY));
   }
 
   return { toPixel, toDate, domainStart, domainEnd, totalWidthPx, pxPerDay };

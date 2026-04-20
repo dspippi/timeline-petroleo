@@ -8,7 +8,7 @@ import { clamp } from "@/lib/utils";
 import { useFilters } from "@/hooks/useFilters";
 import { useOilPrices } from "@/hooks/useOilPrices";
 import { usePxPerDay, useSetPxPerDay } from "@/context/TimelineSyncContext";
-import { useSettings } from "@/context/SettingsContext";
+import { useSettings, useDarkMode } from "@/context/SettingsContext";
 import { FilterDropdown } from "@/components/Filters/FilterDropdown";
 import { Timeline } from "@/components/Timeline/Timeline";
 import { LABEL_WIDTH } from "@/components/Timeline/TimelineRows";
@@ -34,7 +34,8 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
   const pxPerDay    = usePxPerDay();
   const setPxPerDay = useSetPxPerDay();
-  const { settings } = useSettings();
+  const { settings, updateSettings } = useSettings();
+  const darkMode = useDarkMode();
   const { categories } = useCategories();
   const [showChart, setShowChart] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<OilEvent | null>(null);
@@ -132,10 +133,10 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const companyOptions = companies.map((c) => ({ value: c, label: c }));
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 bg-[#f5f3ee]">
+    <div className="flex flex-col flex-1 min-h-0 bg-[#f5f3ee] dark:bg-[#0d0e14]">
 
       {/* ── Toolbar ── */}
-      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-black/[0.07] bg-white">
+      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-black/[0.07] dark:border-white/[0.06] bg-white dark:bg-[#13141d]">
         {/* Filter dropdowns */}
         <FilterDropdown
           label="Tipo"
@@ -162,13 +163,13 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         )}
 
         {/* Separator */}
-        <div className="w-px h-4 bg-gray-200 mx-1 hidden sm:block" />
+        <div className="w-px h-4 bg-gray-200 dark:bg-white/[0.08] mx-1 hidden sm:block" />
 
         {/* Brent toggle */}
         <Toggle enabled={showChart} onChange={setShowChart} label="Preço Brent (USD/barril)" />
 
         {/* Event count + clear */}
-        <span className="text-[11px] text-gray-400 ml-auto">
+        <span className="text-[11px] text-gray-400 dark:text-[#3a3c50] ml-auto">
           {filteredEvents.length} de {allEvents.length} eventos
           {activeCount > 0 && (
             <button
@@ -179,6 +180,27 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
             </button>
           )}
         </span>
+
+        {/* Dark mode toggle */}
+        <button
+          onClick={() => updateSettings({ darkMode: !darkMode })}
+          className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 dark:text-[#3a3c50] dark:hover:text-[#9a9cb0] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-all"
+          title={darkMode ? "Modo claro" : "Modo noturno"}
+        >
+          {darkMode ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Chart */}

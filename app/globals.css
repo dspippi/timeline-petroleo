@@ -6,6 +6,18 @@
   --bg-primary: #f5f3ee;
   --bg-secondary: #ffffff;
   --text-primary: #1c1c2e;
+  --scrollbar-track: #ece9e2;
+  --scrollbar-thumb: rgba(0,0,0,0.22);
+  --scrollbar-thumb-hover: rgba(0,0,0,0.38);
+}
+
+.dark {
+  --bg-primary: #0d0e14;
+  --bg-secondary: #13141d;
+  --text-primary: #e2e4ef;
+  --scrollbar-track: #1a1b26;
+  --scrollbar-thumb: rgba(255,255,255,0.12);
+  --scrollbar-thumb-hover: rgba(255,255,255,0.22);
 }
 
 html, body {
@@ -22,12 +34,12 @@ html, body {
 
 /* Scrollbar styling */
 .timeline-scroll::-webkit-scrollbar { height: 8px; width: 4px; }
-.timeline-scroll::-webkit-scrollbar-track { background: #ece9e2; }
+.timeline-scroll::-webkit-scrollbar-track { background: var(--scrollbar-track); }
 .timeline-scroll::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.22);
+  background: var(--scrollbar-thumb);
   border-radius: 999px;
 }
-.timeline-scroll::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.38); }
+.timeline-scroll::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
 /* Touch scrolling */
 .timeline-scroll {

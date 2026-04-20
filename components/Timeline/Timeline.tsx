@@ -7,7 +7,6 @@ import { MIN_PX_PER_DAY, MAX_PX_PER_DAY, DEFAULT_PX_PER_DAY } from "@/lib/timeli
 import { clamp } from "@/lib/utils";
 import { TimelineRows, LABEL_WIDTH } from "./TimelineRows";
 import { GuideOverlay } from "./GuideOverlay";
-import { EventLinesOverlay } from "./EventLinesOverlay";
 import { SettingsPanel } from "@/components/Settings/SettingsPanel";
 import { getYear } from "date-fns";
 import pkg from "@/package.json";
@@ -97,6 +96,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
     const el = scrollRef.current;
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey) return;
       e.preventDefault();
       pendingDelta.current += e.deltaY;
       if (rafId.current !== null) return;
@@ -154,19 +154,19 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   return (
     <div className="flex flex-col flex-1 min-h-0">
       {/* Zoom controls bar */}
-      <div className="shrink-0 flex items-center gap-1 px-3 py-1.5 border-b border-black/[0.06] bg-[#f5f3ee]">
-        <span className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mr-1">Zoom</span>
+      <div className="shrink-0 flex items-center gap-1 px-3 py-1.5 border-b border-black/[0.06] dark:border-white/[0.06] bg-[#f5f3ee] dark:bg-[#0d0e14]">
+        <span className="text-[10px] text-gray-400 dark:text-[#3a3c50] uppercase tracking-wider font-medium mr-1">Zoom</span>
         <button
           onClick={zoomOut}
           disabled={pxPerDay <= MIN_PX_PER_DAY}
-          className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           title="Reduzir zoom"
         >
           −
         </button>
         <button
           onClick={zoomReset}
-          className="px-2 h-6 text-[10px] font-mono text-gray-500 hover:bg-black/10 rounded transition-colors min-w-[42px] text-center"
+          className="px-2 h-6 text-[10px] font-mono text-gray-500 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08] rounded transition-colors min-w-[42px] text-center"
           title="Resetar zoom"
         >
           {zoomPercent}%
@@ -174,26 +174,26 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         <button
           onClick={zoomIn}
           disabled={pxPerDay >= MAX_PX_PER_DAY}
-          className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 hover:bg-black/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           title="Aumentar zoom"
         >
           +
         </button>
         <button
           onClick={zoomFit}
-          className="ml-1 px-2 h-6 text-[10px] text-gray-500 hover:bg-black/10 rounded transition-colors"
+          className="ml-1 px-2 h-6 text-[10px] text-gray-500 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08] rounded transition-colors"
           title="Ajustar toda a timeline à tela"
         >
           Fit
         </button>
-        <span className="text-[9px] text-gray-300 ml-2 hidden sm:block">Scroll para zoom · Arraste para navegar</span>
+        <span className="text-[9px] text-gray-300 dark:text-[#2a2c40] ml-2 hidden sm:block">Ctrl+Scroll para zoom · Arraste para navegar</span>
 
         <div className="ml-auto relative">
           <button
             ref={settingsBtnRef}
             onClick={() => setSettingsOpen((o) => !o)}
             className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${
-              settingsOpen ? "bg-amber-100 text-amber-700" : "text-gray-500 hover:bg-black/10"
+              settingsOpen ? "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400" : "text-gray-500 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08]"
             }`}
             title="Configurações"
           >
@@ -212,7 +212,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       {/* Year axis — fixed header, synced via JS scroll */}
       <div
         ref={yearAxisRef}
-        className="shrink-0 overflow-x-hidden overflow-y-hidden bg-[#f5f3ee] border-b border-black/[0.06]"
+        className="shrink-0 overflow-x-hidden overflow-y-hidden bg-[#f5f3ee] dark:bg-[#0d0e14] border-b border-black/[0.06] dark:border-white/[0.06]"
         style={{ height: 28 }}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative", height: 28 }}>
@@ -222,8 +222,8 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
               className="absolute top-0 bottom-0 flex flex-col items-start"
               style={{ left: x }}
             >
-              <div className="w-px h-full bg-black/[0.07]" />
-              <span className="absolute top-1 left-1 text-[10px] text-gray-400 font-mono whitespace-nowrap">
+              <div className="w-px h-full bg-black/[0.07] dark:bg-white/[0.06]" />
+              <span className="absolute top-1 left-1 text-[10px] text-gray-400 dark:text-[#3a3c50] font-mono whitespace-nowrap">
                 {year}
               </span>
             </div>
@@ -234,7 +234,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       {/* Scrollable timeline */}
       <div
         ref={scrollRef}
-        className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 bg-white"
+        className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 bg-white dark:bg-[#0d0e14]"
         style={{ cursor: isDragging ? "grabbing" : "grab" }}
         onScroll={handleScroll}
         onMouseDown={handleMouseDown}
@@ -243,32 +243,31 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         onMouseLeave={handleMouseLeave}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative" }}>
-          <EventLinesOverlay events={events} scale={scale} />
-          <TimelineRows events={events} scale={scale} scrollRef={scrollRef} onEventClick={handleEventClick} onTypeFilter={onTypeFilter} />
+<TimelineRows events={events} scale={scale} scrollRef={scrollRef} onEventClick={handleEventClick} onTypeFilter={onTypeFilter} />
           <GuideOverlay scale={scale} />
         </div>
 
         {/* Footer — visible only when scrolled to the bottom */}
         <footer
-          className="border-t border-black/[0.07] bg-[#f5f3ee] px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
+          className="border-t border-black/[0.07] dark:border-white/[0.06] bg-[#f5f3ee] dark:bg-[#0d0e14] px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
           style={{ position: "sticky", left: 0, width: "100vw" }}
         >
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-[10px] text-gray-400 font-semibold tracking-wide">
+            <span className="text-[10px] text-gray-400 dark:text-[#3a3c50] font-semibold tracking-wide">
               Desenvolvido por{" "}
-              <span className="text-gray-600 font-bold">Diogo S. P. Calegari</span>
+              <span className="text-gray-600 dark:text-[#5a5c70] font-bold">Diogo S. P. Calegari</span>
             </span>
-            <span className="hidden sm:inline text-gray-300">·</span>
+            <span className="hidden sm:inline text-gray-300 dark:text-[#2a2c40]">·</span>
             <a
               href="mailto:timelinedopetroleo@gmail.com"
               className="hidden sm:inline text-[10px] text-amber-600 hover:text-amber-800 transition-colors"
             >
               timelinedopetroleo@gmail.com
             </a>
-            <span className="hidden sm:inline text-gray-300">·</span>
-            <span className="hidden sm:inline text-[10px] text-gray-400 font-mono">v{pkg.version}</span>
+            <span className="hidden sm:inline text-gray-300 dark:text-[#2a2c40]">·</span>
+            <span className="hidden sm:inline text-[10px] text-gray-400 dark:text-[#3a3c50] font-mono">v{pkg.version}</span>
           </div>
-          <p className="text-[9.5px] text-gray-400 leading-relaxed sm:border-l sm:border-black/[0.08] sm:pl-4">
+          <p className="text-[9.5px] text-gray-400 dark:text-[#3a3c50] leading-relaxed sm:border-l sm:border-black/[0.08] dark:sm:border-white/[0.06] sm:pl-4">
             Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada —
             podem conter imprecisões de cunho didático. O autor não se responsabiliza pelo uso das informações aqui apresentadas.
           </p>

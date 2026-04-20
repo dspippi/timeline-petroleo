@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { OilPrice } from "@/types";
-import { getOilPrices } from "@/lib/oilPrice";
+import { parseISO } from "date-fns";
 
 export function useOilPrices() {
   const [prices, setPrices] = useState<OilPrice[]>([]);
@@ -11,10 +11,15 @@ export function useOilPrices() {
 
   useEffect(() => {
     let cancelled = false;
-    getOilPrices()
+
+    fetch("/api/oil-prices")
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json() as Promise<{ date: string; price: number }[]>;
+      })
       .then((data) => {
         if (!cancelled) {
-          setPrices(data);
+          setPrices(data.map((d) => ({ date: parseISO(d.date), price: d.price })));
           setLoading(false);
         }
       })
@@ -24,9 +29,8 @@ export function useOilPrices() {
           setLoading(false);
         }
       });
-    return () => {
-      cancelled = true;
-    };
+
+    return () => { cancelled = true; };
   }, []);
 
   return { prices, loading, error };

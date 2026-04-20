@@ -24,7 +24,7 @@ async function loadBase(): Promise<OilPrice[]> {
   return [...parseJsonPrices(hist), ...parseJsonPrices(fallback)];
 }
 
-async function fetchEia2025Plus(): Promise<OilPrice[]> {
+async function fetchEiaFrom(startYearMonth: string): Promise<OilPrice[]> {
   const apiKey = process.env.NEXT_PUBLIC_EIA_API_KEY;
   if (!apiKey) return [];
   try {
@@ -34,7 +34,7 @@ async function fetchEia2025Plus(): Promise<OilPrice[]> {
       `&frequency=monthly` +
       `&data[0]=value` +
       `&facets[series][]=RBRTE` +
-      `&start=2025-01` +
+      `&start=${startYearMonth}` +
       `&sort[0][column]=period` +
       `&sort[0][direction]=asc` +
       `&offset=0&length=120`;
@@ -59,23 +59,31 @@ async function fetchEia2025Plus(): Promise<OilPrice[]> {
 export async function getOilPrices(): Promise<OilPrice[]> {
   if (_cache) return _cache;
 
+  const base = await loadBase();
+
   // Browser: use static data immediately (no CORS issues)
   if (typeof window !== "undefined") {
-    _cache = await loadBase();
+    _cache = base;
     return _cache;
   }
 
-  // Server: combine static base with live EIA data for 2025+
-  const [base, live] = await Promise.all([loadBase(), fetchEia2025Plus()]);
+  // Server: fetch EIA data starting from the month after the last base entry
+  const lastBase = base[base.length - 1];
+  if (!lastBase) {
+    _cache = base;
+    return _cache;
+  }
+
+  const next = new Date(lastBase.date.getFullYear(), lastBase.date.getMonth() + 1, 1);
+  const startYearMonth = `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, "0")}`;
+
+  const live = await fetchEiaFrom(startYearMonth);
 
   if (live.length === 0) {
     _cache = base;
     return _cache;
   }
 
-  // Merge: keep all base data, append live 2025+ points not already in base
-  const lastBaseDate = base[base.length - 1]?.date.getTime() ?? 0;
-  const newPoints = live.filter((p) => p.date.getTime() > lastBaseDate);
-  _cache = [...base, ...newPoints];
+  _cache = [...base, ...live];
   return _cache;
 }

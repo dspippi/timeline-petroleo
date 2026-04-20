@@ -17,20 +17,38 @@ export function groupEventsByRegion(
 ): Map<string, Map<string, OilEvent[]>> {
   const grouped = new Map<string, Map<string, OilEvent[]>>();
 
-  // Brasil always first inside South America
-  const sorted = [...events].sort((a, b) => {
-    if (isBrasil(a.country) && !isBrasil(b.country)) return -1;
-    if (!isBrasil(a.country) && isBrasil(b.country)) return 1;
-    return 0;
-  });
-
-  for (const e of sorted) {
+  for (const e of events) {
     if (!grouped.has(e.region)) grouped.set(e.region, new Map());
     const regionMap = grouped.get(e.region)!;
     if (!regionMap.has(e.country)) regionMap.set(e.country, []);
     regionMap.get(e.country)!.push(e);
   }
-  return grouped;
+
+  // Sort countries within each region by event count desc, Brasil always first
+  for (const [, countries] of grouped) {
+    const countryEntries = Array.from(countries.entries()).sort(([ca, ea], [cb, eb]) => {
+      if (isBrasil(ca) && !isBrasil(cb)) return -1;
+      if (!isBrasil(ca) && isBrasil(cb)) return 1;
+      return eb.length - ea.length;
+    });
+    countries.clear();
+    for (const [country, evts] of countryEntries) countries.set(country, evts);
+  }
+
+  // Sort regions: Global first, then by event count desc
+  const regionEventCount = (entries: Map<string, OilEvent[]>) =>
+    Array.from(entries.values()).reduce((sum, evts) => sum + evts.length, 0);
+
+  const sorted = Array.from(grouped.entries()).sort(([ra, ca], [rb, cb]) => {
+    if (ra === "Global") return -1;
+    if (rb === "Global") return 1;
+    // América Central e do Sul second (Brasil logo após Global)
+    if (ra === "América Central e do Sul") return -1;
+    if (rb === "América Central e do Sul") return 1;
+    return regionEventCount(cb) - regionEventCount(ca);
+  });
+
+  return new Map(sorted);
 }
 
 export function clamp(value: number, min: number, max: number): number {

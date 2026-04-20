@@ -12,19 +12,19 @@ export default function HomePage() {
   }));
 
   return (
-    <main className="flex flex-col h-[100dvh] overflow-hidden bg-[#f5f3ee]">
+    <main className="flex flex-col h-[100dvh] overflow-hidden bg-[#f5f3ee] dark:bg-[#0d0e14]">
       {/* Header */}
-      <header className="shrink-0 px-4 md:px-6 py-2.5 border-b border-black/[0.07] flex items-center gap-3 bg-white shadow-sm">
+      <header className="shrink-0 px-4 md:px-6 py-2.5 border-b border-black/[0.07] dark:border-white/[0.06] flex items-center gap-3 bg-white dark:bg-[#13141d] shadow-sm">
         <div>
-          <h1 className="text-base md:text-lg font-bold text-gray-900 tracking-tight leading-none">
+          <h1 className="text-base md:text-lg font-bold text-gray-900 dark:text-[#e2e4ef] tracking-tight leading-none">
             Timeline do Petróleo
           </h1>
-          <p className="text-[10px] text-gray-400 mt-0.5 tracking-wide uppercase">
+          <p className="text-[10px] text-gray-400 dark:text-[#3a3c50] mt-0.5 tracking-wide uppercase">
             Geopolítica energética
           </p>
         </div>
         <div className="ml-auto hidden lg:block">
-          <span className="text-[10px] text-gray-300 font-mono">
+          <span className="text-[10px] text-gray-300 dark:text-[#2a2c40] font-mono">
             Scroll para zoom · Arraste para navegar
           </span>
         </div>

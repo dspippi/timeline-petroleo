@@ -5,6 +5,7 @@ import { TimelineSyncProvider } from "@/context/TimelineSyncContext";
 import { SettingsProvider } from "@/context/SettingsContext";
 import { CategoriesProvider } from "@/context/CategoriesContext";
 import { listCategories } from "@/lib/categories";
+import { ThemeApplicator } from "@/components/ui/ThemeApplicator";
 
 // Plus Jakarta Sans is the closest Google Font to Aptos (Microsoft's humanist sans-serif)
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className={`${plusJakartaSans.className} antialiased`}>
         <CategoriesProvider initialCategories={categories}>
           <SettingsProvider>
+            <ThemeApplicator />
             <TimelineSyncProvider>{children}</TimelineSyncProvider>
           </SettingsProvider>
         </CategoriesProvider>

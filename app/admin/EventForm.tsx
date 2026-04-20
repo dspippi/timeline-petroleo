@@ -6,7 +6,7 @@ import { EventType } from "@/types";
 import { AdminEventInput } from "@/lib/adminEvents";
 import { useCategories } from "@/context/CategoriesContext";
 
-const REGIONS = ["Middle East", "South America", "North America", "Europe", "Africa", "Asia", "Other"];
+const REGIONS = ["Global", "Oriente Médio", "América do Norte", "América Central e do Sul", "Europa", "Ásia", "África", "Outros"];
 
 interface Props {
   initial?: AdminEventInput;
@@ -31,7 +31,7 @@ const EMPTY: AdminEventInput = {
   start_date: "",
   end_date: "",
   country: "",
-  region: "Middle East",
+  region: "Oriente Médio",
   type: "policy",
   company: "",
   wikipedia: "",
