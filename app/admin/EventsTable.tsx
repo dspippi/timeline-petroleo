@@ -46,12 +46,13 @@ export function EventsTable({ events }: { events: OilEvent[] }) {
     });
 
     result.sort((a, b) => {
+      if (sortKey === "start_date") {
+        const diff = a.start_date.getTime() - b.start_date.getTime();
+        return sortDir === "asc" ? diff : -diff;
+      }
       let av: string = "";
       let bv: string = "";
-      if (sortKey === "start_date") {
-        av = a.start_date ?? "";
-        bv = b.start_date ?? "";
-      } else if (sortKey === "title") {
+      if (sortKey === "title") {
         av = a.title.toLowerCase();
         bv = b.title.toLowerCase();
       } else if (sortKey === "type") {
