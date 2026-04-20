@@ -17,8 +17,8 @@ export default function RawPage() {
         <div>
           <h1 className="text-xl font-bold text-gray-800">Editor de Texto Bruto</h1>
           <p className="text-sm text-gray-400 mt-1">
-            Edite o arquivo <code className="bg-gray-100 px-1 rounded text-xs">data/events.md</code> diretamente.
-            Salvar sobrescreve o arquivo inteiro.
+            Edite o arquivo <code className="bg-gray-100 px-1 rounded text-xs">data/events.json</code> diretamente.
+            Salvar sobrescreve o arquivo inteiro. O conteúdo deve ser JSON válido.
           </p>
         </div>
       </div>

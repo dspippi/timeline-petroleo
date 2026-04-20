@@ -220,7 +220,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative" }}>
           <EventLinesOverlay events={events} scale={scale} />
-          <TimelineRows events={events} scale={scale} onEventClick={handleEventClick} onTypeFilter={onTypeFilter} />
+          <TimelineRows events={events} scale={scale} scrollRef={scrollRef} onEventClick={handleEventClick} onTypeFilter={onTypeFilter} />
           <GuideOverlay scale={scale} />
         </div>
 

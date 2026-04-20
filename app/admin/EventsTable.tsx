@@ -3,12 +3,10 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { OilEvent, EventType } from "@/types";
+import { OilEvent, EventType, EVENT_TYPES } from "@/types";
 import { EVENT_TYPE_COLORS, EVENT_TYPE_LABELS } from "@/lib/colorMap";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-
-const ALL_TYPES: EventType[] = ["war", "discovery", "policy", "company", "crisis"];
 
 export function EventsTable({ events }: { events: OilEvent[] }) {
   const router = useRouter();
@@ -56,7 +54,7 @@ export function EventsTable({ events }: { events: OilEvent[] }) {
           className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
         >
           <option value="">Todos os tipos</option>
-          {ALL_TYPES.map((t) => (
+          {EVENT_TYPES.map((t) => (
             <option key={t} value={t}>{EVENT_TYPE_LABELS[t]}</option>
           ))}
         </select>

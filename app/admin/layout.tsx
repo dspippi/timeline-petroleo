@@ -44,7 +44,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <span className="text-emerald-600 text-sm">●</span>
           <div className="text-xs text-emerald-800">
             <span className="font-semibold">Modo Local</span> — alterações são salvas diretamente em{" "}
-            <code className="bg-emerald-100 px-1 rounded font-mono">data/events.md</code>.
+            <code className="bg-emerald-100 px-1 rounded font-mono">data/events.json</code>.
             Após editar, faça <code className="bg-emerald-100 px-1 rounded font-mono">git commit</code> e envie para o GitHub.
           </div>
         </div>

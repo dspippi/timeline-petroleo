@@ -90,22 +90,30 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const chartScrollRef = useRef<HTMLDivElement>(null);
   const isSyncing = useRef(false);
   const [chartScrollLeft, setChartScrollLeft] = useState(0);
+  const chartScrollTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  // DOM sync é imediato; React state update é debounced para evitar
+  // re-render do OilPriceChart a cada frame de scroll/drag.
+  const scheduleChartScrollUpdate = useCallback((sl: number) => {
+    clearTimeout(chartScrollTimer.current);
+    chartScrollTimer.current = setTimeout(() => setChartScrollLeft(sl), 120);
+  }, []);
 
   const handleTimelineScroll = useCallback(() => {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
     const sl = timelineScrollRef.current.scrollLeft;
     chartScrollRef.current.scrollLeft = sl;
-    setChartScrollLeft(sl);
+    scheduleChartScrollUpdate(sl);
     isSyncing.current = false;
-  }, []);
+  }, [scheduleChartScrollUpdate]);
 
   const handleChartScroll = useCallback(() => {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
     const sl = chartScrollRef.current.scrollLeft;
     timelineScrollRef.current.scrollLeft = sl;
-    setChartScrollLeft(sl);
+    scheduleChartScrollUpdate(sl);
     isSyncing.current = false;
   }, []);
 

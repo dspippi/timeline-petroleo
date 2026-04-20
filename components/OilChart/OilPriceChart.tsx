@@ -159,6 +159,7 @@ export const OilPriceChart = memo(function OilPriceChart({
   }, [setHoveredDate]);
 
   const hoveredX = hoveredDate ? scale.toPixel(hoveredDate) : null;
+  const hoveredPrice = hoveredDate ? findPriceAt(prices, hoveredDate) : null;
 
   const shockMarkers = useMemo(() =>
     OIL_SHOCKS.flatMap((shock) => {
@@ -251,6 +252,41 @@ export const OilPriceChart = memo(function OilPriceChart({
             )}
           </LineChart>
         </div>
+
+        {/* Hovered price bubble — visible from timeline hover too */}
+        {hoveredX !== null && hoveredPrice !== null && (
+          <div
+            className="pointer-events-none absolute"
+            style={{
+              left: hoveredX + LABEL_WIDTH,
+              top: priceToY(hoveredPrice, yDomain),
+              transform: "translate(-50%, -calc(100% + 6px))",
+              zIndex: 18,
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                bottom: "calc(100% + 5px)",
+                left: "50%",
+                transform: "translateX(-50%)",
+                background: "white",
+                border: "1px solid rgba(0,0,0,0.12)",
+                borderRadius: 6,
+                padding: "3px 7px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <div className="font-semibold text-amber-700" style={{ fontSize: 11 }}>
+                ${hoveredPrice.toFixed(2)}/bbl
+              </div>
+              <div className="text-gray-400" style={{ fontSize: 10 }}>
+                {format(hoveredDate!, "MMM yyyy", { locale: ptBR })}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Oil shock markers */}
         {shockMarkers.map((shock) => {

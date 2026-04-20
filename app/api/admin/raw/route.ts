@@ -16,6 +16,7 @@ export async function PUT(req: NextRequest) {
     if (typeof text !== "string") {
       return NextResponse.json({ error: "Campo 'text' inválido" }, { status: 400 });
     }
+    // writeRawEvents validates JSON before saving
     writeRawEvents(text);
     return NextResponse.json({ ok: true });
   } catch (err) {

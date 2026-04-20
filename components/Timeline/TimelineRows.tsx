@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, RefObject } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
 import { groupEventsByRegion, isBrasil } from "@/lib/utils";
 import { EventMarker } from "./EventMarker";
@@ -15,9 +15,12 @@ const POINT_HALF = 65;      // half label width for point events
 const INTERVAL_GAP = 6;     // buffer for interval events
 const LABEL_AFTER_BAR = 124; // label width + gap for short intervals (must match EventMarker)
 
+const RENDER_BUFFER = 500; // px extra além da viewport para evitar pop-in
+
 interface Props {
   events: OilEvent[];
   scale: TimelineScale;
+  scrollRef: RefObject<HTMLDivElement>;
   onEventClick: (e: OilEvent) => void;
   onTypeFilter: (type: EventType) => void;
 }
@@ -71,7 +74,7 @@ function assignLanes(
   return { lanes: laneAssignments, totalLanes: Math.max(1, laneEndPx.length) };
 }
 
-export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Props) {
+export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFilter }: Props) {
   const { settings } = useSettings();
   const rowHeight = settings.rowHeight;
 
@@ -86,6 +89,11 @@ export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Prop
     });
     return items;
   }, [events]);
+
+  // Viewport range in plot-space pixels (excluding LABEL_WIDTH offset)
+  const scrollEl = scrollRef.current;
+  const visStart = (scrollEl?.scrollLeft ?? 0) - RENDER_BUFFER;
+  const visEnd = (scrollEl?.scrollLeft ?? 0) + (scrollEl?.clientWidth ?? 2000) + RENDER_BUFFER;
 
   if (rows.length === 0) {
     return (
@@ -165,20 +173,25 @@ export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Prop
               />
             ))}
 
-            {/* Event markers */}
+            {/* Event markers — only render events in the visible viewport */}
             <div className="absolute inset-0 overflow-hidden" style={{ left: LABEL_WIDTH }}>
-              {row.events.map((event, ei) => (
-                <EventMarker
-                  key={event.id}
-                  event={event}
-                  scale={scale}
-                  rowHeight={totalRowHeight}
-                  lane={lanes[ei]}
-                  totalLanes={totalLanes}
-                  onClick={onEventClick}
-                  onTypeFilter={onTypeFilter}
-                />
-              ))}
+              {row.events.map((event, ei) => {
+                const startPx = scale.toPixel(event.start_date);
+                const endPx = event.end_date ? scale.toPixel(event.end_date) : startPx;
+                if (endPx + LABEL_AFTER_BAR < visStart || startPx - POINT_HALF > visEnd) return null;
+                return (
+                  <EventMarker
+                    key={event.id}
+                    event={event}
+                    scale={scale}
+                    rowHeight={totalRowHeight}
+                    lane={lanes[ei]}
+                    totalLanes={totalLanes}
+                    onClick={onEventClick}
+                    onTypeFilter={onTypeFilter}
+                  />
+                );
+              })}
             </div>
           </div>
         );

@@ -2,12 +2,11 @@
 
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { EventType } from "@/types";
+import { EventType, EVENT_TYPES } from "@/types";
 import { EVENT_TYPE_LABELS } from "@/lib/colorMap";
 import { AdminEventInput } from "@/lib/adminEvents";
 
 const REGIONS = ["Middle East", "South America", "North America", "Europe", "Africa", "Asia", "Other"];
-const ALL_TYPES: EventType[] = ["war", "discovery", "policy", "company", "crisis"];
 
 interface Props {
   initial?: AdminEventInput;
@@ -165,7 +164,7 @@ export function EventForm({ initial, mode, existingCountries, existingCompanies 
           onChange={(e) => set("type", e.target.value as EventType)}
           className={INPUT + " bg-white"}
         >
-          {ALL_TYPES.map((t) => (
+          {EVENT_TYPES.map((t) => (
             <option key={t} value={t}>{EVENT_TYPE_LABELS[t]}</option>
           ))}
         </select>

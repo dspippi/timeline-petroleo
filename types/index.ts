@@ -1,5 +1,7 @@
 export type EventType = "war" | "discovery" | "policy" | "company" | "crisis";
 
+export const EVENT_TYPES: readonly EventType[] = ["war", "discovery", "policy", "company", "crisis"];
+
 export interface OilEvent {
   id: string;
   title: string;
