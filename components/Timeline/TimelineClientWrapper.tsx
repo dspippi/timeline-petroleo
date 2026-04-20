@@ -9,16 +9,20 @@ import { useFilters } from "@/hooks/useFilters";
 import { useOilPrices } from "@/hooks/useOilPrices";
 import { useTimelineSync } from "@/context/TimelineSyncContext";
 import { useSettings } from "@/context/SettingsContext";
-import { FilterPanel } from "@/components/Filters/FilterPanel";
-import { WorldMap } from "@/components/WorldMap/WorldMap";
+import { FilterDropdown } from "@/components/Filters/FilterDropdown";
 import { Timeline } from "@/components/Timeline/Timeline";
+import { LABEL_WIDTH } from "@/components/Timeline/TimelineRows";
 import { OilPriceChart } from "@/components/OilChart/OilPriceChart";
 import { EventCard } from "@/components/EventCard/EventCard";
 import { Toggle } from "@/components/ui/Toggle";
+import { EVENT_TYPE_LABELS, EVENT_TYPE_COLORS } from "@/lib/colorMap";
+import { EventType } from "@/types";
 
 interface Props {
   serializedEvents: SerializedOilEvent[];
 }
+
+const EVENT_TYPES = Object.keys(EVENT_TYPE_LABELS) as EventType[];
 
 export function TimelineClientWrapper({ serializedEvents }: Props) {
   const allEvents = useMemo<OilEvent[]>(
@@ -34,12 +38,20 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const { pxPerDay, setPxPerDay } = useTimelineSync();
   const { settings } = useSettings();
   const [showChart, setShowChart] = useState(true);
-  const [showControls, setShowControls] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<OilEvent | null>(null);
-  const [controlsOpen, setControlsOpen] = useState(false);
 
-  const { filters, filteredEvents, toggleCountry, toggleType, toggleCompany, clearAll, activeCount } =
-    useFilters(allEvents);
+  const {
+    filters,
+    filteredEvents,
+    toggleCountry,
+    toggleType,
+    toggleCompany,
+    clearAll,
+    clearTypes,
+    clearCountries,
+    clearCompanies,
+    activeCount,
+  } = useFilters(allEvents);
 
   const { prices } = useOilPrices();
 
@@ -49,7 +61,6 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     [domainStart, domainEnd, pxPerDay]
   );
 
-  // Fit zoom on first mount, then scroll both panels to the end
   const hasFit = useRef(false);
   const hasScrolled = useRef(false);
   useEffect(() => {
@@ -57,7 +68,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     const containerWidth = timelineScrollRef.current?.clientWidth ?? 0;
     if (containerWidth > 0) {
       hasFit.current = true;
-      setPxPerDay(clamp(pxPerDay * containerWidth / scale.totalWidthPx, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+      setPxPerDay(clamp(pxPerDay * (containerWidth - LABEL_WIDTH) / scale.totalWidthPx, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
     }
   }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -68,19 +79,12 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         timelineScrollRef.current.scrollLeft = timelineScrollRef.current.scrollWidth;
       }
       if (chartScrollRef.current && timelineScrollRef.current) {
-        // Chart uses overflow-x:hidden — sync its scrollLeft from timeline (authoritative)
         chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
       }
-      // Use timeline scrollLeft as source of truth (chart may silently clamp to 0)
       setChartScrollLeft(timelineScrollRef.current?.scrollLeft ?? 0);
       hasScrolled.current = true;
     });
   }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const countriesWithEvents = useMemo(
-    () => new Set(filteredEvents.map((e) => e.country)),
-    [filteredEvents]
-  );
 
   const timelineScrollRef = useRef<HTMLDivElement>(null);
   const chartScrollRef = useRef<HTMLDivElement>(null);
@@ -105,66 +109,62 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     isSyncing.current = false;
   }, []);
 
+  const countries = useMemo(
+    () => Array.from(new Set(allEvents.map((e) => e.country))).sort(),
+    [allEvents]
+  );
+
+  const companies = useMemo(
+    () => Array.from(new Set(allEvents.map((e) => e.company).filter(Boolean) as string[])).sort(),
+    [allEvents]
+  );
+
+  const typeOptions = EVENT_TYPES.map((t) => ({
+    value: t,
+    label: EVENT_TYPE_LABELS[t],
+    color: EVENT_TYPE_COLORS[t],
+  }));
+
+  const countryOptions = countries.map((c) => ({ value: c, label: c }));
+  const companyOptions = companies.map((c) => ({ value: c, label: c }));
+
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-[#f5f3ee]">
 
-      {/* ── Controls: desktop toggleable / mobile collapsible ── */}
-      {showControls && (
-        <div className="shrink-0 border-b border-black/[0.07] bg-white">
+      {/* ── Toolbar ── */}
+      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-black/[0.07] bg-white">
+        {/* Filter dropdowns */}
+        <FilterDropdown
+          label="Tipo"
+          options={typeOptions}
+          selected={filters.types as Set<string>}
+          onToggle={toggleType as (v: string) => void}
+          onClear={clearTypes}
+        />
+        <FilterDropdown
+          label="País"
+          options={countryOptions}
+          selected={filters.countries}
+          onToggle={toggleCountry}
+          onClear={clearCountries}
+        />
+        {companyOptions.length > 0 && (
+          <FilterDropdown
+            label="Empresa"
+            options={companyOptions}
+            selected={filters.companies}
+            onToggle={toggleCompany}
+            onClear={clearCompanies}
+          />
+        )}
 
-          {/* Mobile toggle row */}
-          <div className="flex items-center gap-2 px-3 py-2 md:hidden">
-            <button
-              onClick={() => setControlsOpen((o) => !o)}
-              className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <svg
-                className={`w-4 h-4 transition-transform ${controlsOpen ? "rotate-180" : ""}`}
-                fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-              Mapa e Filtros
-            </button>
-            {activeCount > 0 && (
-              <span className="ml-1 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full font-semibold">
-                {activeCount}
-              </span>
-            )}
-            <div className="ml-auto flex items-center gap-3">
-              <Toggle enabled={showChart} onChange={setShowChart} label="Brent" />
-            </div>
-          </div>
+        {/* Separator */}
+        <div className="w-px h-4 bg-gray-200 mx-1 hidden sm:block" />
 
-          {/* Collapsible panel — always open on desktop, toggleable on mobile */}
-          <div className={`${controlsOpen ? "block" : "hidden"} md:block`}>
-            <div className="flex flex-col md:flex-row gap-3 p-3 overflow-hidden">
-              {/* Map — hidden on small mobile, visible from sm up */}
-              <div className="hidden sm:block shrink-0">
-                <WorldMap
-                  countriesWithEvents={countriesWithEvents}
-                  activeCountries={filters.countries}
-                  onCountryClick={toggleCountry}
-                />
-              </div>
-              <FilterPanel
-                allEvents={allEvents}
-                filters={filters}
-                onToggleCountry={toggleCountry}
-                onToggleType={toggleType}
-                onToggleCompany={toggleCompany}
-                onClearAll={clearAll}
-                activeCount={activeCount}
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Toolbar (desktop only — on mobile it's inside the toggle row) ── */}
-      <div className="shrink-0 hidden md:flex items-center gap-4 px-4 py-2 border-b border-black/[0.07] bg-white/80">
-        <Toggle enabled={showControls} onChange={setShowControls} label="Mapa e Filtros" />
+        {/* Brent toggle */}
         <Toggle enabled={showChart} onChange={setShowChart} label="Preço Brent (USD/barril)" />
+
+        {/* Event count + clear */}
         <span className="text-[11px] text-gray-400 ml-auto">
           {filteredEvents.length} de {allEvents.length} eventos
           {activeCount > 0 && (
@@ -176,18 +176,6 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
             </button>
           )}
         </span>
-      </div>
-
-      {/* Mobile event count bar */}
-      <div className="shrink-0 flex items-center px-3 py-1 border-b border-black/[0.05] bg-white/60 md:hidden">
-        <span className="text-[10px] text-gray-400">
-          {filteredEvents.length}/{allEvents.length} eventos
-        </span>
-        {activeCount > 0 && (
-          <button onClick={clearAll} className="ml-auto text-[10px] text-amber-600 underline">
-            limpar filtros
-          </button>
-        )}
       </div>
 
       {/* Chart */}

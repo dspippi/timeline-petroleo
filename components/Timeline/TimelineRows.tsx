@@ -134,7 +134,7 @@ export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Prop
           >
             {/* Country label — sticky left, spans full height */}
             <div
-              className={`sticky left-0 z-10 px-2 flex items-center shrink-0 border-r border-black/[0.05] ${
+              className={`sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-black/[0.05] ${
                 brasil ? "bg-amber-50" : "bg-white group-hover:bg-gray-50/80"
               }`}
               style={{ width: LABEL_WIDTH, height: totalRowHeight }}
@@ -166,7 +166,7 @@ export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Prop
             ))}
 
             {/* Event markers */}
-            <div className="absolute inset-0" style={{ left: LABEL_WIDTH }}>
+            <div className="absolute inset-0 overflow-hidden" style={{ left: LABEL_WIDTH }}>
               {row.events.map((event, ei) => (
                 <EventMarker
                   key={event.id}

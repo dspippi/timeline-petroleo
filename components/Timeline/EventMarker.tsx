@@ -18,7 +18,7 @@ interface Props {
 }
 
 const LABEL_MAX_WIDTH = 120;
-const LABEL_FONT_SIZE = 11;
+const LABEL_FONT_SIZE = 10;
 
 export const EventMarker = memo(function EventMarker({
   event,

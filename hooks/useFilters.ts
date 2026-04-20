@@ -7,7 +7,10 @@ type FilterAction =
   | { type: "TOGGLE_COUNTRY"; country: string }
   | { type: "TOGGLE_TYPE"; eventType: EventType }
   | { type: "TOGGLE_COMPANY"; company: string }
-  | { type: "CLEAR_ALL" };
+  | { type: "CLEAR_ALL" }
+  | { type: "CLEAR_TYPES" }
+  | { type: "CLEAR_COUNTRIES" }
+  | { type: "CLEAR_COMPANIES" };
 
 const initialState: FilterState = {
   countries: new Set(),
@@ -31,6 +34,12 @@ function filterReducer(state: FilterState, action: FilterAction): FilterState {
       return { ...state, companies: toggle(state.companies, action.company) };
     case "CLEAR_ALL":
       return initialState;
+    case "CLEAR_TYPES":
+      return { ...state, types: new Set() };
+    case "CLEAR_COUNTRIES":
+      return { ...state, countries: new Set() };
+    case "CLEAR_COMPANIES":
+      return { ...state, companies: new Set() };
     default:
       return state;
   }
@@ -65,8 +74,11 @@ export function useFilters(allEvents: OilEvent[]) {
     []
   );
   const clearAll = useCallback(() => dispatch({ type: "CLEAR_ALL" }), []);
+  const clearTypes = useCallback(() => dispatch({ type: "CLEAR_TYPES" }), []);
+  const clearCountries = useCallback(() => dispatch({ type: "CLEAR_COUNTRIES" }), []);
+  const clearCompanies = useCallback(() => dispatch({ type: "CLEAR_COMPANIES" }), []);
 
   const activeCount = filters.countries.size + filters.types.size + filters.companies.size;
 
-  return { filters, filteredEvents, toggleCountry, toggleType, toggleCompany, clearAll, activeCount };
+  return { filters, filteredEvents, toggleCountry, toggleType, toggleCompany, clearAll, clearTypes, clearCountries, clearCompanies, activeCount };
 }

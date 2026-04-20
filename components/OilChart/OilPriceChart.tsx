@@ -323,6 +323,9 @@ export const OilPriceChart = memo(function OilPriceChart({
                   <span style={{ color: color, marginLeft: 4 }}>
                     {isUp ? "▲" : "▼"}
                   </span>
+                  <div style={{ color: "#d97706", fontSize: 9, marginTop: 2, fontWeight: 600 }}>
+                    ${shock.price.toFixed(2)}/bbl
+                  </div>
                 </div>
               )}
             </div>

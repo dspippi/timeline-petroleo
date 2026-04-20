@@ -25,7 +25,7 @@ export default function HomePage() {
         </div>
         <div className="ml-auto hidden lg:block">
           <span className="text-[10px] text-gray-300 font-mono">
-            Ctrl+Scroll ou botões para zoom
+            Scroll para zoom · Arraste para navegar
           </span>
         </div>
       </header>

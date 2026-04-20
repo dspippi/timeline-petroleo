@@ -1,10 +1,10 @@
 {
   "name": "timeline-do-petroleo",
-  "version": "0.1.0",
+  "version": "2026.04",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "admin": "next dev --open http://localhost:3000/admin",
+    "admin": "start http://localhost:3000/admin && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -15,8 +15,7 @@
     "react-dom": "^18.3.0",
     "framer-motion": "^11.18.2",
     "recharts": "^2.12.7",
-    "gray-matter": "^4.0.3",
-    "date-fns": "^3.6.0",
+"date-fns": "^3.6.0",
     "@tanstack/react-virtual": "^3.13.5",
     "d3-scale": "^4.0.2"
   },

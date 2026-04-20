@@ -9,8 +9,8 @@ export interface Settings {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  rowHeight: 72,
-  markerSize: 14,
+  rowHeight: 52,
+  markerSize: 11,
   showEventLabels: true,
 };
 

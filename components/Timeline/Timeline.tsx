@@ -1,6 +1,6 @@
 "use client";
 
-import { RefObject, useCallback, useMemo, useRef, useState, WheelEvent } from "react";
+import { RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
 import { useTimelineSync } from "@/context/TimelineSyncContext";
 import { MIN_PX_PER_DAY, MAX_PX_PER_DAY, DEFAULT_PX_PER_DAY } from "@/lib/timelineScale";
@@ -10,6 +10,7 @@ import { GuideOverlay } from "./GuideOverlay";
 import { EventLinesOverlay } from "./EventLinesOverlay";
 import { SettingsPanel } from "@/components/Settings/SettingsPanel";
 import { getYear } from "date-fns";
+import pkg from "@/package.json";
 
 interface Props {
   events: OilEvent[];
@@ -26,15 +27,69 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   const settingsBtnRef = useRef<HTMLButtonElement>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const handleWheel = useCallback(
-    (e: WheelEvent<HTMLDivElement>) => {
-      if (!e.ctrlKey) return;
+  // Drag-to-pan state
+  const dragState = useRef<{ startX: number; startY: number; startScrollLeft: number; startScrollTop: number; moved: boolean } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    // Only left button; ignore clicks on interactive elements
+    if (e.button !== 0) return;
+    const target = e.target as HTMLElement;
+    if (target.closest("button, a, input, [data-nodrag]")) return;
+    dragState.current = { startX: e.clientX, startY: e.clientY, startScrollLeft: scrollRef.current?.scrollLeft ?? 0, startScrollTop: scrollRef.current?.scrollTop ?? 0, moved: false };
+    setIsDragging(true);
+    e.preventDefault();
+  }, [scrollRef]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!dragState.current || !scrollRef.current) return;
+    const dx = e.clientX - dragState.current.startX;
+    const dy = e.clientY - dragState.current.startY;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) dragState.current.moved = true;
+    scrollRef.current.scrollLeft = dragState.current.startScrollLeft - dx;
+    scrollRef.current.scrollTop = dragState.current.startScrollTop - dy;
+    if (yearAxisRef.current) yearAxisRef.current.scrollLeft = scrollRef.current.scrollLeft;
+    onScroll();
+  }, [scrollRef, onScroll]);
+
+  const handleMouseUp = useCallback(() => {
+    dragState.current = null;
+    setIsDragging(false);
+  }, []);
+
+  // Wrap onEventClick to suppress it when drag occurred
+  const handleEventClick = useCallback((e: OilEvent) => {
+    if (dragState.current?.moved) return;
+    onEventClick(e);
+  }, [onEventClick]);
+
+  // Register wheel as non-passive so preventDefault() blocks scroll.
+  // Accumulate delta per-frame via RAF for smooth, high-FPS zoom.
+  const pxPerDayRef = useRef(pxPerDay);
+  pxPerDayRef.current = pxPerDay;
+  const pendingDelta = useRef(0);
+  const rafId = useRef<number | null>(null);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      const factor = e.deltaY > 0 ? 0.88 : 1.14;
-      setPxPerDay(clamp(pxPerDay * factor, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
-    },
-    [pxPerDay, setPxPerDay]
-  );
+      pendingDelta.current += e.deltaY;
+      if (rafId.current !== null) return;
+      rafId.current = requestAnimationFrame(() => {
+        rafId.current = null;
+        const delta = pendingDelta.current;
+        pendingDelta.current = 0;
+        const factor = Math.pow(0.88, delta / 100);
+        setPxPerDay(clamp(pxPerDayRef.current * factor, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+      });
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      if (rafId.current !== null) cancelAnimationFrame(rafId.current);
+    };
+  }, [scrollRef, setPxPerDay]);
 
   const handleScroll = useCallback(() => {
     if (scrollRef.current && yearAxisRef.current) {
@@ -49,7 +104,8 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
 
   const zoomFit = useCallback(() => {
     const containerWidth = scrollRef.current?.clientWidth ?? 800;
-    const fitPxPerDay = pxPerDay * containerWidth / scale.totalWidthPx;
+    const plotWidth = containerWidth - LABEL_WIDTH;
+    const fitPxPerDay = pxPerDay * plotWidth / scale.totalWidthPx;
     setPxPerDay(clamp(fitPxPerDay, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
   }, [pxPerDay, scale, scrollRef, setPxPerDay]);
 
@@ -106,7 +162,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         >
           Fit
         </button>
-        <span className="text-[9px] text-gray-300 ml-2 hidden sm:block">Ctrl+Scroll também funciona</span>
+        <span className="text-[9px] text-gray-300 ml-2 hidden sm:block">Scroll para zoom · Arraste para navegar</span>
 
         <div className="ml-auto relative">
           <button
@@ -155,12 +211,16 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       <div
         ref={scrollRef}
         className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 bg-white"
+        style={{ cursor: isDragging ? "grabbing" : "grab" }}
         onScroll={handleScroll}
-        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative" }}>
           <EventLinesOverlay events={events} scale={scale} />
-          <TimelineRows events={events} scale={scale} onEventClick={onEventClick} onTypeFilter={onTypeFilter} />
+          <TimelineRows events={events} scale={scale} onEventClick={handleEventClick} onTypeFilter={onTypeFilter} />
           <GuideOverlay scale={scale} />
         </div>
 
@@ -181,6 +241,8 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
             >
               timelinedopetroleo@gmail.com
             </a>
+            <span className="hidden sm:inline text-gray-300">·</span>
+            <span className="hidden sm:inline text-[10px] text-gray-400 font-mono">v{pkg.version}</span>
           </div>
           <p className="text-[9.5px] text-gray-400 leading-relaxed sm:border-l sm:border-black/[0.08] sm:pl-4">
             Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada —
