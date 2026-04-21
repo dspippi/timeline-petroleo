@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Timeline do Petroleo - Explicacao do Projeto</title>
+    <style>
+      :root {
+        --bg: #f5f3ee;
+        --card: #ffffff;
+        --text: #111827;
+        --muted: #6b7280;
+        --border: rgba(17, 24, 39, 0.12);
+        --accent: #b45309;
+        --code-bg: rgba(17, 24, 39, 0.06);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0d0e14;
+          --card: #13141d;
+          --text: #e5e7eb;
+          --muted: #9ca3af;
+          --border: rgba(229, 231, 235, 0.12);
+          --accent: #f59e0b;
+          --code-bg: rgba(229, 231, 235, 0.08);
+        }
+      }
+
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 1.55;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 28px 18px 48px;
+      }
+      header {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 18px 18px 14px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: -0.01em;
+      }
+      .subtitle {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .meta {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .meta code { background: var(--code-bg); padding: 2px 6px; border-radius: 6px; }
+
+      main {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        main { grid-template-columns: 1fr; }
+      }
+      nav, article {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+      nav { padding: 14px; position: sticky; top: 12px; }
+      @media (max-width: 860px) {
+        nav { position: relative; top: auto; }
+      }
+      nav .label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        margin: 0 0 8px;
+      }
+      nav a {
+        display: block;
+        text-decoration: none;
+        color: var(--text);
+        padding: 7px 8px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        font-size: 13px;
+      }
+      nav a:hover {
+        border-color: var(--border);
+        background: var(--code-bg);
+      }
+      nav a .hint { color: var(--muted); font-size: 11px; }
+
+      article { padding: 16px 18px; }
+      section { padding-top: 2px; }
+      h2 {
+        margin: 14px 0 8px;
+        font-size: 16px;
+        letter-spacing: -0.01em;
+      }
+      h2:first-child { margin-top: 0; }
+      p { margin: 8px 0; }
+      ul { margin: 8px 0 10px 18px; }
+      li { margin: 4px 0; }
+      code {
+        background: var(--code-bg);
+        padding: 1px 6px;
+        border-radius: 6px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.95em;
+      }
+      .callout {
+        border-left: 3px solid var(--accent);
+        background: var(--code-bg);
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin: 10px 0;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      @media (max-width: 720px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+      .mini {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .mini h3 {
+        margin: 0 0 6px;
+        font-size: 13px;
+      }
+      .mini p { margin: 0; color: var(--muted); font-size: 12px; }
+      footer {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+      .k {
+        font-weight: 650;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Timeline do Petroleo - Explicacao do Projeto</h1>
+        <div class="subtitle">Como as pecas do app se conectam (publico + admin + dados).</div>
+        <div class="meta">
+          Baseado na estrutura real do repo (Next.js App Router, dados em <code>data/</code>, visualizacao em <code>components/</code>, APIs em <code>app/api/</code>).
+        </div>
+      </header>
+
+      <main>
+        <nav aria-label="Indice">
+          <p class="label">Indice</p>
+          <a href="#visao-geral">Visao geral <span class="hint">o que o app faz</span></a>
+          <a href="#stack">Stack <span class="hint">dependencias e ferramentas</span></a>
+          <a href="#fluxo">Fluxo principal <span class="hint">server -> client</span></a>
+          <a href="#modelos">Modelos de dados <span class="hint">tipos principais</span></a>
+          <a href="#timeline-ui">UI da timeline <span class="hint">zoom, scroll, lanes</span></a>
+          <a href="#grafico">Grafico de preco <span class="hint">Brent + hover sync</span></a>
+          <a href="#contextos">Contextos globais <span class="hint">sync + settings</span></a>
+          <a href="#categorias">Categorias <span class="hint">tipos customizaveis</span></a>
+          <a href="#admin">Admin <span class="hint">CRUD em arquivos locais</span></a>
+          <a href="#dados">Dados e scripts <span class="hint">json/xlsx</span></a>
+          <a href="#observacoes">Observacoes <span class="hint">detalhes e cuidado</span></a>
+          <a href="#rodar">Como rodar <span class="hint">dev e admin</span></a>
+        </nav>
+
+        <article>
+          <section id="visao-geral">
+            <h2>Visao geral</h2>
+            <p>
+              O projeto e uma aplicacao <span class="k">Next.js + React + TypeScript</span> chamada
+              <span class="k">Timeline do Petroleo</span>. Ela mostra uma timeline horizontal de eventos
+              historicos/geopoliticos ligados ao petroleo e permite comparar esses eventos com o
+              preco historico do <span class="k">Brent</span>.
+            </p>
+            <p>
+              O usuario navega com <span class="k">arrastar para pan</span>, usa <span class="k">Ctrl + scroll</span> para zoom
+              e pode clicar em um evento para abrir um card com detalhes.
+            </p>
+            <div class="grid" role="list">
+              <div class="mini" role="listitem">
+                <h3>Site publico</h3>
+                <p>Timeline + filtros + grafico de preco sincronizado.</p>
+              </div>
+              <div class="mini" role="listitem">
+                <h3>Area admin</h3>
+                <p>Edicao local de eventos e categorias (arquivos em <code>data/</code>).</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="stack">
+            <h2>Stack</h2>
+            <p>Principais bibliotecas e responsabilidades:</p>
+            <ul>
+              <li><code>next</code> (App Router): paginas, rotas API e renderizacao server/client.</li>
+              <li><code>react</code>: UI e interacao.</li>
+              <li><code>tailwindcss</code>: estilos utilitarios.</li>
+              <li><code>date-fns</code>: datas (parse/format).</li>
+              <li><code>recharts</code>: grafico do preco.</li>
+              <li><code>framer-motion</code>: animacoes (ex.: card do evento).</li>
+              <li><code>xlsx</code>: import/export de eventos via Excel.</li>
+            </ul>
+          </section>
+
+          <section id="fluxo">
+            <h2>Fluxo principal (Home)</h2>
+            <p>
+              A pagina inicial <code>app/page.tsx</code> le os eventos no servidor e entrega para um wrapper cliente:
+              <code>TimelineClientWrapper</code>.
+            </p>
+            <ul>
+              <li><span class="k">Server:</span> le <code>data/events.json</code> e cria uma lista de eventos com <code>Date</code>.</li>
+              <li><span class="k">Serialize:</span> converte datas para string ISO para passar ao client.</li>
+              <li><span class="k">Client:</span> reconverte strings em <code>Date</code>, aplica filtros, monta escala e renderiza UI.</li>
+            </ul>
+            <div class="callout">
+              <span class="k">Por que assim?</span> O Next.js nao deixa enviar <code>Date</code> diretamente para Client Components.
+              Por isso, a pagina serializa e o wrapper reidrata as datas.
+            </div>
+          </section>
+
+          <section id="modelos">
+            <h2>Modelos de dados</h2>
+            <p>O tipo central e o evento:</p>
+            <ul>
+              <li><code>OilEvent</code>: <code>id</code>, <code>title</code>, <code>start_date</code>, <code>end_date?</code>, <code>country</code>, <code>region</code>, <code>type</code>, <code>company?</code>, <code>wikipedia?</code>, <code>description</code>.</li>
+              <li><code>EventType</code> e <span class="k">string aberta</span>: suporta categorias customizadas em <code>data/categories.json</code>.</li>
+              <li><code>TimelineScale</code>: converte <code>Date</code> -> pixel e pixel -> <code>Date</code>.</li>
+            </ul>
+            <p>
+              Um evento com <code>end_date</code> vira uma barra (intervalo). Um evento sem <code>end_date</code> vira um marcador pontual.
+            </p>
+          </section>
+
+          <section id="timeline-ui">
+            <h2>UI da timeline</h2>
+            <p>
+              O componente <code>components/Timeline/Timeline.tsx</code> coordena zoom, scroll e o eixo de anos. A lista visual de eventos
+              e renderizada por <code>TimelineRows</code>.
+            </p>
+            <ul>
+              <li><span class="k">Zoom:</span> <code>Ctrl + scroll</code> (wheel) e botoes (in/out/reset/fit).</li>
+              <li><span class="k">Pan:</span> arrastar com mouse (drag-to-pan) atualiza <code>scrollLeft</code>/<code>scrollTop</code>.</li>
+              <li><span class="k">Eixo anual:</span> cabecalho fixo sincronizado com o scroll horizontal da timeline.</li>
+              <li><span class="k">Hover:</span> mousemove converte posicao X em data via <code>scale.toDate</code> e envia para o contexto.</li>
+            </ul>
+
+            <h2>Organizacao por regioes/paises</h2>
+            <p>
+              <code>components/Timeline/TimelineRows.tsx</code> agrupa eventos por regiao e por pais, renderiza headers e linhas,
+              e distribui eventos em "lanes" quando ha sobreposicao horizontal.
+            </p>
+            <div class="callout">
+              <span class="k">Detalhe de performance:</span> so renderiza eventos dentro do range visivel (com buffer), evitando custo alto em timelines longas.
+            </div>
+
+            <h2>Marcadores e tooltips</h2>
+            <p>
+              <code>components/Timeline/EventMarker.tsx</code> decide entre barra (intervalo) e losango (ponto) e controla tooltip/hover.
+              Ao clicar, abre o <code>EventCard</code>.
+            </p>
+          </section>
+
+          <section id="grafico">
+            <h2>Grafico de preco (Brent)</h2>
+            <p>
+              O grafico <code>components/OilChart/OilPriceChart.tsx</code> usa <code>recharts</code> e compartilha o mesmo eixo temporal
+              da timeline, via <code>scale.toPixel</code>. Ele sincroniza com o hover e com o scroll horizontal.
+            </p>
+            <ul>
+              <li><span class="k">Dados:</span> o client chama <code>/api/oil-prices</code> via <code>hooks/useOilPrices.ts</code>.</li>
+              <li><span class="k">API:</span> <code>app/api/oil-prices/route.ts</code> usa <code>lib/oilPrice.ts</code> e faz cache/revalidate.</li>
+              <li><span class="k">Fallback:</span> combina JSON historico local e (opcionalmente) busca dados recentes da EIA com <code>NEXT_PUBLIC_EIA_API_KEY</code>.</li>
+              <li><span class="k">Hover eficiente:</span> o "overlay" do hover renderiza separado para nao re-renderizar o Recharts a 60fps.</li>
+            </ul>
+          </section>
+
+          <section id="contextos">
+            <h2>Contextos globais</h2>
+            <p>
+              O layout raiz <code>app/layout.tsx</code> registra providers globais para sincronizacao e preferencias.
+            </p>
+            <ul>
+              <li><code>TimelineSyncProvider</code> (<code>context/TimelineSyncContext.tsx</code>): guarda <code>pxPerDay</code> (zoom) e <code>hoveredDate</code> (hover).</li>
+              <li><code>SettingsProvider</code> (<code>context/SettingsContext.tsx</code>): guarda altura de linha, tamanho de marcador, labels, dark mode.</li>
+              <li><code>CategoriesProvider</code> (<code>context/CategoriesContext.tsx</code>): guarda lista de categorias e resolve cor/label por tipo.</li>
+            </ul>
+            <div class="callout">
+              <span class="k">Detalhe legal:</span> o TimelineSyncContext separa estado e setters em contextos diferentes para reduzir re-renders, especialmente no hover.
+            </div>
+          </section>
+
+          <section id="categorias">
+            <h2>Categorias (tipos de evento)</h2>
+            <p>
+              As categorias vivem em <code>data/categories.json</code> e sao lidas no server por <code>lib/categories.ts</code>.
+              No client, o <code>CategoriesProvider</code> entrega <code>getColor(type)</code> e <code>getLabel(type)</code>.
+            </p>
+            <p>
+              Como <code>EventType</code> e uma string aberta, voce pode criar categorias novas sem mexer no TypeScript.
+            </p>
+          </section>
+
+          <section id="admin">
+            <h2>Admin (CRUD em arquivo)</h2>
+            <p>
+              O admin e uma ferramenta para manutencao dos dados. A leitura/escrita acontece em <code>data/events.json</code>
+              via funcoes server-only em <code>lib/adminEvents.ts</code>.
+            </p>
+            <ul>
+              <li><span class="k">Persistencia:</span> <code>listEvents()</code>, <code>addEvent()</code>, <code>updateEvent()</code>, <code>deleteEvent()</code>.</li>
+              <li><span class="k">API:</span> <code>app/api/admin/events/route.ts</code> (GET lista, POST cria; existem rotas por id no repo).</li>
+              <li><span class="k">Auth em producao:</span> <code>middleware.ts</code> protege <code>/admin</code> e <code>/api/admin</code> via cookie/token.</li>
+              <li><span class="k">Dev mode:</span> em <code>NODE_ENV=development</code>, o middleware libera o admin (ferramenta local).</li>
+            </ul>
+          </section>
+
+          <section id="dados">
+            <h2>Dados e scripts</h2>
+            <ul>
+              <li><code>data/events.json</code>: lista de eventos (fonte da timeline).</li>
+              <li><code>data/categories.json</code>: lista de categorias e cores.</li>
+              <li><code>data/events.xlsx</code>: base em Excel (para importar/exportar).</li>
+              <li><code>data/oil-prices-owid-historical.json</code> e <code>data/oil-prices-fallback.json</code>: precos historicos locais.</li>
+              <li><code>scripts/events-excel.mjs</code>: <code>excel:import</code> e <code>excel:export</code>.</li>
+            </ul>
+          </section>
+
+          <section id="observacoes">
+            <h2>Observacoes</h2>
+            <ul>
+              <li><span class="k">Documentacao possivelmente desatualizada:</span> o README menciona <code>data/events.md</code>, mas o codigo usa <code>data/events.json</code>.</li>
+              <li><span class="k">Escala temporal:</span> <code>lib/timelineScale.ts</code> define <code>toPixel</code>/<code>toDate</code> e uma borda extra para nao cortar labels nas extremidades.</li>
+              <li><span class="k">Interacao polida:</span> pan por drag nao usa estado React (mexe direto no DOM), e hover e "throttled" por frame.</li>
+            </ul>
+          </section>
+
+          <section id="rodar">
+            <h2>Como rodar</h2>
+            <ul>
+              <li><span class="k">Dev:</span> <code>npm run dev</code></li>
+              <li><span class="k">Admin local:</span> <code>npm run admin</code> (abre <code>http://localhost:3000/admin</code> e roda o dev server)</li>
+              <li><span class="k">Excel:</span> <code>npm run excel:export</code> / <code>npm run excel:import</code></li>
+            </ul>
+          </section>
+        </article>
+      </main>
+
+      <footer>
+        Gerado por Codex a partir da explicacao do projeto. Arquivo: <code>docs/projeto-explicacao.html</code>
+      </footer>
+    </div>
+  </body>
+</html>
