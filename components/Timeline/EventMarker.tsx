@@ -72,8 +72,8 @@ export const EventMarker = memo(function EventMarker({
   if (isInterval) {
     const w = Math.max(barWidth, 6);
     const showInlineLabel = w > 60;
-    const barTop = laneH * lane + laneH * 0.25;
-    const barHeight = laneH * 0.5;
+    const barTop = laneH * lane + laneH * 0.2;
+    const barHeight = laneH * 0.6;
 
     return (
       <>
@@ -166,8 +166,8 @@ export const EventMarker = memo(function EventMarker({
   // ── Point event (diamond pin) ────────────────────────────────────────────────
   const base = settings.markerSize;
   const pinSize = isHovered ? Math.round(base * 1.2) : base;
-  const pinTop = laneH * lane + laneH * 0.3 - pinSize / 2;
-  const labelTop = laneH * lane + laneH * 0.3 + pinSize / 2 + 4;
+  const pinTop = laneH * lane + laneH * 0.2 - pinSize / 2;
+  const labelTop = laneH * lane + laneH * 0.2 + pinSize / 2 + 4;
 
   const hitPad = 10;
   const hitLeft = x - pinSize / 2 - hitPad;

@@ -269,7 +269,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
           </div>
           <p className="text-[9.5px] text-gray-400 dark:text-[#3a3c50] leading-relaxed sm:border-l sm:border-black/[0.08] dark:sm:border-white/[0.06] sm:pl-4">
             Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada —
-            podem conter imprecisões de cunho didático. O autor não se responsabiliza pelo uso das informações aqui apresentadas.
+            Envie um email caso identifique algum erro, inconsistência ou tenha alguma sugestão de melhoria. O autor não se responsabiliza pelo uso das informações aqui apresentadas.
           </p>
         </footer>
       </div>

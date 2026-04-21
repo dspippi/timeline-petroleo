@@ -7,28 +7,31 @@
     "admin": "start http://localhost:3000/admin && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "excel:export": "node scripts/events-excel.mjs export",
+    "excel:import": "node scripts/events-excel.mjs import"
   },
   "dependencies": {
+    "@tanstack/react-virtual": "^3.13.5",
+    "d3-scale": "^4.0.2",
+    "date-fns": "^3.6.0",
+    "framer-motion": "^11.18.2",
     "next": "14.2.29",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "framer-motion": "^11.18.2",
-    "recharts": "^2.12.7",
-"date-fns": "^3.6.0",
-    "@tanstack/react-virtual": "^3.13.5",
-    "d3-scale": "^4.0.2"
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/d3-scale": "^4.0.8",
+    "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/node": "^20",
-    "@types/d3-scale": "^4.0.8",
-    "tailwindcss": "^3.4.17",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.5.3",
     "eslint": "^8",
-    "eslint-config-next": "14.2.29"
+    "eslint-config-next": "14.2.29",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5",
+    "xlsx": "^0.18.5"
   }
 }

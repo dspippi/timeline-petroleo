@@ -10,7 +10,7 @@ export interface Settings {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
-  rowHeight: 52,
+  rowHeight: 44,
   markerSize: 11,
   showEventLabels: true,
   darkMode: false,
