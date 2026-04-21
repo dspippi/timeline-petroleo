@@ -36,6 +36,18 @@
     "description": "O conflito impulsiona a demanda industrial e consolida o mercado interno de querosene para iluminação, elevando o petróleo ao status de recurso estratégico nos EUA."
   },
   {
+    "id": "entrega-da-canal-de-suez-1869",
+    "title": "Entrega da Canal de Suez",
+    "start_date": "1869-11-17",
+    "end_date": null,
+    "country": "Egito",
+    "region": "Oriente Médio",
+    "type": "tecnologia",
+    "company": null,
+    "wikipedia": "https://pt.wikipedia.org/wiki/Canal_de_Suez",
+    "description": "Em 1869, o Francez Ferdinand Lesseps, conclui a construção do Canal de Suez, após 10 anos de obras. Após insolvência do Egito, suas ações foram para o mercado e a Grã-Bretanha passou a ser sócia da França no empreendimento. O canal reduzia pela metade o tempo de viagem da Europa para a índia, parte do império Britânico, mas em 1948, com a independência da Índia, ele perdeu sua função original e deu lugar ao grande escoamento de Petróleo do golfo pérsico para a Europa."
+  },
+  {
     "id": "standard-oil-foundation-1870",
     "title": "Fundação da Standard Oil",
     "start_date": "1870-01-09",
@@ -324,6 +336,18 @@
     "description": "O parlamento iraniano aprova a nacionalização em março de 1951; em 1º de maio o Xá assina os decretos de implementação, expropriando a Anglo-Iranian Oil Company e gerando uma crise diplomática que levaria ao golpe de Estado de 1953."
   },
   {
+    "id": "criacao-da-eni-1953",
+    "title": "Criação da ENI",
+    "start_date": "1953-02-10",
+    "end_date": null,
+    "country": "Itália",
+    "region": "Europa",
+    "type": "company",
+    "company": "ENI",
+    "wikipedia": "https://pt.wikipedia.org/wiki/Eni",
+    "description": "Criada pela fusão da AGIP, ANIC e SNAM, a ENI foi a unificação das estatais de Petróleo da Itália em busca da independência energética. A sua frente estava Enrico Mattei, uma dos mais controversos executivos do mundo do Petróleo, que viria a falecer em um acidente aéreo em 1962."
+  },
+  {
     "id": "petrobras-creation-monopoly-1953",
     "title": "Criação da Petrobras",
     "start_date": "1953-10-03",
@@ -349,15 +373,75 @@
   },
   {
     "id": "suez-canal-crisis-1956",
-    "title": "Crise do Canal de Suez",
-    "start_date": "1956-10-29",
-    "end_date": "1956-11-07",
+    "title": "Crise do Canal de Suez  (Expropriação)",
+    "start_date": "1956-07-26",
+    "end_date": null,
     "country": "Egito",
     "region": "Oriente Médio",
     "type": "war",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Suez_Crisis",
     "description": "A nacionalização do canal e a invasão europeia interrompem o suprimento para a Europa, expondo a dependência energética do Ocidente ao óleo árabe e iniciando a decadência do império britânico no mundo."
+  },
+  {
+    "id": "acordo-eni-ira-abala-o-principio-do-50-50-1957",
+    "title": "Acordo ENI-Irã abala o princípio do 50/50",
+    "start_date": "1957-03-14",
+    "end_date": null,
+    "country": "Irã",
+    "region": "Oriente Médio",
+    "type": "company",
+    "company": "ENI;NIOC",
+    "wikipedia": "https://history.state.gov/historicaldocuments/frus1955-57v12/d403?utm_source=copilot.com",
+    "description": "O acordo ENI–Irã de 1957 foi uma concessão inovadora em que Enrico Mattei ofereceu ao Irã um modelo 75/25 — resultado de uma joint venture 50/50 com a NIOC, mas com garantias que elevavam a participação iraniana a 75% dos lucros — rompendo com o padrão das “Sete Irmãs”, que tradicionalmente deixavam aos países produtores apenas 50% e controlavam totalmente operações e preços. Esse gesto transformou o Irã no parceiro mais bem remunerado do mundo na época, abriu espaço para maior soberania dos países produtores e desencadeou uma reação global."
+  },
+  {
+    "id": "entrada-do-japao-no-oriente-medio-aoc-1957",
+    "title": "Entrada do Japão no Oriente Médio (AOC)",
+    "start_date": "1957-12-01",
+    "end_date": null,
+    "country": "Japão",
+    "region": "Ásia",
+    "type": "company",
+    "company": "Arabian Oil Company (AOC)",
+    "wikipedia": "https://www.mofa.go.jp/region/middle_e/saudi/data.html",
+    "description": "O acordo entre a Arabian Oil Company (AOC) do Japão e a Arábia Saudita, firmado em dezembro de 1957, concedeu à empresa japonesa direitos de exploração na Zona Neutra Arábia Saudita–Kuwait, permitindo ao Japão garantir acesso direto ao petróleo do Golfo num momento em que dependia quase totalmente das grandes petrolíferas ocidentais; em troca, a AOC ofereceu condições financeiras mais favoráveis que as das “Sete Irmãs”, o que fortaleceu a posição saudita nas negociações internacionais e marcou a entrada do Japão como ator independente no mercado global de energia."
+  },
+  {
+    "id": "queda-da-ditadura-venezuelana-1958",
+    "title": "Queda da Ditadura Venezuelana",
+    "start_date": "1958-01-23",
+    "end_date": null,
+    "country": "Venezuela",
+    "region": "América Central e do Sul",
+    "type": "policy",
+    "company": null,
+    "wikipedia": "https://pt.wikipedia.org/wiki/Golpe_de_Estado_na_Venezuela_em_1958",
+    "description": "A queda da ditadura venezuelana em 23 de janeiro de 1958 teve impacto direto e imediato na indústria do petróleo, porque abriu espaço para uma nova geração de tecnocratas e nacionalistas que buscavam maior controle estatal sobre a renda petrolífera — e o nome central desse processo foi Juan Pablo Pérez Alfonzo, nomeado ministro de Minas e Hidrocarburos logo após a redemocratização. Ele reorganizou completamente a política petrolífera venezuelana: criou o sistema de “fifty-fifty real” (reduzindo brechas usadas pelas majors), fortaleceu a fiscalização sobre as concessões, aumentou a carga tributária e, sobretudo, iniciou a articulação internacional que levaria à fundação da OPEP em 1960, transformando a Venezuela de simples fornecedora em potência reguladora do mercado global."
+  },
+  {
+    "id": "o-1-superpetroleiro-universe-apollo-1959",
+    "title": "O 1º Superpetroleiro: Universe Apollo",
+    "start_date": "1959-02-16",
+    "end_date": null,
+    "country": "Japão",
+    "region": "Ásia",
+    "type": "tecnologia",
+    "company": null,
+    "wikipedia": null,
+    "description": "O SS Universe Apollo (1959), encomendado por Aristóteles Onassis, foi o primeiro superpetroleiro ao ultrapassar 100 mil DWT, marcando o início da era dos navios de grande escala. Ele reduziu significativamente o custo de transporte por barril e viabilizou a expansão global do comércio de petróleo nas décadas seguintes, após a crise do Suez."
+  },
+  {
+    "id": "programa-de-importacoes-obrigatorio-dos-eua-1959",
+    "title": "Programa de Importações Obrigatório dos EUA",
+    "start_date": "1959-03-10",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "policy",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/Mandatory_Oil_Import_Quota_Program",
+    "description": "Uma medida que limitou oficialmente a entrada de petróleo estrangeiro no mercado americano, impondo cotas rígidas para proteger a produção doméstica. A medida limitou as importações a cerca de 9% da demanda, selando o mercado americano por 14 anos e mantendo preços internos até 70% superiores aos internacionais. Embora tenha garantido o crescimento da produção doméstica em 29% até 1968, o sistema gerou distorções como o \"Carrossel Mexicano\" e forçou as \"Sete Irmãs\" a desviar o excedente do Oriente Médio para a Europa e Japão, acirrando a competição global."
   },
   {
     "id": "link-report-1960",
