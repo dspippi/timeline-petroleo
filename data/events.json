@@ -14,7 +14,7 @@
   {
     "id": "drake-well-titusville-1859",
     "title": "Poço Drake: Início da Era do Petróleo",
-    "start_date": "1859-08-26",
+    "start_date": "1859-08-27",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
@@ -70,6 +70,30 @@
     "company": "Branobel",
     "wikipedia": "https://en.wikipedia.org/wiki/Baku_oil_boom",
     "description": "O governo russo aboliu o monopólio czarista e abriu a exploração em Baku em 1872, atraindo investidores como a família Nobel, que a partir de 1874 introduziram refinarias, oleodutos e navios-tanque para exportação."
+  },
+  {
+    "id": "tidewater-o-1-oleoduto-de-longa-distancia-1879",
+    "title": "Tidewater: O 1º oleoduto de longa distância",
+    "start_date": "1879-01-30",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "tecnologia",
+    "company": "Tidewater Oil Company",
+    "wikipedia": "https://en.wikipedia.org/wiki/Tidewater_Oil_Company",
+    "description": "Em maio de 1879, produtores independentes inauguraram o primeiro duto de longa distância do mundo (110 milhas) dentro da Pennsylvania. O triunfo tecnológico quebrou o monopólio ferroviário e forçou Rockefeller a reagir com a construção imediata de quatro linhas próprias de transporte. Em dois anos, a Standard tornou-se acionista da Tidewater, consolidando novamente seu controle quase total sobre o escoamento regional. O projeto provou a viabilidade dos dutos como o meio mais eficiente e seguro para o transporte de petróleo a longas distâncias\n."
+  },
+  {
+    "id": "o-trust-da-standard-oil-1882",
+    "title": "O Trust da Standard Oil",
+    "start_date": "1882-01-02",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "company",
+    "company": "Standard Oil",
+    "wikipedia": "https://en.wikipedia.org/wiki/Standard_Oil",
+    "description": "Rockefeller uniu 40 empresas sob nove fiduciários, consolidando o controle sobre 90% do refino dos EUA. O pacto forneceu um \"escudo de legalidade\" e a flexibilidade necessária para gerir propriedades globais a partir de uma sede central em Nova York. Este marco substituiu o caos da competição pela ordem burocrática, mas estigmatizou o termo \"truste\" como um monopólio odiado, tornando a empresa o alvo supremo das futuras leis antitruste."
   },
   {
     "id": "royal-dutch-sumatra-1885",
@@ -156,6 +180,18 @@
     "description": "A fusão entre a Royal Dutch Petroleum Company (Holanda, 60%) e a Shell Transport and Trading Company (Reino Unido, 40%) é formalizada em 23 de abril de 1907, criando a Royal Dutch Shell, uma das maiores empresas de energia do mundo."
   },
   {
+    "id": "descoberto-o-petroleo-da-persia-1908",
+    "title": "Descoberto o Petróleo da Pérsia",
+    "start_date": "1908-05-26",
+    "end_date": null,
+    "country": "Irã",
+    "region": "Oriente Médio",
+    "type": "discovery",
+    "company": "Anglo-Persian Oil Company",
+    "wikipedia": "https://en.wikipedia.org/wiki/Masjed_Soleyman",
+    "description": "A Descoberta em Masjid-i-Suleiman, em um esforço final no sudoeste da Pérsia, gerou um jorro de petróleo de 15 metros de altura rompeu o silêncio da noite, marcando o fim de sete anos de buscas infrutíferas. A descoberta ocorreu no exato momento em que os investidores, impacientes com os custos, enviavam uma carta ordenando o encerramento total das operações. O evento, comunicado à Inglaterra através de um código bíblico (\"Salmo 104, versículo 15\"), salvou a concessão de William Knox D'Arcy de um colapso financeiro iminente. Este marco histórico não apenas inaugurou a era do petróleo no Oriente Médio, mas também levou à fundação da Anglo-Persian Oil Company (futura BP), alterando permanentemente o equilíbrio do poder global."
+  },
+  {
     "id": "standard-oil-dissolution-1911",
     "title": "Desmembramento da Standard Oil",
     "start_date": "1911-05-12",
@@ -178,6 +214,18 @@
     "company": null,
     "wikipedia": null,
     "description": "Churchill é nomeado Primeiro Lord do Almirantado em 25 de outubro de 1911 e passa a defender a conversão da frota ao petróleo; a Comissão Real sobre Combustíveis é criada em 1912 e a política é formalizada em 1913, vinculando a defesa nacional ao suprimento externo de óleo."
+  },
+  {
+    "id": "a-revolucao-do-craqueamento-termico-1913",
+    "title": "A Revolução do Craqueamento Térmico",
+    "start_date": "1913-03-01",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "tecnologia",
+    "company": "Standard Oil of Indiana",
+    "wikipedia": "https://en.wikipedia.org/wiki/Cracking_(chemistry)",
+    "description": "Sob a liderança do químico William Burton, a Standard da Indiana colocou em operação o primeiro destilador comercial utilizando o craqueamento térmico, um avanço tecnológico que revolucionou a indústria ao dobrar o rendimento de gasolina extraído de um barril de petróleo — saltando de cerca de 20% para 45%."
   },
   {
     "id": "wwi-mechanized-warfare-1914",
@@ -228,16 +276,40 @@
     "description": "O jorro massivo de óleo no poço Los Barrosos No. 2, no campo La Rosa próximo ao Lago Maracaibo, produzindo 100.000 barris/dia, inicia oficialmente o boom petrolífero venezuelano, tornando o país um dos maiores exportadores mundiais."
   },
   {
+    "id": "baba-gurgur-o-1-grande-poco-do-iraque-1927",
+    "title": "Baba Gurgur: O 1º grande poço do Iraque",
+    "start_date": "1927-10-15",
+    "end_date": null,
+    "country": "Iraque",
+    "region": "Oriente Médio",
+    "type": "discovery",
+    "company": "Turkish Petroleum Company (TPC)",
+    "wikipedia": "https://en.wikipedia.org/wiki/Baba_Gurgur",
+    "description": "O poço Baba Gurgur nº 1 explode em um estrondo que reverberou pelo deserto iraquiano. O petróleo jorrou a 15 metros de altura, liberando gases venenosos que ameaçaram vilas e a própria cidade de Kirkuk, sendo contido apenas após oito dias e meio de esforços de 700 homens. Com um fluxo estimado em 95 mil barris por dia, o evento provou definitivamente o imenso potencial petrolífero do Iraque, tornando a região o \"maior prêmio da história\". Esta descoberta encerrou anos de impasses nas negociações entre gigantes americanos e europeus, sendo o catalisador direto para a assinatura do Acordo da Linha Vermelha em julho de 1928, que definiu a exploração conjunta no antigo Império Otomano."
+  },
+  {
+    "id": "o-acordo-da-linha-vermelha-1928",
+    "title": "O Acordo da Linha Vermelha",
+    "start_date": "1928-07-31",
+    "end_date": null,
+    "country": "Reino Unido",
+    "region": "Europa",
+    "type": "company",
+    "company": "Turkish Petroleum Company (TPC)",
+    "wikipedia": "https://en.wikipedia.org/wiki/Red_Line_Agreement",
+    "description": "Este contrato consolidou a exploração petrolífera nas terras do antigo Império Otomano. O acordo dividiu a propriedade da Turkish Petroleum Company (renomeada para IPC) em quatro fatias de 23,75% entre a Anglo-Persian, Royal Dutch/Shell, a francesa CFP e um consórcio de gigantes americanas, além de garantir a famosa fatia de 5% para Calouste Gulbenkian. O nome do pacto derivou de uma linha desenhada por Gulbenkian com um lápis vermelho sobre um mapa, definindo a vasta área onde os sócios eram proibidos de explorar petróleo de forma independente (a \"cláusula de auto-abnegação\"). Este marco não apenas formalizou a entrada das empresas dos EUA no Oriente Médio, mas estabeleceu um sistema de controle conjunto que dominaria a região por décadas. (O acordo foi firmado em Londres e se aplica a vários países do Oriente Médio)"
+  },
+  {
     "id": "achnacarry-agreement-1928",
-    "title": "Acordo de Achnacarry (Semente das Sete Irmãs)",
+    "title": "Acordo de Achnacarry (As-Is)",
     "start_date": "1928-09-16",
     "end_date": null,
     "country": "Reino Unido",
     "region": "Europa",
-    "type": "policy",
+    "type": "company",
     "company": "Standard Oil; Royal Dutch Shell; Anglo-Persian Oil Company",
     "wikipedia": "https://www.encyclopedia.com/humanities/encyclopedias-almanacs-transcripts-and-maps/agreement",
-    "description": "Ou As-Is Agreement: As maiores companhias petrolíferas reúnem-se secretamente na Escócia para cartelizar o mercado global, estabilizando preços e controlando a oferta."
+    "description": "Ou As-Is Agreement: As maiores companhias petrolíferas reúnem-se secretamente na Escócia para cartelizar o mercado global, estabilizando preços e controlando a oferta. Este acordo é considerado a semente para a aliança das Sete Irmãs"
   },
   {
     "id": "great-depression-oil-crisis-1929",
@@ -252,6 +324,18 @@
     "description": "A quebra da bolsa derruba o consumo mundial de combustíveis, gerando um excedente que forçou o fechamento de inúmeras produtoras independentes nos EUA."
   },
   {
+    "id": "descoberta-de-petroleo-no-bahrein-1932",
+    "title": "Descoberta de Petróleo no Bahrein",
+    "start_date": "1932-05-31",
+    "end_date": null,
+    "country": "Bahrein",
+    "region": "Oriente Médio",
+    "type": "discovery",
+    "company": "Bahrain Petroleum Company (Bapco)",
+    "wikipedia": "https://en.wikipedia.org/wiki/First_Oil_Well,_Bahrain",
+    "description": "A Bahrain Petroleum Company (Bapco), uma subsidiária da Standard Oil of California (Socal), atingiu petróleo pela primeira vez no lado árabe do Golfo Pérsico, marcando um evento de implicações globais. Embora a produção inicial fosse modesta, o impacto mais imediato foi político e geológico: a proximidade do Bahrein com a Arábia Saudita (apenas 32 km de distância) e a semelhança de suas estruturas geológicas tornaram o território de al-Hasa subitamente atraente. Isso convenceu o Rei Ibn Saud, que enfrentava uma crise financeira, a abandonar sua aversão a investidores estrangeiros e abrir caminho para a histórica concessão saudita assinada no ano seguinte. Assim, o marco no Bahrein foi o catalisador que iniciou o deslocamento do \"centro de gravidade\" do petróleo mundial para o Golfo Pérsico.\n."
+  },
+  {
     "id": "saudi-concession-socal-1933",
     "title": "Primeira Concessão na Arábia Saudita",
     "start_date": "1933-05-27",
@@ -264,13 +348,25 @@
     "description": "O Rei Ibn Saud concede direitos de exploração à Standard of California (SoCal), marcando o início da participação americana na Arábia Saudita."
   },
   {
+    "id": "petroleo-e-descoberto-no-kuwait-1938",
+    "title": "Petróleo é descoberto no Kuwait",
+    "start_date": "1938-02-23",
+    "end_date": null,
+    "country": "Kuwait",
+    "region": "Oriente Médio",
+    "type": "discovery",
+    "company": "Anglo-Persian;Gulf Oil",
+    "wikipedia": "https://en.wikipedia.org/wiki/Burgan_field",
+    "description": "Campo de Burgen: Uma descoberta de fluxo colossal cujo calor transformou areia em vidro, salvando a economia do Sheikh Ahmad. Realizado pela joint venture entre Anglo-Persian e Gulf Oil, sócias da Kuwait Oil Company, o marco consolidou definitivamente o Golfo Pérsico como o novo centro de gravidade do petróleo mundial."
+  },
+  {
     "id": "mexico-oil-nationalization-1938",
     "title": "Nacionalização do Petróleo no México",
     "start_date": "1938-03-17",
     "end_date": null,
     "country": "México",
     "region": "América Central e do Sul",
-    "type": "company",
+    "type": "policy",
     "company": "Pemex",
     "wikipedia": "https://en.wikipedia.org/wiki/Mexican_oil_expropriation",
     "description": "O presidente Lázaro Cárdenas expropria as petroleiras estrangeiras em 18 de março de 1938; a Pemex é criada por decreto separado em 7 de junho de 1938, tornando-se um marco do nacionalismo energético na América Latina."
@@ -300,6 +396,18 @@
     "description": "O petróleo jorra pela primeira vez em território brasileiro no bairro de Lobato, Salvador (Bahia), validando a tese de que o país possuía hidrocarbonetos exploráveis."
   },
   {
+    "id": "petroleo-na-arabia-saudita-1939",
+    "title": "Petróleo na Arábia Saudita",
+    "start_date": "1939-03-03",
+    "end_date": null,
+    "country": "Arábia Saudita",
+    "region": "Oriente Médio",
+    "type": "discovery",
+    "company": "California-Arabian Standard Oil Company (CASOC)",
+    "wikipedia": "https://en.wikipedia.org/wiki/History_of_Saudi_Arabia",
+    "description": "Após anos de furos secos e quase dez milhões de dólares investidos, o Poço nº 7 em Dammam atingiu petróleo em escala comercial a 1.440 metros de profundidade. O evento salvou a concessão da Socal (Casoc) e garantiu a estabilidade financeira de Ibn Saud, libertando o Reino da dependência econômica das peregrinações a Meca. Este marco consolidou o deslocamento do \"centro de gravidade\" do petróleo para o Oriente Médio, revelando o que seria o maior prêmio da história mundial."
+  },
+  {
     "id": "wwii-fuel-war-1939",
     "title": "2ª Guerra Mundial",
     "start_date": "1939-09-01",
@@ -310,6 +418,66 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/World_War_II",
     "description": "O conflito foi decidido pela logística de combustível; a superioridade produtiva dos Aliados asfixiou as forças alemãs e japonesas. Petróleo se consolidou como recurso estratégico."
+  },
+  {
+    "id": "ataque-a-pearl-harbor-1941",
+    "title": "Ataque a Pearl Harbor",
+    "start_date": "1941-12-07",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "war",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/Pearl_Harbor",
+    "description": "Marco da entrada dos EUA na 2ª Guerra Mundial"
+  },
+  {
+    "id": "inicio-da-doutrina-truman-1947",
+    "title": "Início da Doutrina Truman",
+    "start_date": "1947-03-12",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "policy",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/Truman_Doctrine",
+    "description": "Em um discurso histórico, o Harry Truman propôs ajuda especial à Grécia e à Turquia para que pudessem resistir à pressão comunista, inaugurando oficialmente a Doutrina Truman. Este marco lançou uma nova era na política externa dos Estados Unidos, focada na contenção da expansão soviética durante a emergente Guerra Fria."
+  },
+  {
+    "id": "solidificacao-da-aramco-1947",
+    "title": "\"Solidificação\" da ARAMCO",
+    "start_date": "1947-03-12",
+    "end_date": null,
+    "country": "Arábia Saudita",
+    "region": "Oriente Médio",
+    "type": "company",
+    "company": "ARAMCO",
+    "wikipedia": "https://en.wikipedia.org/wiki/Saudi_Aramco",
+    "description": "Formalização da entrada da Standard Oil of New Jersey (Exxon) e da Socony-Vacuum (Mobil) na Aramco, juntando-se aos sócios fundadores Socal e Texaco. Essa transação \"solidificou\" a concessão na Arábia Saudita, diluindo os enormes riscos financeiros e políticos e garantindo os mercados globais e o capital necessários para desenvolver as vastas reservas do reino. A assinatura coincidiu exatamente com o discurso do Presidente Harry Truman estabelecendo a Doutrina Truman. O acordo final manteve a Aramco como uma empresa 100% americana."
+  },
+  {
+    "id": "inicio-da-era-offshore-1947",
+    "title": "Início da Era Offshore",
+    "start_date": "1947-10-01",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "tecnologia",
+    "company": "Kerr-McGee",
+    "wikipedia": "https://aoghs.org/offshore-history/offshore-oil-history/",
+    "description": "No Golfo do México, a Kerr-McGee, uma empresa independente, atingiu petróleo a cerca de 17 quilômetros da costa da Louisiana. Este marco inaugurou oficialmente a era da exploração offshore em águas profundas. A decisão foi um risco calculado: por ser uma empresa menor, ela buscou o mar para evitar a competição com as gigantes por áreas terrestres \"classe A\". O sucesso exigiu a criação de uma indústria totalmente nova, pois não existia tecnologia para construir plataformas em mar aberto, perfurar o solo marinho ou lidar com a fúria de furacões e correntes. O evento provou o potencial dos oceanos, levando outras companhias a seguirem o exemplo e desencadeando uma longa batalha jurídica entre os estados e o governo federal dos EUA pela posse das receitas da plataforma continental."
+  },
+  {
+    "id": "proclamacao-do-estado-de-israel-1948",
+    "title": "Proclamação do Estado de Israel",
+    "start_date": "1948-05-14",
+    "end_date": null,
+    "country": "Israel",
+    "region": "Oriente Médio",
+    "type": "policy",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/Israel",
+    "description": "Evento que daria origem a muitos dos conflitos do Oriente Médio."
   },
   {
     "id": "saudi-fifty-fifty-agreement-1950",
@@ -336,6 +504,18 @@
     "description": "O parlamento iraniano aprova a nacionalização em março de 1951; em 1º de maio o Xá assina os decretos de implementação, expropriando a Anglo-Iranian Oil Company e gerando uma crise diplomática que levaria ao golpe de Estado de 1953."
   },
   {
+    "id": "nacionalizacao-do-petroleo-no-ira-1951",
+    "title": "Nacionalização do Petróleo no Irã",
+    "start_date": "1951-05-01",
+    "end_date": null,
+    "country": "Irã",
+    "region": "Oriente Médio",
+    "type": "policy",
+    "company": " Anglo-Iranian Oil Company (AIOC);National Iranian Oil Company (NIOC)",
+    "wikipedia": "https://en.wikipedia.org/wiki/Nationalization_of_the_Iranian_oil_industry",
+    "description": "Sob a liderança de Mohammed Mossadegh, o Irã nacionaliza sua indústria petrolífera, encerrando décadas de controle britânico. A lei transformou a poderosa Anglo-Iraniana na \"Ex-Companhia\" e estabeleceu a NIOC para gerir os recursos nacionais. Considerado um ato de soberania e \"limpeza ritual\" contra o colonialismo, o evento desencadeou uma severa crise global, levando ao embargo naval britânico e à paralisia econômica iraniana."
+  },
+  {
     "id": "criacao-da-eni-1953",
     "title": "Criação da ENI",
     "start_date": "1953-02-10",
@@ -346,6 +526,18 @@
     "company": "ENI",
     "wikipedia": "https://pt.wikipedia.org/wiki/Eni",
     "description": "Criada pela fusão da AGIP, ANIC e SNAM, a ENI foi a unificação das estatais de Petróleo da Itália em busca da independência energética. A sua frente estava Enrico Mattei, uma dos mais controversos executivos do mundo do Petróleo, que viria a falecer em um acidente aéreo em 1962."
+  },
+  {
+    "id": "operacao-ajax-e-a-retomada-do-xa-1953",
+    "title": "Operação Ajax e a Retomada do Xá",
+    "start_date": "1953-08-19",
+    "end_date": null,
+    "country": "Irã",
+    "region": "Oriente Médio",
+    "type": "war",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/1953_Iranian_coup_d%27%C3%A9tat",
+    "description": "A Operação Ajax, orquestrada pela CIA e pelo MI6, derrubou o primeiro-ministro Mohammed Mossadegh após o prolongado impasse na nacionalização do petróleo. Apesar da fuga inicial do Xá para Roma, um contragolpe liderado por forças militares leais e pelo General Zahedi retomou o controle de Teerã em 19 de agosto. O retorno triunfante do Xá Mohammed Reza Pahlavi ao poder consolidou a influência ocidental, afastou a ameaça de domínio soviético e permitiu a criação de um consórcio internacional para reativar as exportações iranianas."
   },
   {
     "id": "petrobras-creation-monopoly-1953",
@@ -492,6 +684,18 @@
     "description": "Também conhecida como Guerra de Junho de 1967, Guerra Árabe-Israelense de 1967 ou ainda Terceira Guerra Árabe-Israelense. O conflito eleva tensões e gera uma breve suspensão das exportações para EUA e Reino Unido, prefigurando o uso do petróleo como arma política."
   },
   {
+    "id": "descoberto-petroleo-no-alasca-1967",
+    "title": "Descoberto Petróleo no Alasca",
+    "start_date": "1967-12-26",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "discovery",
+    "company": "ARCO;Humble Oil",
+    "wikipedia": "https://en.wikipedia.org/wiki/Prudhoe_Bay_Oil_Field",
+    "description": "A ARCO e a Humble Oil descobriram petróleo no poço Prudhoe Bay State nº 1, no Alasca. Sob frio extremo, o jorro revelou o maior campo petrolífero da América do Norte, com reservas estimadas em 10 bilhões de barris. O marco superou o lendário campo do Leste do Texas  após inúmeros furos secos na região. A descoberta transformou o suprimento americano e viabilizou o estratégico oleoduto trans-alasquiano, ainda que em um futuro não tão próximo."
+  },
+  {
     "id": "offshore-guaricema-discovery-1968",
     "title": "Primeira Descoberta de Petróleo no Mar do Brasil (Guaricema)",
     "start_date": "1968-06-01",
@@ -502,6 +706,18 @@
     "company": "Petrobras",
     "wikipedia": "https://pt.wikipedia.org/wiki/Campo_de_Guaricema",
     "description": "Após anos de buscas frustradas em terra, a Petrobras descobre o Campo de Guaricema no litoral de Sergipe. Embora de pequeno porte, a descoberta provou a viabilidade técnica da produção offshore e abriu o caminho para as grandes conquistas da Bacia de Campos."
+  },
+  {
+    "id": "golpe-na-libia-assume-qaddafi-1969",
+    "title": "Golpe na Líbia: Assume Qaddafi",
+    "start_date": "1969-09-01",
+    "end_date": null,
+    "country": "Líbia",
+    "region": "Oriente Médio",
+    "type": "war",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/1969_Libyan_revolution",
+    "description": "Em 1º de setembro de 1969, o capitão Muammar al-Qaddafi liderou oficiais radicais em um golpe militar que derrubou a monarquia do Rei Idris na Líbia. Inspirado pelo pan-arabismo de Nasser, ele iniciou uma ofensiva agressiva contra as multinacionais para retomar a soberania sobre os recursos nacionais. Ao forçar aumentos de preços e cortes na produção, Qaddafi encerrou a era do petróleo barato e alterou permanentemente o equilíbrio de poder global em favor dos países exportadores."
   },
   {
     "id": "north-sea-oil-discovery-1969",
@@ -516,6 +732,18 @@
     "description": "A Phillips Petroleum descobre o campo Ekofisk na plataforma Ocean Viking e notifica oficialmente o governo norueguês em 23 de dezembro de 1969, transformando Reino Unido e Noruega em produtores de peso fora do controle da OPEP."
   },
   {
+    "id": "eua-a-100-da-producao-1971",
+    "title": "EUA à 100% da produção",
+    "start_date": "1971-03-01",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "crisis",
+    "company": "Railroad Commission of Texas",
+    "wikipedia": "https://en.wikipedia.org/wiki/Railroad_Commission_of_Texas",
+    "description": "A Comissão de Ferrovias do Texas permitiu a produção a 100% da capacidade pela primeira vez em um quarto de século. Este marco histórico sinalizou o fim da capacidade excedente dos Estados Unidos, eliminando a \"margem de segurança\" que protegera o Ocidente em crises anteriores. Com a produção doméstica incapaz de suprir a demanda crescente, os EUA perderam seu papel de regulador global para a Arábia Saudita, tornando-se vulneráveis e dependentes de importações."
+  },
+  {
     "id": "first-oil-shock-opec-1973",
     "title": "Guerra do Yom Kippur",
     "start_date": "1973-10-06",
@@ -526,6 +754,18 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Yom_Kippur_War",
     "description": "Também conhecida como Guerra Árabe-Israelense de 1973 ou Quarta guerra Árabe-Israelense, a guerra do Yom Kippur motivou o embargo árabe e cortes na produção como \"arma política\", quadruplicando o preço do petróleo em três meses. O evento transferiu o controle do mercado para os países produtores, gerando recessão global e impulsionando a busca por eficiência e fontes alternativas, como o programa Proálcool no Brasil. Este evento marca o 1º choque do Petróleo."
+  },
+  {
+    "id": "precos-4x-maiores-pela-opep-1973",
+    "title": "Preços 4X maiores pela OPEP",
+    "start_date": "1973-12-31",
+    "end_date": null,
+    "country": "Irã",
+    "region": "Oriente Médio",
+    "type": "policy",
+    "company": null,
+    "wikipedia": null,
+    "description": "Em dezembro de 1973, a reunião da OPEP em Teerã consolidou a crise energética global. Impulsionados pela visão ambiciosa do Xá do Irã, os países exportadores quadruplicaram o preço oficial do petróleo para US$ 11,65, justificando o valor pelo custo de fontes alternativas de energia. Apesar das advertências sauditas sobre uma possível recessão mundial, o marco selou a transferência definitiva de poder das multinacionais para os Estados produtores. O choque encerrou a era da energia barata, mergulhando o Ocidente em instabilidade econômica."
   },
   {
     "id": "campos-basin-garoupa-discovery-1974",
@@ -564,6 +804,18 @@
     "description": "A Braspetro, subsidiária internacional da Petrobras, descobre no Iraque o Campo de Majnoon, um dos maiores reservatórios do mundo. Com a iminência da guerra Irã-Iraque, o contrato foi renegociado em 1979 e a Petrobras deixou de ser concessionária para atuar como prestadora de serviços, perdendo participação no megacampo."
   },
   {
+    "id": "nacionalizacao-do-petroleo-na-venezuela-1976",
+    "title": "Nacionalização do Petróleo na Venezuela ",
+    "start_date": "1976-01-01",
+    "end_date": null,
+    "country": "Venezuela",
+    "region": "América Central e do Sul",
+    "type": "policy",
+    "company": "PDVSA",
+    "wikipedia": "https://pt.wikipedia.org/wiki/Petr%C3%B3leos_de_Venezuela",
+    "description": "Em 1º de janeiro de 1976, o presidente Carlos Andrés Pérez oficializou a nacionalização total da indústria petrolífera venezuelana, transformando o setor em um símbolo de soberania nacional. O governo estabeleceu a PDVSA para coordenar as operações, mantendo o pragmatismo ao assinar contratos de serviço com ex-concessionárias para garantir tecnologia e escoamento para mercados globais. Este marco encerrou a era das concessões estrangeiras, consolidando o controle estatal direto e tornando a Venezuela uma potência energética autônoma."
+  },
+  {
     "id": "iranian-revolution-second-shock-1979",
     "title": "Revolução Iraniana",
     "start_date": "1979-02-01",
@@ -600,6 +852,18 @@
     "description": "O conflito de oito anos devasta as infraestruturas petrolíferas de ambos os países e mantém o mercado em instabilidade permanente. Apesar de tudo, o mundo operava em superávit de Petróleo e o impacto nos preços foi pequeno."
   },
   {
+    "id": "o-1-corte-de-precos-da-opep-1983",
+    "title": "O 1º Corte de Preços da OPEP",
+    "start_date": "1983-03-01",
+    "end_date": null,
+    "country": "Arábia Saudita",
+    "region": "Oriente Médio",
+    "type": "policy",
+    "company": null,
+    "wikipedia": null,
+    "description": "Em março de 1983 a OPEP reduziu seu preço oficial pela primeira vez na história, cortando o barril de 34 USD para 29 USD. Pressionada pela recessão global, conservação de energia e ascensão da produção não-OPEP, a organização cedeu perante as forças do mercado. O marco estabeleceu quotas rígidas e designou a Arábia Saudita como \"produtor de equilíbrio\", tentando estabilizar um sistema fragilizado pelo massivo excesso de oferta mundial."
+  },
+  {
     "id": "nymex-oil-futures-trading-1983",
     "title": "Petróleo negociado na NYMEX (WTI)",
     "start_date": "1983-03-30",
@@ -610,6 +874,18 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/West_Texas_Intermediate",
     "description": "O petróleo WTI passa a ser negociado em contratos futuros como commodity financeira na NYMEX, retirando o poder absoluto da OPEP na definição de preços e inaugurando a era do petróleo como ativo financeiro."
+  },
+  {
+    "id": "nasce-a-producao-da-shell-em-borneu-1987",
+    "title": "Nasce a Produção da Shell em Bornéu",
+    "start_date": "1987-02-01",
+    "end_date": null,
+    "country": "Indonésia",
+    "region": "Ásia",
+    "type": "discovery",
+    "company": "Shell",
+    "wikipedia": "https://pt.wikipedia.org/wiki/Born%C3%A9u",
+    "description": "O primeiro óleo foi atingido em fevereiro de 1897 e o primeiro \"gusher\" (poço jorrante) ocorreu em abril de 1898. Essa descoberta foi existencial para a Shell, pois garantiu sua própria fonte de produção, reduzindo a dependência do óleo russo dos Rothschilds e a vulnerabilidade estratégica perante a Standard Oil. Além disso, como o óleo de Bornéu era ideal para combustível, ele fundamentou a visão de Marcus Samuel de transformar o petróleo na principal fonte de poder motriz para as marinhas globais. Para consolidar esses novos ativos e garantir a lealdade de seus parceiros, Samuel fundou formalmente a Shell Transport and Trading Company em 1897."
   },
   {
     "id": "exxon-valdez-spill-1989",
@@ -901,7 +1177,7 @@
   },
   {
     "id": "buzios-6-production-2025",
-    "title": "Início da Produção da Plataforma P-78 (Búzios 6)",
+    "title": "Início da Produção na P-78 (Búzios 6)",
     "start_date": "2025-12-31",
     "end_date": null,
     "country": "Brasil",
