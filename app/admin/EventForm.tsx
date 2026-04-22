@@ -6,7 +6,7 @@ import { EventType } from "@/types";
 import { AdminEventInput } from "@/lib/adminEvents";
 import { useCategories } from "@/context/CategoriesContext";
 
-const REGIONS = ["Global", "Oriente Médio", "América do Norte", "América Central e do Sul", "Europa", "Ásia", "África", "Outros"];
+const REGIONS = ["Global", "América do Norte", "Oriente Médio", "América Central e do Sul", "Europa", "Ásia", "África", "Outros"];
 
 interface Props {
   initial?: AdminEventInput;

@@ -40,11 +40,26 @@ export function groupEventsByRegion(
     Array.from(entries.values()).reduce((sum, evts) => sum + evts.length, 0);
 
   const sorted = Array.from(grouped.entries()).sort(([ra, ca], [rb, cb]) => {
-    if (ra === "Global") return -1;
-    if (rb === "Global") return 1;
-    // América Central e do Sul second (Brasil logo após Global)
-    if (ra === "América Central e do Sul") return -1;
-    if (rb === "América Central e do Sul") return 1;
+    const order = [
+      "Global",
+      "América do Norte",
+      "Oriente Médio",
+      "América Central e do Sul",
+      "Europa",
+      "Ásia",
+      "África",
+      "Outros",
+    ];
+
+    const ia = order.indexOf(ra);
+    const ib = order.indexOf(rb);
+    if (ia !== -1 || ib !== -1) {
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
+    }
+
+    // Fallback: by event count desc (keeps unknown/new regions stable-ish)
     return regionEventCount(cb) - regionEventCount(ca);
   });
 
