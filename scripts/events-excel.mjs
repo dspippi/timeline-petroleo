@@ -6,153 +6,180 @@
  *   npm run excel:import   →  events.xlsx → events.json
  */
 
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import { createRequire } from "module";
+import { fileURLToPath } from "url";
 
 const require = createRequire(import.meta.url);
-const XLSX = require("xlsx");
+const readline = require("node:readline/promises");
+const path = require("path");
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(__dirname, "..");
-const JSON_PATH = path.join(ROOT, "data", "events.json");
-const XLSX_PATH = path.join(ROOT, "data", "events.xlsx");
+const core = require("./events-excel-core.cjs");
 
-const COLUMNS = ["id", "title", "start_date", "end_date", "country", "region", "type", "company", "wikipedia", "description"];
-const REQUIRED = ["id", "title", "start_date"];
-const NULLABLE = ["end_date", "company", "wikipedia"];
-
-// ── Largura sugerida por coluna (em caracteres) ─────────────────────────────
-const COL_WIDTHS = { id: 36, title: 50, start_date: 12, end_date: 12, country: 20, region: 20, type: 12, company: 30, wikipedia: 55, description: 80 };
-
-// ───────────────────────────────────────────────────────────────────────────
-// EXPORT: events.json → events.xlsx
-// ───────────────────────────────────────────────────────────────────────────
-function exportToExcel() {
-  if (!fs.existsSync(JSON_PATH)) {
-    console.error(`❌  Arquivo não encontrado: ${JSON_PATH}`);
-    process.exit(1);
+function parseArgs(argv) {
+  const args = argv.slice(2);
+  const out = { cmd: null, rootArg: null, yes: false, help: false };
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a === "--help" || a === "-h") out.help = true;
+    else if (a === "--yes" || a === "-y") out.yes = true;
+    else if (a === "--root") out.rootArg = args[++i];
+    else if (!out.cmd) out.cmd = a;
   }
-
-  const events = JSON.parse(fs.readFileSync(JSON_PATH, "utf-8"));
-
-  // Converte para array de arrays (cabeçalho + dados)
-  const rows = [
-    COLUMNS, // linha 1: cabeçalho
-    ...events.map((ev) =>
-      COLUMNS.map((col) => {
-        const val = ev[col];
-        // null e undefined → string vazia
-        return val === null || val === undefined ? "" : String(val);
-      })
-    ),
-  ];
-
-  const ws = XLSX.utils.aoa_to_sheet(rows);
-
-  // Ajusta largura das colunas
-  ws["!cols"] = COLUMNS.map((col) => ({ wch: COL_WIDTHS[col] ?? 20 }));
-
-  // Congela a primeira linha (cabeçalho sempre visível)
-  ws["!freeze"] = { xSplit: 0, ySplit: 1 };
-
-  // Aplica negrito nos cabeçalhos (A1..J1)
-  COLUMNS.forEach((_, i) => {
-    const cellRef = XLSX.utils.encode_cell({ r: 0, c: i });
-    if (ws[cellRef]) {
-      ws[cellRef].s = { font: { bold: true } };
-    }
-  });
-
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "eventos");
-
-  XLSX.writeFile(wb, XLSX_PATH);
-  console.log(`✅  Exportado: ${XLSX_PATH}`);
-  console.log(`    ${events.length} eventos → ${COLUMNS.length} colunas`);
+  return out;
 }
 
-// ───────────────────────────────────────────────────────────────────────────
-// IMPORT: events.xlsx → events.json
-// ───────────────────────────────────────────────────────────────────────────
-function importFromExcel() {
-  if (!fs.existsSync(XLSX_PATH)) {
-    console.error(`❌  Arquivo não encontrado: ${XLSX_PATH}`);
-    console.error(`    Execute primeiro: npm run excel:export`);
-    process.exit(1);
-  }
+function printIntro() {
+  console.log("Timeline do Petróleo — Ferramenta Excel ↔ JSON");
+  console.log("");
+  console.log("O que significa:");
+  console.log("  EXPORTAR = pegar `data/events.json` e GERAR/ATUALIZAR `data/events.xlsx` (para editar no Excel).");
+  console.log("  IMPORTAR = pegar `data/events.xlsx` e SOBRESCREVER `data/events.json` (traz as edições do Excel para o site).");
+  console.log("");
+}
 
-  const wb = XLSX.readFile(XLSX_PATH);
-  const ws = wb.Sheets[wb.SheetNames[0]];
+function printHelp() {
+  printIntro();
+  console.log("Uso:");
+  console.log("  npm run excel:export            (events.json → events.xlsx)");
+  console.log("  npm run excel:import            (events.xlsx → events.json, com confirmação)");
+  console.log("  node scripts/events-excel.mjs   (interface interativa)");
+  console.log("");
+  console.log("Opções (quando usar via node direto):");
+  console.log("  export | import");
+  console.log("  --root <pasta>");
+  console.log("  --yes");
+}
 
-  // Lê como array de objetos usando a primeira linha como cabeçalho
-  const rows = XLSX.utils.sheet_to_json(ws, {
-    header: 1,         // retorna array de arrays
-    raw: false,        // tudo como string (evita conversão automática de datas)
-    defval: "",        // células vazias → string vazia
-  });
+async function confirmImport({ rl, paths, currentCount, excelCount, skipped }) {
+  console.log("");
+  console.log("Você escolheu IMPORTAR (Excel → JSON).");
+  console.log(`Isso vai SOBRESCREVER: ${paths.jsonPath}`);
+  console.log(`Planilha lida:        ${paths.xlsxPath}`);
+  console.log("");
+  console.log("Resumo:");
+  console.log(`  - events.json atual: ${currentCount ?? "não encontrado"}`);
+  console.log(`  - eventos na planilha: ${excelCount}${skipped > 0 ? ` (${skipped} linha(s) ignorada(s))` : ""}`);
+  console.log("");
+  console.log("Para confirmar, digite IMPORTAR e pressione Enter (ou Enter para cancelar).");
+  const answer = (await rl.question("> ")).trim().toUpperCase();
+  return answer === "IMPORTAR";
+}
 
-  if (rows.length < 2) {
-    console.error("❌  Planilha vazia ou sem dados.");
-    process.exit(1);
-  }
+async function runUi({ root }) {
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+  try {
+    printIntro();
+    const paths = core.getPaths(root);
+    console.log(`Pasta do projeto: ${paths.root}`);
+    console.log("");
+    console.log("Escolha uma opção:");
+    console.log("  1) Exportar (JSON → Excel)");
+    console.log("  2) Importar (Excel → JSON)");
+    console.log("  0) Sair");
+    const choice = (await rl.question("> ")).trim();
 
-  // Primeira linha = cabeçalhos; valida se batem com os esperados
-  const headers = rows[0].map((h) => String(h).trim());
-  const missingCols = COLUMNS.filter((c) => !headers.includes(c));
-  if (missingCols.length > 0) {
-    console.error(`❌  Colunas faltando na planilha: ${missingCols.join(", ")}`);
-    process.exit(1);
-  }
+    if (choice === "0") return { ok: true, action: "exit" };
 
-  // Índice de cada coluna (tolerante a colunas extras ou fora de ordem)
-  const idx = {};
-  COLUMNS.forEach((col) => { idx[col] = headers.indexOf(col); });
-
-  const events = [];
-  let skipped = 0;
-
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    const ev = {};
-
-    for (const col of COLUMNS) {
-      const raw = String(row[idx[col]] ?? "").trim();
-      ev[col] = NULLABLE.includes(col) ? (raw === "" ? null : raw) : raw;
+    if (choice === "1") {
+      const res = core.exportToExcel({ root });
+      if (!res.ok) return res;
+      console.log(`✅  Exportado: ${res.xlsxPath}`);
+      console.log(`    ${res.eventCount} eventos → ${res.columnCount} colunas`);
+      return { ok: true, action: "export" };
     }
 
-    // Valida campos obrigatórios
-    const missing = REQUIRED.filter((f) => !ev[f]);
-    if (missing.length > 0) {
-      console.warn(`⚠️   Linha ${i + 1} ignorada — campos obrigatórios vazios: ${missing.join(", ")}`);
-      skipped++;
-      continue;
+    if (choice === "2") {
+      const current = core.safeReadJsonArray(paths.jsonPath);
+      const currentCount = current.ok ? current.value.length : null;
+      const read = core.readEventsFromExcel({ root });
+      if (!read.ok) return read;
+      const confirmed = await confirmImport({
+        rl,
+        paths,
+        currentCount,
+        excelCount: read.events.length,
+        skipped: read.skipped,
+      });
+      if (!confirmed) return { ok: true, action: "import-cancelled" };
+      const write = core.writeEventsJson({ root, events: read.events, makeBackup: true });
+      console.log(`✅  Importado: ${write.jsonPath}`);
+      if (write.backupPath) console.log(`    Backup criado: ${write.backupPath}`);
+      console.log(`    ${read.events.length} eventos salvos${read.skipped > 0 ? ` (${read.skipped} linha(s) ignorada(s))` : ""}`);
+      return { ok: true, action: "import" };
     }
 
-    events.push(ev);
+    return { ok: false, error: "Opção inválida." };
+  } finally {
+    rl.close();
   }
-
-  // Ordena por start_date
-  events.sort((a, b) => (a.start_date < b.start_date ? -1 : 1));
-
-  fs.writeFileSync(JSON_PATH, JSON.stringify(events, null, 2), "utf-8");
-  console.log(`✅  Importado: ${JSON_PATH}`);
-  console.log(`    ${events.length} eventos salvos${skipped > 0 ? ` (${skipped} linha(s) ignorada(s))` : ""}`);
 }
 
 // ───────────────────────────────────────────────────────────────────────────
 // CLI
 // ───────────────────────────────────────────────────────────────────────────
-const cmd = process.argv[2];
+const parsed = parseArgs(process.argv);
+const callerDir = path.dirname(fileURLToPath(import.meta.url));
+const root = core.resolveProjectRoot({ rootArg: parsed.rootArg, callerDir });
 
-if (cmd === "export") {
-  exportToExcel();
-} else if (cmd === "import") {
-  importFromExcel();
-} else {
-  console.log("Uso:");
-  console.log("  npm run excel:export   →  events.json  →  events.xlsx");
-  console.log("  npm run excel:import   →  events.xlsx  →  events.json");
-  process.exit(1);
+if (parsed.help) {
+  printHelp();
+  process.exit(0);
 }
+
+// Sem comando → abre interface simples.
+if (!parsed.cmd) {
+  const ui = await runUi({ root });
+  if (!ui.ok) {
+    console.error(`❌  ${ui.error}`);
+    process.exit(1);
+  }
+  process.exit(0);
+}
+
+if (parsed.cmd === "export") {
+  const res = core.exportToExcel({ root });
+  if (!res.ok) {
+    console.error(`❌  ${res.error}`);
+    process.exit(1);
+  }
+  console.log(`✅  Exportado: ${res.xlsxPath}`);
+  console.log(`    ${res.eventCount} eventos → ${res.columnCount} colunas`);
+  process.exit(0);
+}
+
+if (parsed.cmd === "import") {
+  const paths = core.getPaths(root);
+  const current = core.safeReadJsonArray(paths.jsonPath);
+  const currentCount = current.ok ? current.value.length : null;
+
+  const read = core.readEventsFromExcel({ root });
+  if (!read.ok) {
+    console.error(`❌  ${read.error}`);
+    process.exit(1);
+  }
+
+  if (!parsed.yes) {
+    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    try {
+      const confirmed = await confirmImport({
+        rl,
+        paths,
+        currentCount,
+        excelCount: read.events.length,
+        skipped: read.skipped,
+      });
+      if (!confirmed) process.exit(0);
+    } finally {
+      rl.close();
+    }
+  }
+
+  const write = core.writeEventsJson({ root, events: read.events, makeBackup: true });
+  console.log(`✅  Importado: ${write.jsonPath}`);
+  if (write.backupPath) console.log(`    Backup criado: ${write.backupPath}`);
+  console.log(`    ${read.events.length} eventos salvos${read.skipped > 0 ? ` (${read.skipped} linha(s) ignorada(s))` : ""}`);
+  process.exit(0);
+}
+
+printHelp();
+process.exit(1);

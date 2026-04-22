@@ -1,0 +1,6 @@
+dist/
+scripts/
+docs/
+data/events.xlsx
+data/*.bak-*
+.claude/

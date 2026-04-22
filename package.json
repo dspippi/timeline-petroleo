@@ -9,7 +9,10 @@
     "start": "next start",
     "lint": "next lint",
     "excel:export": "node scripts/events-excel.mjs export",
-    "excel:import": "node scripts/events-excel.mjs import"
+    "excel:import": "node scripts/events-excel.mjs import",
+    "excel:ui": "node scripts/events-excel.mjs",
+    "preexcel:exe": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\"",
+    "excel:exe": "pkg -t node18-win-x64 -o dist/events-excel.exe scripts/events-excel-ui.cjs"
   },
   "dependencies": {
     "@tanstack/react-virtual": "^3.13.5",
@@ -29,6 +32,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.29",
+    "pkg": "^5.8.1",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5",
