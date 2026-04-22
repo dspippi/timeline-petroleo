@@ -43,6 +43,7 @@ O navegador abre em `http://localhost:3000/admin`.
 No admin voce pode criar, editar e excluir eventos. As alteracoes sao salvas em `data/events.json` no seu computador.
 
 Importante: o admin online deve ser tratado como somente leitura. Edicoes confiaveis devem ser feitas localmente e publicadas com Git.
+Por padrao, `/admin` e `/api/admin/*` ficam desabilitados em producao. Para reativar online de forma intencional, configure `ALLOW_ADMIN_ONLINE=1` no ambiente.
 
 ## Editar eventos pelo Excel
 

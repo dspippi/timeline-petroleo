@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const PUBLIC_ADMIN_PATHS = ["/admin/login", "/api/admin/login"];
+const ALLOW_ADMIN_ONLINE = process.env.ALLOW_ADMIN_ONLINE === "1";
 
 /** Compute HMAC-SHA256 using Web Crypto API (Edge-compatible) */
 async function computeToken(secret: string, password: string): Promise<string> {
@@ -23,6 +24,12 @@ export async function middleware(request: NextRequest) {
 
   const isAdminRoute = pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
   if (!isAdminRoute) return NextResponse.next();
+
+  // Admin is a local maintenance tool. In production, disable it by default.
+  // Set ALLOW_ADMIN_ONLINE=1 if you intentionally want it reachable online.
+  if (process.env.NODE_ENV !== "development" && !ALLOW_ADMIN_ONLINE) {
+    return new NextResponse("Not Found", { status: 404 });
+  }
 
   // In development, skip auth entirely — admin is a local editing tool
   if (process.env.NODE_ENV === "development") return NextResponse.next();
