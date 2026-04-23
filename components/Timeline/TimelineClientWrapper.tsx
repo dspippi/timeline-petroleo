@@ -65,6 +65,28 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     [domainStart, domainEnd, pxPerDay]
   );
 
+  const scrollEndLimit = useMemo(() => new Date(2031, 11, 31), []);
+
+  const getMaxAllowedScrollLeft = useCallback((el: HTMLDivElement) => {
+    const contentWidth = scale.totalWidthPx + LABEL_WIDTH;
+    const maxByContent = Math.max(0, contentWidth - el.clientWidth);
+
+    const limitPlotPxRaw = scale.toPixel(scrollEndLimit);
+    const limitPlotPx = clamp(limitPlotPxRaw, 0, scale.totalWidthPx);
+    const limitContentPx = LABEL_WIDTH + limitPlotPx;
+    const maxByLimit = Math.max(0, limitContentPx - el.clientWidth);
+
+    return Math.min(maxByContent, maxByLimit);
+  }, [scale, scrollEndLimit]);
+
+  const clampScrollLeftPairInPlace = useCallback((primary: HTMLDivElement, secondary: HTMLDivElement) => {
+    const maxAllowed = getMaxAllowedScrollLeft(primary);
+    if (primary.scrollLeft <= maxAllowed) return false;
+    primary.scrollLeft = maxAllowed;
+    secondary.scrollLeft = maxAllowed;
+    return true;
+  }, [getMaxAllowedScrollLeft]);
+
   const hasFit = useRef(false);
   const hasScrolled = useRef(false);
   const [chartReady, setChartReady] = useState(false);
@@ -82,7 +104,10 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     if (hasScrolled.current) return;
     requestAnimationFrame(() => {
       if (timelineScrollRef.current) {
-        timelineScrollRef.current.scrollLeft = timelineScrollRef.current.scrollWidth;
+        timelineScrollRef.current.scrollLeft = Math.min(
+          timelineScrollRef.current.scrollWidth,
+          getMaxAllowedScrollLeft(timelineScrollRef.current)
+        );
       }
       if (chartScrollRef.current && timelineScrollRef.current) {
         chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
@@ -90,7 +115,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       hasScrolled.current = true;
       requestAnimationFrame(() => setChartReady(true));
     });
-  }, [scale.totalWidthPx]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [scale.totalWidthPx, getMaxAllowedScrollLeft]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // When chart prices arrive asynchronously, sync its scroll to the timeline.
   useEffect(() => {
@@ -133,17 +158,19 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
     chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
+    clampScrollLeftPairInPlace(timelineScrollRef.current, chartScrollRef.current);
     isSyncing.current = false;
     scheduleVisibleRangeUpdate();
-  }, [scheduleVisibleRangeUpdate]);
+  }, [scheduleVisibleRangeUpdate, clampScrollLeftPairInPlace]);
 
   const handleChartScroll = useCallback(() => {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
     timelineScrollRef.current.scrollLeft = chartScrollRef.current.scrollLeft;
+    clampScrollLeftPairInPlace(chartScrollRef.current, timelineScrollRef.current);
     isSyncing.current = false;
     scheduleVisibleRangeUpdate();
-  }, [scheduleVisibleRangeUpdate]);
+  }, [scheduleVisibleRangeUpdate, clampScrollLeftPairInPlace]);
 
   const countries = useMemo(
     () => Array.from(new Set(allEvents.map((e) => e.country))).sort(),
