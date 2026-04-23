@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { EventType } from "@/types";
 import { AdminEventInput } from "@/lib/adminEvents";
 import { useCategories } from "@/context/CategoriesContext";
+import { withBasePath } from "@/lib/basePath";
 
 const REGIONS = ["Global", "América do Norte", "Oriente Médio", "América Central e do Sul", "Europa", "Ásia", "África", "Outros"];
 
@@ -72,12 +73,12 @@ export function EventForm({ initial, mode, existingCountries, existingCompanies 
 
     try {
       const res = mode === "create"
-        ? await fetch("/api/admin/events", {
+        ? await fetch(withBasePath("/api/admin/events"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
           })
-        : await fetch(`/api/admin/events/${encodeURIComponent(initial!.id)}`, {
+        : await fetch(withBasePath(`/api/admin/events/${encodeURIComponent(initial!.id)}`), {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),

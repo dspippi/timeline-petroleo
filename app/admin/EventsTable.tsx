@@ -7,6 +7,7 @@ import { OilEvent, EventType } from "@/types";
 import { useCategories } from "@/context/CategoriesContext";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { withBasePath } from "@/lib/basePath";
 
 type SortKey = "title" | "type" | "country" | "start_date" | "company";
 type SortDir = "asc" | "desc";
@@ -77,7 +78,7 @@ export function EventsTable({ events }: { events: OilEvent[] }) {
     if (!confirm(`Excluir "${title}"?`)) return;
     setDeleting(id);
     try {
-      const res = await fetch(`/api/admin/events/${encodeURIComponent(id)}`, { method: "DELETE" });
+      const res = await fetch(withBasePath(`/api/admin/events/${encodeURIComponent(id)}`), { method: "DELETE" });
       if (res.ok) {
         router.refresh();
       } else {

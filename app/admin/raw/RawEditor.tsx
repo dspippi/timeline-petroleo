@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { withBasePath } from "@/lib/basePath";
 
 export function RawEditor({ initialText }: { initialText: string }) {
   const router = useRouter();
@@ -14,7 +15,7 @@ export function RawEditor({ initialText }: { initialText: string }) {
     setSaving(true);
     setMessage(null);
     try {
-      const res = await fetch("/api/admin/raw", {
+      const res = await fetch(withBasePath("/api/admin/raw"), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
