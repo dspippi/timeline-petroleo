@@ -23,8 +23,8 @@ export const GuideOverlay = memo(function GuideOverlay({ scale }: Props) {
       className="absolute top-0 bottom-0 pointer-events-none z-30"
       style={{ left: x, width: 1 }}
     >
-      <div className="w-px h-full bg-gray-400/50" />
-      <div className="absolute top-6 left-2 text-[10px] text-gray-600 bg-white px-1.5 py-0.5 rounded border border-gray-200 shadow-sm whitespace-nowrap font-mono">
+      <div className="w-px h-full bg-gray-400/50 dark:bg-[#b7ff00]/45 dark:shadow-[0_0_12px_rgba(183,255,0,0.28)]" />
+      <div className="absolute top-6 left-2 text-[10px] text-gray-600 dark:text-[#dce8e1] bg-white dark:bg-[#071018] px-1.5 py-0.5 rounded border border-gray-200 dark:border-[#b7ff00]/30 shadow-sm dark:shadow-[0_0_14px_rgba(183,255,0,0.14)] whitespace-nowrap font-mono">
         {label}
       </div>
     </div>

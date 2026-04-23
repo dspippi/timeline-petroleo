@@ -22,7 +22,7 @@ export function EventCard({ event, onClose }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/30 dark:bg-black/60 backdrop-blur-sm z-40"
             onClick={onClose}
           />
 
@@ -32,7 +32,7 @@ export function EventCard({ event, onClose }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.97 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[500px] max-w-[92vw] rounded-2xl border border-black/10 dark:border-white/[0.08] bg-white dark:bg-[#13141d] shadow-2xl"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[500px] max-w-[92vw] rounded-2xl border border-black/10 dark:border-[#2a3948] bg-white dark:bg-[#071018] shadow-2xl dark:shadow-[0_24px_70px_rgba(0,0,0,0.62),0_0_32px_rgba(183,255,0,0.08)]"
           >
             {/* Top accent */}
             <div
@@ -54,13 +54,13 @@ export function EventCard({ event, onClose }: Props) {
                   >
                     {getLabel(event.type)}
                   </span>
-                  <span className="text-[11px] text-gray-400 dark:text-[#3a3c50] px-2 py-0.5 rounded-full border border-gray-200 dark:border-white/[0.08]">
+                  <span className="text-[11px] text-gray-400 dark:text-[#8896a8] px-2 py-0.5 rounded-full border border-gray-200 dark:border-[#2a3948]">
                     {event.region}
                   </span>
                 </div>
                 <button
                   onClick={onClose}
-                  className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-gray-400 dark:text-[#3a3c50] hover:text-gray-700 dark:hover:text-[#9a9cb0] hover:bg-gray-100 dark:hover:bg-white/[0.08] transition-all text-lg leading-none"
+                  className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-gray-400 dark:text-[#8896a8] hover:text-gray-700 dark:hover:text-[#b7ff00] hover:bg-gray-100 dark:hover:bg-[rgba(183,255,0,0.09)] transition-all text-lg leading-none"
                 >
                   ×
                 </button>
@@ -69,29 +69,29 @@ export function EventCard({ event, onClose }: Props) {
               {/* Title */}
               <h2
                 className={`text-xl font-bold leading-tight mb-2 ${
-                  isBrasil(event.country) ? "text-amber-700 dark:text-amber-500" : "text-gray-900 dark:text-[#e2e4ef]"
+                  isBrasil(event.country) ? "text-amber-700 dark:text-[#d8ff66]" : "text-gray-900 dark:text-[#f2f7f4]"
                 }`}
               >
                 {event.title}
               </h2>
 
               {/* Meta */}
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4 text-sm text-gray-400 dark:text-[#5a5c70]">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4 text-sm text-gray-400 dark:text-[#8896a8]">
                 <span>{formatEventDate(event.start_date, event.end_date)}</span>
-                <span className="w-px h-3 bg-gray-200 dark:bg-white/[0.08]" />
+                <span className="w-px h-3 bg-gray-200 dark:bg-[#2a3948]" />
                 <span className={isBrasil(event.country) ? "text-amber-600 font-medium" : ""}>
                   {event.country}
                 </span>
                 {event.company && (
                   <>
-                    <span className="w-px h-3 bg-gray-200 dark:bg-white/[0.08]" />
-                    <span className="text-gray-600 dark:text-[#5a5c70]">{event.company}</span>
+                    <span className="w-px h-3 bg-gray-200 dark:bg-[#2a3948]" />
+                    <span className="text-gray-600 dark:text-[#8896a8]">{event.company}</span>
                   </>
                 )}
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 dark:text-[#8a8ca0] leading-relaxed mb-5">
+              <p className="text-sm text-gray-600 dark:text-[#a8b4c2] leading-relaxed mb-5">
                 {event.description}
               </p>
 
@@ -101,7 +101,7 @@ export function EventCard({ event, onClose }: Props) {
                   href={event.wikipedia}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors group"
+                  className="inline-flex items-center gap-1.5 text-xs text-blue-600 dark:text-[#7fb3ff] hover:text-blue-800 dark:hover:text-[#b7ff00] transition-colors group"
                 >
                   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />

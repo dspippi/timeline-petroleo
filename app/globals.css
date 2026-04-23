@@ -12,12 +12,18 @@
 }
 
 .dark {
-  --bg-primary: #0d0e14;
-  --bg-secondary: #13141d;
-  --text-primary: #e2e4ef;
-  --scrollbar-track: #1a1b26;
-  --scrollbar-thumb: rgba(255,255,255,0.12);
-  --scrollbar-thumb-hover: rgba(255,255,255,0.22);
+  --bg-primary: #050a10;
+  --bg-secondary: #0a1119;
+  --text-primary: #f2f7f4;
+  --scrollbar-track: #071018;
+  --scrollbar-thumb: rgba(183,255,0,0.22);
+  --scrollbar-thumb-hover: rgba(183,255,0,0.42);
+  --lime-accent: #b7ff00;
+  --lime-soft: rgba(183,255,0,0.16);
+  --line-soft: rgba(139,159,181,0.16);
+  --line-strong: rgba(183,255,0,0.34);
+  --text-muted: #8896a8;
+  --text-dim: #526173;
 }
 
 html, body {

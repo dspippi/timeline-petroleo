@@ -2,6 +2,7 @@
 
 import { OilEvent, EventType } from "@/types";
 import { useCategories } from "@/context/CategoriesContext";
+import { useDarkMode } from "@/context/SettingsContext";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -16,6 +17,7 @@ interface Props {
 
 export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeClick }: Props) {
   const { getColor, getLabel } = useCategories();
+  const darkMode = useDarkMode();
   const color = getColor(event.type);
   const typeLabel = getLabel(event.type);
 
@@ -41,9 +43,9 @@ export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeCl
         className="rounded-xl shadow-2xl overflow-hidden text-left"
         style={{
           width: tipWidth,
-          background: "white",
-          border: `1px solid ${color}33`,
-          boxShadow: `0 8px 32px rgba(0,0,0,0.16), 0 0 0 1px ${color}18`,
+          background: darkMode ? "#071018" : "white",
+          border: `1px solid ${darkMode ? color + "55" : color + "33"}`,
+          boxShadow: darkMode ? `0 14px 38px rgba(0,0,0,0.55), 0 0 22px ${color}28` : `0 8px 32px rgba(0,0,0,0.16), 0 0 0 1px ${color}18`,
         }}
       >
         {/* Colored top accent bar */}
@@ -69,7 +71,7 @@ export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeCl
           </div>
 
           {/* Title */}
-          <div className="font-bold leading-snug mb-2" style={{ fontSize: 13, color: "#1a1a2e" }}>
+          <div className="font-bold leading-snug mb-2" style={{ fontSize: 13, color: darkMode ? "#f2f7f4" : "#1a1a2e" }}>
             {event.title}
           </div>
 
@@ -78,7 +80,7 @@ export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeCl
             <div
               className="text-[11px] leading-relaxed"
               style={{
-                color: "#6b7280",
+                color: darkMode ? "#a8b4c2" : "#6b7280",
                 display: "-webkit-box",
                 WebkitLineClamp: 4,
                 WebkitBoxOrient: "vertical" as React.CSSProperties["WebkitBoxOrient"],
@@ -96,8 +98,8 @@ export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeCl
             </span>
             {event.company && (
               <>
-                <span className="text-gray-200">·</span>
-                <span className="text-[10px] text-gray-400">{event.company}</span>
+                <span className="text-gray-200 dark:text-[#526173]">·</span>
+                <span className="text-[10px] text-gray-400 dark:text-[#8896a8]">{event.company}</span>
               </>
             )}
           </div>
@@ -116,7 +118,7 @@ export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeCl
           borderLeft: "7px solid transparent",
           borderRight: "7px solid transparent",
           borderTop: `7px solid ${color}33`,
-          filter: "drop-shadow(0 2px 1px rgba(0,0,0,0.06))",
+          filter: darkMode ? "drop-shadow(0 2px 2px rgba(0,0,0,0.36))" : "drop-shadow(0 2px 1px rgba(0,0,0,0.06))",
         }}
       />
       <div
@@ -129,7 +131,7 @@ export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeCl
           height: 0,
           borderLeft: "6px solid transparent",
           borderRight: "6px solid transparent",
-          borderTop: "6px solid white",
+          borderTop: darkMode ? "6px solid #071018" : "6px solid white",
         }}
       />
     </div>

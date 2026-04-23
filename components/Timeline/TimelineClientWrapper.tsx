@@ -9,6 +9,7 @@ import { useFilters } from "@/hooks/useFilters";
 import { useOilPrices } from "@/hooks/useOilPrices";
 import { usePxPerDay, useSetPxPerDay } from "@/context/TimelineSyncContext";
 import { useSettings, useDarkMode } from "@/context/SettingsContext";
+import { DEFAULT_PX_PER_DAY } from "@/lib/timelineScale";
 import { FilterDropdown } from "@/components/Filters/FilterDropdown";
 import { Timeline } from "@/components/Timeline/Timeline";
 import { LABEL_WIDTH } from "@/components/Timeline/TimelineRows";
@@ -16,6 +17,7 @@ import { OilPriceChart } from "@/components/OilChart/OilPriceChart";
 import { EventCard } from "@/components/EventCard/EventCard";
 import { Toggle } from "@/components/ui/Toggle";
 import { useCategories } from "@/context/CategoriesContext";
+import { SettingsPanel } from "@/components/Settings/SettingsPanel";
 
 interface Props {
   serializedEvents: SerializedOilEvent[];
@@ -39,6 +41,8 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const { categories } = useCategories();
   const [showChart, setShowChart] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<OilEvent | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const settingsBtnRef = useRef<HTMLButtonElement>(null);
 
   const {
     filters,
@@ -97,6 +101,32 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const timelineScrollRef = useRef<HTMLDivElement>(null);
   const chartScrollRef    = useRef<HTMLDivElement>(null);
   const isSyncing         = useRef(false);
+  const visibleRangeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [visibleRange, setVisibleRange] = useState<{ start: Date; end: Date } | null>(null);
+
+  const updateVisibleRange = useCallback(() => {
+    const scrollEl = timelineScrollRef.current ?? chartScrollRef.current;
+    if (!scrollEl || scale.totalWidthPx <= 0) return;
+
+    const startPx = clamp(scrollEl.scrollLeft - LABEL_WIDTH, 0, scale.totalWidthPx);
+    const endPx = clamp(scrollEl.scrollLeft + scrollEl.clientWidth - LABEL_WIDTH, startPx, scale.totalWidthPx);
+    setVisibleRange({
+      start: scale.toDate(startPx),
+      end: scale.toDate(endPx),
+    });
+  }, [scale]);
+
+  const scheduleVisibleRangeUpdate = useCallback((delay = 180) => {
+    if (visibleRangeTimer.current !== null) clearTimeout(visibleRangeTimer.current);
+    visibleRangeTimer.current = setTimeout(updateVisibleRange, delay);
+  }, [updateVisibleRange]);
+
+  useEffect(() => {
+    scheduleVisibleRangeUpdate();
+    return () => {
+      if (visibleRangeTimer.current !== null) clearTimeout(visibleRangeTimer.current);
+    };
+  }, [prices.length, scale, scheduleVisibleRangeUpdate]);
 
   // Pure DOM scroll sync — no React state, no re-renders, runs every scroll frame.
   const handleTimelineScroll = useCallback(() => {
@@ -104,14 +134,16 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     isSyncing.current = true;
     chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
     isSyncing.current = false;
-  }, []);
+    scheduleVisibleRangeUpdate();
+  }, [scheduleVisibleRangeUpdate]);
 
   const handleChartScroll = useCallback(() => {
     if (isSyncing.current || !timelineScrollRef.current || !chartScrollRef.current) return;
     isSyncing.current = true;
     timelineScrollRef.current.scrollLeft = chartScrollRef.current.scrollLeft;
     isSyncing.current = false;
-  }, []);
+    scheduleVisibleRangeUpdate();
+  }, [scheduleVisibleRangeUpdate]);
 
   const countries = useMemo(
     () => Array.from(new Set(allEvents.map((e) => e.country))).sort(),
@@ -132,11 +164,32 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const countryOptions = countries.map((c) => ({ value: c, label: c }));
   const companyOptions = companies.map((c) => ({ value: c, label: c }));
 
+  const zoomIn = useCallback(() => {
+    setPxPerDay(clamp(pxPerDay * 1.4, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+  }, [pxPerDay, setPxPerDay]);
+
+  const zoomOut = useCallback(() => {
+    setPxPerDay(clamp(pxPerDay / 1.4, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+  }, [pxPerDay, setPxPerDay]);
+
+  const zoomReset = useCallback(() => {
+    setPxPerDay(DEFAULT_PX_PER_DAY);
+  }, [setPxPerDay]);
+
+  const zoomFit = useCallback(() => {
+    const containerWidth = timelineScrollRef.current?.clientWidth ?? 800;
+    const plotWidth = containerWidth - LABEL_WIDTH;
+    const fitPxPerDay = pxPerDay * plotWidth / scale.totalWidthPx;
+    setPxPerDay(clamp(fitPxPerDay, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+  }, [pxPerDay, scale.totalWidthPx, setPxPerDay]);
+
+  const zoomPercent = Math.round((pxPerDay / DEFAULT_PX_PER_DAY) * 100);
+
   return (
-    <div className="flex flex-col flex-1 min-h-0 bg-[#f5f3ee] dark:bg-[#0d0e14]">
+    <div className="flex flex-col flex-1 min-h-0 bg-[#f5f3ee] dark:bg-[#050a10]">
 
       {/* ── Toolbar ── */}
-      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-black/[0.07] dark:border-white/[0.06] bg-white dark:bg-[#13141d]">
+      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-black/[0.07] dark:border-[#1d2a36] bg-white dark:bg-[#071018]">
         {/* Filter dropdowns */}
         <FilterDropdown
           label="Tipo"
@@ -163,28 +216,86 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         )}
 
         {/* Separator */}
-        <div className="w-px h-4 bg-gray-200 dark:bg-white/[0.08] mx-1 hidden sm:block" />
+        <div className="w-px h-4 bg-gray-200 dark:bg-[#1d2a36] mx-1 hidden sm:block" />
 
         {/* Brent toggle */}
         <Toggle enabled={showChart} onChange={setShowChart} label="Preço Brent (USD/barril)" />
 
+        <div className="w-px h-4 bg-gray-200 dark:bg-[#1d2a36] mx-1 hidden md:block" />
+
+        <div className="flex items-center gap-1">
+          <span className="text-[10px] text-gray-400 dark:text-[#8896a8] uppercase tracking-wider font-medium mr-1">Zoom</span>
+          <button
+            onClick={zoomOut}
+            disabled={pxPerDay <= MIN_PX_PER_DAY}
+            className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 dark:text-[#dce8e1] hover:bg-black/10 dark:hover:bg-[rgba(183,255,0,0.09)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            title="Reduzir zoom"
+          >
+            −
+          </button>
+          <button
+            onClick={zoomReset}
+            className="px-2 h-6 text-[10px] font-mono text-gray-500 dark:text-[#dce8e1] hover:bg-black/10 dark:hover:bg-[rgba(183,255,0,0.09)] rounded transition-colors min-w-[42px] text-center"
+            title="Resetar zoom"
+          >
+            {zoomPercent}%
+          </button>
+          <button
+            onClick={zoomIn}
+            disabled={pxPerDay >= MAX_PX_PER_DAY}
+            className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 dark:text-[#dce8e1] hover:bg-black/10 dark:hover:bg-[rgba(183,255,0,0.09)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            title="Aumentar zoom"
+          >
+            +
+          </button>
+          <button
+            onClick={zoomFit}
+            className="px-2 h-6 text-[10px] text-gray-500 dark:text-[#dce8e1] hover:bg-black/10 dark:hover:bg-[rgba(183,255,0,0.09)] rounded transition-colors"
+            title="Ajustar toda a timeline à tela"
+          >
+            Fit
+          </button>
+        </div>
+
+        <span className="text-[9px] text-gray-300 dark:text-[#526173] hidden xl:block">Ctrl+Scroll para zoom · Arraste para navegar</span>
+
         {/* Event count + clear */}
-        <span className="text-[11px] text-gray-400 dark:text-[#3a3c50] ml-auto">
+        <span className="text-[11px] text-gray-400 dark:text-[#8896a8] ml-auto">
           {filteredEvents.length} de {allEvents.length} eventos
           {activeCount > 0 && (
             <button
               onClick={clearAll}
-              className="ml-2 text-amber-600 hover:text-amber-800 underline transition-colors"
+              className="ml-2 text-amber-600 dark:text-[#b7ff00] hover:text-amber-800 dark:hover:text-[#d8ff66] underline transition-colors"
             >
               limpar filtros
             </button>
           )}
         </span>
 
+        <div className="relative">
+          <button
+            ref={settingsBtnRef}
+            onClick={() => setSettingsOpen((o) => !o)}
+            className={`w-7 h-7 flex items-center justify-center rounded-full transition-colors ${
+              settingsOpen ? "bg-amber-100 dark:bg-[rgba(183,255,0,0.12)] text-amber-700 dark:text-[#b7ff00] dark:shadow-[0_0_12px_rgba(183,255,0,0.16)]" : "text-gray-400 hover:text-gray-700 dark:text-[#8896a8] dark:hover:text-[#b7ff00] hover:bg-black/[0.06] dark:hover:bg-[rgba(183,255,0,0.09)]"
+            }`}
+            title="Configurações"
+          >
+            <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
+              <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+            </svg>
+          </button>
+          <SettingsPanel
+            open={settingsOpen}
+            onClose={() => setSettingsOpen(false)}
+            anchorRef={settingsBtnRef}
+          />
+        </div>
+
         {/* Dark mode toggle */}
         <button
           onClick={() => updateSettings({ darkMode: !darkMode })}
-          className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 dark:text-[#3a3c50] dark:hover:text-[#9a9cb0] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-all"
+          className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 dark:text-[#8896a8] dark:hover:text-[#b7ff00] hover:bg-black/[0.06] dark:hover:bg-[rgba(183,255,0,0.09)] transition-all"
           title={darkMode ? "Modo claro" : "Modo noturno"}
         >
           {darkMode ? (
@@ -211,6 +322,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
             scale={scale}
             scrollRef={chartScrollRef}
             onScroll={handleChartScroll}
+            visibleRange={visibleRange}
           />
         </div>
       )}

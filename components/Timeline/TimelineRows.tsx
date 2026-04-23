@@ -97,7 +97,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
 
   if (rows.length === 0) {
     return (
-      <div className="flex items-center justify-center h-32 text-gray-400 dark:text-[#3a3c50] text-sm">
+      <div className="flex items-center justify-center h-32 text-gray-400 dark:text-[#526173] text-sm">
         Nenhum evento corresponde aos filtros selecionados.
       </div>
     );
@@ -110,18 +110,18 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
           return (
             <div
               key={`region-${row.region}`}
-              className="flex items-center border-b border-black/[0.04] dark:border-white/[0.04] bg-[#f5f3ee] dark:bg-[#0d0e14]"
+              className="flex items-center border-b border-black/[0.04] dark:border-[#1d2a36] bg-[#f5f3ee] dark:bg-[#0a1119]"
               style={{ minHeight: REGION_HEADER_MIN_HEIGHT, width: "100%" }}
             >
               <div
-                className="sm:sticky left-0 z-10 bg-[#f5f3ee] dark:bg-[#0d0e14] px-2 py-1 flex items-center"
+                className="sm:sticky left-0 z-10 bg-[#f5f3ee] dark:bg-[#0a1119] px-2 py-1 flex items-center"
                 style={{ width: LABEL_WIDTH }}
               >
-                <span className="text-[9px] font-bold text-gray-400 dark:text-[#2a2c40] uppercase tracking-[0.08em] leading-tight break-words">
+                <span className="text-[9px] font-bold text-gray-400 dark:text-[#8896a8] uppercase tracking-[0.08em] leading-tight break-words">
                   {row.region}
                 </span>
               </div>
-              <div className="flex-1 h-px bg-black/[0.05] dark:bg-white/[0.04]" />
+              <div className="flex-1 h-px bg-black/[0.05] dark:bg-[#1d2a36]" />
             </div>
           );
         }
@@ -133,25 +133,25 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
         return (
           <div
             key={`country-${row.country}-${i}`}
-            className={`relative flex items-stretch border-b border-black/[0.04] dark:border-white/[0.04] group ${
+            className={`relative flex items-stretch border-b border-black/[0.04] dark:border-[#1d2a36] group ${
               brasil
-                ? "bg-amber-50 dark:bg-[#1a1200] border-l-2 border-l-amber-400 dark:border-l-amber-700"
-                : "bg-white dark:bg-[#13141d] hover:bg-gray-50/80 dark:hover:bg-white/[0.03]"
+                ? "bg-amber-50 dark:bg-[#0f1710] border-l-2 border-l-amber-400 dark:border-l-[#b7ff00]"
+                : "bg-white dark:bg-[#071018] hover:bg-gray-50/80 dark:hover:bg-[#0d1823]"
             }`}
             style={{ height: totalRowHeight, width: "100%" }}
           >
             {/* Country label — sticky left, spans full height */}
             <div
-              className={`sm:sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-black/[0.05] dark:border-white/[0.04] ${
-                brasil ? "bg-amber-50 dark:bg-[#1a1200]" : "bg-white dark:bg-[#13141d] group-hover:bg-gray-50/80 dark:group-hover:bg-white/[0.03]"
+              className={`sm:sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-black/[0.05] dark:border-[#1d2a36] ${
+                brasil ? "bg-amber-50 dark:bg-[#0f1710]" : "bg-white dark:bg-[#071018] group-hover:bg-gray-50/80 dark:group-hover:bg-[#0d1823]"
               }`}
               style={{ width: LABEL_WIDTH, height: totalRowHeight }}
             >
               <span
                 className={`text-[12px] font-bold truncate transition-colors leading-tight ${
                   brasil
-                    ? "text-amber-700 dark:text-amber-600"
-                    : "text-gray-500 dark:text-[#4a4c60] group-hover:text-gray-700 dark:group-hover:text-[#8a8ca0]"
+                    ? "text-amber-700 dark:text-[#d8ff66]"
+                    : "text-gray-500 dark:text-[#dce8e1] group-hover:text-gray-700 dark:group-hover:text-[#f2f7f4]"
                 }`}
               >
                 {row.country}
@@ -168,7 +168,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
                   right: 0,
                   top: rowHeight * (li + 1),
                   height: 1,
-                  backgroundColor: "rgba(0,0,0,0.03)",
+                  backgroundColor: "rgba(139,159,181,0.12)",
                 }}
               />
             ))}

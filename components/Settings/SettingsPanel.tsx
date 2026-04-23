@@ -29,8 +29,8 @@ function Slider({
   return (
     <label className="flex flex-col gap-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-medium text-gray-600">{label}</span>
-        <span className="text-[11px] font-mono text-gray-400">
+        <span className="text-[11px] font-medium text-gray-600 dark:text-[#dce8e1]">{label}</span>
+        <span className="text-[11px] font-mono text-gray-400 dark:text-[#8896a8]">
           {value}{unit}
         </span>
       </div>
@@ -41,7 +41,7 @@ function Slider({
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-1.5 rounded-full appearance-none cursor-pointer accent-amber-500"
+        className="w-full h-1.5 rounded-full appearance-none cursor-pointer accent-amber-500 dark:accent-[#b7ff00]"
       />
     </label>
   );
@@ -72,15 +72,15 @@ export function SettingsPanel({ open, onClose, anchorRef }: Props) {
   return (
     <div
       ref={panelRef}
-      className="absolute right-0 top-full mt-1 z-50 w-64 bg-white rounded-xl border border-black/10 shadow-lg p-4 flex flex-col gap-4"
+      className="absolute right-0 top-full mt-1 z-50 w-64 bg-white dark:bg-[#071018] rounded-xl border border-black/10 dark:border-[#2a3948] shadow-lg dark:shadow-[0_16px_44px_rgba(0,0,0,0.55),0_0_22px_rgba(183,255,0,0.08)] p-4 flex flex-col gap-4"
     >
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+        <span className="text-[11px] font-bold text-gray-500 dark:text-[#8896a8] uppercase tracking-wider">
           Configurações
         </span>
         <button
           onClick={() => updateSettings(DEFAULT_SETTINGS)}
-          className="text-[10px] text-amber-600 hover:text-amber-800 transition-colors"
+          className="text-[10px] text-amber-600 dark:text-[#b7ff00] hover:text-amber-800 dark:hover:text-[#d8ff66] transition-colors"
         >
           Restaurar padrões
         </button>
@@ -111,9 +111,9 @@ export function SettingsPanel({ open, onClose, anchorRef }: Props) {
           type="checkbox"
           checked={settings.showEventLabels}
           onChange={(e) => updateSettings({ showEventLabels: e.target.checked })}
-          className="w-3.5 h-3.5 rounded accent-amber-500"
+          className="w-3.5 h-3.5 rounded accent-amber-500 dark:accent-[#b7ff00]"
         />
-        <span className="text-[11px] font-medium text-gray-600">
+        <span className="text-[11px] font-medium text-gray-600 dark:text-[#dce8e1]">
           Mostrar rótulos dos eventos
         </span>
       </label>

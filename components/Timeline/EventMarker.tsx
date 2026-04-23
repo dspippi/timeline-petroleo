@@ -3,7 +3,7 @@
 import { memo, useCallback, useRef, useState } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
 import { useSetHoveredDate } from "@/context/TimelineSyncContext";
-import { useSettings } from "@/context/SettingsContext";
+import { useDarkMode, useSettings } from "@/context/SettingsContext";
 import { useCategories } from "@/context/CategoriesContext";
 import { HoverTooltip } from "./HoverTooltip";
 
@@ -31,6 +31,7 @@ export const EventMarker = memo(function EventMarker({
 }: Props) {
   const setHoveredDate = useSetHoveredDate();
   const { settings } = useSettings();
+  const darkMode = useDarkMode();
   const { getColor } = useCategories();
   const color = getColor(event.type);
   const x = scale.toPixel(event.start_date);
@@ -94,7 +95,7 @@ export const EventMarker = memo(function EventMarker({
               right: 0,
               backgroundColor: color,
               border: `1px solid ${color}`,
-              boxShadow: isHovered ? `0 0 6px ${color}` : undefined,
+              boxShadow: isHovered ? `0 0 10px ${color}, 0 0 18px ${color}55` : darkMode ? `0 0 8px ${color}44` : undefined,
             }}
           />
 
@@ -137,8 +138,9 @@ export const EventMarker = memo(function EventMarker({
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: "vertical" as React.CSSProperties["WebkitBoxOrient"],
                   overflow: "hidden",
-                  backgroundColor: "rgba(255,255,255,0.82)",
+                  backgroundColor: darkMode ? "rgba(7,16,24,0.82)" : "rgba(255,255,255,0.82)",
                   backdropFilter: "blur(2px)",
+                  border: darkMode ? "1px solid rgba(139,159,181,0.12)" : undefined,
                   borderRadius: 3,
                   padding: "1px 3px",
                 }}
@@ -194,7 +196,7 @@ export const EventMarker = memo(function EventMarker({
             height: pinSize,
             transform: "rotate(45deg)",
             backgroundColor: color,
-            boxShadow: isHovered ? `0 0 10px ${color}` : `0 0 4px ${color}88`,
+            boxShadow: isHovered ? `0 0 12px ${color}, 0 0 24px ${color}66` : `0 0 7px ${color}99`,
           }}
         />
       </div>
@@ -209,14 +211,16 @@ export const EventMarker = memo(function EventMarker({
             style={{
               fontSize: LABEL_FONT_SIZE,
               fontWeight: 600,
-              color: isHovered ? color : "#4b5563",
+              color: isHovered ? color : darkMode ? "#dce8e1" : "#4b5563",
               lineHeight: "1.25",
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical" as React.CSSProperties["WebkitBoxOrient"],
               overflow: "hidden",
-              backgroundColor: "rgba(255,255,255,0.82)",
+              backgroundColor: darkMode ? "rgba(7,16,24,0.82)" : "rgba(255,255,255,0.82)",
               backdropFilter: "blur(2px)",
+              border: darkMode ? "1px solid rgba(139,159,181,0.12)" : undefined,
+              boxShadow: darkMode ? "0 3px 12px rgba(0,0,0,0.24)" : undefined,
               borderRadius: 3,
               padding: "1px 3px",
             }}

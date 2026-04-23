@@ -3,11 +3,10 @@
 import { RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
 import { usePxPerDay, useSetPxPerDay, useSetHoveredDate } from "@/context/TimelineSyncContext";
-import { MIN_PX_PER_DAY, MAX_PX_PER_DAY, DEFAULT_PX_PER_DAY } from "@/lib/timelineScale";
+import { MIN_PX_PER_DAY, MAX_PX_PER_DAY } from "@/lib/timelineScale";
 import { clamp } from "@/lib/utils";
 import { TimelineRows, LABEL_WIDTH } from "./TimelineRows";
 import { GuideOverlay } from "./GuideOverlay";
-import { SettingsPanel } from "@/components/Settings/SettingsPanel";
 import { getYear } from "date-fns";
 import pkg from "@/package.json";
 
@@ -27,8 +26,6 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   const yearAxisRef    = useRef<HTMLDivElement>(null);
   // rAF handle for throttling hover date updates to one per frame
   const hoverRafRef = useRef<number | null>(null);
-  const settingsBtnRef = useRef<HTMLButtonElement>(null);
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // Drag-to-pan state
   const dragState = useRef<{ startX: number; startY: number; startScrollLeft: number; startScrollTop: number; moved: boolean } | null>(null);
@@ -122,19 +119,6 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
     onScroll();
   }, [onScroll, scrollRef]);
 
-  const zoomIn = useCallback(() => setPxPerDay(clamp(pxPerDay * 1.4, MIN_PX_PER_DAY, MAX_PX_PER_DAY)), [pxPerDay, setPxPerDay]);
-  const zoomOut = useCallback(() => setPxPerDay(clamp(pxPerDay / 1.4, MIN_PX_PER_DAY, MAX_PX_PER_DAY)), [pxPerDay, setPxPerDay]);
-  const zoomReset = useCallback(() => setPxPerDay(DEFAULT_PX_PER_DAY), [setPxPerDay]);
-
-  const zoomFit = useCallback(() => {
-    const containerWidth = scrollRef.current?.clientWidth ?? 800;
-    const plotWidth = containerWidth - LABEL_WIDTH;
-    const fitPxPerDay = pxPerDay * plotWidth / scale.totalWidthPx;
-    setPxPerDay(clamp(fitPxPerDay, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
-  }, [pxPerDay, scale, scrollRef, setPxPerDay]);
-
-  const zoomPercent = Math.round((pxPerDay / DEFAULT_PX_PER_DAY) * 100);
-
   const yearTicks = useMemo(() => {
     const ticks: { year: number; x: number }[] = [];
     const startYear = getYear(scale.domainStart);
@@ -153,66 +137,10 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      {/* Zoom controls bar */}
-      <div className="shrink-0 flex items-center gap-1 px-3 py-1.5 border-b border-black/[0.06] dark:border-white/[0.06] bg-[#f5f3ee] dark:bg-[#0d0e14]">
-        <span className="text-[10px] text-gray-400 dark:text-[#3a3c50] uppercase tracking-wider font-medium mr-1">Zoom</span>
-        <button
-          onClick={zoomOut}
-          disabled={pxPerDay <= MIN_PX_PER_DAY}
-          className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          title="Reduzir zoom"
-        >
-          −
-        </button>
-        <button
-          onClick={zoomReset}
-          className="px-2 h-6 text-[10px] font-mono text-gray-500 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08] rounded transition-colors min-w-[42px] text-center"
-          title="Resetar zoom"
-        >
-          {zoomPercent}%
-        </button>
-        <button
-          onClick={zoomIn}
-          disabled={pxPerDay >= MAX_PX_PER_DAY}
-          className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          title="Aumentar zoom"
-        >
-          +
-        </button>
-        <button
-          onClick={zoomFit}
-          className="ml-1 px-2 h-6 text-[10px] text-gray-500 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08] rounded transition-colors"
-          title="Ajustar toda a timeline à tela"
-        >
-          Fit
-        </button>
-        <span className="text-[9px] text-gray-300 dark:text-[#2a2c40] ml-2 hidden sm:block">Ctrl+Scroll para zoom · Arraste para navegar</span>
-
-        <div className="ml-auto relative">
-          <button
-            ref={settingsBtnRef}
-            onClick={() => setSettingsOpen((o) => !o)}
-            className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${
-              settingsOpen ? "bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400" : "text-gray-500 dark:text-[#5a5c70] hover:bg-black/10 dark:hover:bg-white/[0.08]"
-            }`}
-            title="Configurações"
-          >
-            <svg viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
-              <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-            </svg>
-          </button>
-          <SettingsPanel
-            open={settingsOpen}
-            onClose={() => setSettingsOpen(false)}
-            anchorRef={settingsBtnRef}
-          />
-        </div>
-      </div>
-
       {/* Year axis — fixed header, synced via JS scroll */}
       <div
         ref={yearAxisRef}
-        className="shrink-0 overflow-x-hidden overflow-y-hidden bg-[#f5f3ee] dark:bg-[#0d0e14] border-b border-black/[0.06] dark:border-white/[0.06]"
+        className="shrink-0 overflow-x-hidden overflow-y-hidden bg-[#f5f3ee] dark:bg-[#071018] border-b border-black/[0.06] dark:border-[#1d2a36]"
         style={{ height: 28 }}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative", height: 28 }}>
@@ -222,8 +150,8 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
               className="absolute top-0 bottom-0 flex flex-col items-start"
               style={{ left: x }}
             >
-              <div className="w-px h-full bg-black/[0.07] dark:bg-white/[0.06]" />
-              <span className="absolute top-1 left-1 text-[10px] text-gray-400 dark:text-[#3a3c50] font-mono whitespace-nowrap">
+              <div className="w-px h-full bg-black/[0.07] dark:bg-[#1d2a36]" />
+              <span className="absolute top-1 left-1 text-[10px] text-gray-400 dark:text-[#8896a8] font-mono whitespace-nowrap">
                 {year}
               </span>
             </div>
@@ -234,7 +162,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       {/* Scrollable timeline */}
       <div
         ref={scrollRef}
-        className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 bg-white dark:bg-[#0d0e14]"
+        className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 bg-white dark:bg-[#050a10]"
         style={{ cursor: isDragging ? "grabbing" : "grab" }}
         onScroll={handleScroll}
         onMouseDown={handleMouseDown}
@@ -249,25 +177,25 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
 
         {/* Footer — visible only when scrolled to the bottom */}
         <footer
-          className="border-t border-black/[0.07] dark:border-white/[0.06] bg-[#f5f3ee] dark:bg-[#0d0e14] px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
+          className="border-t border-black/[0.07] dark:border-[#1d2a36] bg-[#f5f3ee] dark:bg-[#050a10] px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
           style={{ position: "sticky", left: 0, width: "100vw" }}
         >
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-[10px] text-gray-400 dark:text-[#3a3c50] font-semibold tracking-wide">
+            <span className="text-[10px] text-gray-400 dark:text-[#8896a8] font-semibold tracking-wide">
               Desenvolvido por{" "}
-              <span className="text-gray-600 dark:text-[#5a5c70] font-bold">Diogo S. P. Calegari</span>
+              <span className="text-gray-600 dark:text-[#dce8e1] font-bold">Diogo S. P. Calegari</span>
             </span>
-            <span className="hidden sm:inline text-gray-300 dark:text-[#2a2c40]">·</span>
+            <span className="hidden sm:inline text-gray-300 dark:text-[#526173]">·</span>
             <a
               href="mailto:timelinedopetroleo@gmail.com"
-              className="hidden sm:inline text-[10px] text-amber-600 hover:text-amber-800 transition-colors"
+              className="hidden sm:inline text-[10px] text-amber-600 dark:text-[#b7ff00] hover:text-amber-800 dark:hover:text-[#d8ff66] transition-colors"
             >
               timelinedopetroleo@gmail.com
             </a>
-            <span className="hidden sm:inline text-gray-300 dark:text-[#2a2c40]">·</span>
-            <span className="hidden sm:inline text-[10px] text-gray-400 dark:text-[#3a3c50] font-mono">v{pkg.version}</span>
+            <span className="hidden sm:inline text-gray-300 dark:text-[#526173]">·</span>
+            <span className="hidden sm:inline text-[10px] text-gray-400 dark:text-[#8896a8] font-mono">v{pkg.version}</span>
           </div>
-          <p className="text-[9.5px] text-gray-400 dark:text-[#3a3c50] leading-relaxed sm:border-l sm:border-black/[0.08] dark:sm:border-white/[0.06] sm:pl-4">
+          <p className="text-[9.5px] text-gray-400 dark:text-[#526173] leading-relaxed sm:border-l sm:border-black/[0.08] dark:sm:border-[#1d2a36] sm:pl-4">
             Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada —
             Envie um email caso identifique algum erro, inconsistência ou tenha alguma sugestão de melhoria. O autor não se responsabiliza pelo uso das informações aqui apresentadas.
           </p>
