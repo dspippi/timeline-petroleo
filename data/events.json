@@ -315,7 +315,7 @@
     "id": "great-depression-oil-crisis-1929",
     "title": "Grande Depressão",
     "start_date": "1929-10-28",
-    "end_date": "1939-12-30",
+    "end_date": null,
     "country": "Global",
     "region": "Global",
     "type": "crisis",
