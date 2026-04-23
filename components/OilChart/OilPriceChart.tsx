@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useCallback, RefObject, useMemo, useState } from "react";
-import { LineChart, Line, XAxis, YAxis } from "recharts";
+import { ComposedChart, Line, Area, XAxis, YAxis } from "recharts";
 import { OilPrice, TimelineScale } from "@/types";
 import { useHoveredDate, useSetHoveredDate } from "@/context/TimelineSyncContext";
 import { useDarkMode } from "@/context/SettingsContext";
@@ -239,7 +239,7 @@ export const OilPriceChart = memo(function OilPriceChart({
           )}
 
           {/* Recharts — no longer re-renders on hover */}
-          <LineChart
+          <ComposedChart
             width={scale.totalWidthPx + LABEL_WIDTH}
             height={CHART_HEIGHT}
             data={data}
@@ -247,8 +247,28 @@ export const OilPriceChart = memo(function OilPriceChart({
             onMouseLeave={handleMouseLeave}
             margin={CHART_MARGIN}
           >
+            <defs>
+              <linearGradient id="brentFillLight" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#f97316" stopOpacity={0.52} />
+                <stop offset="42%" stopColor="#f59e0b" stopOpacity={0.22} />
+                <stop offset="100%" stopColor="#0ea5e9" stopOpacity={0.0} />
+              </linearGradient>
+              <linearGradient id="brentFillDark" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#b7ff00" stopOpacity={0.44} />
+                <stop offset="45%" stopColor="#b7ff00" stopOpacity={0.18} />
+                <stop offset="100%" stopColor="#071018" stopOpacity={0.0} />
+              </linearGradient>
+            </defs>
             <XAxis dataKey="x" type="number" domain={xDomain} hide />
             <YAxis domain={[0, 1]} hide allowDataOverflow />
+            <Area
+              type="monotone"
+              dataKey="yNorm"
+              stroke="none"
+              fill={darkMode ? "url(#brentFillDark)" : "url(#brentFillLight)"}
+              baseValue={0}
+              isAnimationActive={false}
+            />
             <Line
               type="monotone"
               dataKey="yNorm"
@@ -257,7 +277,7 @@ export const OilPriceChart = memo(function OilPriceChart({
               strokeWidth={2}
               isAnimationActive={false}
             />
-          </LineChart>
+          </ComposedChart>
         </div>
 
         {/* Hover overlay — lightweight component that re-renders at 60fps */}
