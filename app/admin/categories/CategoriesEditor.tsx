@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Category } from "@/lib/categories";
 import { useCategories } from "@/context/CategoriesContext";
+import { withBasePath } from "@/lib/basePath";
 
 function slugify(text: string): string {
   return text
@@ -71,7 +72,7 @@ export function CategoriesEditor({ initial }: { initial: Category[] }) {
     setError("");
     setSuccess(false);
     try {
-      const res = await fetch("/api/admin/categories", {
+      const res = await fetch(withBasePath("/api/admin/categories"), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(cats),

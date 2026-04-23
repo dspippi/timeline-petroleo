@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { OilPrice } from "@/types";
 import { parseISO } from "date-fns";
+import { withBasePath } from "@/lib/basePath";
 
 export function useOilPrices() {
   const [prices, setPrices] = useState<OilPrice[]>([]);
@@ -12,7 +13,7 @@ export function useOilPrices() {
   useEffect(() => {
     let cancelled = false;
 
-    fetch("/api/oil-prices")
+    fetch(withBasePath("/api/oil-prices"))
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json() as Promise<{ date: string; price: number }[]>;
