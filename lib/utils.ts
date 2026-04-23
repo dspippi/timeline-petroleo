@@ -42,9 +42,9 @@ export function groupEventsByRegion(
   const sorted = Array.from(grouped.entries()).sort(([ra, ca], [rb, cb]) => {
     const order = [
       "Global",
+      "América Central e do Sul",
       "América do Norte",
       "Oriente Médio",
-      "América Central e do Sul",
       "Europa",
       "Ásia",
       "África",

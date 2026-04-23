@@ -7,7 +7,7 @@ import { EventMarker } from "./EventMarker";
 import { useSettings } from "@/context/SettingsContext";
 
 export const ROW_HEIGHT = 72; // default; runtime value comes from settings
-const REGION_HEADER_HEIGHT = 22;
+const REGION_HEADER_MIN_HEIGHT = 22;
 export const LABEL_WIDTH = 112;
 
 // How wide (in px) each event "claims" horizontally to detect overlap
@@ -111,13 +111,13 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
             <div
               key={`region-${row.region}`}
               className="flex items-center border-b border-black/[0.04] dark:border-white/[0.04] bg-[#f5f3ee] dark:bg-[#0d0e14]"
-              style={{ height: REGION_HEADER_HEIGHT, width: "100%" }}
+              style={{ minHeight: REGION_HEADER_MIN_HEIGHT, width: "100%" }}
             >
               <div
-                className="sm:sticky left-0 z-10 bg-[#f5f3ee] dark:bg-[#0d0e14] px-2 flex items-center"
+                className="sm:sticky left-0 z-10 bg-[#f5f3ee] dark:bg-[#0d0e14] px-2 py-1 flex items-center"
                 style={{ width: LABEL_WIDTH }}
               >
-                <span className="text-[9px] font-bold text-gray-400 dark:text-[#2a2c40] uppercase tracking-[0.15em]">
+                <span className="text-[9px] font-bold text-gray-400 dark:text-[#2a2c40] uppercase tracking-[0.08em] leading-tight break-words">
                   {row.region}
                 </span>
               </div>
