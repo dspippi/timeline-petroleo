@@ -49,7 +49,7 @@ const config: Config = {
         "text-glow": "var(--shadow-text-glow)",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["var(--font-jakarta)", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },

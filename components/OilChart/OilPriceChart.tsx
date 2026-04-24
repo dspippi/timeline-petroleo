@@ -155,8 +155,8 @@ export const OilPriceChart = memo(function OilPriceChart({
       ? prices.filter((p) => p.date >= visibleRange.start && p.date <= visibleRange.end)
       : prices;
     const domainPrices = visiblePrices.length > 0 ? visiblePrices : prices;
-    const minP = Math.min(...domainPrices.map((p) => p.price));
-    const maxP = Math.max(...domainPrices.map((p) => p.price));
+    const minP = domainPrices.reduce((m, p) => Math.min(m, p.price), Infinity);
+    const maxP = domainPrices.reduce((m, p) => Math.max(m, p.price), -Infinity);
     const { domain, ticks } = niceYAxis(minP, maxP);
     return { yDomain: domain, yTicks: ticks };
   }, [prices, visibleRange]);

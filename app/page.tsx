@@ -25,17 +25,13 @@ export default function HomePage() {
           </p>
         </div>
         <div className="ml-auto flex items-center gap-4">
-          <Link 
-            href="/sources" 
+          <Link
+            href="/sources"
             className="text-xs font-medium text-content-tertiary hover:text-gray-900 dark:hover:text-[#f2f7f4] transition-colors bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-md"
           >
             Fontes
           </Link>
-          <div className="hidden lg:block">
-            <span className="text-[10px] text-gray-300 dark:text-[#8896a8] font-mono">
-              Charcoal Lime
-            </span>
-          </div>
+
         </div>
       </header>
 

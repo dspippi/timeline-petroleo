@@ -2,9 +2,6 @@
 // The actual list of valid types is stored in data/categories.json.
 export type EventType = string;
 
-/** @deprecated Use listCategories() server-side or useCategories() client-side instead. */
-export const EVENT_TYPES: readonly string[] = ["war", "discovery", "policy", "company", "crisis"];
-
 export interface OilEvent {
   id: string;
   title: string;

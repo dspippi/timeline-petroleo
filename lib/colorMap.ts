@@ -2,20 +2,35 @@
  * Static fallback maps — kept for backward compatibility with any code that
  * still imports these directly.  Prefer useCategories() in client components
  * and listCategories() in server components.
+ *
+ * @deprecated Use useCategories() or listCategories() instead.
+ * These values may be out of sync with data/categories.json.
  */
 
-export const EVENT_TYPE_COLORS: Record<string, string> = {
-  war:       "#ef4444",
-  discovery: "#22c55e",
-  policy:    "#3b82f6",
-  company:   "#f59e0b",
-  crisis:    "#a855f7",
-};
+import { listCategories } from "./categories";
 
-export const EVENT_TYPE_LABELS: Record<string, string> = {
-  war:       "Guerra / Conflito",
-  discovery: "Descoberta",
-  policy:    "Política / Embargo",
-  company:   "Evento Corporativo",
-  crisis:    "Crise Econômica",
-};
+let _cached: { colors: Record<string, string>; labels: Record<string, string> } | null = null;
+
+function load() {
+  if (_cached) return _cached;
+  try {
+    const cats = listCategories();
+    _cached = {
+      colors: Object.fromEntries(cats.map((c) => [c.id, c.color])),
+      labels: Object.fromEntries(cats.map((c) => [c.id, c.label])),
+    };
+  } catch {
+    _cached = { colors: {}, labels: {} };
+  }
+  return _cached;
+}
+
+/** @deprecated Use useCategories().getColor() instead */
+export const EVENT_TYPE_COLORS: Record<string, string> = new Proxy({}, {
+  get: (_, key: string) => load().colors[key] ?? "#6b7280",
+});
+
+/** @deprecated Use useCategories().getLabel() instead */
+export const EVENT_TYPE_LABELS: Record<string, string> = new Proxy({}, {
+  get: (_, key: string) => load().labels[key] ?? key,
+});

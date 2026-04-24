@@ -7,6 +7,19 @@ import { useDarkMode, useSettings } from "@/context/SettingsContext";
 import { useCategories } from "@/context/CategoriesContext";
 import { HoverTooltip } from "./HoverTooltip";
 
+const SHAPE_PATHS: Record<string, string> = {
+  triangle: "M12 2L22 20H2Z",
+  circle: "M12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22Z",
+  square: "M4 4h16v16H4z",
+  star: "M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z",
+  hexagon: "M12 2L20.66 7L20.66 17L12 22L3.34 17L3.34 7Z",
+  diamond: "M12 2L22 12L12 22L2 12Z",
+};
+
+function getShapePath(s: string): string {
+  return SHAPE_PATHS[s] ?? SHAPE_PATHS.diamond;
+}
+
 interface Props {
   event: OilEvent;
   scale: TimelineScale;
@@ -166,25 +179,7 @@ export const EventMarker = memo(function EventMarker({
     );
   }
 
-  // ── Point event (diamond pin) ────────────────────────────────────────────────
-  const getShapePath = (s: string) => {
-    switch (s) {
-      case "triangle":
-        return "M12 2L22 20H2Z";
-      case "circle":
-        return "M12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22Z";
-      case "square":
-        return "M4 4h16v16H4z";
-      case "star":
-        return "M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z";
-      case "hexagon":
-        return "M12 2L20.66 7L20.66 17L12 22L3.34 17L3.34 7Z";
-      case "diamond":
-      default:
-        return "M12 2L22 12L12 22L2 12Z";
-    }
-  };
-
+  // ── Point event ────────────────────────────────────────────────────────────
   const base = settings.markerSize * 1.35; // Compensate for SVG bounding box vs old rotated div
   const pinSize = isHovered ? Math.round(base * 1.2) : base;
   const pinTop = laneH * lane + laneH * 0.2 - pinSize / 2;

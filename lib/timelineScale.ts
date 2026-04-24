@@ -45,8 +45,8 @@ export function getDefaultDomain(
   const dates = events.flatMap((e) =>
     e.end_date ? [e.start_date, e.end_date] : [e.start_date]
   );
-  const minMs = Math.min(...dates.map((d) => d.getTime()));
-  const maxMs = Math.max(...dates.map((d) => d.getTime()));
+  const minMs = dates.reduce((m, d) => Math.min(m, d.getTime()), Infinity);
+  const maxMs = dates.reduce((m, d) => Math.max(m, d.getTime()), -Infinity);
   const min = new Date(minMs);
   const max = new Date(maxMs);
   min.setFullYear(min.getFullYear() - 2);

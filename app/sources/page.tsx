@@ -54,8 +54,8 @@ export default function SourcesPage() {
             Timeline do Petróleo
           </p>
         </div>
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 dark:text-[#f2f7f4] dark:bg-[#151c24] dark:hover:bg-[#1d2a36] rounded-md transition-colors border border-line-subtle"
         >
           ← Voltar ao Início
@@ -68,14 +68,14 @@ export default function SourcesPage() {
           <div className="prose prose-sm dark:prose-invert max-w-none text-content-tertiary">
             <p>
               Esta página lista as principais referências, livros e bases de dados utilizadas
-              para construir a cronologia e os dados da Timeline do Petróleo.
+              para construir a cronologia e os dados da Timeline do Petróleo. Outras referências estão disponíveis ao acessar cada evento.
             </p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
             {sources.map((source) => (
-              <div 
-                key={source.id} 
+              <div
+                key={source.id}
                 className="p-5 bg-surface rounded-xl border border-line shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start mb-2">
@@ -89,9 +89,9 @@ export default function SourcesPage() {
                 <div className="flex gap-4">
                   <div className="shrink-0 hidden sm:block">
                     {source.imageUrl ? (
-                      <img 
-                        src={source.imageUrl} 
-                        alt={source.title} 
+                      <img
+                        src={source.imageUrl}
+                        alt={source.title}
                         className="w-20 h-28 object-cover rounded-md border border-line-strong bg-surface"
                         loading="lazy"
                       />
@@ -112,9 +112,9 @@ export default function SourcesPage() {
                       {source.description}
                     </p>
                     {source.url && (
-                      <a 
-                        href={source.url} 
-                        target="_blank" 
+                      <a
+                        href={source.url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center text-xs font-semibold text-blue-600 hover:text-blue-800 dark:text-[#b7ff00] dark:hover:text-[#caff33] transition-colors"
                       >

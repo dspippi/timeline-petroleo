@@ -4,9 +4,10 @@ import { useMemo, RefObject } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
 import { groupEventsByRegion, isBrasil } from "@/lib/utils";
 import { EventMarker } from "./EventMarker";
-import { useSettings } from "@/context/SettingsContext";
+import { useSettings, DEFAULT_SETTINGS } from "@/context/SettingsContext";
 
-export const ROW_HEIGHT = 72; // default; runtime value comes from settings
+/** @deprecated Use settings.rowHeight from useSettings() instead */
+export const ROW_HEIGHT = DEFAULT_SETTINGS.rowHeight;
 const REGION_HEADER_MIN_HEIGHT = 22;
 export const LABEL_WIDTH = 112;
 
