@@ -24,8 +24,26 @@
     "author": "Roberta Paduan",
     "year": 2016,
     "type": "book",
-    "url": "https://www.amazon.com.br/Petrobras-Uma-hist%C3%B3ria-orgulho-vergonha/dp/8547000100?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1UZ9FWTDLE0KZ&dib=eyJ2IjoiMSJ9.RnD1Gy6WdGo66IzGzHV8x0YQvTnHy8ugiC1fxqLwiSUaF-LM6mIqG0v7w08c-uDgwyNoT5VYmMaSb07U7elQ-aygXR4srTImnzk0ftQBawm6SDvv_pGbklCrj_v-t5Yq.KSo1zUVETLKyDh2nFMtFk27ZBOWalcjiocrKaelt16g&dib_tag=se&keywords=roberta+paduan&qid=1776998640&sprefix=roberta+paduan%2Caps%2C224&sr=8-1&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9&linkCode=ll2&tag=geopoliticada-20&linkId=45361237952369df4d262cbf11bcc2d8&ref_=as_li_ss_tl",
+    "url": "https://www.amazon.com.br/Petrobras-Uma-hist%C3%B3ria-orgulho-vergonha/dp/8547000100",
     "imageUrl": "https://m.media-amazon.com/images/I/71LTd7MSbmS._SL1500_.jpg",
-    "description": "Apresenta uma análise profunda sobre a trajetória da maior estatal brasileira, focando especialmente no período que levou à eclosão da Operação Lava Jato. "
+    "description": "Apresenta uma análise profunda sobre a trajetória da maior estatal brasileira, focando especialmente no período que levou à eclosão da Operação Lava Jato."
+  },
+  {
+    "id": "oil-prices-owid",
+    "title": "Oil Price — Our World in Data / EIA (Historical)",
+    "author": "Our World in Data & U.S. Energy Information Administration (EIA)",
+    "year": 2024,
+    "type": "dataset",
+    "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+    "description": "Série histórica do preço do petróleo bruto (Brent) de 1861 a 1986, compilada pelo Our World in Data com base nos dados originais da EIA. Utilizada no gráfico de preços da Timeline como base de dados de longo prazo."
+  },
+  {
+    "id": "oil-prices-eia-brent",
+    "title": "Spot Prices — Brent Crude Oil (RBRTE)",
+    "author": "U.S. Energy Information Administration (EIA)",
+    "year": 2025,
+    "type": "dataset",
+    "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+    "description": "Dados mensais do preço spot do petróleo Brent (série RBRTE) fornecidos pela API aberta da EIA. Utilizados no gráfico de preços da Timeline para cobrir o período de 1987 até o presente, com atualização automática via API."
   }
 ]
