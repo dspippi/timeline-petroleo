@@ -1,0 +1,31 @@
+[
+  {
+    "id": "1",
+    "title": "O petróleo: Uma história mundial de conquistas, poder e dinheiro",
+    "author": "Daniel Yergin",
+    "year": 2012,
+    "type": "book",
+    "url": "https://amzn.to/4w3H4DU",
+    "imageUrl": "https://m.media-amazon.com/images/I/81tufH+hKbL._SL1500_.jpg",
+    "description": "Uma narrativa abrangente sobre a história da indústria do petróleo, desde o século 19 até a Guerra do Golfo."
+  },
+  {
+    "id": "2",
+    "title": "A história do petróleo no Brasil",
+    "author": "Agência Nacional do Petróleo (ANP)",
+    "year": 2024,
+    "type": "website",
+    "url": "https://www.gov.br/anp/pt-br/acesso-a-informacao/institucional/historia-petroleo-brasil",
+    "description": "Visão institucional sobre a história da exploração e produção de petróleo no Brasil, desde os primeiros indícios até a consolidação da indústria nacional."
+  },
+  {
+    "id": "1776999039456",
+    "title": "Petrobras: Uma história de orgulho e vergonha",
+    "author": "Roberta Paduan",
+    "year": 2016,
+    "type": "book",
+    "url": "https://www.amazon.com.br/Petrobras-Uma-hist%C3%B3ria-orgulho-vergonha/dp/8547000100?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1UZ9FWTDLE0KZ&dib=eyJ2IjoiMSJ9.RnD1Gy6WdGo66IzGzHV8x0YQvTnHy8ugiC1fxqLwiSUaF-LM6mIqG0v7w08c-uDgwyNoT5VYmMaSb07U7elQ-aygXR4srTImnzk0ftQBawm6SDvv_pGbklCrj_v-t5Yq.KSo1zUVETLKyDh2nFMtFk27ZBOWalcjiocrKaelt16g&dib_tag=se&keywords=roberta+paduan&qid=1776998640&sprefix=roberta+paduan%2Caps%2C224&sr=8-1&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9&linkCode=ll2&tag=geopoliticada-20&linkId=45361237952369df4d262cbf11bcc2d8&ref_=as_li_ss_tl",
+    "imageUrl": "https://m.media-amazon.com/images/I/71LTd7MSbmS._SL1500_.jpg",
+    "description": "Apresenta uma análise profunda sobre a trajetória da maior estatal brasileira, focando especialmente no período que levou à eclosão da Operação Lava Jato. "
+  }
+]

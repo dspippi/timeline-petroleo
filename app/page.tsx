@@ -1,6 +1,7 @@
 import { parseEvents } from "@/lib/parseEvents";
 import { TimelineClientWrapper } from "@/components/Timeline/TimelineClientWrapper";
 import { SerializedOilEvent } from "@/types";
+import Link from "next/link";
 
 export default function HomePage() {
   const events = parseEvents();
@@ -23,10 +24,18 @@ export default function HomePage() {
             Geopolítica energética
           </p>
         </div>
-        <div className="ml-auto hidden lg:block">
-          <span className="text-[10px] text-gray-300 dark:text-[#8896a8] font-mono">
-            Charcoal Lime
-          </span>
+        <div className="ml-auto flex items-center gap-4">
+          <Link 
+            href="/sources" 
+            className="text-xs font-medium text-gray-600 dark:text-[#8896a8] hover:text-gray-900 dark:hover:text-[#f2f7f4] transition-colors bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-md"
+          >
+            Fontes
+          </Link>
+          <div className="hidden lg:block">
+            <span className="text-[10px] text-gray-300 dark:text-[#8896a8] font-mono">
+              Charcoal Lime
+            </span>
+          </div>
         </div>
       </header>
 

@@ -876,15 +876,15 @@
     "description": "O petróleo WTI passa a ser negociado em contratos futuros como commodity financeira na NYMEX, retirando o poder absoluto da OPEP na definição de preços e inaugurando a era do petróleo como ativo financeiro."
   },
   {
-    "id": "nasce-a-producao-da-shell-em-borneu-1987",
+    "id": "nasce-a-producao-da-shell-em-borneu-1897",
     "title": "Nasce a Produção da Shell em Bornéu",
-    "start_date": "1987-02-01",
+    "start_date": "1897-02-01",
     "end_date": null,
     "country": "Indonésia",
     "region": "Ásia",
     "type": "discovery",
     "company": "Shell",
-    "wikipedia": "https://pt.wikipedia.org/wiki/Born%C3%A9u",
+    "wikipedia": "https://en.wikipedia.org/wiki/Balikpapan",
     "description": "O primeiro óleo foi atingido em fevereiro de 1897 e o primeiro \"gusher\" (poço jorrante) ocorreu em abril de 1898. Essa descoberta foi existencial para a Shell, pois garantiu sua própria fonte de produção, reduzindo a dependência do óleo russo dos Rothschilds e a vulnerabilidade estratégica perante a Standard Oil. Além disso, como o óleo de Bornéu era ideal para combustível, ele fundamentou a visão de Marcus Samuel de transformar o petróleo na principal fonte de poder motriz para as marinhas globais. Para consolidar esses novos ativos e garantir a lealdade de seus parceiros, Samuel fundou formalmente a Shell Transport and Trading Company em 1897."
   },
   {
@@ -1210,5 +1210,17 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Strait_of_Hormuz",
     "description": "Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global."
-  }
+  },
+  {
+  "id": "plano-messmer-franca-1974",
+  "title": "O Plano Messmer - Energia Nuclear na França",
+  "start_date": "1974-03-05",
+  "end_date": null,
+  "country": "França",
+  "region": "Europa",
+  "type": "policy",
+  "company": "EDF (Électricité de France)",
+  "wikipedia": "https://en.wikipedia.org/wiki/Nuclear_power_in_France#Messmer_Plan",
+  "description": "Anunciado pelo primeiro-ministro Pierre Messmer como resposta direta ao choque do petróleo de 1973, o plano visava a independência energética da França através de um programa massivo de expansão nuclear ('tout-nucléaire'). O objetivo era substituir a queima de óleo combustível na geração de eletricidade por reatores nucleares de tecnologia PWR. O impacto para a indústria do petróleo foi drástico: a França conseguiu descarbonizar e 'des-olear' quase inteiramente sua matriz elétrica em tempo recorde, reduzindo severamente sua dependência de importações da OPEP e alterando o fluxo global de demanda de petróleo para fins industriais e de utilidade pública na Europa."
+}
 ]
