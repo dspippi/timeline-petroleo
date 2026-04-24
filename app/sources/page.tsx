@@ -45,7 +45,7 @@ export default function SourcesPage() {
   return (
     <main className="flex flex-col min-h-[100dvh] bg-app">
       {/* Header */}
-      <header className="shrink-0 px-4 md:px-6 py-2.5 border-b border-line-default flex items-center justify-between gap-3 bg-surface dark:shadow-brand-glow shadow-sm sticky top-0 z-10">
+      <header className="shrink-0 px-4 md:px-6 py-2.5 border-b border-line flex items-center justify-between gap-3 bg-surface dark:shadow-brand-glow shadow-sm sticky top-0 z-10">
         <div>
           <h1 className="text-base md:text-lg font-bold text-content-primary tracking-tight leading-none dark:drop-shadow-text-glow">
             Fontes & Referências
@@ -76,7 +76,7 @@ export default function SourcesPage() {
             {sources.map((source) => (
               <div 
                 key={source.id} 
-                className="p-5 bg-surface rounded-xl border border-line-default shadow-sm hover:shadow-md transition-shadow"
+                className="p-5 bg-surface rounded-xl border border-line shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-surface-alt text-gray-600 dark:text-[#b0bdcc] uppercase tracking-wider">

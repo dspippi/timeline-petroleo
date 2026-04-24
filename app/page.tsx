@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <main className="flex flex-col h-[100dvh] overflow-hidden bg-app">
       {/* Header */}
-      <header className="shrink-0 px-4 md:px-6 py-2.5 border-b border-line-default flex items-center gap-3 bg-surface dark:shadow-brand-glow shadow-sm">
+      <header className="shrink-0 px-4 md:px-6 py-2.5 border-b border-line flex items-center gap-3 bg-surface dark:shadow-brand-glow shadow-sm">
         <div>
           <h1 className="text-base md:text-lg font-bold text-content-primary tracking-tight leading-none dark:drop-shadow-text-glow">
             Timeline do Petróleo

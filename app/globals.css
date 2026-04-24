@@ -49,9 +49,9 @@
   --text-muted: #526173;
 
   /* Bordas e Linhas */
-  --border-subtle: #1d2a36;
-  --border-default: #1d2a36;
-  --border-strong: #2a3948;
+  --border-subtle: rgba(255, 255, 255, 0.03);
+  --border-default: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
 
   /* Cores de Destaque (Accent) */
   --accent-main: #b7ff00;

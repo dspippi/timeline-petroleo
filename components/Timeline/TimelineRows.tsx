@@ -110,7 +110,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
           return (
             <div
               key={`region-${row.region}`}
-              className="flex items-center border-b border-line-default bg-app"
+              className="flex items-center border-b border-line bg-app"
               style={{ minHeight: REGION_HEADER_MIN_HEIGHT, width: "100%" }}
             >
               <div
@@ -121,7 +121,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
                   {row.region}
                 </span>
               </div>
-              <div className="flex-1 h-px bg-line-default" />
+              <div className="flex-1 h-px bg-line" />
             </div>
           );
         }
@@ -133,7 +133,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
         return (
           <div
             key={`country-${row.country}-${i}`}
-            className={`relative flex items-stretch border-b border-line-default group ${
+            className={`relative flex items-stretch border-b border-line group ${
               brasil
                 ? "bg-brand-bg border-l-2 border-l-brand"
                 : "bg-surface hover:bg-surface-hover"
@@ -142,7 +142,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
           >
             {/* Country label — sticky left, spans full height */}
             <div
-              className={`sm:sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-line-default ${
+              className={`sm:sticky left-0 z-20 px-2 flex items-center shrink-0 border-r border-line ${
                 brasil ? "bg-brand-bg" : "bg-surface group-hover:bg-surface-hover"
               }`}
               style={{ width: LABEL_WIDTH, height: totalRowHeight }}
@@ -158,20 +158,7 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
               </span>
             </div>
 
-            {/* Lane dividers (subtle) */}
-            {totalLanes > 1 && Array.from({ length: totalLanes - 1 }).map((_, li) => (
-              <div
-                key={li}
-                className="absolute pointer-events-none"
-                style={{
-                  left: LABEL_WIDTH,
-                  right: 0,
-                  top: rowHeight * (li + 1),
-                  height: 1,
-                  backgroundColor: "rgba(139,159,181,0.12)",
-                }}
-              />
-            ))}
+            {/* Lane dividers removidos para um design mais limpo */}
 
             {/* Event markers — only render events in the visible viewport */}
             <div className="absolute inset-0 overflow-hidden" style={{ left: LABEL_WIDTH }}>

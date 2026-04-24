@@ -216,7 +216,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     <div className="flex flex-col flex-1 min-h-0 bg-app">
 
       {/* ── Toolbar ── */}
-      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-line-default bg-surface">
+      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-line bg-surface">
         {/* Filter dropdowns */}
         <FilterDropdown
           label="Tipo"

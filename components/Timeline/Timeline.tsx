@@ -140,7 +140,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       {/* Year axis — fixed header, synced via JS scroll */}
       <div
         ref={yearAxisRef}
-        className="shrink-0 overflow-x-hidden overflow-y-hidden bg-app border-b border-line-default"
+        className="shrink-0 overflow-x-hidden overflow-y-hidden bg-app border-b border-line"
         style={{ height: 28 }}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative", height: 28 }}>
@@ -150,7 +150,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
               className="absolute top-0 bottom-0 flex flex-col items-start"
               style={{ left: x }}
             >
-              <div className="w-px h-full bg-line-default" />
+              <div className="w-px h-full bg-line" />
               <span className="absolute top-1 left-1 text-[10px] text-content-tertiary font-mono whitespace-nowrap">
                 {year}
               </span>
@@ -177,7 +177,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
 
         {/* Footer — visible only when scrolled to the bottom */}
         <footer
-          className="border-t border-line-default bg-app px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
+          className="border-t border-line bg-app px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
           style={{ position: "sticky", left: 0, width: "100vw" }}
         >
           <div className="flex items-center gap-2 shrink-0">
