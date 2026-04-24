@@ -23,7 +23,7 @@
   /* Cores de Destaque (Accent) */
   --accent-main: #f59e0b; /* amber-500 */
   --accent-hover: #d97706; /* amber-600 */
-  --accent-bg: #fffbeb; /* amber-50 */
+  --accent-bg: #fff3d1; /* amber-50 */
 
   /* Shadows (Fallback for Light mode since we only define them dark mode usually) */
   --shadow-text-glow: none;

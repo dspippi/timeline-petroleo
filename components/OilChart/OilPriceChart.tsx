@@ -17,14 +17,14 @@ interface OilShock {
 }
 
 const OIL_SHOCKS: OilShock[] = [
-  { id: 1, name: "Embargo Árabe",        date: new Date(1973, 9, 17),  effect: "up" },
-  { id: 2, name: "Revolução Iraniana",   date: new Date(1979, 0, 16),  effect: "up" },
-  { id: 3, name: "Crise do Golfo",       date: new Date(1990, 7, 2),   effect: "up" },
-  { id: 4, name: "Pico de 2008",         date: new Date(2008, 6, 3),   effect: "up" },
-  { id: 5, name: "Colapso do Xisto",     date: new Date(2014, 5, 20),  effect: "down" },
-  { id: 6, name: "COVID-19",             date: new Date(2020, 3, 20),  effect: "down" },
-  { id: 7, name: "Guerra Rússia-Ucrânia",date: new Date(2022, 1, 24),  effect: "up" },
-  { id: 8, name: "Estreito de Hormuz",   date: new Date(2026, 2, 1),   effect: "up" },
+  { id: 1, name: "Embargo Árabe", date: new Date(1973, 9, 17), effect: "up" },
+  { id: 2, name: "Revolução Iraniana", date: new Date(1979, 0, 16), effect: "up" },
+  { id: 3, name: "Crise do Golfo", date: new Date(1990, 7, 2), effect: "up" },
+  { id: 4, name: "Pico de 2008", date: new Date(2008, 6, 3), effect: "up" },
+  { id: 5, name: "Colapso do Shale", date: new Date(2014, 5, 20), effect: "down" },
+  { id: 6, name: "COVID-19", date: new Date(2020, 3, 20), effect: "down" },
+  { id: 7, name: "Guerra Rússia-Ucrânia", date: new Date(2022, 1, 24), effect: "up" },
+  { id: 8, name: "Estreito de Hormuz", date: new Date(2026, 2, 1), effect: "up" },
 ];
 
 function findPriceAt(prices: OilPrice[], targetDate: Date): number | null {
@@ -91,7 +91,7 @@ const ChartHoverOverlay = memo(function ChartHoverOverlay({ prices, yDomain, sca
   const darkMode = useDarkMode();
   if (!hoveredDate) return null;
 
-  const hoveredX    = scale.toPixel(hoveredDate);
+  const hoveredX = scale.toPixel(hoveredDate);
   const hoveredPrice = findPriceAt(prices, hoveredDate);
 
   return (
@@ -165,10 +165,10 @@ export const OilPriceChart = memo(function OilPriceChart({
     const [lo, hi] = yDomain;
     const range = Math.max(hi - lo, 1);
     return prices.map((p) => ({
-      x:     scale.toPixel(p.date),
+      x: scale.toPixel(p.date),
       price: p.price,
       yNorm: (p.price - lo) / range,
-      date:  p.date,
+      date: p.date,
     }));
   }, [prices, scale, yDomain]);
 
@@ -204,190 +204,190 @@ export const OilPriceChart = memo(function OilPriceChart({
 
   return (
     <>
-    <div
-      ref={scrollRef}
-      className="shrink-0 overflow-x-hidden border-b border-line relative"
-      style={{ height: CHART_HEIGHT, background: darkMode ? "#071018" : "white" }}
-      onScroll={onScroll}
-    >
-      <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, height: CHART_HEIGHT, position: "relative" }}>
+      <div
+        ref={scrollRef}
+        className="shrink-0 overflow-x-hidden border-b border-line relative"
+        style={{ height: CHART_HEIGHT, background: darkMode ? "#071018" : "white" }}
+        onScroll={onScroll}
+      >
+        <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, height: CHART_HEIGHT, position: "relative" }}>
 
-        {/* Chart */}
-        <div style={{ position: "absolute", inset: 0 }}>
+          {/* Chart */}
+          <div style={{ position: "absolute", inset: 0 }}>
 
-          {/* "No data" zone */}
-          {noDataEndPx > 0 && (
-            <div
-              className="absolute top-0 bottom-0 pointer-events-none overflow-hidden"
-              style={{ left: LABEL_WIDTH, width: noDataEndPx, zIndex: 5 }}
-            >
+            {/* "No data" zone */}
+            {noDataEndPx > 0 && (
               <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: darkMode
-                    ? "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(183,255,0,0.035) 5px, rgba(183,255,0,0.035) 6px)"
-                    : "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(0,0,0,0.035) 5px, rgba(0,0,0,0.035) 6px)",
-                }}
-              />
-              <span
-                className="absolute text-[9px] font-medium whitespace-nowrap"
-                style={{ bottom: 6, left: 6, color: darkMode ? "rgba(136,150,168,0.38)" : "rgba(0,0,0,0.18)" }}
+                className="absolute top-0 bottom-0 pointer-events-none overflow-hidden"
+                style={{ left: LABEL_WIDTH, width: noDataEndPx, zIndex: 5 }}
               >
-                sem dados disponíveis
-              </span>
-            </div>
-          )}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: darkMode
+                      ? "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(183,255,0,0.035) 5px, rgba(183,255,0,0.035) 6px)"
+                      : "repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(0,0,0,0.035) 5px, rgba(0,0,0,0.035) 6px)",
+                  }}
+                />
+                <span
+                  className="absolute text-[9px] font-medium whitespace-nowrap"
+                  style={{ bottom: 6, left: 6, color: darkMode ? "rgba(136,150,168,0.38)" : "rgba(0,0,0,0.18)" }}
+                >
+                  sem dados disponíveis
+                </span>
+              </div>
+            )}
 
-          {/* Recharts — no longer re-renders on hover */}
-          <ComposedChart
-            width={scale.totalWidthPx + LABEL_WIDTH}
-            height={CHART_HEIGHT}
-            data={data}
-            onMouseMove={handleMouseMove as (e: unknown) => void}
-            onMouseLeave={handleMouseLeave}
-            margin={CHART_MARGIN}
+            {/* Recharts — no longer re-renders on hover */}
+            <ComposedChart
+              width={scale.totalWidthPx + LABEL_WIDTH}
+              height={CHART_HEIGHT}
+              data={data}
+              onMouseMove={handleMouseMove as (e: unknown) => void}
+              onMouseLeave={handleMouseLeave}
+              margin={CHART_MARGIN}
+            >
+              <defs>
+                <linearGradient id="brentFillLight" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#f97316" stopOpacity={0.52} />
+                  <stop offset="42%" stopColor="#f59e0b" stopOpacity={0.22} />
+                  <stop offset="100%" stopColor="#0ea5e9" stopOpacity={0.0} />
+                </linearGradient>
+                <linearGradient id="brentFillDark" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#b7ff00" stopOpacity={0.44} />
+                  <stop offset="45%" stopColor="#b7ff00" stopOpacity={0.18} />
+                  <stop offset="100%" stopColor="#071018" stopOpacity={0.0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="x" type="number" domain={xDomain} hide />
+              <YAxis domain={[0, 1]} hide allowDataOverflow />
+              <Area
+                type="monotone"
+                dataKey="yNorm"
+                stroke="none"
+                fill={darkMode ? "url(#brentFillDark)" : "url(#brentFillLight)"}
+                baseValue={0}
+                isAnimationActive={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="yNorm"
+                stroke={darkMode ? "#b7ff00" : "#d97706"}
+                dot={false}
+                strokeWidth={2}
+                isAnimationActive={false}
+              />
+            </ComposedChart>
+          </div>
+
+          {/* Hover overlay — lightweight component that re-renders at 60fps */}
+          <ChartHoverOverlay prices={prices} yDomain={yDomain} scale={scale} />
+
+          {/* Oil shock markers */}
+          {shockMarkers.map((shock) => {
+            const isUp = shock.effect === "up";
+            const color = isUp ? "#dc2626" : "#2563eb";
+            const isActive = activeShock === shock.id;
+            const tooltipBelow = shock.y < 32;
+            const size = 18;
+            return (
+              <div
+                key={shock.id}
+                style={{
+                  position: "absolute",
+                  left: shock.x - size / 2,
+                  top: shock.y - size / 2,
+                  width: size,
+                  height: size,
+                  cursor: "pointer",
+                  pointerEvents: "auto",
+                  zIndex: 16,
+                  filter: isActive
+                    ? `drop-shadow(0 0 7px ${color}) drop-shadow(0 0 3px ${color}cc)`
+                    : `drop-shadow(0 0 4px ${color}99)`,
+                  transition: "filter 0.15s ease, transform 0.15s ease",
+                  transform: isActive ? "scale(1.25)" : "scale(1)",
+                }}
+                onMouseEnter={(e) => {
+                  setActiveShock(shock.id);
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  setTooltipPos({
+                    x: rect.left + rect.width / 2,
+                    anchorY: tooltipBelow ? rect.bottom : rect.top,
+                    above: !tooltipBelow,
+                  });
+                }}
+                onMouseLeave={() => { setActiveShock(null); setTooltipPos(null); }}
+              >
+                <svg width={size} height={size} viewBox="0 0 18 18" overflow="visible">
+                  <path d="M9 1 L17 9 L9 17 L1 9 Z" fill={color} stroke="white" strokeWidth="1.5" opacity={isActive ? 1 : 0.88} />
+                  {isUp
+                    ? <path d="M9 5.5 L12.5 11 L5.5 11 Z" fill="white" />
+                    : <path d="M9 12.5 L12.5 7 L5.5 7 Z" fill="white" />
+                  }
+                </svg>
+              </div>
+            );
+          })}
+
+          {/* Sticky Y-axis overlay */}
+          <div
+            className="pointer-events-none"
+            style={{
+              position: "sticky", left: 0, top: 0,
+              width: LABEL_WIDTH, height: CHART_HEIGHT,
+              zIndex: 20, background: darkMode ? "#071018" : "white",
+              borderRight: darkMode ? "1px solid rgba(139,159,181,0.16)" : "1px solid rgba(0,0,0,0.05)",
+            }}
           >
-            <defs>
-              <linearGradient id="brentFillLight" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#f97316" stopOpacity={0.52} />
-                <stop offset="42%" stopColor="#f59e0b" stopOpacity={0.22} />
-                <stop offset="100%" stopColor="#0ea5e9" stopOpacity={0.0} />
-              </linearGradient>
-              <linearGradient id="brentFillDark" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#b7ff00" stopOpacity={0.44} />
-                <stop offset="45%" stopColor="#b7ff00" stopOpacity={0.18} />
-                <stop offset="100%" stopColor="#071018" stopOpacity={0.0} />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="x" type="number" domain={xDomain} hide />
-            <YAxis domain={[0, 1]} hide allowDataOverflow />
-            <Area
-              type="monotone"
-              dataKey="yNorm"
-              stroke="none"
-              fill={darkMode ? "url(#brentFillDark)" : "url(#brentFillLight)"}
-              baseValue={0}
-              isAnimationActive={false}
-            />
-            <Line
-              type="monotone"
-              dataKey="yNorm"
-              stroke={darkMode ? "#b7ff00" : "#d97706"}
-              dot={false}
-              strokeWidth={2}
-              isAnimationActive={false}
-            />
-          </ComposedChart>
-        </div>
-
-        {/* Hover overlay — lightweight component that re-renders at 60fps */}
-        <ChartHoverOverlay prices={prices} yDomain={yDomain} scale={scale} />
-
-        {/* Oil shock markers */}
-        {shockMarkers.map((shock) => {
-          const isUp    = shock.effect === "up";
-          const color   = isUp ? "#dc2626" : "#2563eb";
-          const isActive = activeShock === shock.id;
-          const tooltipBelow = shock.y < 32;
-          const size = 18;
-          return (
-            <div
-              key={shock.id}
-              style={{
-                position: "absolute",
-                left: shock.x - size / 2,
-                top:  shock.y - size / 2,
-                width: size,
-                height: size,
-                cursor: "pointer",
-                pointerEvents: "auto",
-                zIndex: 16,
-                filter: isActive
-                  ? `drop-shadow(0 0 7px ${color}) drop-shadow(0 0 3px ${color}cc)`
-                  : `drop-shadow(0 0 4px ${color}99)`,
-                transition: "filter 0.15s ease, transform 0.15s ease",
-                transform: isActive ? "scale(1.25)" : "scale(1)",
-              }}
-              onMouseEnter={(e) => {
-                setActiveShock(shock.id);
-                const rect = e.currentTarget.getBoundingClientRect();
-                setTooltipPos({
-                  x: rect.left + rect.width / 2,
-                  anchorY: tooltipBelow ? rect.bottom : rect.top,
-                  above: !tooltipBelow,
-                });
-              }}
-              onMouseLeave={() => { setActiveShock(null); setTooltipPos(null); }}
-            >
-              <svg width={size} height={size} viewBox="0 0 18 18" overflow="visible">
-                <path d="M9 1 L17 9 L9 17 L1 9 Z" fill={color} stroke="white" strokeWidth="1.5" opacity={isActive ? 1 : 0.88} />
-                {isUp
-                  ? <path d="M9 5.5 L12.5 11 L5.5 11 Z" fill="white" />
-                  : <path d="M9 12.5 L12.5 7 L5.5 7 Z" fill="white" />
-                }
-              </svg>
-            </div>
-          );
-        })}
-
-        {/* Sticky Y-axis overlay */}
-        <div
-          className="pointer-events-none"
-          style={{
-            position: "sticky", left: 0, top: 0,
-            width: LABEL_WIDTH, height: CHART_HEIGHT,
-            zIndex: 20, background: darkMode ? "#071018" : "white",
-            borderRight: darkMode ? "1px solid rgba(139,159,181,0.16)" : "1px solid rgba(0,0,0,0.05)",
-          }}
-        >
-          {yTicks.map((price) => (
-            <div
-              key={price}
-              className="absolute"
-              style={{
-                right: 6, top: priceToY(price, yDomain) - 5,
-                fontSize: 9, fontFamily: "monospace",
-                color: darkMode ? "#8896a8" : "#9ca3af", lineHeight: 1, userSelect: "none",
-              }}
-            >
-              ${price}
-            </div>
-          ))}
+            {yTicks.map((price) => (
+              <div
+                key={price}
+                className="absolute"
+                style={{
+                  right: 6, top: priceToY(price, yDomain) - 5,
+                  fontSize: 9, fontFamily: "monospace",
+                  color: darkMode ? "#8896a8" : "#9ca3af", lineHeight: 1, userSelect: "none",
+                }}
+              >
+                ${price}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
 
-    {activeShockData !== null && tooltipPos !== null && (
-      <div style={{
-        position: "fixed",
-        left: tooltipPos.x,
-        ...(tooltipPos.above
-          ? { top: tooltipPos.anchorY - 5, transform: "translateX(-50%) translateY(-100%)" }
-          : { top: tooltipPos.anchorY + 5, transform: "translateX(-50%)" }
-        ),
-        background: darkMode ? "rgba(7,16,24,0.94)" : "rgba(15,15,15,0.88)",
-        color: "white",
-        fontSize: 10,
-        fontWeight: 500,
-        padding: "3px 7px",
-        borderRadius: 4,
-        whiteSpace: "nowrap",
-        pointerEvents: "none",
-        border: darkMode ? "1px solid rgba(183,255,0,0.14)" : undefined,
-        borderLeft: `2px solid ${activeShockData.effect === "up" ? "#dc2626" : "#2563eb"}`,
-        boxShadow: darkMode ? "0 10px 28px rgba(0,0,0,0.5), 0 0 18px rgba(183,255,0,0.12)" : undefined,
-        lineHeight: 1.4,
-        zIndex: 9999,
-      }}>
-        {activeShockData.name}
-        <span style={{ color: activeShockData.effect === "up" ? "#dc2626" : "#2563eb", marginLeft: 4 }}>
-          {activeShockData.effect === "up" ? "▲" : "▼"}
-        </span>
-        <div style={{ color: darkMode ? "#b7ff00" : "#d97706", fontSize: 9, marginTop: 2, fontWeight: 600 }}>
-          ${activeShockData.price.toFixed(2)}/bbl
+      {activeShockData !== null && tooltipPos !== null && (
+        <div style={{
+          position: "fixed",
+          left: tooltipPos.x,
+          ...(tooltipPos.above
+            ? { top: tooltipPos.anchorY - 5, transform: "translateX(-50%) translateY(-100%)" }
+            : { top: tooltipPos.anchorY + 5, transform: "translateX(-50%)" }
+          ),
+          background: darkMode ? "rgba(7,16,24,0.94)" : "rgba(15,15,15,0.88)",
+          color: "white",
+          fontSize: 10,
+          fontWeight: 500,
+          padding: "3px 7px",
+          borderRadius: 4,
+          whiteSpace: "nowrap",
+          pointerEvents: "none",
+          border: darkMode ? "1px solid rgba(183,255,0,0.14)" : undefined,
+          borderLeft: `2px solid ${activeShockData.effect === "up" ? "#dc2626" : "#2563eb"}`,
+          boxShadow: darkMode ? "0 10px 28px rgba(0,0,0,0.5), 0 0 18px rgba(183,255,0,0.12)" : undefined,
+          lineHeight: 1.4,
+          zIndex: 9999,
+        }}>
+          {activeShockData.name}
+          <span style={{ color: activeShockData.effect === "up" ? "#dc2626" : "#2563eb", marginLeft: 4 }}>
+            {activeShockData.effect === "up" ? "▲" : "▼"}
+          </span>
+          <div style={{ color: darkMode ? "#b7ff00" : "#d97706", fontSize: 9, marginTop: 2, fontWeight: 600 }}>
+            ${activeShockData.price.toFixed(2)}/bbl
+          </div>
         </div>
-      </div>
-    )}
+      )}
     </>
   );
 });

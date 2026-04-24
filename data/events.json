@@ -2,7 +2,7 @@
   {
     "id": "bissell-oil-inspection-1854",
     "title": "Primeiras Prospecções nos EUA (Bissell)",
-    "start_date": "1854-08-31",
+    "start_date": "1854-12-30",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
@@ -26,8 +26,8 @@
   {
     "id": "us-civil-war-impact-1861",
     "title": "Guerra Civil Americana",
-    "start_date": "1861-04-11",
-    "end_date": "1865-04-08",
+    "start_date": "1861-04-12",
+    "end_date": "1865-04-089",
     "country": "Estados Unidos",
     "region": "América do Norte",
     "type": "war",
@@ -45,12 +45,12 @@
     "type": "tecnologia",
     "company": null,
     "wikipedia": "https://pt.wikipedia.org/wiki/Canal_de_Suez",
-    "description": "Em 1869, o Francez Ferdinand Lesseps, conclui a construção do Canal de Suez, após 10 anos de obras. Após insolvência do Egito, suas ações foram para o mercado e a Grã-Bretanha passou a ser sócia da França no empreendimento. O canal reduzia pela metade o tempo de viagem da Europa para a índia, parte do império Britânico, mas em 1948, com a independência da Índia, ele perdeu sua função original e deu lugar ao grande escoamento de Petróleo do golfo pérsico para a Europa."
+    "description": "Projetado pelo francês Ferdinand de Lesseps, o canal encurta drasticamente a rota entre Europa e Ásia, tornando-se vital para o transporte de petróleo (especialmente após a independência da Índia em 1947)."
   },
   {
     "id": "standard-oil-foundation-1870",
     "title": "Fundação da Standard Oil",
-    "start_date": "1870-01-09",
+    "start_date": "1870-01-10",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
@@ -62,7 +62,7 @@
   {
     "id": "baku-oil-opening-1872",
     "title": "Boom Petrolífero de Baku",
-    "start_date": "1871-12-30",
+    "start_date": "1872-02-01",
     "end_date": null,
     "country": "Azerbaijão",
     "region": "Ásia",
@@ -74,7 +74,7 @@
   {
     "id": "tidewater-o-1-oleoduto-de-longa-distancia-1879",
     "title": "Tidewater: O 1º oleoduto de longa distância",
-    "start_date": "1879-01-30",
+    "start_date": "1879-05-28",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
@@ -108,18 +108,6 @@
     "description": "Aeilko Jans Zijlker descobre óleo em Langkat, Sumatra (Índias Orientais Holandesas) em 1885; a Royal Dutch Company é fundada em 1890 para desenvolver o campo, estabelecendo-se como força capaz de competir com a Standard Oil nos mercados asiáticos."
   },
   {
-    "id": "brazil-early-surveys-1897",
-    "title": "Primeira Sondagem de Petróleo no Brasil",
-    "start_date": "1892-01-01",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América Central e do Sul",
-    "type": "discovery",
-    "company": null,
-    "wikipedia": "https://pt.wikipedia.org/wiki/Petr%C3%B3leo_no_Brasil",
-    "description": "Ocorrem as primeiras buscas geológicas e perfurações formais no território brasileiro, motivadas pela necessidade de encontrar fontes internas de energia. A primeira registrada foi em Bofete (SP) liderada pelo fazendeiro Eugênio Ferreira de Camargo, atingindo 488 metros e encontrando apenas traços de petróleo, sem viabilidade econômica."
-  },
-  {
     "id": "murex-suez-transit-1892",
     "title": "Petroleiro Murex Atravessa o Suez",
     "start_date": "1892-08-18",
@@ -134,7 +122,7 @@
   {
     "id": "ford-first-car-1896",
     "title": "Ford e o Primeiro Automóvel",
-    "start_date": "1896-06-03",
+    "start_date": "1896-06-04",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
@@ -142,6 +130,18 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Ford_Quadricycle",
     "description": "O automóvel de Ford sinaliza a futura transição do mercado de querosene para o de gasolina, criando um novo mercado massivo para derivados de petróleo."
+  },
+  {
+    "id": "nasce-a-producao-da-shell-em-borneu-1897",
+    "title": "Nasce a Produção da Shell em Bornéu",
+    "start_date": "1897-02-01",
+    "end_date": null,
+    "country": "Indonésia",
+    "region": "Ásia",
+    "type": "discovery",
+    "company": "Shell",
+    "wikipedia": "https://en.wikipedia.org/wiki/Balikpapan",
+    "description": "O primeiro óleo foi atingido em fevereiro de 1897 e o primeiro \"gusher\" (poço jorrante) ocorreu em abril de 1898. Essa descoberta foi existencial para a Shell, pois garantiu sua própria fonte de produção, reduzindo a dependência do óleo russo dos Rothschilds e a vulnerabilidade estratégica perante a Standard Oil. Além disso, como o óleo de Bornéu era ideal para combustível, ele fundamentou a visão de Marcus Samuel de transformar o petróleo na principal fonte de poder motriz para as marinhas globais. Para consolidar esses novos ativos e garantir a lealdade de seus parceiros, Samuel fundou formalmente a Shell Transport and Trading Company em 1897."
   },
   {
     "id": "spindletop-texas-gusher-1901",
@@ -194,7 +194,7 @@
   {
     "id": "standard-oil-dissolution-1911",
     "title": "Desmembramento da Standard Oil",
-    "start_date": "1911-05-12",
+    "start_date": "1911-05-15",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
@@ -230,8 +230,8 @@
   {
     "id": "wwi-mechanized-warfare-1914",
     "title": "1ª Guerra Mundial",
-    "start_date": "1914-07-27",
-    "end_date": "1918-11-10",
+    "start_date": "1914-07-28",
+    "end_date": "1918-11-11",
     "country": "Global",
     "region": "Global",
     "type": "war",
@@ -385,8 +385,8 @@
   },
   {
     "id": "brazil-lobato-discovery-1939",
-    "title": "Primeiro Petróleo do Brasil (Lobato)",
-    "start_date": "1939-01-20",
+    "title": "Petróleo no Brasil: Descoberta de Lobato",
+    "start_date": "1939-01-21",
     "end_date": null,
     "country": "Brasil",
     "region": "América Central e do Sul",
@@ -398,7 +398,7 @@
   {
     "id": "petroleo-na-arabia-saudita-1939",
     "title": "Petróleo na Arábia Saudita",
-    "start_date": "1939-03-03",
+    "start_date": "1939-03-04",
     "end_date": null,
     "country": "Arábia Saudita",
     "region": "Oriente Médio",
@@ -458,7 +458,7 @@
   {
     "id": "inicio-da-era-offshore-1947",
     "title": "Início da Era Offshore",
-    "start_date": "1947-10-01",
+    "start_date": "1947-10-04",
     "end_date": null,
     "country": "Estados Unidos",
     "region": "América do Norte",
@@ -768,6 +768,18 @@
     "description": "Em dezembro de 1973, a reunião da OPEP em Teerã consolidou a crise energética global. Impulsionados pela visão ambiciosa do Xá do Irã, os países exportadores quadruplicaram o preço oficial do petróleo para US$ 11,65, justificando o valor pelo custo de fontes alternativas de energia. Apesar das advertências sauditas sobre uma possível recessão mundial, o marco selou a transferência definitiva de poder das multinacionais para os Estados produtores. O choque encerrou a era da energia barata, mergulhando o Ocidente em instabilidade econômica."
   },
   {
+    "id": "plano-messmer-franca-1974",
+    "title": "O Plano Messmer - Energia Nuclear na França",
+    "start_date": "1974-03-06",
+    "end_date": null,
+    "country": "França",
+    "region": "Europa",
+    "type": "policy",
+    "company": "EDF (Électricité de France)",
+    "wikipedia": "https://en.wikipedia.org/wiki/Nuclear_power_in_France#Messmer_Plan",
+    "description": "Anunciado pelo primeiro-ministro Pierre Messmer como resposta direta ao choque do petróleo de 1973, o plano visava a independência energética da França através de um programa massivo de expansão nuclear ('tout-nucléaire'). O objetivo era substituir a queima de óleo combustível na geração de eletricidade por reatores nucleares de tecnologia PWR. O impacto para a indústria do petróleo foi drástico: a França conseguiu descarbonizar e 'des-olear' quase inteiramente sua matriz elétrica em tempo recorde, reduzindo severamente sua dependência de importações da OPEP e alterando o fluxo global de demanda de petróleo para fins industriais e de utilidade pública na Europa."
+  },
+  {
     "id": "campos-basin-garoupa-discovery-1974",
     "title": "Descoberta da Bacia de Campos (Garoupa)",
     "start_date": "1974-11-01",
@@ -874,18 +886,6 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/West_Texas_Intermediate",
     "description": "O petróleo WTI passa a ser negociado em contratos futuros como commodity financeira na NYMEX, retirando o poder absoluto da OPEP na definição de preços e inaugurando a era do petróleo como ativo financeiro."
-  },
-  {
-    "id": "nasce-a-producao-da-shell-em-borneu-1897",
-    "title": "Nasce a Produção da Shell em Bornéu",
-    "start_date": "1897-02-01",
-    "end_date": null,
-    "country": "Indonésia",
-    "region": "Ásia",
-    "type": "discovery",
-    "company": "Shell",
-    "wikipedia": "https://en.wikipedia.org/wiki/Balikpapan",
-    "description": "O primeiro óleo foi atingido em fevereiro de 1897 e o primeiro \"gusher\" (poço jorrante) ocorreu em abril de 1898. Essa descoberta foi existencial para a Shell, pois garantiu sua própria fonte de produção, reduzindo a dependência do óleo russo dos Rothschilds e a vulnerabilidade estratégica perante a Standard Oil. Além disso, como o óleo de Bornéu era ideal para combustível, ele fundamentou a visão de Marcus Samuel de transformar o petróleo na principal fonte de poder motriz para as marinhas globais. Para consolidar esses novos ativos e garantir a lealdade de seus parceiros, Samuel fundou formalmente a Shell Transport and Trading Company em 1897."
   },
   {
     "id": "exxon-valdez-spill-1989",
@@ -1210,17 +1210,5 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Strait_of_Hormuz",
     "description": "Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global."
-  },
-  {
-  "id": "plano-messmer-franca-1974",
-  "title": "O Plano Messmer - Energia Nuclear na França",
-  "start_date": "1974-03-05",
-  "end_date": null,
-  "country": "França",
-  "region": "Europa",
-  "type": "policy",
-  "company": "EDF (Électricité de France)",
-  "wikipedia": "https://en.wikipedia.org/wiki/Nuclear_power_in_France#Messmer_Plan",
-  "description": "Anunciado pelo primeiro-ministro Pierre Messmer como resposta direta ao choque do petróleo de 1973, o plano visava a independência energética da França através de um programa massivo de expansão nuclear ('tout-nucléaire'). O objetivo era substituir a queima de óleo combustível na geração de eletricidade por reatores nucleares de tecnologia PWR. O impacto para a indústria do petróleo foi drástico: a França conseguiu descarbonizar e 'des-olear' quase inteiramente sua matriz elétrica em tempo recorde, reduzindo severamente sua dependência de importações da OPEP e alterando o fluxo global de demanda de petróleo para fins industriais e de utilidade pública na Europa."
-}
+  }
 ]
