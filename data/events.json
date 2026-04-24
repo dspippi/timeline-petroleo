@@ -120,18 +120,6 @@
     "description": "O petroleiro a granel Murex, de Marcus Samuel, atravessa o Canal de Suez em 24 de agosto de 1892, sendo o primeiro navio-tanque de carga a granel a fazê-lo, revolucionando a logística global e marcando o nascimento prático da Shell."
   },
   {
-    "id": "ford-first-car-1896",
-    "title": "Ford e o Primeiro Automóvel",
-    "start_date": "1896-06-04",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "discovery",
-    "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/Ford_Quadricycle",
-    "description": "O automóvel de Ford sinaliza a futura transição do mercado de querosene para o de gasolina, criando um novo mercado massivo para derivados de petróleo."
-  },
-  {
     "id": "nasce-a-producao-da-shell-em-borneu-1897",
     "title": "Nasce a Produção da Shell em Bornéu",
     "start_date": "1897-02-01",
@@ -166,6 +154,18 @@
     "company": "Anglo-Persian Oil Company; British Petroleum",
     "wikipedia": "https://en.wikipedia.org/wiki/D%27Arcy_Concession",
     "description": "William Knox D'Arcy obtém direitos exclusivos para explorar petróleo na Pérsia, o que levaria à criação da Anglo-Persian Oil Company, futura BP."
+  },
+  {
+    "id": "ford-first-car-1896",
+    "title": "Nasce o Ford Model A",
+    "start_date": "1903-07-23",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "tecnologia",
+    "company": "Ford Motor Company",
+    "wikipedia": "https://en.wikipedia.org/wiki/Ford_Quadricycle",
+    "description": "O automóvel de Ford sinaliza a futura transição do mercado de querosene para o de gasolina, criando um novo mercado massivo para derivados de petróleo."
   },
   {
     "id": "criacao-da-royal-dutch-shell-1907",
