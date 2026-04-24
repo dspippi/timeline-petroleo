@@ -178,7 +178,17 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   );
 
   const companies = useMemo(
-    () => Array.from(new Set(allEvents.map((e) => e.company).filter(Boolean) as string[])).sort(),
+    () =>
+      Array.from(
+        new Set(
+          allEvents
+            .flatMap((e) =>
+              e.company
+                ? e.company.split(";").map((c) => c.trim()).filter(Boolean)
+                : []
+            )
+        )
+      ).sort(),
     [allEvents]
   );
 

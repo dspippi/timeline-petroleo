@@ -57,7 +57,7 @@ export function useFilters(allEvents: OilEvent[]) {
       (e) =>
         (countries.size === 0 || countries.has(e.country)) &&
         (types.size === 0 || types.has(e.type)) &&
-        (companies.size === 0 || (!!e.company && companies.has(e.company)))
+        (companies.size === 0 || (!!e.company && e.company.split(";").map((c) => c.trim()).some((c) => companies.has(c))))
     );
   }, [allEvents, filters]);
 
