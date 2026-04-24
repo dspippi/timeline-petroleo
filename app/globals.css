@@ -3,31 +3,73 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #f5f3ee;
-  --bg-secondary: #ffffff;
-  --text-primary: #1c1c2e;
+  /* Fundo da Aplicação */
+  --bg-app: #f5f3ee;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: rgba(0, 0, 0, 0.04);
+  --bg-surface-alt: #f3f4f6;
+
+  /* Textos */
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --text-muted: #d1d5db;
+
+  /* Bordas e Linhas */
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border-default: rgba(0, 0, 0, 0.07);
+  --border-strong: rgba(0, 0, 0, 0.1);
+
+  /* Cores de Destaque (Accent) */
+  --accent-main: #f59e0b; /* amber-500 */
+  --accent-hover: #d97706; /* amber-600 */
+  --accent-bg: #fffbeb; /* amber-50 */
+
+  /* Shadows (Fallback for Light mode since we only define them dark mode usually) */
+  --shadow-text-glow: none;
+  --shadow-brand-glow: 0 1px 0 rgba(0,0,0,0.05);
+  --shadow-panel: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
   --scrollbar-track: #ece9e2;
   --scrollbar-thumb: rgba(0,0,0,0.22);
   --scrollbar-thumb-hover: rgba(0,0,0,0.38);
 }
 
 .dark {
-  --bg-primary: #050a10;
-  --bg-secondary: #0a1119;
+  /* Fundo da Aplicação */
+  --bg-app: #050a10;
+  --bg-surface: #071018;
+  --bg-surface-hover: #0d1823;
+  --bg-surface-alt: #151c24;
+
+  /* Textos */
   --text-primary: #f2f7f4;
+  --text-secondary: #dce8e1;
+  --text-tertiary: #8896a8;
+  --text-muted: #526173;
+
+  /* Bordas e Linhas */
+  --border-subtle: #1d2a36;
+  --border-default: #1d2a36;
+  --border-strong: #2a3948;
+
+  /* Cores de Destaque (Accent) */
+  --accent-main: #b7ff00;
+  --accent-hover: #d8ff66;
+  --accent-bg: #0f1710;
+
+  /* Shadows */
+  --shadow-text-glow: 0 0 10px rgba(242,247,244,0.12);
+  --shadow-brand-glow: 0 0 12px rgba(183,255,0,0.14);
+  --shadow-panel: 0 16px 44px rgba(0,0,0,0.55), 0 0 22px rgba(183,255,0,0.08);
+
   --scrollbar-track: #071018;
   --scrollbar-thumb: rgba(183,255,0,0.22);
   --scrollbar-thumb-hover: rgba(183,255,0,0.42);
-  --lime-accent: #b7ff00;
-  --lime-soft: rgba(183,255,0,0.16);
-  --line-soft: rgba(139,159,181,0.16);
-  --line-strong: rgba(183,255,0,0.34);
-  --text-muted: #8896a8;
-  --text-dim: #526173;
 }
 
 html, body {
-  background-color: var(--bg-primary);
+  background-color: var(--bg-app);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

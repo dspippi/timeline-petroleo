@@ -98,8 +98,8 @@ export function HoverTooltip({ event, x, y, onMouseEnter, onMouseLeave, onTypeCl
             </span>
             {event.company && (
               <>
-                <span className="text-gray-200 dark:text-[#526173]">·</span>
-                <span className="text-[10px] text-gray-400 dark:text-[#8896a8]">{event.company}</span>
+                <span className="text-content-muted">·</span>
+                <span className="text-[10px] text-content-tertiary">{event.company}</span>
               </>
             )}
           </div>

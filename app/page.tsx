@@ -13,21 +13,21 @@ export default function HomePage() {
   }));
 
   return (
-    <main className="flex flex-col h-[100dvh] overflow-hidden bg-[#f5f3ee] dark:bg-[#050a10]">
+    <main className="flex flex-col h-[100dvh] overflow-hidden bg-app">
       {/* Header */}
-      <header className="shrink-0 px-4 md:px-6 py-2.5 border-b border-black/[0.07] dark:border-[#1d2a36] flex items-center gap-3 bg-white dark:bg-[#050a10] dark:shadow-[0_1px_0_rgba(183,255,0,0.08)] shadow-sm">
+      <header className="shrink-0 px-4 md:px-6 py-2.5 border-b border-line-default flex items-center gap-3 bg-surface dark:shadow-brand-glow shadow-sm">
         <div>
-          <h1 className="text-base md:text-lg font-bold text-gray-900 dark:text-[#f2f7f4] tracking-tight leading-none dark:drop-shadow-[0_0_10px_rgba(242,247,244,0.12)]">
+          <h1 className="text-base md:text-lg font-bold text-content-primary tracking-tight leading-none dark:drop-shadow-text-glow">
             Timeline do Petróleo
           </h1>
-          <p className="text-[10px] text-gray-400 dark:text-[#8896a8] mt-0.5 tracking-wide uppercase">
+          <p className="text-[10px] text-content-tertiary mt-0.5 tracking-wide uppercase">
             Geopolítica energética
           </p>
         </div>
         <div className="ml-auto flex items-center gap-4">
           <Link 
             href="/sources" 
-            className="text-xs font-medium text-gray-600 dark:text-[#8896a8] hover:text-gray-900 dark:hover:text-[#f2f7f4] transition-colors bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-md"
+            className="text-xs font-medium text-content-tertiary hover:text-gray-900 dark:hover:text-[#f2f7f4] transition-colors bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-md"
           >
             Fontes
           </Link>

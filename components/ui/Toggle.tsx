@@ -23,7 +23,7 @@ export function Toggle({ enabled, onChange, label }: Props) {
           }`}
         />
       </div>
-      <span className={`text-xs transition-colors ${enabled ? "text-gray-700 dark:text-[#f2f7f4]" : "text-gray-400 dark:text-[#526173]"}`}>
+      <span className={`text-xs transition-colors ${enabled ? "text-content-primary" : "text-content-muted"}`}>
         {label}
       </span>
     </label>

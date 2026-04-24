@@ -213,10 +213,10 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const zoomPercent = Math.round((pxPerDay / DEFAULT_PX_PER_DAY) * 100);
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 bg-[#f5f3ee] dark:bg-[#050a10]">
+    <div className="flex flex-col flex-1 min-h-0 bg-app">
 
       {/* ── Toolbar ── */}
-      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-black/[0.07] dark:border-[#1d2a36] bg-white dark:bg-[#071018]">
+      <div className="shrink-0 flex flex-wrap items-center gap-2 px-3 py-2 border-b border-line-default bg-surface">
         {/* Filter dropdowns */}
         <FilterDropdown
           label="Tipo"
@@ -243,26 +243,26 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         )}
 
         {/* Separator */}
-        <div className="w-px h-4 bg-gray-200 dark:bg-[#1d2a36] mx-1 hidden sm:block" />
+        <div className="w-px h-4 bg-surface-alt mx-1 hidden sm:block" />
 
         {/* Brent toggle */}
         <Toggle enabled={showChart} onChange={setShowChart} label="Preço Brent (USD/barril)" />
 
-        <div className="w-px h-4 bg-gray-200 dark:bg-[#1d2a36] mx-1 hidden md:block" />
+        <div className="w-px h-4 bg-surface-alt mx-1 hidden md:block" />
 
         <div className="flex items-center gap-1">
-          <span className="text-[10px] text-gray-400 dark:text-[#8896a8] uppercase tracking-wider font-medium mr-1">Zoom</span>
+          <span className="text-[10px] text-content-tertiary uppercase tracking-wider font-medium mr-1">Zoom</span>
           <button
             onClick={zoomOut}
             disabled={pxPerDay <= MIN_PX_PER_DAY}
-            className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 dark:text-[#dce8e1] hover:bg-black/10 dark:hover:bg-[rgba(183,255,0,0.09)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-content-secondary hover:bg-surface-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             title="Reduzir zoom"
           >
             −
           </button>
           <button
             onClick={zoomReset}
-            className="px-2 h-6 text-[10px] font-mono text-gray-500 dark:text-[#dce8e1] hover:bg-black/10 dark:hover:bg-[rgba(183,255,0,0.09)] rounded transition-colors min-w-[42px] text-center"
+            className="px-2 h-6 text-[10px] font-mono text-content-secondary hover:bg-surface-hover rounded transition-colors min-w-[42px] text-center"
             title="Resetar zoom"
           >
             {zoomPercent}%
@@ -270,29 +270,29 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
           <button
             onClick={zoomIn}
             disabled={pxPerDay >= MAX_PX_PER_DAY}
-            className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-gray-600 dark:text-[#dce8e1] hover:bg-black/10 dark:hover:bg-[rgba(183,255,0,0.09)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="w-6 h-6 flex items-center justify-center rounded text-sm font-bold text-content-secondary hover:bg-surface-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             title="Aumentar zoom"
           >
             +
           </button>
           <button
             onClick={zoomFit}
-            className="px-2 h-6 text-[10px] text-gray-500 dark:text-[#dce8e1] hover:bg-black/10 dark:hover:bg-[rgba(183,255,0,0.09)] rounded transition-colors"
+            className="px-2 h-6 text-[10px] text-content-secondary hover:bg-surface-hover rounded transition-colors"
             title="Ajustar toda a timeline à tela"
           >
             Fit
           </button>
         </div>
 
-        <span className="text-[9px] text-gray-300 dark:text-[#526173] hidden xl:block">Ctrl+Scroll para zoom · Arraste para navegar</span>
+        <span className="text-[9px] text-content-muted hidden xl:block">Ctrl+Scroll para zoom · Arraste para navegar</span>
 
         {/* Event count + clear */}
-        <span className="text-[11px] text-gray-400 dark:text-[#8896a8] ml-auto">
+        <span className="text-[11px] text-content-tertiary ml-auto">
           {filteredEvents.length} de {allEvents.length} eventos
           {activeCount > 0 && (
             <button
               onClick={clearAll}
-              className="ml-2 text-amber-600 dark:text-[#b7ff00] hover:text-amber-800 dark:hover:text-[#d8ff66] underline transition-colors"
+              className="ml-2 text-brand hover:text-brand-hover underline transition-colors"
             >
               limpar filtros
             </button>
@@ -304,7 +304,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
             ref={settingsBtnRef}
             onClick={() => setSettingsOpen((o) => !o)}
             className={`w-7 h-7 flex items-center justify-center rounded-full transition-colors ${
-              settingsOpen ? "bg-amber-100 dark:bg-[rgba(183,255,0,0.12)] text-amber-700 dark:text-[#b7ff00] dark:shadow-[0_0_12px_rgba(183,255,0,0.16)]" : "text-gray-400 hover:text-gray-700 dark:text-[#8896a8] dark:hover:text-[#b7ff00] hover:bg-black/[0.06] dark:hover:bg-[rgba(183,255,0,0.09)]"
+              settingsOpen ? "bg-brand-bg text-brand dark:shadow-brand-glow" : "text-gray-400 hover:text-gray-700 dark:text-[#8896a8] dark:hover:text-[#b7ff00] hover:bg-surface-hover"
             }`}
             title="Configurações"
           >
@@ -322,7 +322,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         {/* Dark mode toggle */}
         <button
           onClick={() => updateSettings({ darkMode: !darkMode })}
-          className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 dark:text-[#8896a8] dark:hover:text-[#b7ff00] hover:bg-black/[0.06] dark:hover:bg-[rgba(183,255,0,0.09)] transition-all"
+          className="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 dark:text-[#8896a8] dark:hover:text-[#b7ff00] hover:bg-surface-hover transition-all"
           title={darkMode ? "Modo claro" : "Modo noturno"}
         >
           {darkMode ? (

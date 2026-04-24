@@ -32,7 +32,7 @@ export function EventCard({ event, onClose }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.97 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[500px] max-w-[92vw] rounded-2xl border border-black/10 dark:border-[#2a3948] bg-white dark:bg-[#071018] shadow-2xl dark:shadow-[0_24px_70px_rgba(0,0,0,0.62),0_0_32px_rgba(183,255,0,0.08)]"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[500px] max-w-[92vw] rounded-2xl border border-line-strong bg-surface shadow-2xl dark:shadow-[0_24px_70px_rgba(0,0,0,0.62),0_0_32px_rgba(183,255,0,0.08)]"
           >
             {/* Top accent */}
             <div
@@ -54,13 +54,13 @@ export function EventCard({ event, onClose }: Props) {
                   >
                     {getLabel(event.type)}
                   </span>
-                  <span className="text-[11px] text-gray-400 dark:text-[#8896a8] px-2 py-0.5 rounded-full border border-gray-200 dark:border-[#2a3948]">
+                  <span className="text-[11px] text-content-tertiary px-2 py-0.5 rounded-full border border-gray-200 dark:border-[#2a3948]">
                     {event.region}
                   </span>
                 </div>
                 <button
                   onClick={onClose}
-                  className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-gray-400 dark:text-[#8896a8] hover:text-gray-700 dark:hover:text-[#b7ff00] hover:bg-gray-100 dark:hover:bg-[rgba(183,255,0,0.09)] transition-all text-lg leading-none"
+                  className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-content-tertiary hover:text-brand hover:bg-gray-100 dark:hover:bg-[rgba(183,255,0,0.09)] transition-all text-lg leading-none"
                 >
                   ×
                 </button>
@@ -69,14 +69,14 @@ export function EventCard({ event, onClose }: Props) {
               {/* Title */}
               <h2
                 className={`text-xl font-bold leading-tight mb-2 ${
-                  isBrasil(event.country) ? "text-amber-700 dark:text-[#d8ff66]" : "text-gray-900 dark:text-[#f2f7f4]"
+                  isBrasil(event.country) ? "text-brand-hover" : "text-content-primary"
                 }`}
               >
                 {event.title}
               </h2>
 
               {/* Meta */}
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4 text-sm text-gray-400 dark:text-[#8896a8]">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4 text-sm text-content-tertiary">
                 <span>{formatEventDate(event.start_date, event.end_date)}</span>
                 <span className="w-px h-3 bg-gray-200 dark:bg-[#2a3948]" />
                 <span className={isBrasil(event.country) ? "text-amber-600 font-medium" : ""}>
@@ -85,7 +85,7 @@ export function EventCard({ event, onClose }: Props) {
                 {event.company && (
                   <>
                     <span className="w-px h-3 bg-gray-200 dark:bg-[#2a3948]" />
-                    <span className="text-gray-600 dark:text-[#8896a8]">{event.company}</span>
+                    <span className="text-content-tertiary">{event.company}</span>
                   </>
                 )}
               </div>

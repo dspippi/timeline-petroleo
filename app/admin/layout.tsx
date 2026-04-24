@@ -8,7 +8,7 @@ const isLocal = process.env.NODE_ENV === "development";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#f5f3ee] flex flex-col">
+    <div className="min-h-screen bg-app flex flex-col">
       {/* Topbar */}
       <header className="bg-white border-b border-black/[0.07] px-4 py-3 flex items-center gap-4 shrink-0">
         <Link href="/admin" className="font-bold text-gray-800 text-sm hover:text-amber-600 transition-colors">
@@ -27,6 +27,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </Link>
           <Link href="/admin/sources" className="text-gray-500 hover:text-gray-900 transition-colors">
             Fontes
+          </Link>
+          <Link href="/admin/theme" className="text-gray-500 hover:text-gray-900 transition-colors">
+            Cores & Tema
           </Link>
           <Link href="/admin/raw" className="text-gray-500 hover:text-gray-900 transition-colors">
             Editor de Texto

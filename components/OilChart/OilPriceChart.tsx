@@ -122,7 +122,7 @@ const ChartHoverOverlay = memo(function ChartHoverOverlay({ prices, yDomain, sca
               whiteSpace: "nowrap",
             }}
           >
-            <div className="font-semibold text-amber-600 dark:text-[#b7ff00]" style={{ fontSize: 11 }}>
+            <div className="font-semibold text-brand" style={{ fontSize: 11 }}>
               ${hoveredPrice.toFixed(2)}/bbl
             </div>
             <div style={{ fontSize: 10, color: darkMode ? "#8896a8" : "#9ca3af" }}>
@@ -196,8 +196,8 @@ export const OilPriceChart = memo(function OilPriceChart({
 
   if (prices.length === 0) {
     return (
-      <div className="shrink-0 flex items-center justify-center border-b border-black/[0.07] dark:border-[#1d2a36] bg-gray-50 dark:bg-[#071018]" style={{ height: CHART_HEIGHT }}>
-        <span className="text-gray-400 dark:text-[#526173] text-xs">Carregando dados de preço…</span>
+      <div className="shrink-0 flex items-center justify-center border-b border-line-default bg-gray-50 dark:bg-[#071018]" style={{ height: CHART_HEIGHT }}>
+        <span className="text-content-muted text-xs">Carregando dados de preço…</span>
       </div>
     );
   }
@@ -206,7 +206,7 @@ export const OilPriceChart = memo(function OilPriceChart({
     <>
     <div
       ref={scrollRef}
-      className="shrink-0 overflow-x-hidden border-b border-black/[0.07] dark:border-[#1d2a36] relative"
+      className="shrink-0 overflow-x-hidden border-b border-line-default relative"
       style={{ height: CHART_HEIGHT, background: darkMode ? "#071018" : "white" }}
       onScroll={onScroll}
     >

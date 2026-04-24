@@ -140,7 +140,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       {/* Year axis — fixed header, synced via JS scroll */}
       <div
         ref={yearAxisRef}
-        className="shrink-0 overflow-x-hidden overflow-y-hidden bg-[#f5f3ee] dark:bg-[#071018] border-b border-black/[0.06] dark:border-[#1d2a36]"
+        className="shrink-0 overflow-x-hidden overflow-y-hidden bg-app border-b border-line-default"
         style={{ height: 28 }}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative", height: 28 }}>
@@ -150,8 +150,8 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
               className="absolute top-0 bottom-0 flex flex-col items-start"
               style={{ left: x }}
             >
-              <div className="w-px h-full bg-black/[0.07] dark:bg-[#1d2a36]" />
-              <span className="absolute top-1 left-1 text-[10px] text-gray-400 dark:text-[#8896a8] font-mono whitespace-nowrap">
+              <div className="w-px h-full bg-line-default" />
+              <span className="absolute top-1 left-1 text-[10px] text-content-tertiary font-mono whitespace-nowrap">
                 {year}
               </span>
             </div>
@@ -162,7 +162,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       {/* Scrollable timeline */}
       <div
         ref={scrollRef}
-        className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 bg-white dark:bg-[#050a10]"
+        className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 bg-surface"
         style={{ cursor: isDragging ? "grabbing" : "grab" }}
         onScroll={handleScroll}
         onMouseDown={handleMouseDown}
@@ -177,25 +177,25 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
 
         {/* Footer — visible only when scrolled to the bottom */}
         <footer
-          className="border-t border-black/[0.07] dark:border-[#1d2a36] bg-[#f5f3ee] dark:bg-[#050a10] px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
+          className="border-t border-line-default bg-app px-5 py-2.5 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4"
           style={{ position: "sticky", left: 0, width: "100vw" }}
         >
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-[10px] text-gray-400 dark:text-[#8896a8] font-semibold tracking-wide">
+            <span className="text-[10px] text-content-tertiary font-semibold tracking-wide">
               Desenvolvido por{" "}
-              <span className="text-gray-600 dark:text-[#dce8e1] font-bold">Diogo S. P. Calegari</span>
+              <span className="text-content-secondary font-bold">Diogo S. P. Calegari</span>
             </span>
-            <span className="hidden sm:inline text-gray-300 dark:text-[#526173]">·</span>
+            <span className="hidden sm:inline text-content-muted">·</span>
             <a
               href="mailto:timelinedopetroleo@gmail.com"
-              className="hidden sm:inline text-[10px] text-amber-600 dark:text-[#b7ff00] hover:text-amber-800 dark:hover:text-[#d8ff66] transition-colors"
+              className="hidden sm:inline text-[10px] text-brand hover:text-brand-hover transition-colors"
             >
               timelinedopetroleo@gmail.com
             </a>
-            <span className="hidden sm:inline text-gray-300 dark:text-[#526173]">·</span>
-            <span className="hidden sm:inline text-[10px] text-gray-400 dark:text-[#8896a8] font-mono">v{pkg.version}</span>
+            <span className="hidden sm:inline text-content-muted">·</span>
+            <span className="hidden sm:inline text-[10px] text-content-tertiary font-mono">v{pkg.version}</span>
           </div>
-          <p className="text-[9.5px] text-gray-400 dark:text-[#526173] leading-relaxed sm:border-l sm:border-black/[0.08] dark:sm:border-[#1d2a36] sm:pl-4">
+          <p className="text-[9.5px] text-content-muted leading-relaxed sm:border-l sm:border-black/[0.08] dark:sm:border-[#1d2a36] sm:pl-4">
             Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada —
             Envie um email caso identifique algum erro, inconsistência ou tenha alguma sugestão de melhoria. O autor não se responsabiliza pelo uso das informações aqui apresentadas.
           </p>

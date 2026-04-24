@@ -38,7 +38,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f5f3ee]">
+    <div className="min-h-screen flex items-center justify-center bg-app">
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-sm">
         <div className="mb-6 text-center">
           <h1 className="text-xl font-bold text-gray-800">Painel Admin</h1>

@@ -42,7 +42,7 @@ export const FilterDropdown = memo(function FilterDropdown({
         onClick={() => setOpen((o) => !o)}
         className={`flex items-center gap-1 text-[11px] px-2 py-1 rounded border transition-colors whitespace-nowrap ${
           count > 0
-            ? "border-amber-400 bg-amber-50 text-amber-700 dark:border-[#b7ff00] dark:bg-[rgba(183,255,0,0.09)] dark:text-[#d8ff66] dark:shadow-[0_0_12px_rgba(183,255,0,0.16)]"
+            ? "border-amber-400 bg-amber-50 text-amber-700 dark:border-[#b7ff00] dark:bg-[rgba(183,255,0,0.09)] dark:text-[#d8ff66] dark:shadow-brand-glow"
             : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:text-gray-800 dark:border-[#2a3948] dark:bg-[#071018] dark:text-[#dce8e1] dark:hover:border-[#b7ff00] dark:hover:text-[#f2f7f4]"
         }`}
       >
@@ -64,11 +64,11 @@ export const FilterDropdown = memo(function FilterDropdown({
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 mt-1 bg-white dark:bg-[#071018] border border-gray-200 dark:border-[#2a3948] rounded shadow-lg dark:shadow-[0_12px_36px_rgba(0,0,0,0.42),0_0_0_1px_rgba(183,255,0,0.06)] z-50 min-w-[160px] max-h-[260px] overflow-y-auto">
+        <div className="absolute top-full left-0 mt-1 bg-surface border border-gray-200 dark:border-[#2a3948] rounded shadow-lg dark:shadow-[0_12px_36px_rgba(0,0,0,0.42),0_0_0_1px_rgba(183,255,0,0.06)] z-50 min-w-[160px] max-h-[260px] overflow-y-auto">
           {count > 0 && (
             <button
               onClick={() => { onClear(); setOpen(false); }}
-              className="w-full text-left px-3 py-1.5 text-[10px] text-amber-600 dark:text-[#b7ff00] hover:bg-amber-50 dark:hover:bg-[rgba(183,255,0,0.08)] border-b border-gray-100 dark:border-[#1d2a36] font-medium"
+              className="w-full text-left px-3 py-1.5 text-[10px] text-brand hover:bg-amber-50 dark:hover:bg-[rgba(183,255,0,0.08)] border-b border-gray-100 dark:border-[#1d2a36] font-medium"
             >
               Limpar seleção
             </button>
@@ -82,7 +82,7 @@ export const FilterDropdown = memo(function FilterDropdown({
                 type="checkbox"
                 checked={selected.has(opt.value)}
                 onChange={() => onToggle(opt.value)}
-                className="w-3 h-3 accent-amber-500 dark:accent-[#b7ff00] shrink-0"
+                className="w-3 h-3 accent-brand shrink-0"
               />
               {opt.color && (
                 <span
