@@ -2,31 +2,37 @@
   {
     "id": "war",
     "label": "Conflito",
-    "color": "#ef4444"
+    "color": "#ef4444",
+    "shape": "triangle"
   },
   {
     "id": "discovery",
     "label": "Descoberta / Produção",
-    "color": "#22c55e"
+    "color": "#22c55e",
+    "shape": "diamond"
   },
   {
     "id": "policy",
     "label": "Política / Embargo",
-    "color": "#3b82f6"
+    "color": "#3b82f6",
+    "shape": "circle"
   },
   {
     "id": "company",
     "label": "Corporações",
-    "color": "#6b7280"
+    "color": "#6b7280",
+    "shape": "square"
   },
   {
     "id": "crisis",
     "label": "Crise",
-    "color": "#f97316"
+    "color": "#f97316",
+    "shape": "star"
   },
   {
     "id": "tecnologia",
     "label": "Tecnologia",
-    "color": "#a855f7"
+    "color": "#a855f7",
+    "shape": "hexagon"
   }
 ]

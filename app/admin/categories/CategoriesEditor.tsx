@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Category } from "@/lib/categories";
+import { Category, CategoryShape } from "@/lib/categories";
 import { useCategories } from "@/context/CategoriesContext";
 import { withBasePath } from "@/lib/basePath";
 
@@ -21,6 +21,15 @@ const PRESET_COLORS = [
   "#a855f7", "#ec4899", "#6b7280", "#0ea5e9",
 ];
 
+const AVAILABLE_SHAPES: { value: CategoryShape; label: string; icon: string }[] = [
+  { value: "diamond", label: "Losango", icon: "♦" },
+  { value: "triangle", label: "Triângulo", icon: "▲" },
+  { value: "circle", label: "Círculo", icon: "●" },
+  { value: "square", label: "Quadrado", icon: "■" },
+  { value: "star", label: "Estrela", icon: "✦" },
+  { value: "hexagon", label: "Hexágono", icon: "⬢" },
+];
+
 export function CategoriesEditor({ initial }: { initial: Category[] }) {
   const { setCategories: setCtxCategories } = useCategories();
   const [cats, setCats] = useState<Category[]>(initial);
@@ -30,9 +39,9 @@ export function CategoriesEditor({ initial }: { initial: Category[] }) {
   const [editingId, setEditingId] = useState<string | null>(null);
 
   // Draft for the category being edited
-  const [draft, setDraft] = useState<Category>({ id: "", label: "", color: "#6b7280" });
+  const [draft, setDraft] = useState<Category>({ id: "", label: "", color: "#6b7280", shape: "diamond" });
   // New category draft
-  const [newCat, setNewCat] = useState<Category>({ id: "", label: "", color: "#6b7280" });
+  const [newCat, setNewCat] = useState<Category>({ id: "", label: "", color: "#6b7280", shape: "diamond" });
   const [autoId, setAutoId] = useState(true);
 
   function startEdit(cat: Category) {
@@ -63,7 +72,7 @@ export function CategoriesEditor({ initial }: { initial: Category[] }) {
     if (!id) { setError("ID inválido."); return; }
     if (cats.find((c) => c.id === id)) { setError(`Já existe uma categoria com o ID "${id}".`); return; }
     setCats((prev) => [...prev, { ...newCat, id }]);
-    setNewCat({ id: "", label: "", color: "#6b7280" });
+    setNewCat({ id: "", label: "", color: "#6b7280", shape: "diamond" });
     setAutoId(true);
   }
 
@@ -149,6 +158,26 @@ export function CategoriesEditor({ initial }: { initial: Category[] }) {
                     ))}
                   </div>
 
+                  {/* Shape selector */}
+                  <div className="pl-12 flex items-center gap-2">
+                    <span className="text-xs text-gray-500 font-medium mr-2">Formato:</span>
+                    {AVAILABLE_SHAPES.map((s) => (
+                      <button
+                        key={s.value}
+                        type="button"
+                        onClick={() => setDraft((d) => ({ ...d, shape: s.value }))}
+                        className={`w-7 h-7 flex items-center justify-center rounded transition-all text-sm ${
+                          draft.shape === s.value || (!draft.shape && s.value === "diamond")
+                            ? "bg-amber-100 text-amber-700 font-bold border border-amber-300"
+                            : "bg-gray-50 text-gray-500 hover:bg-gray-100 border border-gray-200"
+                        }`}
+                        title={s.label}
+                      >
+                        {s.icon}
+                      </button>
+                    ))}
+                  </div>
+
                   {/* Preview badge */}
                   <div className="pl-12 flex items-center gap-3">
                     <span
@@ -174,7 +203,13 @@ export function CategoriesEditor({ initial }: { initial: Category[] }) {
               ) : (
                 /* ── Display row ── */
                 <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 rounded-full shrink-0" style={{ backgroundColor: cat.color }} />
+                  <div 
+                    className="w-7 h-7 rounded-lg shrink-0 flex items-center justify-center text-sm border" 
+                    style={{ backgroundColor: cat.color + "22", color: cat.color, borderColor: cat.color + "44" }}
+                    title={AVAILABLE_SHAPES.find(s => s.value === (cat.shape || "diamond"))?.label}
+                  >
+                    {AVAILABLE_SHAPES.find(s => s.value === (cat.shape || "diamond"))?.icon}
+                  </div>
                   <div className="flex-1 min-w-0">
                     <span className="text-sm font-medium text-gray-800">{cat.label}</span>
                     <span className="ml-2 text-xs text-gray-400 font-mono">{cat.id}</span>
@@ -248,6 +283,26 @@ export function CategoriesEditor({ initial }: { initial: Category[] }) {
                 }}
                 title={c}
               />
+            ))}
+          </div>
+
+          {/* Shape selector */}
+          <div className="pl-12 flex items-center gap-2">
+            <span className="text-xs text-gray-500 font-medium mr-2">Formato:</span>
+            {AVAILABLE_SHAPES.map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                onClick={() => setNewCat((n) => ({ ...n, shape: s.value }))}
+                className={`w-7 h-7 flex items-center justify-center rounded transition-all text-sm ${
+                  newCat.shape === s.value || (!newCat.shape && s.value === "diamond")
+                    ? "bg-gray-800 text-white font-bold border border-gray-900"
+                    : "bg-gray-50 text-gray-500 hover:bg-gray-100 border border-gray-200"
+                }`}
+                title={s.label}
+              >
+                {s.icon}
+              </button>
             ))}
           </div>
 

@@ -8,6 +8,7 @@ interface CategoriesContextValue {
   setCategories: (cats: Category[]) => void;
   getColor: (type: string) => string;
   getLabel: (type: string) => string;
+  getShape: (type: string) => string;
 }
 
 const CategoriesContext = createContext<CategoriesContextValue | null>(null);
@@ -27,8 +28,11 @@ export function CategoriesProvider({
   const getLabel = (type: string) =>
     categories.find((c) => c.id === type)?.label ?? type;
 
+  const getShape = (type: string) =>
+    categories.find((c) => c.id === type)?.shape ?? "diamond";
+
   return (
-    <CategoriesContext.Provider value={{ categories, setCategories, getColor, getLabel }}>
+    <CategoriesContext.Provider value={{ categories, setCategories, getColor, getLabel, getShape }}>
       {children}
     </CategoriesContext.Provider>
   );

@@ -5,10 +5,13 @@
 import fs from "fs";
 import path from "path";
 
+export type CategoryShape = "diamond" | "triangle" | "circle" | "square" | "star" | "hexagon";
+
 export interface Category {
   id: string;
   label: string;
   color: string;
+  shape?: CategoryShape;
 }
 
 const CATEGORIES_PATH = path.join(process.cwd(), "data", "categories.json");

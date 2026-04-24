@@ -32,8 +32,9 @@ export const EventMarker = memo(function EventMarker({
   const setHoveredDate = useSetHoveredDate();
   const { settings } = useSettings();
   const darkMode = useDarkMode();
-  const { getColor } = useCategories();
+  const { getColor, getShape } = useCategories();
   const color = getColor(event.type);
+  const shape = getShape(event.type);
   const x = scale.toPixel(event.start_date);
   const isInterval = !!event.end_date;
   const barWidth = isInterval ? scale.toPixel(event.end_date!) - x : 0;
@@ -166,7 +167,25 @@ export const EventMarker = memo(function EventMarker({
   }
 
   // ── Point event (diamond pin) ────────────────────────────────────────────────
-  const base = settings.markerSize;
+  const getShapePath = (s: string) => {
+    switch (s) {
+      case "triangle":
+        return "M12 2L22 20H2Z";
+      case "circle":
+        return "M12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22Z";
+      case "square":
+        return "M4 4h16v16H4z";
+      case "star":
+        return "M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z";
+      case "hexagon":
+        return "M12 2L20.66 7L20.66 17L12 22L3.34 17L3.34 7Z";
+      case "diamond":
+      default:
+        return "M12 2L22 12L12 22L2 12Z";
+    }
+  };
+
+  const base = settings.markerSize * 1.35; // Compensate for SVG bounding box vs old rotated div
   const pinSize = isHovered ? Math.round(base * 1.2) : base;
   const pinTop = laneH * lane + laneH * 0.2 - pinSize / 2;
   const labelTop = laneH * lane + laneH * 0.2 + pinSize / 2 + 4;
@@ -180,25 +199,25 @@ export const EventMarker = memo(function EventMarker({
   return (
     <>
       <div
-        className="absolute cursor-pointer"
+        className="absolute cursor-pointer flex items-center justify-center"
         style={{ left: hitLeft, top: hitTop, width: hitWidth, height: hitHeight, zIndex: 10 }}
         onMouseEnter={showTooltip}
         onMouseLeave={scheduleHide}
         onMouseMove={updatePos}
         onClick={() => onClick(event)}
       >
-        <div
-          className="absolute transition-all"
+        <svg
+          width={pinSize}
+          height={pinSize}
+          viewBox="0 0 24 24"
+          className="transition-all"
           style={{
-            left: hitPad,
-            top: hitPad,
-            width: pinSize,
-            height: pinSize,
-            transform: "rotate(45deg)",
-            backgroundColor: color,
-            boxShadow: isHovered ? `0 0 12px ${color}, 0 0 24px ${color}66` : `0 0 7px ${color}99`,
+            fill: color,
+            filter: isHovered ? `drop-shadow(0 0 8px ${color}) drop-shadow(0 0 12px ${color}66)` : `drop-shadow(0 0 4px ${color}99)`,
           }}
-        />
+        >
+          <path d={getShapePath(shape)} />
+        </svg>
       </div>
 
       {settings.showEventLabels && (
