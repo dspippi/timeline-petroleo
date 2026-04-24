@@ -16,6 +16,7 @@
     "year": 2024,
     "type": "website",
     "url": "https://www.gov.br/anp/pt-br/acesso-a-informacao/institucional/historia-petroleo-brasil",
+    "imageUrl": "https://yt3.ggpht.com/a/AATXAJx0H0E_UkR051UNgf3wER-zwGuDm_XZB1ETqg=s900-c-k-c0xffffffff-no-rj-mo",
     "description": "Visão institucional sobre a história da exploração e produção de petróleo no Brasil, desde os primeiros indícios até a consolidação da indústria nacional."
   },
   {
@@ -34,7 +35,7 @@
     "author": "Our World in Data & U.S. Energy Information Administration (EIA)",
     "year": 2024,
     "type": "dataset",
-    "url": "https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=RBRTE&f=M",
+    "url": "https://ourworldindata.org/grapher/crude-oil-prices",
     "description": "Série histórica do preço do petróleo bruto (Brent) de 1861 a 1986, compilada pelo Our World in Data com base nos dados originais da EIA. Utilizada no gráfico de preços da Timeline como base de dados de longo prazo."
   },
   {
