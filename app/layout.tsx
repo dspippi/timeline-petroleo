@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Timeline do Petróleo",
   description:
     "Visualização interativa da geopolítica do petróleo e correlação com preços históricos do Brent.",
+  verification: {
+    google: "uPJ41I9rL3gBtLUvF77owQnmEZJ0MACZYP-iUTTscHU",
+  },
 };
 
 export const viewport: Viewport = {
