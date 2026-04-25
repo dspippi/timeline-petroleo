@@ -52,7 +52,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   const [isDragging, setIsDragging] = useState(false);
 
   // Momentum state — velocity samples and active animation frame
-  const velocitySamples = useRef<Array<{ x: number; t: number }>>([]);
+  const velocitySamples = useRef<Array<{ x: number; y: number; t: number }>>([]);
   const momentumRaf = useRef<number | null>(null);
 
   const cancelMomentum = useCallback(() => {
@@ -62,18 +62,21 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
     }
   }, []);
 
-  const launchMomentum = useCallback((velocityX: number) => {
+  const launchMomentum = useCallback((velocityX: number, velocityY = 0) => {
     cancelMomentum();
     let vx = clamp(velocityX, -MOMENTUM.maxVelocity, MOMENTUM.maxVelocity);
+    let vy = clamp(velocityY, -MOMENTUM.maxVelocity, MOMENTUM.maxVelocity);
 
     const step = () => {
       vx *= MOMENTUM.friction;
-      if (Math.abs(vx) < MOMENTUM.minVelocity) {
+      vy *= MOMENTUM.friction;
+      if (Math.abs(vx) < MOMENTUM.minVelocity && Math.abs(vy) < MOMENTUM.minVelocity) {
         momentumRaf.current = null;
         return;
       }
       if (scrollRef.current) {
         scrollRef.current.scrollLeft -= vx;
+        scrollRef.current.scrollTop  -= vy;
         if (yearAxisRef.current) yearAxisRef.current.scrollLeft = scrollRef.current.scrollLeft;
         onScroll();
       }
@@ -89,7 +92,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
     const target = e.target as HTMLElement;
     if (target.closest("button, a, input, [data-nodrag]")) return;
     cancelMomentum();
-    velocitySamples.current = [{ x: e.clientX, t: performance.now() }];
+    velocitySamples.current = [{ x: e.clientX, y: e.clientY, t: performance.now() }];
     dragState.current = { startX: e.clientX, startY: e.clientY, startScrollLeft: scrollRef.current?.scrollLeft ?? 0, startScrollTop: scrollRef.current?.scrollTop ?? 0, moved: false };
     setIsDragging(true);
     e.preventDefault();
@@ -107,7 +110,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       onScroll();
       // Track pointer velocity — keep only samples within the sampling window
       const now = performance.now();
-      velocitySamples.current.push({ x: e.clientX, t: now });
+      velocitySamples.current.push({ x: e.clientX, y: e.clientY, t: now });
       const cutoff = now - MOMENTUM.velocitySampleMs;
       velocitySamples.current = velocitySamples.current.filter(s => s.t >= cutoff);
     }
@@ -133,7 +136,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         const first = samples[0];
         const last  = samples[samples.length - 1];
         const dt = last.t - first.t;
-        if (dt > 0) launchMomentum((last.x - first.x) / (dt / 16.67));
+        if (dt > 0) launchMomentum((last.x - first.x) / (dt / 16.67), (last.y - first.y) / (dt / 16.67));
       }
     }
     dragState.current = null;
@@ -149,7 +152,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         const first = samples[0];
         const last  = samples[samples.length - 1];
         const dt = last.t - first.t;
-        if (dt > 0) launchMomentum((last.x - first.x) / (dt / 16.67));
+        if (dt > 0) launchMomentum((last.x - first.x) / (dt / 16.67), (last.y - first.y) / (dt / 16.67));
       }
     }
     dragState.current = null;
@@ -199,10 +202,10 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
     startX: number;
     startY: number;
     startScrollLeft: number;
-    direction: "unknown" | "horizontal" | "vertical";
+    startScrollTop: number;
     pinch?: { startDist: number; startPxPerDay: number };
   } | null>(null);
-  const touchSamples = useRef<Array<{ x: number; t: number }>>([]);
+  const touchSamples = useRef<Array<{ x: number; y: number; t: number }>>([]);
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -216,7 +219,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
           startX: (t0.clientX + t1.clientX) / 2,
           startY: (t0.clientY + t1.clientY) / 2,
           startScrollLeft: el.scrollLeft,
-          direction: "unknown",
+          startScrollTop: el.scrollTop,
           pinch: { startDist: dist, startPxPerDay: pxPerDayRef.current },
         };
         touchSamples.current = [];
@@ -227,9 +230,9 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         startX: touch.clientX,
         startY: touch.clientY,
         startScrollLeft: el.scrollLeft,
-        direction: "unknown",
+        startScrollTop: el.scrollTop,
       };
-      touchSamples.current = [{ x: touch.clientX, t: performance.now() }];
+      touchSamples.current = [{ x: touch.clientX, y: touch.clientY, t: performance.now() }];
     };
 
     const onTouchMove = (e: TouchEvent) => {
@@ -248,22 +251,15 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       if (e.touches.length !== 1) return;
       const touch = e.touches[0];
 
-      if (touchState.current.direction === "unknown") {
-        const adx = Math.abs(touch.clientX - touchState.current.startX);
-        const ady = Math.abs(touch.clientY - touchState.current.startY);
-        if (adx < 4 && ady < 4) return;
-        touchState.current.direction = adx >= ady ? "horizontal" : "vertical";
-      }
-
-      if (touchState.current.direction === "vertical") return;
-
       e.preventDefault();
       const dx = touch.clientX - touchState.current.startX;
+      const dy = touch.clientY - touchState.current.startY;
       el.scrollLeft = touchState.current.startScrollLeft - dx;
+      el.scrollTop  = touchState.current.startScrollTop  - dy;
       if (yearAxisRef.current) yearAxisRef.current.scrollLeft = el.scrollLeft;
       onScroll();
       const now = performance.now();
-      touchSamples.current.push({ x: touch.clientX, t: now });
+      touchSamples.current.push({ x: touch.clientX, y: touch.clientY, t: now });
       const cutoff = now - MOMENTUM.velocitySampleMs;
       touchSamples.current = touchSamples.current.filter(s => s.t >= cutoff);
     };
@@ -274,7 +270,12 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         const first = samples[0];
         const last  = samples[samples.length - 1];
         const dt = last.t - first.t;
-        if (dt > 0) launchMomentum((last.x - first.x) / (dt / 16.67));
+        if (dt > 0) {
+          launchMomentum(
+            (last.x - first.x) / (dt / 16.67),
+            (last.y - first.y) / (dt / 16.67),
+          );
+        }
       }
       touchState.current = null;
       touchSamples.current = [];
