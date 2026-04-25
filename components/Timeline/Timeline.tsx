@@ -195,7 +195,13 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   // Touch inertia — mirrors mouse drag momentum for mobile devices.
   // We take over from native scroll so that both containers stay in sync
   // during the momentum phase (native scroll only scrolls the touched element).
-  const touchState = useRef<{ startX: number; startScrollLeft: number } | null>(null);
+  const touchState = useRef<{
+    startX: number;
+    startY: number;
+    startScrollLeft: number;
+    direction: "unknown" | "horizontal" | "vertical";
+    pinch?: { startDist: number; startPxPerDay: number };
+  } | null>(null);
   const touchSamples = useRef<Array<{ x: number; t: number }>>([]);
   useEffect(() => {
     const el = scrollRef.current;
@@ -203,15 +209,55 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
 
     const onTouchStart = (e: TouchEvent) => {
       cancelMomentum();
+      if (e.touches.length === 2) {
+        const t0 = e.touches[0], t1 = e.touches[1];
+        const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        touchState.current = {
+          startX: (t0.clientX + t1.clientX) / 2,
+          startY: (t0.clientY + t1.clientY) / 2,
+          startScrollLeft: el.scrollLeft,
+          direction: "unknown",
+          pinch: { startDist: dist, startPxPerDay: pxPerDayRef.current },
+        };
+        touchSamples.current = [];
+        return;
+      }
       const touch = e.touches[0];
-      touchState.current = { startX: touch.clientX, startScrollLeft: el.scrollLeft };
+      touchState.current = {
+        startX: touch.clientX,
+        startY: touch.clientY,
+        startScrollLeft: el.scrollLeft,
+        direction: "unknown",
+      };
       touchSamples.current = [{ x: touch.clientX, t: performance.now() }];
     };
 
     const onTouchMove = (e: TouchEvent) => {
       if (!touchState.current) return;
-      e.preventDefault();
+
+      // Pinch-to-zoom (two fingers)
+      if (e.touches.length === 2 && touchState.current.pinch) {
+        e.preventDefault();
+        const t0 = e.touches[0], t1 = e.touches[1];
+        const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        const ratio = dist / touchState.current.pinch.startDist;
+        setPxPerDay(clamp(touchState.current.pinch.startPxPerDay * ratio, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+        return;
+      }
+
+      if (e.touches.length !== 1) return;
       const touch = e.touches[0];
+
+      if (touchState.current.direction === "unknown") {
+        const adx = Math.abs(touch.clientX - touchState.current.startX);
+        const ady = Math.abs(touch.clientY - touchState.current.startY);
+        if (adx < 4 && ady < 4) return;
+        touchState.current.direction = adx >= ady ? "horizontal" : "vertical";
+      }
+
+      if (touchState.current.direction === "vertical") return;
+
+      e.preventDefault();
       const dx = touch.clientX - touchState.current.startX;
       el.scrollLeft = touchState.current.startScrollLeft - dx;
       if (yearAxisRef.current) yearAxisRef.current.scrollLeft = el.scrollLeft;
@@ -245,7 +291,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       el.removeEventListener("touchend",    onTouchEnd);
       el.removeEventListener("touchcancel", onTouchEnd);
     };
-  }, [scrollRef, onScroll, cancelMomentum, launchMomentum]);
+  }, [scrollRef, onScroll, cancelMomentum, launchMomentum, setPxPerDay]);
 
   const handleScroll = useCallback(() => {
     if (scrollRef.current && yearAxisRef.current) {
