@@ -10,6 +10,26 @@ import { GuideOverlay } from "./GuideOverlay";
 import { getYear } from "date-fns";
 import pkg from "@/package.json";
 
+// ─── Momentum / Inertia configuration ────────────────────────────────────────
+// Adjust these values to tune the pan inertia feel.
+const MOMENTUM = {
+  // Velocity decay multiplier applied every animation frame (60 fps assumed).
+  // Range: 0 (instant stop) → 1 (never stops). Higher = more glide.
+  friction: 0.90,
+
+  // Stop the animation when |velocity| drops below this threshold (px/frame).
+  // Lower values = longer tail; higher values = snappier stop.
+  minVelocity: 0.8,
+
+  // Time window (ms) used to sample pointer velocity on release.
+  // Wider window = smoother but less reactive to fast flicks.
+  velocitySampleMs: 80,
+
+  // Maximum initial velocity cap (px/frame) to avoid jarring launches.
+  maxVelocity: 60,
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
 interface Props {
   events: OilEvent[];
   scale: TimelineScale;
@@ -31,15 +51,49 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   const dragState = useRef<{ startX: number; startY: number; startScrollLeft: number; startScrollTop: number; moved: boolean } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  // Momentum state — velocity samples and active animation frame
+  const velocitySamples = useRef<Array<{ x: number; t: number }>>([]);
+  const momentumRaf = useRef<number | null>(null);
+
+  const cancelMomentum = useCallback(() => {
+    if (momentumRaf.current !== null) {
+      cancelAnimationFrame(momentumRaf.current);
+      momentumRaf.current = null;
+    }
+  }, []);
+
+  const launchMomentum = useCallback((velocityX: number) => {
+    cancelMomentum();
+    let vx = clamp(velocityX, -MOMENTUM.maxVelocity, MOMENTUM.maxVelocity);
+
+    const step = () => {
+      vx *= MOMENTUM.friction;
+      if (Math.abs(vx) < MOMENTUM.minVelocity) {
+        momentumRaf.current = null;
+        return;
+      }
+      if (scrollRef.current) {
+        scrollRef.current.scrollLeft -= vx;
+        if (yearAxisRef.current) yearAxisRef.current.scrollLeft = scrollRef.current.scrollLeft;
+        onScroll();
+      }
+      momentumRaf.current = requestAnimationFrame(step);
+    };
+
+    momentumRaf.current = requestAnimationFrame(step);
+  }, [cancelMomentum, scrollRef, onScroll]);
+
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     // Only left button; ignore clicks on interactive elements
     if (e.button !== 0) return;
     const target = e.target as HTMLElement;
     if (target.closest("button, a, input, [data-nodrag]")) return;
+    cancelMomentum();
+    velocitySamples.current = [{ x: e.clientX, t: performance.now() }];
     dragState.current = { startX: e.clientX, startY: e.clientY, startScrollLeft: scrollRef.current?.scrollLeft ?? 0, startScrollTop: scrollRef.current?.scrollTop ?? 0, moved: false };
     setIsDragging(true);
     e.preventDefault();
-  }, [scrollRef]);
+  }, [scrollRef, cancelMomentum]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     // Drag-to-pan — direct DOM manipulation, no React state, runs every frame
@@ -51,6 +105,11 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       scrollRef.current.scrollTop  = dragState.current.startScrollTop  - dy;
       if (yearAxisRef.current) yearAxisRef.current.scrollLeft = scrollRef.current.scrollLeft;
       onScroll();
+      // Track pointer velocity — keep only samples within the sampling window
+      const now = performance.now();
+      velocitySamples.current.push({ x: e.clientX, t: now });
+      const cutoff = now - MOMENTUM.velocitySampleMs;
+      velocitySamples.current = velocitySamples.current.filter(s => s.t >= cutoff);
     }
     // Hover → date for price chart — throttled to one rAF per frame
     if (scrollRef.current && hoverRafRef.current === null) {
@@ -67,15 +126,36 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   }, [scrollRef, onScroll, scale, setHoveredDate]);
 
   const handleMouseLeave = useCallback(() => {
+    // Treat leave as release — compute velocity and launch momentum
+    if (dragState.current?.moved) {
+      const samples = velocitySamples.current;
+      if (samples.length >= 2) {
+        const first = samples[0];
+        const last  = samples[samples.length - 1];
+        const dt = last.t - first.t;
+        if (dt > 0) launchMomentum((last.x - first.x) / (dt / 16.67));
+      }
+    }
     dragState.current = null;
+    velocitySamples.current = [];
     setIsDragging(false);
     setHoveredDate(null);
-  }, [setHoveredDate]);
+  }, [setHoveredDate, launchMomentum]);
 
   const handleMouseUp = useCallback(() => {
+    if (dragState.current?.moved) {
+      const samples = velocitySamples.current;
+      if (samples.length >= 2) {
+        const first = samples[0];
+        const last  = samples[samples.length - 1];
+        const dt = last.t - first.t;
+        if (dt > 0) launchMomentum((last.x - first.x) / (dt / 16.67));
+      }
+    }
     dragState.current = null;
+    velocitySamples.current = [];
     setIsDragging(false);
-  }, []);
+  }, [launchMomentum]);
 
   // Wrap onEventClick to suppress it when drag occurred
   const handleEventClick = useCallback((e: OilEvent) => {
@@ -111,6 +191,61 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       if (rafId.current !== null) cancelAnimationFrame(rafId.current);
     };
   }, [scrollRef, setPxPerDay]);
+
+  // Touch inertia — mirrors mouse drag momentum for mobile devices.
+  // We take over from native scroll so that both containers stay in sync
+  // during the momentum phase (native scroll only scrolls the touched element).
+  const touchState = useRef<{ startX: number; startScrollLeft: number } | null>(null);
+  const touchSamples = useRef<Array<{ x: number; t: number }>>([]);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const onTouchStart = (e: TouchEvent) => {
+      cancelMomentum();
+      const touch = e.touches[0];
+      touchState.current = { startX: touch.clientX, startScrollLeft: el.scrollLeft };
+      touchSamples.current = [{ x: touch.clientX, t: performance.now() }];
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!touchState.current) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const dx = touch.clientX - touchState.current.startX;
+      el.scrollLeft = touchState.current.startScrollLeft - dx;
+      if (yearAxisRef.current) yearAxisRef.current.scrollLeft = el.scrollLeft;
+      onScroll();
+      const now = performance.now();
+      touchSamples.current.push({ x: touch.clientX, t: now });
+      const cutoff = now - MOMENTUM.velocitySampleMs;
+      touchSamples.current = touchSamples.current.filter(s => s.t >= cutoff);
+    };
+
+    const onTouchEnd = () => {
+      const samples = touchSamples.current;
+      if (touchState.current && samples.length >= 2) {
+        const first = samples[0];
+        const last  = samples[samples.length - 1];
+        const dt = last.t - first.t;
+        if (dt > 0) launchMomentum((last.x - first.x) / (dt / 16.67));
+      }
+      touchState.current = null;
+      touchSamples.current = [];
+    };
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove",  onTouchMove,  { passive: false });
+    el.addEventListener("touchend",   onTouchEnd,   { passive: true });
+    el.addEventListener("touchcancel",onTouchEnd,   { passive: true });
+
+    return () => {
+      el.removeEventListener("touchstart",  onTouchStart);
+      el.removeEventListener("touchmove",   onTouchMove);
+      el.removeEventListener("touchend",    onTouchEnd);
+      el.removeEventListener("touchcancel", onTouchEnd);
+    };
+  }, [scrollRef, onScroll, cancelMomentum, launchMomentum]);
 
   const handleScroll = useCallback(() => {
     if (scrollRef.current && yearAxisRef.current) {

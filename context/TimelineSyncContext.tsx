@@ -88,12 +88,3 @@ export function usePxPerDay() {
 export function useSetPxPerDay() {
   return useContext(ZoomSetterCtx).setPxPerDay;
 }
-
-// ── Legacy combined hook (use only when you genuinely need all four values) ───
-export function useTimelineSync() {
-  const hoveredDate    = useHoveredDate();
-  const setHoveredDate = useSetHoveredDate();
-  const pxPerDay       = usePxPerDay();
-  const setPxPerDay    = useSetPxPerDay();
-  return { hoveredDate, setHoveredDate, pxPerDay, setPxPerDay };
-}

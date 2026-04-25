@@ -89,10 +89,10 @@ html, body {
 }
 .timeline-scroll::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
-/* Touch scrolling */
+/* Touch scrolling — touch-action: none lets our JS handlers take over
+   so both the timeline and chart scroll in sync during momentum. */
 .timeline-scroll {
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x pan-y;
+  touch-action: none;
 }
 
 .no-select { user-select: none; }

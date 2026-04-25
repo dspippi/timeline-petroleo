@@ -43,7 +43,6 @@ All data lives in two JSON files:
 
 - **Client components**: use `useCategories()` → `getColor(type)`, `getLabel(type)`
 - **Server components**: use `listCategories()` from `lib/categories.ts`
-- `lib/colorMap.ts` and `EVENT_TYPES` in `types/index.ts` are **deprecated static fallbacks** — do not use them for display logic
 
 ### Contexts
 

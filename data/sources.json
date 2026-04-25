@@ -20,16 +20,6 @@
     "description": "Visão institucional sobre a história da exploração e produção de petróleo no Brasil, desde os primeiros indícios até a consolidação da indústria nacional."
   },
   {
-    "id": "1776999039456",
-    "title": "Petrobras: Uma história de orgulho e vergonha",
-    "author": "Roberta Paduan",
-    "year": 2016,
-    "type": "book",
-    "url": "https://www.amazon.com.br/Petrobras-Uma-hist%C3%B3ria-orgulho-vergonha/dp/8547000100",
-    "imageUrl": "https://m.media-amazon.com/images/I/71LTd7MSbmS._SL1500_.jpg",
-    "description": "Apresenta uma análise profunda sobre a trajetória da maior estatal brasileira, focando especialmente no período que levou à eclosão da Operação Lava Jato."
-  },
-  {
     "id": "oil-prices-owid",
     "title": "Oil Price — Our World in Data / EIA (Historical)",
     "author": "Our World in Data & U.S. Energy Information Administration (EIA)",
