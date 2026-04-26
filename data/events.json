@@ -1210,5 +1210,17 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Strait_of_Hormuz",
     "description": "Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global."
+  },
+  {
+    "id": "Carmopolis-descoberto",
+    "title": "Descoberto o campo de Carmópolis - o primeiro dos grandes",
+    "start_date": "1963-11-15",
+    "end_date": null,
+    "country": "Brasil",
+    "region": "América Central e do Sul",
+    "type": "discovery",
+    "company": "Petrobras",
+    "wikipedia": "https://cinttec.ufs.br/uploads/content_attach/path/5732/petrobras_comemora_50_anos_da_descoberta_do_campo_de_carmopolis_18-08-16.pdf",
+    "description": "Após mudanças na gestão da companhia e uma revisão das constatações do relatório Link, o campo de Carmópolis é descoberto em novembro de 1963, provando a existência de petróleo em Sergipe e dando início à era da exploração offshore no Brasil. Essa descoberta, com volume de óleo in-place estimado de 1,15 bilhão de barris, representou um marco fundamental na exploração de petróleo no Brasil, pois mostrava o potencial petrolífero das bacias marginais brasileiras."
   }
 ]

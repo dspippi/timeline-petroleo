@@ -18,6 +18,16 @@
     "url": "https://www.gov.br/anp/pt-br/acesso-a-informacao/institucional/historia-petroleo-brasil",
     "imageUrl": "https://yt3.ggpht.com/a/AATXAJx0H0E_UkR051UNgf3wER-zwGuDm_XZB1ETqg=s900-c-k-c0xffffffff-no-rj-mo",
     "description": "Visão institucional sobre a história da exploração e produção de petróleo no Brasil, desde os primeiros indícios até a consolidação da indústria nacional."
+  },  
+  {
+    "id": "3",
+    "title": "Exploração na Petrobras: 50 anos de sucesso",
+    "author": "Paulo Manuel Mendes de Mendonça, Adali Ricardo Spadini e Edison José Milani",
+    "year": 2004,
+    "type": "book",
+    "url": "https://bgp.petrobras.com.br/bgp/article/view/172",
+    "imageUrl": "https://bgp.petrobras.com.br/public/journals/1/cover_issue_20_pt_BR.png",
+    "description": "Artigo sobre a Petrobras que, ao longo de 50 anos, consolidou sua excelência em exploração de petróleo por meio de inovação tecnológica, descobertas estratégicas e liderança global em águas profundas."
   },
   {
     "id": "oil-prices-owid",
