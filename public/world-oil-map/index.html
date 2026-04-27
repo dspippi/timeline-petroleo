@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>World Oil Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="map-styles.css?v=2026042617">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body, #root { height: 100%; }
+  body[data-mode="dark"] { background: #0a0d12; }
+  body[data-mode="light"] { background: #fafafa; }
+
+  .oilmap-light, .oilmap-dark {
+    --font-head: var(--twk-font-head, "Inter", -apple-system, sans-serif);
+    --font-body: var(--twk-font-body, "Inter", -apple-system, sans-serif);
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  body { font-family: var(--twk-font-body, "Inter", -apple-system, sans-serif); }
+  .oilmap-light .oilmap-detail-name,
+  .oilmap-light .oilmap-brand-title { font-weight: 700; letter-spacing: -0.02em; }
+  .oilmap-dark .oilmap-brand-title { font-family: var(--twk-font-head, "JetBrains Mono", ui-monospace, monospace); }
+  .oilmap-dark .oilmap-stat-num,
+  .oilmap-dark .oilmap-cap-num,
+  .oilmap-dark .oilmap-count { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+  /* Mode toggle button */
+</style>
+</head>
+<body data-mode="light">
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script type="text/babel" src="map-component.jsx?v=2026042617"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "cartography": "auto"
+}/*EDITMODE-END*/;
+
+// --- Theme palettes ---
+const lightBase = {
+  id: 'light',
+  bg: '#ffffff', bg2: '#fafafa', fg: '#111418', fg2: '#6b7280',
+  border: '#e5e7eb', card: '#f5f6f8', accent: '#0066ff',
+  brandTitle: 'World Oil Map',
+  brandSub: 'Plataformas offshore',
+  logoSvg: (
+    <svg viewBox="0 0 36 36" fill="none">
+      <circle cx="18" cy="18" r="14" stroke="#0066ff" strokeWidth="1.75"/>
+      <circle cx="18" cy="18" r="4" fill="#0066ff"/>
+    </svg>
+  ),
+};
+const darkBase = {
+  id: 'dark',
+  bg: '#0a0d12', bg2: '#10141c', fg: '#e6edf3', fg2: '#7d8590',
+  border: '#1f2630', card: '#161b24', accent: '#f0b400',
+  brandTitle: 'WORLD OIL MAP',
+  brandSub: 'OFFSHORE PLATFORMS · BR',
+  logoSvg: (
+    <svg viewBox="0 0 36 36" fill="none">
+      <rect x="1" y="1" width="34" height="34" rx="2" stroke="#f0b400" strokeWidth="1.5"/>
+      <circle cx="18" cy="18" r="10" stroke="#f0b400" strokeWidth="1" opacity="0.4"/>
+      <circle cx="18" cy="18" r="3" fill="#f0b400"/>
+      <path d="M18 6 L18 30 M6 18 L30 18" stroke="#f0b400" strokeWidth="0.75" opacity="0.3"/>
+    </svg>
+  ),
+};
+
+// --- Cartography presets (tile + map background per mode) ---
+const CARTOGRAPHY = {
+  auto: {
+    label: 'Automática',
+    light: { tileUrl: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', tileAttribution: '© OpenStreetMap France | © OpenStreetMap contributors', mapBg: '#dde6ee' },
+    dark:  { tileUrl: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', tileAttribution: '© OpenStreetMap, © CARTO', mapBg: '#0a0d12' },
+  },
+  minimal: {
+    label: 'Minimalista',
+    light: { tileUrl: 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', tileAttribution: '© OpenStreetMap, © CARTO', mapBg: '#f0f0ec' },
+    dark:  { tileUrl: 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', tileAttribution: '© OpenStreetMap, © CARTO', mapBg: '#0a0d12' },
+  },
+  nautical: {
+    label: 'Náutica',
+    light: { tileUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', tileAttribution: 'Tiles © Esri — Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri', mapBg: '#cfe2ec' },
+    dark:  { tileUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', tileAttribution: 'Tiles © Esri', mapBg: '#0d1820' },
+  },
+  satellite: {
+    label: 'Satélite',
+    light: { tileUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', tileAttribution: 'Tiles © Esri', mapBg: '#1a1a1a' },
+    dark:  { tileUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', tileAttribution: 'Tiles © Esri', mapBg: '#000' },
+  },
+};
+
+const STATUS_COLORS = {
+  light: { operando: '#10b981', interrompida: '#f59e0b', descomissionada: '#9ca3af' },
+  dark:  { operando: '#21d07a', interrompida: '#f0b400', descomissionada: '#6e7682' },
+};
+
+
+function App() {
+  const [data, setData] = React.useState(null);
+  const [fieldFeatures, setFieldFeatures] = React.useState([]);
+  const [mode, setMode] = React.useState(() => localStorage.getItem('oilmap-mode') || 'light');
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    fetch('/data/platforms.json').then(r => r.json()).then(setData).catch(console.error);
+    fetch('/data/fields/campos.json').then(r => r.json()).then(fc => setFieldFeatures(fc.features || [])).catch(console.error);
+  }, []);
+
+  React.useEffect(() => {
+    document.body.dataset.mode = mode;
+    localStorage.setItem('oilmap-mode', mode);
+  }, [mode]);
+
+  // Build the active theme by composing base + cartography + tweaks
+  const theme = React.useMemo(() => {
+    const base = mode === 'dark' ? darkBase : lightBase;
+    const cart = CARTOGRAPHY[tweaks.cartography] || CARTOGRAPHY.auto;
+    const tile = cart[mode];
+    return {
+      ...base,
+      tileUrl: tile.tileUrl,
+      tileAttribution: tile.tileAttribution,
+      mapBg: tile.mapBg,
+      statusColors: STATUS_COLORS[mode],
+      markerStroke: mode === 'dark' ? '#0a0d12' : '#ffffff',
+      markerStyle: 'dot',
+      markerSize: 7,
+    };
+  }, [mode, tweaks.cartography]);
+
+  if (!data) return <div style={{padding: 40, color: '#888'}}>Carregando…</div>;
+
+  return (
+    <div style={{position:'relative', height:'100%'}}>
+      <OilMap theme={theme} platforms={data} fieldFeatures={fieldFeatures}
+              onToggleMode={() => setMode(mode === 'light' ? 'dark' : 'light')}
+              key={mode + '-' + tweaks.cartography}/>
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Cartografia" />
+        <TweakSelect
+          label="Estilo do mapa"
+          value={tweaks.cartography}
+          options={[
+            { value: 'auto', label: 'Automática' },
+            { value: 'minimal', label: 'Minimalista' },
+            { value: 'nautical', label: 'Náutica' },
+            { value: 'satellite', label: 'Satélite' },
+          ]}
+          onChange={(v) => setTweak('cartography', v)}
+        />
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

@@ -34,6 +34,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/raw" className="text-gray-500 hover:text-gray-900 transition-colors">
             Editor de Texto
           </Link>
+          <Link href="/mapaplataformas" className="text-gray-500 hover:text-gray-900 transition-colors" target="_blank">
+            Mapa de Plataformas ↗
+          </Link>
         </nav>
         <div className="ml-auto flex items-center gap-3">
           <Link

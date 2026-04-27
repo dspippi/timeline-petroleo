@@ -1,0 +1,877 @@
+/* Shared structural styles for OilMap. Theme-specific overrides come from inline CSS in the variation files. */
+
+.oilmap-root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body, -apple-system, "Inter", "Helvetica Neue", Arial, sans-serif);
+  color: var(--fg);
+  background: var(--bg);
+  font-size: 13px;
+  line-height: 1.4;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------- Header ---------- */
+.oilmap-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  z-index: 10;
+}
+.oilmap-brand { display: flex; align-items: center; gap: 12px; }
+.oilmap-logo { width: 36px; height: 36px; flex-shrink: 0; }
+.oilmap-logo svg { width: 100%; height: 100%; display: block; }
+.oilmap-brand-title { font-weight: 700; font-size: 15px; letter-spacing: 0.02em; font-family: var(--font-head, inherit); }
+.oilmap-brand-sub { font-size: 11px; color: var(--fg2); margin-top: 1px; letter-spacing: 0.06em; text-transform: uppercase; }
+.oilmap-nav { display: flex; gap: 22px; justify-content: center; }
+.oilmap-nav-link {
+  color: var(--fg2);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 0;
+  position: relative;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.oilmap-nav-link:hover { color: var(--fg); }
+.oilmap-nav-link:first-child {
+  color: var(--fg);
+}
+.oilmap-nav-link:first-child::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -15px;
+  height: 2px;
+  background: var(--accent);
+}
+.oilmap-header-meta { display: flex; gap: 12px; align-items: center; }
+.oilmap-mode-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--card); color: var(--fg);
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 5px 11px; cursor: pointer;
+  font-family: inherit; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  transition: border-color 0.15s, color 0.15s;
+}
+.oilmap-mode-btn:hover { border-color: var(--accent); color: var(--accent); }
+.oilmap-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg2);
+}
+.oilmap-count {
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  font-weight: 600;
+}
+.oilmap-count span { color: var(--fg2); font-weight: 400; }
+
+/* ---------- Body ---------- */
+.oilmap-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 0;
+  position: relative;
+}
+
+/* ---------- Filters sidebar ---------- */
+.oilmap-filters {
+  border-right: 1px solid var(--border);
+  background: var(--bg2);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  transition: width 0.25s ease;
+}
+.oilmap-filters.is-collapsed { width: 40px; }
+.oilmap-filters.is-collapsed .oilmap-filters-body { display: none; }
+.oilmap-filters-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg2);
+}
+.oilmap-filters-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.oilmap-icon-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg);
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0;
+}
+.oilmap-icon-btn:hover { background: var(--card); }
+
+/* ---------- Stats ---------- */
+.oilmap-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.oilmap-stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  border-radius: 4px;
+}
+.oilmap-stat-wide { grid-column: span 2; }
+.oilmap-stat-num {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-head, inherit);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.oilmap-stat-lbl {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg2);
+  margin-top: 6px;
+}
+
+/* ---------- Search ---------- */
+.oilmap-search-wrap { margin-bottom: 14px; }
+.oilmap-search {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+}
+.oilmap-search:focus { border-color: var(--accent); }
+.oilmap-search::placeholder { color: var(--fg2); }
+
+/* ---------- Section ---------- */
+.oilmap-section { margin-bottom: 16px; }
+.oilmap-section-head {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 6px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  text-align: left;
+}
+.oilmap-section-head:hover { color: var(--fg); }
+.oilmap-section-chev { font-size: 12px; }
+.oilmap-section-body { padding-top: 8px; }
+
+/* ---------- Chips ---------- */
+.oilmap-chip-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
+.oilmap-chip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.12s;
+}
+.oilmap-chip:hover { border-color: var(--fg2); }
+.oilmap-chip.is-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.oilmap-status-row { display: flex; flex-direction: column; gap: 4px; }
+.oilmap-chip-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+.oilmap-chip-status .oilmap-dot { flex-shrink: 0; }
+.oilmap-chip-status:not(.is-on) { opacity: 0.55; }
+.oilmap-chip-status.is-on {
+  background: var(--card);
+  border-color: var(--fg2);
+  color: var(--fg);
+}
+
+.oilmap-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ---------- Operator list ---------- */
+.oilmap-op-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--card);
+}
+.oilmap-op-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+}
+.oilmap-op-row:last-child { border-bottom: 0; }
+.oilmap-op-row:hover { background: var(--bg2); }
+.oilmap-op-row input { accent-color: var(--accent); cursor: pointer; }
+.oilmap-op-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.oilmap-op-count {
+  font-size: 10px;
+  color: var(--fg2);
+  font-variant-numeric: tabular-nums;
+  background: var(--bg2);
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+/* ---------- Toggle row ---------- */
+.oilmap-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.oilmap-toggle-row input { accent-color: var(--accent); }
+.oilmap-todo {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--fg2);
+}
+
+/* ---------- Dual range ---------- */
+.oilmap-dual-range { position: relative; height: 36px; padding-top: 6px; }
+.oilmap-dual-track {
+  position: absolute;
+  left: 0; right: 0; top: 14px;
+  height: 4px;
+  background: var(--card);
+  border-radius: 2px;
+}
+.oilmap-dual-fill {
+  position: absolute;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.oilmap-dual-range input[type=range] {
+  position: absolute;
+  left: 0; right: 0; top: 8px;
+  width: 100%;
+  height: 16px;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  pointer-events: none;
+  outline: none;
+}
+.oilmap-dual-range input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+.oilmap-dual-range input[type=range]::-moz-range-thumb {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.oilmap-dual-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--fg2);
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+
+/* ---------- Map area ---------- */
+.oilmap-map-area {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+.oilmap-map {
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+}
+.oilmap-map .leaflet-container { background: var(--mapBg, #000); font-family: inherit; }
+.oilmap-map .leaflet-control-attribution {
+  font-size: 9px;
+  background: rgba(0,0,0,0.4) !important;
+  color: rgba(255,255,255,0.7) !important;
+  padding: 2px 6px;
+}
+.oilmap-map .leaflet-control-attribution a {
+  color: rgba(255,255,255,0.85) !important;
+}
+.oilmap-map .leaflet-bar { border: 1px solid var(--border); background: var(--bg); box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.oilmap-map .leaflet-bar a {
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+  border-bottom-color: var(--border) !important;
+  font-family: inherit;
+}
+.oilmap-map .leaflet-bar a:hover { background: var(--card) !important; }
+
+/* ---------- Legend ---------- */
+.oilmap-legend {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  border-radius: 4px;
+  z-index: 400;
+  font-size: 11px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  min-width: 160px;
+}
+.oilmap-legend-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  margin-bottom: 8px;
+}
+.oilmap-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+/* ---------- List overlay ---------- */
+.oilmap-list-wrap {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  z-index: 400;
+  width: 320px;
+  max-height: 360px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  overflow: hidden;
+}
+.oilmap-list-toggle {
+  background: transparent;
+  border: 0;
+  width: 100%;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--fg);
+}
+.oilmap-list-toggle:hover { background: var(--card); }
+.oilmap-list {
+  border-top: 1px solid var(--border);
+  overflow-y: auto;
+  max-height: 300px;
+}
+.oilmap-list-row {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 8px 14px;
+  display: grid;
+  grid-template-columns: auto 70px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--fg);
+  font-family: inherit;
+}
+.oilmap-list-row:hover { background: var(--card); }
+.oilmap-list-row.is-sel { background: var(--card); border-left: 2px solid var(--accent); padding-left: 12px; }
+.oilmap-list-sigla { font-family: var(--font-mono, ui-monospace, monospace); font-size: 11px; font-weight: 600; }
+.oilmap-list-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.oilmap-list-bacia { font-size: 10px; color: var(--fg2); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ---------- Detail panel ---------- */
+.oilmap-detail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 380px;
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 24px rgba(0,0,0,0.2);
+}
+.oilmap-detail.is-open { transform: translateX(0); }
+.oilmap-detail-inner {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 24px 32px;
+}
+
+.oilmap-detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  background: var(--bg2);
+  z-index: 1;
+}
+.oilmap-detail-status {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bg);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.oilmap-close { font-size: 18px; line-height: 1; }
+
+.oilmap-detail-sigla {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--fg2);
+  margin-bottom: 4px;
+}
+.oilmap-detail-name {
+  font-family: var(--font-head, inherit);
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+.oilmap-detail-op {
+  font-size: 12px;
+  color: var(--fg2);
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.oilmap-kv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+  margin-bottom: 24px;
+}
+.oilmap-kv-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg2);
+  margin-bottom: 4px;
+}
+.oilmap-kv-value {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.oilmap-detail-section { margin-bottom: 24px; }
+.oilmap-detail-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--fg2);
+  margin-bottom: 10px;
+}
+
+.oilmap-cap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.oilmap-cap-cell {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 4px;
+}
+.oilmap-cap-num {
+  font-family: var(--font-head, inherit);
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.oilmap-cap-lbl {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg2);
+  margin-top: 4px;
+}
+
+.oilmap-fields { display: flex; flex-wrap: wrap; gap: 4px; }
+.oilmap-field-chip {
+  font-size: 11px;
+  padding: 3px 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.oilmap-coords code {
+  display: block;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+}
+
+.oilmap-source-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+}
+.oilmap-source-link:hover { text-decoration: underline; }
+
+/* ---------- Footer ---------- */
+.oilmap-footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 6px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+  font-size: 10px;
+  color: var(--fg2);
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+.oilmap-footer-credit {
+  font-size: 10px;
+  white-space: nowrap;
+}
+.oilmap-footer-credit strong { color: var(--fg); font-weight: 600; }
+.oilmap-footer-credit a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.oilmap-footer-credit a:hover { text-decoration: underline; }
+.oilmap-footer-version {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  opacity: 0.75;
+}
+.oilmap-footer-msg {
+  flex: 1;
+  min-width: 200px;
+  font-size: 10px;
+  text-wrap: pretty;
+}
+.oilmap-footer-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+  font-size: 10px;
+}
+.oilmap-footer-meta-lbl {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  font-size: 9px;
+  opacity: 0.85;
+}
+.oilmap-footer-meta-val {
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Resize handle ---------- */
+.oilmap-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  cursor: ew-resize;
+  z-index: 700;
+  transition: background 0.12s;
+}
+.oilmap-resize-handle:hover,
+.oilmap-resize-handle:active {
+  background: var(--accent);
+  opacity: 0.5;
+}
+.oilmap-resize-left { right: -3px; }
+.oilmap-resize-right { left: -3px; }
+.oilmap-filters { position: relative; }
+
+/* ---------- Combobox platform picker ---------- */
+.oilmap-combo {
+  position: relative;
+  margin-top: 4px;
+}
+.oilmap-combo-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--fg);
+  font-size: 12px;
+  text-align: left;
+}
+.oilmap-combo-trigger:hover { border-color: var(--fg2); }
+.oilmap-combo-selected {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.oilmap-combo-sigla {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  font-weight: 600;
+}
+.oilmap-combo-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--fg2);
+}
+.oilmap-combo-placeholder {
+  flex: 1;
+  color: var(--fg2);
+  font-size: 12px;
+}
+.oilmap-combo-chev {
+  color: var(--fg2);
+  font-size: 11px;
+}
+.oilmap-combo-pop {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.18);
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  max-height: 360px;
+  overflow: hidden;
+}
+.oilmap-combo-search {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--fg);
+  padding: 8px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  flex-shrink: 0;
+}
+.oilmap-combo-list {
+  overflow-y: auto;
+  flex: 1;
+}
+.oilmap-combo-empty {
+  padding: 14px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--fg2);
+}
+.oilmap-combo-row {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 7px 10px;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--fg);
+  font-size: 11px;
+}
+.oilmap-combo-row:last-child { border-bottom: 0; }
+.oilmap-combo-row:hover { background: var(--card); }
+.oilmap-combo-row.is-sel { background: var(--card); border-left: 2px solid var(--accent); padding-left: 8px; }
+.oilmap-combo-row-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--fg2);
+}
+.oilmap-combo-row-bacia {
+  font-size: 9px;
+  color: var(--fg2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.oilmap-combo-more {
+  padding: 8px 10px;
+  font-size: 10px;
+  color: var(--fg2);
+  text-align: center;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+
+.oilmap-combo-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg2);
+  color: var(--fg2);
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.oilmap-combo-clear:hover { background: var(--accent); color: var(--bg); }
+.oilmap-op-row.is-sel { background: var(--card); }
+
+/* Pulse marker */
+.oilmap-pulse-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+.oilmap-pulse-halo {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.45;
+  animation: oilmap-pulse 2.2s ease-out infinite;
+}
+.oilmap-pulse-core {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid;
+  z-index: 2;
+}
+@keyframes oilmap-pulse {
+  0%   { transform: scale(0.35); opacity: 0.5; }
+  60%  { transform: scale(1.0);  opacity: 0; }
+  100% { transform: scale(1.0);  opacity: 0; }
+}
+
+/* Leaflet tooltip overrides */
+.oilmap-tip {
+  background: rgba(0,0,0,0.85) !important;
+  color: #fff !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  font-family: inherit !important;
+}
+.oilmap-tip::before { display: none !important; }
