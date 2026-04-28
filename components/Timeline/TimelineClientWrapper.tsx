@@ -12,6 +12,7 @@ import { useSettings, useDarkMode } from "@/context/SettingsContext";
 import { DEFAULT_PX_PER_DAY } from "@/lib/timelineScale";
 import { FilterDropdown } from "@/components/Filters/FilterDropdown";
 import { Timeline } from "@/components/Timeline/Timeline";
+import { MobileEventList } from "@/components/Timeline/MobileEventList";
 import { LABEL_WIDTH } from "@/components/Timeline/TimelineRows";
 import { OilPriceChart } from "@/components/OilChart/OilPriceChart";
 import { EventCard } from "@/components/EventCard/EventCard";
@@ -92,30 +93,64 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const [chartReady, setChartReady] = useState(false);
 
   useEffect(() => {
-    if (scale.totalWidthPx === 0) return;
-    if (!hasFit.current) {
-      const containerWidth = timelineScrollRef.current?.clientWidth ?? 0;
-      if (containerWidth > 0) {
+    const timelineEl = timelineScrollRef.current;
+    if (!timelineEl || scale.totalWidthPx === 0) return;
+
+    let cancelled = false;
+
+    const initializeDesktopTimeline = () => {
+      if (cancelled) return;
+      const el = timelineScrollRef.current;
+      if (!el) return;
+
+      const containerWidth = el.clientWidth ?? 0;
+      if (containerWidth <= 0) return;
+
+      if (!hasFit.current) {
         hasFit.current = true;
-        setPxPerDay(clamp(pxPerDay * (containerWidth - LABEL_WIDTH) / scale.totalWidthPx, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+        setPxPerDay(
+          clamp(
+            (pxPerDay * (containerWidth - LABEL_WIDTH)) / scale.totalWidthPx,
+            MIN_PX_PER_DAY,
+            MAX_PX_PER_DAY
+          )
+        );
+        return;
       }
-      return;
-    }
-    if (hasScrolled.current) return;
-    requestAnimationFrame(() => {
-      if (timelineScrollRef.current) {
+
+      if (hasScrolled.current) return;
+
+      requestAnimationFrame(() => {
+        if (cancelled || !timelineScrollRef.current) return;
+
         timelineScrollRef.current.scrollLeft = Math.min(
           timelineScrollRef.current.scrollWidth,
           getMaxAllowedScrollLeft(timelineScrollRef.current)
         );
-      }
-      if (chartScrollRef.current && timelineScrollRef.current) {
-        chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
-      }
-      hasScrolled.current = true;
-      requestAnimationFrame(() => setChartReady(true));
+
+        if (chartScrollRef.current) {
+          chartScrollRef.current.scrollLeft = timelineScrollRef.current.scrollLeft;
+        }
+
+        hasScrolled.current = true;
+        requestAnimationFrame(() => {
+          if (!cancelled) setChartReady(true);
+        });
+      });
+    };
+
+    initializeDesktopTimeline();
+
+    const observer = new ResizeObserver(() => {
+      initializeDesktopTimeline();
     });
-  }, [scale.totalWidthPx, getMaxAllowedScrollLeft]); // eslint-disable-line react-hooks/exhaustive-deps
+    observer.observe(timelineEl);
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
+  }, [scale.totalWidthPx, getMaxAllowedScrollLeft, pxPerDay, setPxPerDay]);
 
   // When chart prices arrive asynchronously, sync its scroll to the timeline.
   useEffect(() => {
@@ -253,14 +288,16 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         )}
 
         {/* Separator */}
-        <div className="w-px h-4 bg-surface-alt mx-1 hidden sm:block" />
+        <div className="w-px h-4 bg-surface-alt mx-1 hidden md:block" />
 
         {/* Brent toggle */}
-        <Toggle enabled={showChart} onChange={setShowChart} label="Preço do Barril (USD)" />
+        <div className="hidden md:block">
+          <Toggle enabled={showChart} onChange={setShowChart} label="Preço do Barril (USD)" />
+        </div>
 
         <div className="w-px h-4 bg-surface-alt mx-1 hidden md:block" />
 
-        <div className="flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-1">
           <span className="text-[10px] text-content-tertiary uppercase tracking-wider font-medium mr-1">Zoom</span>
           <button
             onClick={zoomOut}
@@ -352,7 +389,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
       {/* Chart */}
       {showChart && (
-        <div style={{ opacity: chartReady ? 1 : 0, transition: "opacity 0.12s" }}>
+        <div className="hidden md:block" style={{ opacity: chartReady ? 1 : 0, transition: "opacity 0.12s" }}>
           <OilPriceChart
             prices={prices}
             scale={scale}
@@ -364,14 +401,20 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       )}
 
       {/* Timeline */}
-      <Timeline
-        events={filteredEvents}
-        scale={scale}
-        scrollRef={timelineScrollRef}
-        onScroll={handleTimelineScroll}
-        onEventClick={setSelectedEvent}
-        onTypeFilter={toggleType}
-      />
+      <div className="hidden md:flex flex-1 min-h-0 min-w-0 w-full overflow-hidden">
+        <Timeline
+          events={filteredEvents}
+          scale={scale}
+          scrollRef={timelineScrollRef}
+          onScroll={handleTimelineScroll}
+          onEventClick={setSelectedEvent}
+          onTypeFilter={toggleType}
+        />
+      </div>
+
+      <div className="md:hidden flex flex-1 min-h-0 min-w-0 w-full overflow-hidden">
+        <MobileEventList events={filteredEvents} onEventClick={setSelectedEvent} />
+      </div>
 
       <EventCard event={selectedEvent} onClose={() => setSelectedEvent(null)} />
     </div>

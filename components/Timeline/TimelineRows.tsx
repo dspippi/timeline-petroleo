@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, RefObject } from "react";
+import { useMemo } from "react";
 import { OilEvent, TimelineScale, EventType } from "@/types";
 import { groupEventsByRegion, isBrasil } from "@/lib/utils";
 import { EventMarker } from "./EventMarker";
@@ -11,17 +11,15 @@ export const ROW_HEIGHT = DEFAULT_SETTINGS.rowHeight;
 const REGION_HEADER_MIN_HEIGHT = 22;
 export const LABEL_WIDTH = 112;
 
-// How wide (in px) each event "claims" horizontally to detect overlap
-const POINT_HALF = 65;      // half label width for point events
-const INTERVAL_GAP = 6;     // buffer for interval events
-const LABEL_AFTER_BAR = 124; // label width + gap for short intervals (must match EventMarker)
+// Horizontal footprint constants used for lane assignment.
+const INTERVAL_GAP = 6;
+const POINT_HALF = 65;
+const LABEL_AFTER_BAR = 124;
 
-const RENDER_BUFFER = 500; // px extra além da viewport para evitar pop-in
 
 interface Props {
   events: OilEvent[];
   scale: TimelineScale;
-  scrollRef: RefObject<HTMLDivElement>;
   onEventClick: (e: OilEvent) => void;
   onTypeFilter: (type: EventType) => void;
 }
@@ -75,7 +73,7 @@ function assignLanes(
   return { lanes: laneAssignments, totalLanes: Math.max(1, laneEndPx.length) };
 }
 
-export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFilter }: Props) {
+export function TimelineRows({ events, scale, onEventClick, onTypeFilter }: Props) {
   const { settings } = useSettings();
   const rowHeight = settings.rowHeight;
 
@@ -90,11 +88,6 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
     });
     return items;
   }, [events]);
-
-  // Viewport range in plot-space pixels (excluding LABEL_WIDTH offset)
-  const scrollEl = scrollRef.current;
-  const visStart = (scrollEl?.scrollLeft ?? 0) - RENDER_BUFFER;
-  const visEnd = (scrollEl?.scrollLeft ?? 0) + (scrollEl?.clientWidth ?? 2000) + RENDER_BUFFER;
 
   if (rows.length === 0) {
     return (
@@ -111,9 +104,13 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
           return (
             <div
               key={`region-${row.region}`}
-              className="flex items-center border-b border-line bg-app"
+              className="relative flex items-stretch border-y border-line bg-app"
               style={{ minHeight: REGION_HEADER_MIN_HEIGHT, width: "100%" }}
             >
+              <div
+                className="absolute bottom-0 top-0 w-px bg-line"
+                style={{ left: LABEL_WIDTH - 1 }}
+              />
               <div
                 className="sm:sticky left-0 z-10 bg-app px-2 py-1 flex items-center"
                 style={{ width: LABEL_WIDTH }}
@@ -164,9 +161,6 @@ export function TimelineRows({ events, scale, scrollRef, onEventClick, onTypeFil
             {/* Event markers — only render events in the visible viewport */}
             <div className="absolute inset-0 overflow-hidden" style={{ left: LABEL_WIDTH }}>
               {row.events.map((event, ei) => {
-                const startPx = scale.toPixel(event.start_date);
-                const endPx = event.end_date ? scale.toPixel(event.end_date) : startPx;
-                if (endPx + LABEL_AFTER_BAR < visStart || startPx - POINT_HALF > visEnd) return null;
                 return (
                   <EventMarker
                     key={event.id}

@@ -36,6 +36,50 @@ const shortClass = (c) => {
   return c;
 };
 
+const normalizeFieldName = (name) => (name || '').trim().replace(/\s+/g, ' ').toUpperCase();
+const normalizeText = (text) => normalizeFieldName(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const FIELD_BASIN_COLORS = {
+  'ALAGOAS': '#7c3aed',
+  'CAMAMU': '#d97706',
+  'CAMPOS': '#2563eb',
+  'CEARA': '#0f766e',
+  'CUMURUXATIBA': '#be123c',
+  'ESPIRITO SANTO': '#16a34a',
+  'POTIGUAR': '#9333ea',
+  'SANTOS': '#ea580c',
+  'SERGIPE': '#0891b2',
+};
+const fieldColorForBasin = (basin) => FIELD_BASIN_COLORS[normalizeText(basin)] || '#64748b';
+const fieldArea = (feature) => Number(feature && feature.properties && feature.properties.AREA) || 0;
+const fieldLimitForZoom = (zoom) => {
+  if (zoom >= 10) return Infinity;
+  if (zoom >= 9) return 100;
+  if (zoom >= 8) return 70;
+  if (zoom >= 7) return 45;
+  if (zoom >= 6) return 28;
+  return 14;
+};
+const shortPlatformName = (name) => {
+  if (!name) return '';
+  return name
+    .replace(/^PLATAFORMA\s+/i, '')
+    .replace(/^FPSO\s+/i, '')
+    .replace(/^PETROBRAS\s+/i, '')
+    .replace(/^P-?\s*(\d+)/i, 'P-$1')
+    .trim();
+};
+const platformLabelText = (platform, showDetail) => {
+  if (!showDetail) return platform.sigla;
+  const detail = shortPlatformName(platform.nome);
+  const sigla = platform.sigla.toUpperCase();
+  const normalizedDetail = detail.toUpperCase();
+  const siglaNumber = sigla.match(/^P-(\d+)$/);
+
+  if (!detail || normalizedDetail === sigla) return platform.sigla;
+  if (siglaNumber && normalizedDetail === siglaNumber[1]) return platform.sigla;
+  return `${platform.sigla} · ${detail}`;
+};
+
 // ---------- The big component ----------
 // ---------- Metadata (data freshness) ----------
 const DATA_META = {
@@ -53,6 +97,8 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
   const mapRef = useRef(null);
   const markersLayer = useRef(null);
   const fieldsLayer = useRef(null);
+  const fieldLabelsLayer = useRef(null);
+  const platformLabelsLayer = useRef(null);
 
   // Sidebar widths (resizable)
   const [leftWidth, setLeftWidth] = useState(320);
@@ -69,7 +115,10 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
   const yearMaxAll = useMemo(() => Math.max(...platforms.map(p => p.ano_inicio_operacao || 0)), [platforms]);
   const [yearRange, setYearRange] = useState([yearMinAll, yearMaxAll]);
   const [search, setSearch] = useState('');
+  const [showPlatforms, setShowPlatforms] = useState(true);
   const [showFields, setShowFields] = useState(true);
+  const [mapZoom, setMapZoom] = useState(5);
+  const [mapViewTick, setMapViewTick] = useState(0);
 
   const [selectedId, setSelectedId] = useState(null);
   const [filtersOpen, setFiltersOpen] = useState(true);
@@ -121,6 +170,33 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
   }, [platforms, selectedOps, selectedCampos, selectedStatus, selectedBacias, selectedClasses, yearRange, search]);
 
   const selectedPlat = useMemo(() => filtered.find(p => p.sigla === selectedId) || platforms.find(p => p.sigla === selectedId), [filtered, platforms, selectedId]);
+  const visibleFieldFeatures = useMemo(() => {
+    if (!fieldFeatures || fieldFeatures.length === 0) return [];
+    const selectedFieldNames = new Set([...selectedCampos].map((field) => normalizeFieldName(field)));
+    const selectedBasinNames = new Set([...selectedBacias].map((basin) => normalizeText(basin)));
+    return fieldFeatures.filter((feature) => {
+      const props = feature.properties || {};
+      const fieldName = normalizeFieldName(props.NOM_CAMPO);
+      const basinName = props.NOM_BACIA || '';
+      if (!fieldName) return false;
+      if (selectedFieldNames.size && !selectedFieldNames.has(fieldName)) return false;
+      if (selectedBasinNames.size && !selectedBasinNames.has(normalizeText(basinName))) return false;
+      if (search) {
+        const q = normalizeText(search);
+        const haystack = `${normalizeText(props.NOM_CAMPO)} ${normalizeText(basinName)} ${normalizeText(props.SIG_CAMPO)}`;
+        if (!haystack.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [fieldFeatures, search, selectedBacias, selectedCampos]);
+  const displayedFieldFeatures = useMemo(() => {
+    if (search || selectedCampos.size) return visibleFieldFeatures;
+    const limit = fieldLimitForZoom(mapZoom);
+    if (!Number.isFinite(limit) || visibleFieldFeatures.length <= limit) return visibleFieldFeatures;
+    return [...visibleFieldFeatures]
+      .sort((a, b) => fieldArea(b) - fieldArea(a))
+      .slice(0, limit);
+  }, [mapZoom, search, selectedCampos, visibleFieldFeatures]);
 
   // Stats
   const stats = useMemo(() => {
@@ -143,6 +219,15 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
     map.createPane('fieldsPane').style.zIndex = 350;
     mapRef.current = map;
     markersLayer.current = L.layerGroup().addTo(map);
+    fieldLabelsLayer.current = L.layerGroup().addTo(map);
+    platformLabelsLayer.current = L.layerGroup().addTo(map);
+    const syncMapViewState = () => {
+      setMapZoom(map.getZoom());
+      setMapViewTick((v) => v + 1);
+    };
+    map.on('zoomend', syncMapViewState);
+    map.on('moveend', syncMapViewState);
+    syncMapViewState();
   }, []);
 
   // Tile layer (changes with theme)
@@ -165,6 +250,7 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
   useEffect(() => {
     if (!markersLayer.current) return;
     markersLayer.current.clearLayers();
+    if (!showPlatforms) return;
 
     filtered.forEach(p => {
       const color = theme.statusColors[p.status];
@@ -206,19 +292,21 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
       marker.bindTooltip(`<b>${p.sigla}</b> · ${shortOp(p.operador)}`, { className: `oilmap-tip oilmap-tip-${theme.id}`, direction: 'top', offset: [0, -8] });
       marker.addTo(markersLayer.current);
     });
-  }, [filtered, selectedId, theme]);
+  }, [filtered, selectedId, showPlatforms, theme]);
 
   useEffect(() => {
     if (fieldsLayer.current && mapRef.current) mapRef.current.removeLayer(fieldsLayer.current);
-    if (!fieldFeatures || fieldFeatures.length === 0) { fieldsLayer.current = null; return; }
-    const fieldColor = theme.accent;
-    fieldsLayer.current = L.geoJSON(fieldFeatures, {
-      style: {
+    if (!displayedFieldFeatures || displayedFieldFeatures.length === 0) { fieldsLayer.current = null; return; }
+    fieldsLayer.current = L.geoJSON(displayedFieldFeatures, {
+      style: (feature) => {
+        const fieldColor = fieldColorForBasin(feature.properties && feature.properties.NOM_BACIA);
+        return {
         color: fieldColor,
-        weight: 1.5,
+        weight: 1.7,
         fillColor: fieldColor,
-        fillOpacity: theme.id === 'dark' ? 0.10 : 0.12,
-        opacity: 0.7,
+        fillOpacity: theme.id === 'dark' ? 0.13 : 0.16,
+        opacity: 0.82,
+        };
       },
       pane: 'fieldsPane',
       onEachFeature: (feature, layer) => {
@@ -231,7 +319,7 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
     });
     if (showFields && mapRef.current) fieldsLayer.current.addTo(mapRef.current);
     return () => { if (mapRef.current && fieldsLayer.current) mapRef.current.removeLayer(fieldsLayer.current); };
-  }, [fieldFeatures, theme.accent, theme.id]);
+  }, [displayedFieldFeatures, theme.id]);
 
   useEffect(() => {
     if (!mapRef.current || !fieldsLayer.current) return;
@@ -241,6 +329,118 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
       mapRef.current.removeLayer(fieldsLayer.current);
     }
   }, [showFields]);
+
+  useEffect(() => {
+    if (!mapRef.current || !fieldLabelsLayer.current || !platformLabelsLayer.current) return;
+
+    const map = mapRef.current;
+    const fieldLayer = fieldLabelsLayer.current;
+    const platformLayer = platformLabelsLayer.current;
+    fieldLayer.clearLayers();
+    platformLayer.clearLayers();
+
+    const viewport = map.getBounds().pad(0.15);
+    const nearPlatformZoom = mapZoom >= 11;
+    const platformClass = nearPlatformZoom ? 'oilmap-label-platform is-near' : 'oilmap-label-platform is-mid';
+    const platformLabelPoints = [];
+    const platformLabelCandidates = [];
+
+    // Plataformas: aparecem progressivamente em zoom medio/proximo
+    if (showPlatforms && mapZoom >= 8) {
+      const maxLabels = nearPlatformZoom ? 140 : 60;
+      let emitted = 0;
+
+      filtered.forEach((p) => {
+        const isSelected = p.sigla === selectedId;
+        if (!isSelected && emitted >= maxLabels) return;
+
+        const latlng = L.latLng(p.latitude, p.longitude);
+        if (!isSelected && !viewport.contains(latlng)) return;
+        if (!isSelected && !nearPlatformZoom && p.status !== 'operando') return;
+
+        platformLabelCandidates.push({ p, latlng, isSelected });
+        platformLabelPoints.push(map.latLngToLayerPoint(latlng));
+        if (!isSelected) emitted += 1;
+      });
+
+      platformLabelCandidates.forEach(({ p, latlng, isSelected }) => {
+        const text = platformLabelText(p, nearPlatformZoom);
+        const selectedClass = isSelected ? ' is-selected' : '';
+
+        L.marker(latlng, {
+          interactive: false,
+          keyboard: false,
+          zIndexOffset: isSelected ? 300 : 120,
+          icon: L.divIcon({
+            className: `oilmap-label ${platformClass}${selectedClass}`,
+            html: `<span>${text}</span>`,
+          }),
+        }).addTo(platformLayer);
+
+      });
+    }
+
+    // Campos: aparecem sempre e deslocam para evitar sobreposição com labels de plataforma
+    if (showFields && displayedFieldFeatures && displayedFieldFeatures.length > 0) {
+      const fieldClass = nearPlatformZoom ? 'oilmap-label-field is-near' : 'oilmap-label-field is-mid';
+      const fieldPoints = [];
+      const minGap = nearPlatformZoom ? 42 : 30;
+      const tryOffsets = [
+        L.point(0, 0),
+        L.point(0, -24),
+        L.point(20, -18),
+        L.point(-20, -18),
+        L.point(24, 0),
+        L.point(-24, 0),
+        L.point(0, 24),
+        L.point(20, 18),
+        L.point(-20, 18),
+      ];
+
+      const hasCollision = (point) => {
+        for (let i = 0; i < platformLabelPoints.length; i += 1) {
+          if (point.distanceTo(platformLabelPoints[i]) < minGap) return true;
+        }
+        for (let i = 0; i < fieldPoints.length; i += 1) {
+          if (point.distanceTo(fieldPoints[i]) < minGap) return true;
+        }
+        return false;
+      };
+
+      displayedFieldFeatures.forEach((feature) => {
+        const props = feature.properties || {};
+        const rawName = props.NOM_CAMPO || '';
+        const normalized = normalizeFieldName(rawName);
+        if (!normalized) return;
+
+        const center = L.geoJSON(feature).getBounds().getCenter();
+        if (!viewport.contains(center)) return;
+
+        const centerPoint = map.latLngToLayerPoint(center);
+        let finalPoint = centerPoint;
+        for (let i = 0; i < tryOffsets.length; i += 1) {
+          const candidate = centerPoint.add(tryOffsets[i]);
+          if (!hasCollision(candidate)) {
+            finalPoint = candidate;
+            break;
+          }
+        }
+
+        fieldPoints.push(finalPoint);
+        const finalLatLng = map.layerPointToLatLng(finalPoint);
+
+        L.marker(finalLatLng, {
+          interactive: false,
+          keyboard: false,
+          zIndexOffset: -100,
+          icon: L.divIcon({
+            className: `oilmap-label ${fieldClass}`,
+            html: `<span style="--field-color:${fieldColorForBasin(props.NOM_BACIA)}">${rawName}</span>`,
+          }),
+        }).addTo(fieldLayer);
+      });
+    }
+  }, [displayedFieldFeatures, filtered, mapViewTick, mapZoom, selectedId, showFields, showPlatforms]);
 
   // Pan to selected
   useEffect(() => {
@@ -370,9 +570,12 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
                   {allBacias.map(b => (
                     <button
                       key={b}
-                      className={`oilmap-chip ${selectedBacias.has(b) ? 'is-on' : ''}`}
+                      className={`oilmap-chip oilmap-chip-basin ${selectedBacias.has(b) ? 'is-on' : ''}`}
                       onClick={() => toggleSetItem(selectedBacias, setSelectedBacias, b)}
-                    >{b}</button>
+                    >
+                      <span className="oilmap-basin-swatch" style={{ background: fieldColorForBasin(b) }}></span>
+                      {b}
+                    </button>
                   ))}
                 </div>
               </Section>
@@ -418,8 +621,12 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
 
               <Section title="Camadas">
                 <label className="oilmap-toggle-row">
+                  <input type="checkbox" checked={showPlatforms} onChange={e => setShowPlatforms(e.target.checked)} />
+                  <span>Plataformas</span>
+                </label>
+                <label className="oilmap-toggle-row">
                   <input type="checkbox" checked={showFields} onChange={e => setShowFields(e.target.checked)} />
-                  <span>Polígonos dos campos</span>
+                  <span>Campos</span>
                 </label>
               </Section>
             </div>
@@ -436,17 +643,6 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
         {/* Map area */}
         <main className="oilmap-map-area">
           <div className="oilmap-map" ref={mapEl}></div>
-
-          {/* Legend */}
-          <div className="oilmap-legend">
-            <div className="oilmap-legend-title">Status operacional</div>
-            {Object.entries(STATUS_META).map(([key, meta]) => (
-              <div key={key} className="oilmap-legend-row">
-                <span className="oilmap-dot" style={{ background: t.statusColors[key], opacity: key === 'descomissionada' ? 0.55 : 1 }}></span>
-                <span>{meta.label}</span>
-              </div>
-            ))}
-          </div>
         </main>
 
         {/* Detail panel */}

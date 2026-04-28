@@ -318,7 +318,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
   }, [scale]);
 
   return (
-    <div className="flex flex-col flex-1 min-h-0">
+    <div className="flex flex-col flex-1 min-h-0 min-w-0 w-full overflow-hidden">
       {/* Year axis — fixed header, synced via JS scroll */}
       <div
         ref={yearAxisRef}
@@ -344,7 +344,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
       {/* Scrollable timeline */}
       <div
         ref={scrollRef}
-        className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 bg-surface"
+        className="timeline-scroll flex-1 overflow-x-auto overflow-y-auto relative min-h-0 min-w-0 bg-surface"
         style={{ cursor: isDragging ? "grabbing" : "grab" }}
         onScroll={handleScroll}
         onMouseDown={handleMouseDown}
@@ -353,7 +353,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
         onMouseLeave={handleMouseLeave}
       >
         <div style={{ width: scale.totalWidthPx + LABEL_WIDTH, minWidth: scale.totalWidthPx + LABEL_WIDTH, position: "relative" }}>
-<TimelineRows events={events} scale={scale} scrollRef={scrollRef} onEventClick={handleEventClick} onTypeFilter={onTypeFilter} />
+<TimelineRows events={events} scale={scale} onEventClick={handleEventClick} onTypeFilter={onTypeFilter} />
           <GuideOverlay scale={scale} />
         </div>
 
@@ -377,7 +377,7 @@ export function Timeline({ events, scale, scrollRef, onScroll, onEventClick, onT
             <span className="hidden sm:inline text-content-muted">·</span>
             <span className="hidden sm:inline text-[10px] text-content-tertiary font-mono">v{pkg.version}</span>
           </div>
-          <p className="text-[9.5px] text-content-muted leading-relaxed sm:border-l sm:border-black/[0.08] dark:sm:border-[#1d2a36] sm:pl-4">
+          <p className="text-[9.5px] text-content-tertiary leading-relaxed sm:border-l sm:border-black/[0.08] dark:sm:border-[#1d2a36] sm:pl-4">
             Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada —
             Envie um email caso identifique algum erro, inconsistência ou tenha alguma sugestão de melhoria. O autor não se responsabiliza pelo uso das informações aqui apresentadas.
           </p>

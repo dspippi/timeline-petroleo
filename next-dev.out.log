@@ -1,0 +1,38 @@
+
+> timeline-do-petroleo@2026.04 dev
+> next dev
+
+  ▲ Next.js 14.2.29
+  - Local:        http://localhost:3001
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1537ms
+ ○ Compiling /mapaplataformas ...
+ ✓ Compiled /mapaplataformas in 2.7s (487 modules)
+ GET /mapaplataformas 200 in 2908ms
+ GET /mapaplataformas 200 in 57ms
+ ✓ Compiled /_not-found in 340ms (481 modules)
+ GET /_next/static/css/app/layout.css?v=1777342951982 404 in 454ms
+ GET /_next/static/chunks/webpack.js?v=1777342951982 404 in 439ms
+ GET /_next/static/chunks/main-app.js?v=1777342951982 404 in 439ms
+ GET /_next/static/chunks/app/layout.js 404 in 435ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 437ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1054ms (690 modules)
+ GET /mapaplataformas 500 in 1235ms
+ GET /mapaplataformas 500 in 28ms
+ GET /mapaplataformas 500 in 11ms
+ GET /mapaplataformas 500 in 13ms
+ GET /mapaplataformas 500 in 10ms
+ ✓ Compiled /_not-found in 171ms (693 modules)
+ GET /mapaplataformas 404 in 261ms
+ GET /_next/static/css/app/layout.css?v=1777343312281 404 in 24ms
+ GET /_next/static/chunks/main-app.js?v=1777343312281 404 in 26ms
+ GET /_next/static/chunks/app/layout.js 404 in 24ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 26ms
+ GET /mapaplataformas 404 in 63ms
+ GET /_next/static/css/app/layout.css?v=1777343313831 404 in 30ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 31ms
+ GET /_next/static/chunks/app/layout.js 404 in 32ms
+ GET /_next/static/chunks/main-app.js?v=1777343313831 404 in 33ms
