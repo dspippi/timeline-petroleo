@@ -1,6 +1,7 @@
 import { parseEvents } from "@/lib/parseEvents";
 import { TimelineClientWrapper } from "@/components/Timeline/TimelineClientWrapper";
 import { SerializedOilEvent } from "@/types";
+import { serializeLocalDate } from "@/lib/date";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -8,8 +9,8 @@ export default function HomePage() {
 
   const serialized: SerializedOilEvent[] = events.map((e) => ({
     ...e,
-    start_date: e.start_date.toISOString(),
-    end_date: e.end_date ? e.end_date.toISOString() : null,
+    start_date: serializeLocalDate(e.start_date),
+    end_date: e.end_date ? serializeLocalDate(e.end_date) : null,
   }));
 
   return (

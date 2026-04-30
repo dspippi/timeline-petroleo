@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState, useRef, useCallback, useEffect } from "react";
-import { parseISO } from "date-fns";
 import { OilEvent, SerializedOilEvent } from "@/types";
 import { buildScale, getDefaultDomain, MIN_PX_PER_DAY, MAX_PX_PER_DAY } from "@/lib/timelineScale";
 import { clamp } from "@/lib/utils";
@@ -19,6 +18,7 @@ import { EventCard } from "@/components/EventCard/EventCard";
 import { Toggle } from "@/components/ui/Toggle";
 import { useCategories } from "@/context/CategoriesContext";
 import { SettingsPanel } from "@/components/Settings/SettingsPanel";
+import { parseLocalDate } from "@/lib/date";
 
 interface Props {
   serializedEvents: SerializedOilEvent[];
@@ -29,8 +29,8 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
     () =>
       serializedEvents.map((e) => ({
         ...e,
-        start_date: parseISO(e.start_date),
-        end_date: e.end_date ? parseISO(e.end_date) : undefined,
+        start_date: parseLocalDate(e.start_date),
+        end_date: e.end_date ? parseLocalDate(e.end_date) : undefined,
       })),
     [serializedEvents]
   );

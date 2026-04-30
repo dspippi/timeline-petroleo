@@ -4,8 +4,8 @@
  */
 import fs from "fs";
 import path from "path";
-import { format } from "date-fns";
 import { OilEvent, EventType } from "@/types";
+import { parseLocalDate, serializeLocalDate } from "./date";
 
 const EVENTS_PATH = path.join(process.cwd(), "data", "events.json");
 
@@ -38,7 +38,7 @@ export interface AdminEventInput {
 
 /** Convert a date from Date object to "YYYY-MM-DD" (HTML input format) */
 export function dateToHtml(date: Date): string {
-  return format(date, "yyyy-MM-dd");
+  return serializeLocalDate(date);
 }
 
 // ── OilEvent → AdminEventInput (for pre-filling edit forms) ──────────────────
@@ -123,12 +123,6 @@ export function deleteEvent(id: string): void {
   if (idx === -1) throw new Error(`Event "${id}" not found`);
   events.splice(idx, 1);
   writeAll(events);
-}
-
-/** Parse "YYYY-MM-DD" as local midnight (avoids UTC timezone shift). */
-function parseLocalDate(s: string): Date {
-  const [y, m, d] = s.split("-").map(Number);
-  return new Date(y, m - 1, d);
 }
 
 export function listEvents(): OilEvent[] {
