@@ -2,8 +2,33 @@
 
 import { useState, useEffect } from "react";
 import { OilPrice } from "@/types";
-import { parseISO } from "date-fns";
+import { isValid, parseISO } from "date-fns";
 import { withBasePath } from "@/lib/basePath";
+
+interface OilPriceRow {
+  date: string;
+  price: number;
+}
+
+function normalizeRows(rows: OilPriceRow[]): OilPrice[] {
+  return rows
+    .map((row) => {
+      const date = parseISO(row.date);
+      if (!isValid(date) || typeof row.price !== "number" || Number.isNaN(row.price)) {
+        return null;
+      }
+      return { date, price: row.price };
+    })
+    .filter((row): row is OilPrice => row !== null);
+}
+
+async function loadBundledPrices(): Promise<OilPrice[]> {
+  const [hist, fallback] = await Promise.all([
+    import("@/data/oil-prices-owid-historical.json").then((m) => m.default as OilPriceRow[]),
+    import("@/data/oil-prices-fallback.json").then((m) => m.default as OilPriceRow[]),
+  ]);
+  return normalizeRows([...hist, ...fallback]);
+}
 
 export function useOilPrices() {
   const [prices, setPrices] = useState<OilPrice[]>([]);
@@ -13,23 +38,30 @@ export function useOilPrices() {
   useEffect(() => {
     let cancelled = false;
 
-    fetch(withBasePath("/api/oil-prices"))
-      .then((res) => {
+    (async () => {
+      try {
+        const res = await fetch(withBasePath("/api/oil-prices"), { signal: AbortSignal.timeout(5000) });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json() as Promise<{ date: string; price: number }[]>;
-      })
-      .then((data) => {
-        if (!cancelled) {
-          setPrices(data.map((d) => ({ date: parseISO(d.date), price: d.price })));
+        const data = await res.json() as OilPriceRow[];
+        if (cancelled) return;
+        setPrices(normalizeRows(data));
+        setLoading(false);
+        setError(null);
+      } catch (apiErr) {
+        try {
+          const bundled = await loadBundledPrices();
+          if (cancelled) return;
+          setPrices(bundled);
+          setLoading(false);
+          setError(null);
+          console.warn("Oil price API failed; using bundled fallback data instead.", apiErr);
+        } catch (fallbackErr) {
+          if (cancelled) return;
+          setError(String(fallbackErr ?? apiErr));
           setLoading(false);
         }
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setError(String(err));
-          setLoading(false);
-        }
-      });
+      }
+    })();
 
     return () => { cancelled = true; };
   }, []);

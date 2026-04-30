@@ -90,7 +90,6 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
   const hasFit = useRef(false);
   const hasScrolled = useRef(false);
-  const [chartReady, setChartReady] = useState(false);
 
   useEffect(() => {
     const timelineEl = timelineScrollRef.current;
@@ -133,9 +132,6 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         }
 
         hasScrolled.current = true;
-        requestAnimationFrame(() => {
-          if (!cancelled) setChartReady(true);
-        });
       });
     };
 
@@ -389,7 +385,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
       {/* Chart */}
       {showChart && (
-        <div className="hidden md:block" style={{ opacity: chartReady ? 1 : 0, transition: "opacity 0.12s" }}>
+        <div className="hidden md:block">
           <OilPriceChart
             prices={prices}
             scale={scale}
