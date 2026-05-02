@@ -28,15 +28,15 @@ export function EventCard({ event, onClose }: Props) {
 
           <motion.div
             key="card"
-            initial={{ opacity: 0, y: 16, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.97 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 16 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[500px] max-w-[92vw] rounded-2xl border border-line-strong bg-surface shadow-2xl dark:shadow-[0_24px_70px_rgba(0,0,0,0.62),0_0_32px_rgba(183,255,0,0.08)]"
+            className="fixed inset-0 z-50 overflow-y-auto bg-surface border-0 shadow-2xl md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[500px] md:max-w-[92vw] md:max-h-[90vh] md:rounded-2xl md:border md:border-line-strong dark:shadow-[0_24px_70px_rgba(0,0,0,0.62),0_0_32px_rgba(183,255,0,0.08)]"
           >
             {/* Top accent */}
             <div
-              className="h-1 w-full rounded-t-2xl"
+              className="h-1 w-full md:rounded-t-2xl"
               style={{ backgroundColor: getColor(event.type) }}
             />
 
@@ -107,7 +107,7 @@ export function EventCard({ event, onClose }: Props) {
                     <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
                     <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
                   </svg>
-                  Ver no Wikipedia
+                  Saber mais
                 </a>
               )}
             </div>

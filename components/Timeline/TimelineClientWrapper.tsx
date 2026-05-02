@@ -19,6 +19,7 @@ import { Toggle } from "@/components/ui/Toggle";
 import { useCategories } from "@/context/CategoriesContext";
 import { SettingsPanel } from "@/components/Settings/SettingsPanel";
 import { parseLocalDate } from "@/lib/date";
+import { OverviewPanel } from "@/components/Overview/OverviewPanel";
 
 interface Props {
   serializedEvents: SerializedOilEvent[];
@@ -43,6 +44,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   const [showChart, setShowChart] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState<OilEvent | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [overviewMode, setOverviewMode] = useState(false);
   const settingsBtnRef = useRef<HTMLButtonElement>(null);
 
   const {
@@ -329,6 +331,29 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
         <span className="text-[9px] text-content-muted hidden xl:block">Ctrl+Scroll para zoom · Arraste para navegar</span>
 
+        <div className="w-px h-4 bg-surface-alt mx-1 hidden md:block" />
+
+        {/* Overview mode toggle */}
+        <button
+          onClick={() => setOverviewMode((v) => !v)}
+          className={`hidden md:flex items-center gap-1.5 px-2 h-6 rounded text-[10px] font-medium transition-colors ${
+            overviewMode
+              ? "bg-brand-bg text-brand dark:shadow-brand-glow"
+              : "text-content-secondary hover:bg-surface-hover"
+          }`}
+          title="Visão geral compacta de todos os eventos"
+        >
+          <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3">
+            <rect x="1" y="1" width="6" height="3" rx="0.5" />
+            <rect x="9" y="1" width="6" height="3" rx="0.5" />
+            <rect x="1" y="6.5" width="6" height="3" rx="0.5" />
+            <rect x="9" y="6.5" width="6" height="3" rx="0.5" />
+            <rect x="1" y="12" width="6" height="3" rx="0.5" />
+            <rect x="9" y="12" width="6" height="3" rx="0.5" />
+          </svg>
+          Visão Geral
+        </button>
+
         {/* Event count + clear */}
         <span className="text-[11px] text-content-tertiary ml-auto">
           {filteredEvents.length} de {allEvents.length} eventos
@@ -384,7 +409,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       </div>
 
       {/* Chart */}
-      {showChart && (
+      {showChart && !overviewMode && (
         <div className="hidden md:block">
           <OilPriceChart
             prices={prices}
@@ -397,16 +422,25 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       )}
 
       {/* Timeline */}
-      <div className="hidden md:flex flex-1 min-h-0 min-w-0 w-full overflow-hidden">
-        <Timeline
-          events={filteredEvents}
-          scale={scale}
-          scrollRef={timelineScrollRef}
-          onScroll={handleTimelineScroll}
-          onEventClick={setSelectedEvent}
-          onTypeFilter={toggleType}
-        />
-      </div>
+      {!overviewMode && (
+        <div className="hidden md:flex flex-1 min-h-0 min-w-0 w-full overflow-hidden">
+          <Timeline
+            events={filteredEvents}
+            scale={scale}
+            scrollRef={timelineScrollRef}
+            onScroll={handleTimelineScroll}
+            onEventClick={setSelectedEvent}
+            onTypeFilter={toggleType}
+          />
+        </div>
+      )}
+
+      {/* Overview mode */}
+      {overviewMode && (
+        <div className="hidden md:flex flex-1 min-h-0 min-w-0 w-full">
+          <OverviewPanel events={filteredEvents} onEventClick={setSelectedEvent} />
+        </div>
+      )}
 
       <div className="md:hidden flex flex-1 min-h-0 min-w-0 w-full overflow-hidden">
         <MobileEventList events={filteredEvents} onEventClick={setSelectedEvent} />
