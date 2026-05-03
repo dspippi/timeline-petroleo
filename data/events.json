@@ -27,7 +27,7 @@
     "id": "us-civil-war-impact-1861",
     "title": "Guerra Civil Americana",
     "start_date": "1861-04-12",
-    "end_date": "1865-04-089",
+    "end_date": "1865-04-89",
     "country": "Estados Unidos",
     "region": "América do Norte",
     "type": "war",
@@ -1234,5 +1234,41 @@
     "company": "Petrobras",
     "wikipedia": "https://agencia.petrobras.com.br/w/negocio/petrobras-antecipa-in%C3%ADcio-de-produ%C3%A7%C3%A3o-de-b%C3%BAzios-8-p-79-",
     "description": "A plataforma P-79, integrante do projeto Búzios 8, inicia produção no pré-sal da Bacia de Santos."
+  },
+  {
+    "id": "methane_pioneer_lng_ship",
+    "title": "1º transporte de LNG por navio (Methane Pioneer)",
+    "start_date": "1959-01-25",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "tecnologia",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/Methane_Pioneer",
+    "description": "O Methane Pioneer foi o primeiro navio a transportar gás natural liquefeito (GNL) pelo oceano. A sua viagem inaugural ocorreu em 25 de janeiro de 1959, quando partiu da instalação de liquefação de gás natural na Louisiana, e chegou a Canvey Island no Reino Unido. Essa viagem foi histórica, pois foi a primeira vez que uma carga de GNL foi transportada pelo oceano, marcando o início da cadeia global de suprimentos de GNL."
+  },
+  {
+    "id": "first-shail-GNL",
+    "title": "1º carga exportada de Shale gas norte-americano",
+    "start_date": "2016-02-24",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "policy",
+    "company": "Cheniere Energy",
+    "wikipedia": "https://oglobo.globo.com/economia/eua-enviam-para-brasil-sua-primeira-exportacao-de-gas-natural-18849891#:~:text=Jornal%20O%20Globo-,EUA%20enviam%20para%20o%20Brasil%20sua%20primeira%20exporta%C3%A7%C3%A3o%20de%20g%C3%A1s,Petrobras%20na%20Ba%C3%ADa%20de%20Guanabara.",
+    "description": "A primeira carga histórica de GNL exportada pelos Estados Unidos (proveniente do terminal Sabine Pass, na Louisiana) saiu, no navio Asia Vision, no final de fevereiro de 2016 com destino ao Brasil, Rio de Janeiro."
+  },
+  {
+    "id": "EUA-exportations-back",
+    "title": "Fim da proibição de exportação de petróleo dos EUA",
+    "start_date": "2015-12-18",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "policy",
+    "company": null,
+    "wikipedia": "https://oglobo.globo.com/economia/petroleo-e-energia/fim-de-proibicao-exportacoes-de-petroleo-nos-eua-nao-afeta-mercado-diz-russia-18363752",
+    "description": "O governo dos EUA suspende a proibição de 40 anos que restringia a exportação do petróleo bruto a outros países. A proibição anterior, vigente desde 1975, foi uma resposta ao desabastecimento e à recessão que a crise do petróleo de 1973 causou."
   }
 ]
