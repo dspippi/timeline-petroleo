@@ -1,7 +1,7 @@
 [
   {
     "id": "bissell-oil-inspection-1854",
-    "title": "Primeiras Prospecções nos EUA (Bissell)",
+    "title": "Primeiras Prospecções nos EUA",
     "start_date": "1854-12-30",
     "end_date": null,
     "country": "Estados Unidos",
@@ -37,7 +37,7 @@
   },
   {
     "id": "entrega-da-canal-de-suez-1869",
-    "title": "Entrega da Canal de Suez",
+    "title": "Canal de Suez começa a operar",
     "start_date": "1869-11-17",
     "end_date": null,
     "country": "Egito",
@@ -166,6 +166,18 @@
     "company": "Ford Motor Company",
     "wikipedia": "https://en.wikipedia.org/wiki/Ford_Quadricycle",
     "description": "O automóvel de Ford sinaliza a futura transição do mercado de querosene para o de gasolina, criando um novo mercado massivo para derivados de petróleo."
+  },
+  {
+    "id": "descoberta-do-poco-la-pez-1-1904",
+    "title": "Descoberta no Poço La Pez-1",
+    "start_date": "1904-04-03",
+    "end_date": null,
+    "country": "México",
+    "region": "América Central e do Sul",
+    "type": "discovery",
+    "company": "Mexican Petroleum Company",
+    "wikipedia": "https://es.wikipedia.org/wiki/Municipio_de_%C3%89bano#Pozo_%22La_Pez_No._1%22",
+    "description": "A descoberta do poço La Pez-1, em Ébano, San Luis Potosí, em 3 de abril de 1904, marcou o início comercial da indústria petrolífera mexicana. Perfurado pela Mexican Petroleum Company, ligada ao empresário Edward L. Doheny, o poço atingiu cerca de 500 metros de profundidade e passou a produzir aproximadamente 1.500 barris por dia. A descoberta transformou a região do Golfo em novo polo energético e abriu caminho para a entrada de capital estrangeiro, o crescimento das exportações e, décadas depois, o debate nacional sobre soberania que culminaria na criação da PEMEX."
   },
   {
     "id": "criacao-da-royal-dutch-shell-1907",
@@ -646,6 +658,18 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Mandatory_Oil_Import_Quota_Program",
     "description": "Uma medida que limitou oficialmente a entrada de petróleo estrangeiro no mercado americano, impondo cotas rígidas para proteger a produção doméstica. A medida limitou as importações a cerca de 9% da demanda, selando o mercado americano por 14 anos e mantendo preços internos até 70% superiores aos internacionais. Embora tenha garantido o crescimento da produção doméstica em 29% até 1968, o sistema gerou distorções como o \"Carrossel Mexicano\" e forçou as \"Sete Irmãs\" a desviar o excedente do Oriente Médio para a Europa e Japão, acirrando a competição global."
+  },
+  {
+    "id": "descoberta-do-campo-zelten-1959",
+    "title": "Descoberta do Campo Zelten",
+    "start_date": "1959-06-10",
+    "end_date": null,
+    "country": "Líbia",
+    "region": "Oriente Médio",
+    "type": "discovery",
+    "company": "Esso Standard Libya",
+    "wikipedia": "https://en.wikipedia.org/wiki/Zelten_oil_field?utm_source=chatgpt.com",
+    "description": "A conclusão do poço Zelten-1, em 10 de junho de 1959, marcou a primeira grande descoberta comercial de petróleo da Líbia. Perfurado pela Esso Standard Libya, no campo de Zelten — hoje conhecido como Nasser — o poço testou cerca de 17.500 barris por dia, revelando o potencial da Bacia de Sirte. A descoberta transformou rapidamente a Líbia de uma economia pobre e periférica em um novo polo estratégico do petróleo mundial: em 1961 começaram as exportações e, poucos anos depois, o país já figurava entre os grandes produtores globais."
   },
   {
     "id": "link-report-1960",
@@ -1264,8 +1288,8 @@
     "title": "Brent em US$ 120: Pânico no Mercado",
     "start_date": "2026-03-21",
     "end_date": null,
-    "country": "Irã",
-    "region": "Oriente Médio",
+    "country": "Global",
+    "region": "Global",
     "type": "crisis",
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/Strait_of_Hormuz",

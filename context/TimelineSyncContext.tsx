@@ -41,27 +41,42 @@ const ZoomStateCtx = createContext<ZoomState>({ pxPerDay: DEFAULT_PX_PER_DAY });
 interface ZoomSetter { setPxPerDay: (v: number) => void }
 const ZoomSetterCtx = createContext<ZoomSetter>({ setPxPerDay: () => {} });
 
+// ── Density mode state ────────────────────────────────────────────────────────
+interface DensityModeState { densityMode: boolean }
+const DensityModeStateCtx = createContext<DensityModeState>({ densityMode: false });
+
+// ── Density mode setter (stable) ──────────────────────────────────────────────
+interface DensityModeSetter { setDensityMode: (v: boolean) => void }
+const DensityModeSetterCtx = createContext<DensityModeSetter>({ setDensityMode: () => {} });
+
 // ── Provider ──────────────────────────────────────────────────────────────────
 export function TimelineSyncProvider({ children }: { children: ReactNode }) {
   const [hoveredDate, _setHoveredDate] = useState<Date | null>(null);
   const [pxPerDay, _setPxPerDay] = useState(DEFAULT_PX_PER_DAY);
+  const [densityMode, _setDensityMode] = useState(false);
 
   // Stable callbacks — these never change reference
-  const setHoveredDate = useCallback((d: Date | null) => _setHoveredDate(d), []);
-  const setPxPerDay    = useCallback((v: number)      => _setPxPerDay(v),    []);
+  const setHoveredDate  = useCallback((d: Date | null) => _setHoveredDate(d),  []);
+  const setPxPerDay     = useCallback((v: number)      => _setPxPerDay(v),     []);
+  const setDensityMode  = useCallback((v: boolean)     => _setDensityMode(v),  []);
 
   // Memoize setter objects so their context values are also stable
-  const hoverSetter = useMemo(() => ({ setHoveredDate }), [setHoveredDate]);
-  const zoomSetter  = useMemo(() => ({ setPxPerDay }),    [setPxPerDay]);
+  const hoverSetter   = useMemo(() => ({ setHoveredDate }),  [setHoveredDate]);
+  const zoomSetter    = useMemo(() => ({ setPxPerDay }),     [setPxPerDay]);
+  const densitySetter = useMemo(() => ({ setDensityMode }), [setDensityMode]);
 
   return (
     <HoverSetterCtx.Provider value={hoverSetter}>
       <ZoomSetterCtx.Provider value={zoomSetter}>
-        <HoverStateCtx.Provider value={{ hoveredDate }}>
-          <ZoomStateCtx.Provider value={{ pxPerDay }}>
-            {children}
-          </ZoomStateCtx.Provider>
-        </HoverStateCtx.Provider>
+        <DensityModeSetterCtx.Provider value={densitySetter}>
+          <HoverStateCtx.Provider value={{ hoveredDate }}>
+            <ZoomStateCtx.Provider value={{ pxPerDay }}>
+              <DensityModeStateCtx.Provider value={{ densityMode }}>
+                {children}
+              </DensityModeStateCtx.Provider>
+            </ZoomStateCtx.Provider>
+          </HoverStateCtx.Provider>
+        </DensityModeSetterCtx.Provider>
       </ZoomSetterCtx.Provider>
     </HoverSetterCtx.Provider>
   );
@@ -87,4 +102,14 @@ export function usePxPerDay() {
 /** Stable — never triggers a re-render. */
 export function useSetPxPerDay() {
   return useContext(ZoomSetterCtx).setPxPerDay;
+}
+
+/** Re-renders when densityMode changes. */
+export function useDensityMode() {
+  return useContext(DensityModeStateCtx).densityMode;
+}
+
+/** Stable — never triggers a re-render. */
+export function useSetDensityMode() {
+  return useContext(DensityModeSetterCtx).setDensityMode;
 }

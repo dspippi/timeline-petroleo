@@ -2,11 +2,19 @@
 
 import { useMemo, useState, useRef, useCallback, useEffect } from "react";
 import { OilEvent, SerializedOilEvent } from "@/types";
-import { buildScale, getDefaultDomain, MIN_PX_PER_DAY, MAX_PX_PER_DAY } from "@/lib/timelineScale";
+import {
+  buildScale,
+  buildDensityScale,
+  getDefaultDomain,
+  getFitPxPerDay,
+  getZoomPercent,
+  MIN_PX_PER_DAY,
+  MAX_PX_PER_DAY,
+} from "@/lib/timelineScale";
 import { clamp } from "@/lib/utils";
 import { useFilters } from "@/hooks/useFilters";
 import { useOilPrices } from "@/hooks/useOilPrices";
-import { usePxPerDay, useSetPxPerDay } from "@/context/TimelineSyncContext";
+import { usePxPerDay, useSetPxPerDay, useDensityMode, useSetDensityMode } from "@/context/TimelineSyncContext";
 import { useSettings, useDarkMode } from "@/context/SettingsContext";
 import { DEFAULT_PX_PER_DAY } from "@/lib/timelineScale";
 import { FilterDropdown } from "@/components/Filters/FilterDropdown";
@@ -38,6 +46,8 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
   const pxPerDay = usePxPerDay();
   const setPxPerDay = useSetPxPerDay();
+  const densityMode = useDensityMode();
+  const setDensityMode = useSetDensityMode();
   const { settings, updateSettings } = useSettings();
   const darkMode = useDarkMode();
   const { categories } = useCategories();
@@ -64,8 +74,10 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
   const [domainStart, domainEnd] = useMemo(() => getDefaultDomain(allEvents), [allEvents]);
   const scale = useMemo(
-    () => buildScale(domainStart, domainEnd, pxPerDay),
-    [domainStart, domainEnd, pxPerDay]
+    () => densityMode
+      ? buildDensityScale(allEvents, domainStart, domainEnd, pxPerDay)
+      : buildScale(domainStart, domainEnd, pxPerDay),
+    [densityMode, allEvents, domainStart, domainEnd, pxPerDay]
   );
 
   const scrollEndLimit = useMemo(() => new Date(2031, 11, 31), []);
@@ -92,6 +104,7 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
 
   const hasFit = useRef(false);
   const hasScrolled = useRef(false);
+  const initialZoomPxPerDayRef = useRef(DEFAULT_PX_PER_DAY);
 
   useEffect(() => {
     const timelineEl = timelineScrollRef.current;
@@ -108,14 +121,15 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
       if (containerWidth <= 0) return;
 
       if (!hasFit.current) {
-        hasFit.current = true;
-        setPxPerDay(
-          clamp(
-            (pxPerDay * (containerWidth - LABEL_WIDTH)) / scale.totalWidthPx,
-            MIN_PX_PER_DAY,
-            MAX_PX_PER_DAY
-          )
+        const initialFitPxPerDay = getFitPxPerDay(
+          pxPerDay,
+          containerWidth,
+          scale.totalWidthPx,
+          LABEL_WIDTH
         );
+        hasFit.current = true;
+        initialZoomPxPerDayRef.current = initialFitPxPerDay;
+        setPxPerDay(initialFitPxPerDay);
         return;
       }
 
@@ -243,17 +257,15 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
   }, [pxPerDay, setPxPerDay]);
 
   const zoomReset = useCallback(() => {
-    setPxPerDay(DEFAULT_PX_PER_DAY);
+    setPxPerDay(initialZoomPxPerDayRef.current);
   }, [setPxPerDay]);
 
   const zoomFit = useCallback(() => {
     const containerWidth = timelineScrollRef.current?.clientWidth ?? 800;
-    const plotWidth = containerWidth - LABEL_WIDTH;
-    const fitPxPerDay = pxPerDay * plotWidth / scale.totalWidthPx;
-    setPxPerDay(clamp(fitPxPerDay, MIN_PX_PER_DAY, MAX_PX_PER_DAY));
+    setPxPerDay(getFitPxPerDay(pxPerDay, containerWidth, scale.totalWidthPx, LABEL_WIDTH));
   }, [pxPerDay, scale.totalWidthPx, setPxPerDay]);
 
-  const zoomPercent = Math.round((pxPerDay / DEFAULT_PX_PER_DAY) * 100);
+  const zoomPercent = getZoomPercent(pxPerDay, initialZoomPxPerDayRef.current);
 
   return (
     <div className="flex flex-col flex-1 min-h-0 bg-app">
@@ -291,6 +303,11 @@ export function TimelineClientWrapper({ serializedEvents }: Props) {
         {/* Brent toggle */}
         <div className="hidden md:block">
           <Toggle enabled={showChart} onChange={setShowChart} label="Preço do Barril (USD)" />
+        </div>
+
+        {/* Density scale toggle */}
+        <div className="hidden" aria-hidden="true">
+          <Toggle enabled={densityMode} onChange={setDensityMode} label="Escala por Densidade" />
         </div>
 
         <div className="w-px h-4 bg-surface-alt mx-1 hidden md:block" />

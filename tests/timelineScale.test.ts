@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildScale, getDefaultDomain } from "../lib/timelineScale";
+import { buildScale, getDefaultDomain, getFitPxPerDay, getZoomPercent } from "../lib/timelineScale";
 
 test("buildScale converts date <-> pixel with stable offsets", () => {
   const start = new Date(2020, 0, 1);
@@ -35,4 +35,16 @@ test("getDefaultDomain pads event range and guarantees future headroom", () => {
 
   assert.equal(min.getFullYear(), 2008);
   assert.ok(max.getFullYear() >= now.getFullYear() + 4);
+});
+
+test("getFitPxPerDay derives the initial viewport fit from the current scale", () => {
+  const fitPxPerDay = getFitPxPerDay(1.8, 1200, 1600, 180);
+
+  assert.equal(fitPxPerDay, 1.1475);
+});
+
+test("getZoomPercent rebases zoom percentage against the effective initial zoom", () => {
+  assert.equal(getZoomPercent(1.1475, 1.1475), 100);
+  assert.equal(getZoomPercent(1.6065, 1.1475), 140);
+  assert.equal(getZoomPercent(0.8196428571428571, 1.1475), 71);
 });

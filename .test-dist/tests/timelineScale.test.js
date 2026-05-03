@@ -35,3 +35,12 @@ const timelineScale_1 = require("../lib/timelineScale");
     strict_1.default.equal(min.getFullYear(), 2008);
     strict_1.default.ok(max.getFullYear() >= now.getFullYear() + 4);
 });
+(0, node_test_1.default)("getFitPxPerDay derives the initial viewport fit from the current scale", () => {
+    const fitPxPerDay = (0, timelineScale_1.getFitPxPerDay)(1.8, 1200, 1600, 180);
+    strict_1.default.equal(fitPxPerDay, 1.1475);
+});
+(0, node_test_1.default)("getZoomPercent rebases zoom percentage against the effective initial zoom", () => {
+    strict_1.default.equal((0, timelineScale_1.getZoomPercent)(1.1475, 1.1475), 100);
+    strict_1.default.equal((0, timelineScale_1.getZoomPercent)(1.6065, 1.1475), 140);
+    strict_1.default.equal((0, timelineScale_1.getZoomPercent)(0.8196428571428571, 1.1475), 71);
+});

@@ -725,7 +725,7 @@
 .oilmap-footer-credit strong { color: var(--fg); font-weight: 600; }
 .oilmap-footer-credit a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
 }
 .oilmap-footer-credit a:hover { text-decoration: underline; }
 .oilmap-footer-version {
