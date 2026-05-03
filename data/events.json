@@ -265,7 +265,7 @@
   },
   {
     "id": "venezuela-la-rosa-discovery-1922",
-    "title": "Jorro de Los Barrosos, Venezuela",
+    "title": "Jorro de Los Barrosos",
     "start_date": "1922-12-13",
     "end_date": null,
     "country": "Venezuela",
@@ -612,6 +612,18 @@
     "description": "A queda da ditadura venezuelana em 23 de janeiro de 1958 teve impacto direto e imediato na indústria do petróleo, porque abriu espaço para uma nova geração de tecnocratas e nacionalistas que buscavam maior controle estatal sobre a renda petrolífera — e o nome central desse processo foi Juan Pablo Pérez Alfonzo, nomeado ministro de Minas e Hidrocarburos logo após a redemocratização. Ele reorganizou completamente a política petrolífera venezuelana: criou o sistema de “fifty-fifty real” (reduzindo brechas usadas pelas majors), fortaleceu a fiscalização sobre as concessões, aumentou a carga tributária e, sobretudo, iniciou a articulação internacional que levaria à fundação da OPEP em 1960, transformando a Venezuela de simples fornecedora em potência reguladora do mercado global."
   },
   {
+    "id": "methane_pioneer_lng_ship",
+    "title": "1º transporte de LNG por navio (Methane Pioneer)",
+    "start_date": "1959-01-25",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "tecnologia",
+    "company": null,
+    "wikipedia": "https://en.wikipedia.org/wiki/Methane_Pioneer",
+    "description": "O Methane Pioneer foi o primeiro navio a transportar gás natural liquefeito (GNL) pelo oceano. A sua viagem inaugural ocorreu em 25 de janeiro de 1959, quando partiu da instalação de liquefação de gás natural na Louisiana, e chegou a Canvey Island no Reino Unido. Essa viagem foi histórica, pois foi a primeira vez que uma carga de GNL foi transportada pelo oceano, marcando o início da cadeia global de suprimentos de GNL."
+  },
+  {
     "id": "o-1-superpetroleiro-universe-apollo-1959",
     "title": "O 1º Superpetroleiro: Universe Apollo",
     "start_date": "1959-02-16",
@@ -658,6 +670,18 @@
     "company": null,
     "wikipedia": "https://en.wikipedia.org/wiki/OPEC",
     "description": "Irã, Iraque, Kuwait, Arábia Saudita e Venezuela fundam a organização em Bagdá para coordenar políticas petrolíferas e garantir preços estáveis aos países produtores. O movimento realizado pelo venezuelano Juan Pablo Pérez Alfonzo e o saudita Abdullah Tariki foi o início da real organização das nações exportadoras para assegurar sua soberania do Petróleo."
+  },
+  {
+    "id": "Carmopolis-descoberto",
+    "title": "Descoberto o campo de Carmópolis - o primeiro dos grandes",
+    "start_date": "1963-11-15",
+    "end_date": null,
+    "country": "Brasil",
+    "region": "América Central e do Sul",
+    "type": "discovery",
+    "company": "Petrobras",
+    "wikipedia": "https://cinttec.ufs.br/uploads/content_attach/path/5732/petrobras_comemora_50_anos_da_descoberta_do_campo_de_carmopolis_18-08-16.pdf",
+    "description": "Após mudanças na gestão da companhia e uma revisão das constatações do relatório Link, o campo de Carmópolis é descoberto em novembro de 1963, provando a existência de petróleo em Sergipe e dando início à era da exploração offshore no Brasil. Essa descoberta, com volume de óleo in-place estimado de 1,15 bilhão de barris, representou um marco fundamental na exploração de petróleo no Brasil, pois mostrava o potencial petrolífero das bacias marginais brasileiras."
   },
   {
     "id": "oil-surpasses-coal-global-1964",
@@ -1080,6 +1104,30 @@
     "description": "Compromisso global para limitar o aquecimento, sinalizando o início do fim da era fóssil e acelerando a transição energética."
   },
   {
+    "id": "EUA-exportations-back",
+    "title": "Fim da proibição de exportação de petróleo dos EUA",
+    "start_date": "2015-12-18",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "policy",
+    "company": null,
+    "wikipedia": "https://oglobo.globo.com/economia/petroleo-e-energia/fim-de-proibicao-exportacoes-de-petroleo-nos-eua-nao-afeta-mercado-diz-russia-18363752",
+    "description": "O governo dos EUA suspende a proibição de 40 anos que restringia a exportação do petróleo bruto a outros países. A proibição anterior, vigente desde 1975, foi uma resposta ao desabastecimento e à recessão que a crise do petróleo de 1973 causou."
+  },
+  {
+    "id": "first-shail-GNL",
+    "title": "1º carga exportada de Shale gas norte-americano",
+    "start_date": "2016-02-24",
+    "end_date": null,
+    "country": "Estados Unidos",
+    "region": "América do Norte",
+    "type": "policy",
+    "company": "Cheniere Energy",
+    "wikipedia": "https://oglobo.globo.com/economia/eua-enviam-para-brasil-sua-primeira-exportacao-de-gas-natural-18849891#:~:text=Jornal%20O%20Globo-,EUA%20enviam%20para%20o%20Brasil%20sua%20primeira%20exporta%C3%A7%C3%A3o%20de%20g%C3%A1s,Petrobras%20na%20Ba%C3%ADa%20de%20Guanabara.",
+    "description": "A primeira carga histórica de GNL exportada pelos Estados Unidos (proveniente do terminal Sabine Pass, na Louisiana) saiu, no navio Asia Vision, no final de fevereiro de 2016 com destino ao Brasil, Rio de Janeiro."
+  },
+  {
     "id": "opec-plus-alliance-2016",
     "title": "OPEP+ é formada",
     "start_date": "2016-11-30",
@@ -1188,6 +1236,18 @@
     "description": "A plataforma P-78, integrante do projeto Búzios 6, inicia produção no pré-sal da Bacia de Santos, cumprindo o plano estratégico da Petrobras para 2025 e reforçando o campo de Búzios como principal motor do crescimento da produção brasileira."
   },
   {
+    "id": "captura-de-maduro-e-reabertura-ao-exterior-2026",
+    "title": "Captura de Maduro e Reabertura ao Exterior",
+    "start_date": "2026-01-03",
+    "end_date": null,
+    "country": "Venezuela",
+    "region": "América Central e do Sul",
+    "type": "war",
+    "company": null,
+    "wikipedia": "https://www.reuters.com/business/energy/venezuelas-oil-exports-jump-highest-since-2018-with-more-sales-us-india-2026-05-01/?utm_source=chatgpt.com",
+    "description": "A captura de Nicolás Maduro em 3 de janeiro de 2026 marcou uma ruptura política e energética na Venezuela. Preso e levado a Nova York sob acusações ligadas a narcoterrorismo e tráfico, Maduro deixou um vácuo preenchido por Delcy Rodríguez como presidente interina. A mudança decisiva veio no petróleo: Caracas retomou exportações aos EUA e iniciou reformas para ampliar a participação estrangeira no setor. Com as maiores reservas provadas do mundo, a Venezuela voltou ao centro da disputa energética global."
+  },
+  {
     "id": "operation-epic-fury-iran-2026",
     "title": "Operação Fúria Épica",
     "start_date": "2026-02-28",
@@ -1212,18 +1272,6 @@
     "description": "Como efeito do bloqueio de Ormuz, o barril dispara nas três semanas seguintes ao início do conflito, ameaçando o suprimento global."
   },
   {
-    "id": "Carmopolis-descoberto",
-    "title": "Descoberto o campo de Carmópolis - o primeiro dos grandes",
-    "start_date": "1963-11-15",
-    "end_date": null,
-    "country": "Brasil",
-    "region": "América Central e do Sul",
-    "type": "discovery",
-    "company": "Petrobras",
-    "wikipedia": "https://cinttec.ufs.br/uploads/content_attach/path/5732/petrobras_comemora_50_anos_da_descoberta_do_campo_de_carmopolis_18-08-16.pdf",
-    "description": "Após mudanças na gestão da companhia e uma revisão das constatações do relatório Link, o campo de Carmópolis é descoberto em novembro de 1963, provando a existência de petróleo em Sergipe e dando início à era da exploração offshore no Brasil. Essa descoberta, com volume de óleo in-place estimado de 1,15 bilhão de barris, representou um marco fundamental na exploração de petróleo no Brasil, pois mostrava o potencial petrolífero das bacias marginais brasileiras."
-  },
-  {
     "id": "buzios-8-production-2026",
     "title": "Início da Produção na P-79 (Búzios 8)",
     "start_date": "2026-05-01",
@@ -1234,41 +1282,5 @@
     "company": "Petrobras",
     "wikipedia": "https://agencia.petrobras.com.br/w/negocio/petrobras-antecipa-in%C3%ADcio-de-produ%C3%A7%C3%A3o-de-b%C3%BAzios-8-p-79-",
     "description": "A plataforma P-79, integrante do projeto Búzios 8, inicia produção no pré-sal da Bacia de Santos."
-  },
-  {
-    "id": "methane_pioneer_lng_ship",
-    "title": "1º transporte de LNG por navio (Methane Pioneer)",
-    "start_date": "1959-01-25",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "tecnologia",
-    "company": null,
-    "wikipedia": "https://en.wikipedia.org/wiki/Methane_Pioneer",
-    "description": "O Methane Pioneer foi o primeiro navio a transportar gás natural liquefeito (GNL) pelo oceano. A sua viagem inaugural ocorreu em 25 de janeiro de 1959, quando partiu da instalação de liquefação de gás natural na Louisiana, e chegou a Canvey Island no Reino Unido. Essa viagem foi histórica, pois foi a primeira vez que uma carga de GNL foi transportada pelo oceano, marcando o início da cadeia global de suprimentos de GNL."
-  },
-  {
-    "id": "first-shail-GNL",
-    "title": "1º carga exportada de Shale gas norte-americano",
-    "start_date": "2016-02-24",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "policy",
-    "company": "Cheniere Energy",
-    "wikipedia": "https://oglobo.globo.com/economia/eua-enviam-para-brasil-sua-primeira-exportacao-de-gas-natural-18849891#:~:text=Jornal%20O%20Globo-,EUA%20enviam%20para%20o%20Brasil%20sua%20primeira%20exporta%C3%A7%C3%A3o%20de%20g%C3%A1s,Petrobras%20na%20Ba%C3%ADa%20de%20Guanabara.",
-    "description": "A primeira carga histórica de GNL exportada pelos Estados Unidos (proveniente do terminal Sabine Pass, na Louisiana) saiu, no navio Asia Vision, no final de fevereiro de 2016 com destino ao Brasil, Rio de Janeiro."
-  },
-  {
-    "id": "EUA-exportations-back",
-    "title": "Fim da proibição de exportação de petróleo dos EUA",
-    "start_date": "2015-12-18",
-    "end_date": null,
-    "country": "Estados Unidos",
-    "region": "América do Norte",
-    "type": "policy",
-    "company": null,
-    "wikipedia": "https://oglobo.globo.com/economia/petroleo-e-energia/fim-de-proibicao-exportacoes-de-petroleo-nos-eua-nao-afeta-mercado-diz-russia-18363752",
-    "description": "O governo dos EUA suspende a proibição de 40 anos que restringia a exportação do petróleo bruto a outros países. A proibição anterior, vigente desde 1975, foi uma resposta ao desabastecimento e à recessão que a crise do petróleo de 1973 causou."
   }
 ]

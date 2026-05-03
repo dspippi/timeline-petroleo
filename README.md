@@ -1,27 +1,40 @@
-# Timeline do Petroleo
+# Timeline do Petróleo
 
-Aplicacao Next.js para visualizar uma timeline historica do petroleo. O site online usa os arquivos JSON em `data/`; as ferramentas de edicao ficam para uso local.
+Aplicação Next.js para visualizar uma timeline histórica do petróleo, com gráfico de preços, filtros, página de fontes e uma área administrativa local para manutenção dos dados.
 
-## O que vai para o site
+## Manual principal
 
-Arquivos importantes para a aplicacao online:
+O manual completo de uso da aplicação está em:
+
+- [docs/manual-de-uso.html](docs/manual-de-uso.html)
+
+Esse arquivo cobre:
+
+- estrutura do projeto
+- funcionamento da timeline e do gráfico
+- uso do admin local
+- como adicionar e editar eventos
+- uso da planilha `data/events.xlsx`
+- categorias, fontes, tema e editor bruto
+- fluxo de publicação
+
+## Estrutura essencial
+
+Arquivos e pastas centrais do projeto:
 
 - `app/`, `components/`, `context/`, `hooks/`, `lib/`, `types/`
 - `public/`
 - `data/events.json`
 - `data/categories.json`
+- `data/sources.json`
 - `data/oil-prices-*.json`
-- `package.json`, `package-lock.json`, `next.config.mjs`, `tailwind.config.ts`, `tsconfig.json`
 
-Arquivos locais que nao precisam ir para o servidor:
+Arquivos locais de apoio que normalmente não vão para produção:
 
-- `dist/`
-- `scripts/`
-- `docs/`
 - `data/events.xlsx`
 - `data/*.bak-*`
-
-Esses arquivos locais ja estao protegidos por `.vercelignore`; `dist/`, `events.xlsx` e backups tambem ficam fora do Git por `.gitignore`.
+- `dist/`
+- `docs/`
 
 ## Rodar localmente
 
@@ -32,50 +45,58 @@ npm run dev
 
 Abra `http://localhost:3000`.
 
-## Editar eventos pelo admin local
+## Admin local
 
 ```bash
 npm run admin
 ```
 
-O navegador abre em `http://localhost:3000/admin`.
+Abra `http://localhost:3000/admin`.
 
-No admin voce pode criar, editar e excluir eventos. As alteracoes sao salvas em `data/events.json` no seu computador.
+O admin salva localmente em:
 
-Importante: o admin online deve ser tratado como somente leitura. Edicoes confiaveis devem ser feitas localmente e publicadas com Git.
-Por padrao, `/admin` e `/api/admin/*` ficam desabilitados em producao. Para reativar online de forma intencional, configure `ALLOW_ADMIN_ONLINE=1` no ambiente.
+- `data/events.json`
+- `data/categories.json`
+- `data/sources.json`
+- `app/globals.css`
 
-## Editar eventos pelo Excel
+Por padrão, `/admin` e `/api/admin/*` ficam bloqueados em produção. Para expor isso online de forma intencional, configure `ALLOW_ADMIN_ONLINE=1`.
 
-Exportar significa pegar `data/events.json` e gerar/atualizar `data/events.xlsx` para editar no Excel:
+## Fluxo com Excel
+
+Exportar `events.json` para `events.xlsx`:
 
 ```bash
 npm run excel:export
 ```
 
-Importar significa pegar `data/events.xlsx` e sobrescrever `data/events.json` com as edicoes feitas no Excel:
+Importar `events.xlsx` de volta para `events.json`:
 
 ```bash
 npm run excel:import
 ```
 
-O import pede confirmacao antes de sobrescrever `events.json` e cria backup automaticamente.
-
-Interface simples no terminal:
+Abrir a interface interativa no terminal:
 
 ```bash
 npm run excel:ui
 ```
 
-## Gerar o .exe do editor Excel
+O import pede confirmação e cria backup automático do JSON atual.
+
+## Executável da ferramenta Excel
 
 ```bash
 npm run excel:exe
 ```
 
-O executavel fica em `dist/events-excel.exe`.
+Saída:
 
-Uso:
+```bash
+dist/events-excel.exe
+```
+
+Exemplos:
 
 ```bash
 .\dist\events-excel.exe
@@ -83,20 +104,22 @@ Uso:
 .\dist\events-excel.exe import
 ```
 
-Se executar o `.exe` fora da pasta do projeto, informe a raiz:
+## Testes e build
 
 ```bash
-.\dist\events-excel.exe --root "C:\caminho\para\Timeline do Petroleo v2"
+npm test
+npm run build
 ```
 
-## Publicar alteracoes
+## Publicação
 
-Depois de editar localmente e conferir `data/events.json`:
+Depois de revisar os arquivos alterados:
 
 ```bash
-git add data/events.json data/categories.json
-git commit -m "Update events"
+git status
+git add data/events.json data/categories.json data/sources.json app/globals.css README.md docs/manual-de-uso.html
+git commit -m "Atualiza conteúdo"
 git push
 ```
 
-O Vercel detecta o `push` e republica o site automaticamente.
+O deploy da Vercel publica a nova versão após o `push`.

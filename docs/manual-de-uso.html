@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Timeline do Petróleo - Manual de Uso</title>
+    <style>
+      :root {
+        --bg: #f3efe6;
+        --surface: rgba(255, 255, 255, 0.9);
+        --surface-strong: #ffffff;
+        --text: #16202b;
+        --muted: #637282;
+        --line: rgba(22, 32, 43, 0.12);
+        --line-strong: rgba(22, 32, 43, 0.22);
+        --accent: #af5c10;
+        --accent-soft: rgba(175, 92, 16, 0.1);
+        --code: #f6f1e7;
+        --shadow: 0 18px 40px rgba(32, 25, 14, 0.08);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0b1016;
+          --surface: rgba(16, 24, 34, 0.88);
+          --surface-strong: #111a23;
+          --text: #edf3f8;
+          --muted: #9db0c1;
+          --line: rgba(237, 243, 248, 0.1);
+          --line-strong: rgba(237, 243, 248, 0.18);
+          --accent: #f7b34d;
+          --accent-soft: rgba(247, 179, 77, 0.12);
+          --code: #16202b;
+          --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(255, 214, 153, 0.16), transparent 28%),
+          radial-gradient(circle at bottom right, rgba(24, 119, 242, 0.12), transparent 25%),
+          var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      code,
+      pre {
+        font-family: Consolas, "Courier New", monospace;
+      }
+
+      code {
+        background: var(--code);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0.12rem 0.42rem;
+        font-size: 0.95em;
+      }
+
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        background: var(--code);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 16px 18px;
+        overflow-x: auto;
+      }
+
+      .page {
+        width: min(1280px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 28px 0 44px;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, rgba(175, 92, 16, 0.12), rgba(255, 255, 255, 0) 45%), var(--surface-strong);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        padding: 30px 30px 26px;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto -60px -80px auto;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(circle, rgba(175, 92, 16, 0.18), transparent 68%);
+        pointer-events: none;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 16px 0 10px;
+        font-size: clamp(2rem, 4vw, 3.3rem);
+        line-height: 1.06;
+        letter-spacing: -0.03em;
+        max-width: 900px;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 860px;
+        color: var(--muted);
+        font-size: 1.02rem;
+      }
+
+      .hero-grid {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .hero-card,
+      .panel,
+      .mini-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(14px);
+      }
+
+      .hero-card {
+        border-radius: 20px;
+        padding: 16px 18px;
+      }
+
+      .hero-card h2 {
+        margin: 0 0 6px;
+        font-size: 0.92rem;
+      }
+
+      .hero-card p {
+        font-size: 0.92rem;
+      }
+
+      .layout {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        gap: 18px;
+        align-items: start;
+      }
+
+      .toc,
+      .content {
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .toc {
+        position: sticky;
+        top: 18px;
+        padding: 18px;
+      }
+
+      .toc h2,
+      .content h2 {
+        margin: 0 0 12px;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+      }
+
+      .toc a {
+        display: block;
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid transparent;
+        transition: 160ms ease;
+        font-size: 0.94rem;
+      }
+
+      .toc a:hover {
+        border-color: var(--line);
+        background: var(--accent-soft);
+      }
+
+      .toc span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.78rem;
+        margin-top: 2px;
+      }
+
+      .content {
+        padding: 26px;
+      }
+
+      section + section {
+        margin-top: 28px;
+        padding-top: 28px;
+        border-top: 1px solid var(--line);
+      }
+
+      section h3 {
+        margin: 0 0 12px;
+        font-size: 1.45rem;
+        letter-spacing: -0.02em;
+      }
+
+      section p {
+        margin: 10px 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .callout {
+        margin: 16px 0;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: var(--accent-soft);
+        border: 1px solid rgba(175, 92, 16, 0.18);
+      }
+
+      .callout strong {
+        color: var(--accent);
+      }
+
+      .grid-2,
+      .grid-3 {
+        display: grid;
+        gap: 14px;
+      }
+
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .mini-card {
+        border-radius: 18px;
+        padding: 16px;
+      }
+
+      .mini-card h4 {
+        margin: 0 0 8px;
+        font-size: 1rem;
+      }
+
+      .mini-card p,
+      .mini-card li {
+        font-size: 0.94rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 12px 14px;
+        text-align: left;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+
+      th {
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        background: rgba(99, 114, 130, 0.06);
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      ul,
+      ol {
+        padding-left: 20px;
+      }
+
+      li + li {
+        margin-top: 6px;
+      }
+
+      .steps {
+        counter-reset: steps;
+        list-style: none;
+        padding: 0;
+        margin: 14px 0 0;
+      }
+
+      .steps li {
+        counter-increment: steps;
+        margin: 0;
+        padding: 14px 16px 14px 56px;
+        position: relative;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--surface);
+      }
+
+      .steps li + li {
+        margin-top: 10px;
+      }
+
+      .steps li::before {
+        content: counter(steps);
+        position: absolute;
+        left: 16px;
+        top: 14px;
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: white;
+        font-weight: 700;
+        display: grid;
+        place-items: center;
+      }
+
+      .footer {
+        margin-top: 18px;
+        padding: 18px 20px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        text-align: center;
+      }
+
+      @media (max-width: 1080px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .toc {
+          position: static;
+        }
+      }
+
+      @media (max-width: 840px) {
+        .hero-grid,
+        .grid-2,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+
+        .content {
+          padding: 22px 18px;
+        }
+
+        .hero {
+          padding: 24px 18px 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="eyebrow">Manual Completo • Timeline do Petróleo</div>
+        <h1>Manual de uso da aplicação, da estrutura do código ao fluxo de edição com Excel</h1>
+        <p>
+          Este documento foi escrito a partir da estrutura real do repositório. Ele cobre como a aplicação é organizada,
+          como rodar localmente, como adicionar eventos pelo admin, como usar a planilha <code>data/events.xlsx</code> de apoio,
+          como editar categorias, fontes e tema, e como publicar alterações com segurança.
+        </p>
+
+        <div class="hero-grid">
+          <div class="hero-card">
+            <h2>Aplicação pública</h2>
+            <p>Timeline histórica, gráfico de preço do petróleo, filtros, painel de detalhes e página de fontes.</p>
+          </div>
+          <div class="hero-card">
+            <h2>Ferramentas locais</h2>
+            <p>Admin para CRUD, editor bruto de JSON, importação/exportação Excel e editor de tema.</p>
+          </div>
+          <div class="hero-card">
+            <h2>Arquivos centrais</h2>
+            <p><code>data/events.json</code>, <code>data/categories.json</code>, <code>data/sources.json</code> e <code>app/globals.css</code>.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside class="toc panel" aria-label="Índice">
+          <h2>Índice</h2>
+          <a href="#visao-geral">1. Visão geral<span>O que a aplicação entrega</span></a>
+          <a href="#estrutura">2. Estrutura do projeto<span>Pastas e responsabilidades</span></a>
+          <a href="#arquitetura">3. Arquitetura de execução<span>Server, client, dados e rotas</span></a>
+          <a href="#dados">4. Modelo de dados<span>Campos, formatos e regras</span></a>
+          <a href="#uso-publico">5. Como usar o site<span>Navegação da timeline e páginas públicas</span></a>
+          <a href="#admin">6. Área administrativa<span>CRUD de eventos, categorias, fontes e tema</span></a>
+          <a href="#novo-evento">7. Como adicionar eventos<span>Fluxo recomendado pelo admin</span></a>
+          <a href="#excel">8. Planilha events.xlsx<span>Exportar, editar e importar</span></a>
+          <a href="#manutencao">9. Manutenção de dados<span>Editor bruto, backups e validação</span></a>
+          <a href="#publicacao">10. Publicação<span>Git, deploy e cuidados</span></a>
+          <a href="#referencia">11. Referência rápida<span>Comandos e checklist</span></a>
+        </aside>
+
+        <main class="content panel">
+          <section id="visao-geral">
+            <h3>1. Visão geral</h3>
+            <p>
+              A <strong>Timeline do Petróleo</strong> é uma aplicação em <code>Next.js 14</code> com <code>React</code> e
+              <code>TypeScript</code> voltada à visualização de eventos históricos, corporativos, tecnológicos e geopolíticos
+              relacionados ao petróleo. O núcleo da experiência é uma timeline horizontal com zoom, pan, agrupamento por região e país,
+              e sincronização visual com um gráfico do preço do Brent.
+            </p>
+            <p>
+              O projeto também inclui uma área administrativa local para manutenção do conteúdo. Essa área salva diretamente em arquivos
+              JSON do repositório e foi pensada para uso no computador de trabalho, não como CMS online permanente.
+            </p>
+            <div class="callout">
+              <strong>Ponto central do projeto:</strong> o site público lê dados versionados em arquivos do próprio repositório.
+              Ou seja: editar a aplicação significa editar arquivos locais, validar e depois publicar via Git.
+            </div>
+          </section>
+
+          <section id="estrutura">
+            <h3>2. Estrutura do projeto</h3>
+            <p>As pastas abaixo são as mais importantes para entender o funcionamento da aplicação.</p>
+
+            <div class="grid-2">
+              <div class="mini-card">
+                <h4>Frontend público</h4>
+                <ul>
+                  <li><code>app/page.tsx</code>: página inicial com a timeline.</li>
+                  <li><code>components/Timeline/</code>: renderização da timeline, linhas, marcadores, tooltip e wrapper principal.</li>
+                  <li><code>components/OilChart/</code>: gráfico de preços do petróleo.</li>
+                  <li><code>app/sources/page.tsx</code>: página pública de fontes e referências.</li>
+                  <li><code>context/</code> e <code>hooks/</code>: filtros, sincronização e preferências.</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <h4>Dados e lógica</h4>
+                <ul>
+                  <li><code>data/events.json</code>: base principal de eventos.</li>
+                  <li><code>data/categories.json</code>: categorias, rótulos, cores e formatos.</li>
+                  <li><code>data/sources.json</code>: lista de referências exibidas em <code>/sources</code>.</li>
+                  <li><code>data/oil-prices-*.json</code>: base local de apoio para o gráfico.</li>
+                  <li><code>lib/</code>: leitura/escrita de dados, datas, categorias, escala e tema.</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <h4>Admin e APIs</h4>
+                <ul>
+                  <li><code>app/admin/</code>: telas do painel administrativo.</li>
+                  <li><code>app/api/admin/</code>: endpoints para eventos, categorias, fontes, tema e editor bruto.</li>
+                  <li><code>middleware.ts</code>: trava ou libera o admin conforme o ambiente.</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <h4>Ferramentas auxiliares</h4>
+                <ul>
+                  <li><code>scripts/events-excel.mjs</code>: interface CLI para Excel.</li>
+                  <li><code>scripts/events-excel-core.cjs</code>: regras de importação e exportação.</li>
+                  <li><code>dist/</code>: saída opcional do executável do editor Excel.</li>
+                  <li><code>docs/</code>: documentação e arquivos de apoio locais.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout">
+              <strong>Importante:</strong> <code>data/events.xlsx</code> é um arquivo local de apoio. Ele não precisa ir para produção
+              e está ignorado pelo Git.
+            </div>
+          </section>
+
+          <section id="arquitetura">
+            <h3>3. Arquitetura de execução</h3>
+            <p>O fluxo principal da home funciona assim:</p>
+
+            <pre>app/page.tsx
+  -> parseEvents() / listEvents()
+  -> lê data/events.json no servidor
+  -> converte datas para string (serialização)
+  -> envia para TimelineClientWrapper
+  -> wrapper reconstrói Date, aplica filtros e desenha a timeline</pre>
+
+            <div class="grid-3">
+              <div class="mini-card">
+                <h4>Camada server</h4>
+                <p>
+                  <code>app/page.tsx</code> lê os eventos no servidor para que a página já nasça com dados prontos.
+                  O parser usado hoje é <code>listEvents()</code>, reexportado por <code>lib/parseEvents.ts</code>.
+                </p>
+              </div>
+              <div class="mini-card">
+                <h4>Camada client</h4>
+                <p>
+                  <code>TimelineClientWrapper</code> recebe os eventos serializados, reconstrói as datas,
+                  cria escala temporal, controla filtros, sincroniza hover e monta a interface.
+                </p>
+              </div>
+              <div class="mini-card">
+                <h4>Camada API</h4>
+                <p>
+                  <code>app/api/oil-prices/route.ts</code> alimenta o gráfico.
+                  <code>app/api/admin/*</code> faz as operações de edição local dos arquivos.
+                </p>
+              </div>
+            </div>
+
+            <p>
+              A aplicação usa <code>app/layout.tsx</code> para registrar três providers globais:
+              <code>CategoriesProvider</code>, <code>SettingsProvider</code> e <code>TimelineSyncProvider</code>.
+              Eles mantêm o estado compartilhado de categorias, preferências visuais e sincronização de hover/zoom.
+            </p>
+          </section>
+
+          <section id="dados">
+            <h3>4. Modelo de dados</h3>
+            <p>O objeto central da aplicação é o evento da timeline.</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Campo</th>
+                  <th>Obrigatório</th>
+                  <th>Formato</th>
+                  <th>Uso na aplicação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>id</code></td>
+                  <td>Sim</td>
+                  <td>Texto único</td>
+                  <td>Identificador interno. É usado para edição, atualização e exclusão.</td>
+                </tr>
+                <tr>
+                  <td><code>title</code></td>
+                  <td>Sim</td>
+                  <td>Texto</td>
+                  <td>Título visível do evento na tabela e no card.</td>
+                </tr>
+                <tr>
+                  <td><code>start_date</code></td>
+                  <td>Sim</td>
+                  <td><code>YYYY-MM-DD</code></td>
+                  <td>Data inicial usada para ordenação e posicionamento.</td>
+                </tr>
+                <tr>
+                  <td><code>end_date</code></td>
+                  <td>Não</td>
+                  <td><code>YYYY-MM-DD</code> ou <code>null</code></td>
+                  <td>Se existir, o evento vira intervalo. Se não existir, vira marcador pontual.</td>
+                </tr>
+                <tr>
+                  <td><code>country</code></td>
+                  <td>Sim</td>
+                  <td>Texto</td>
+                  <td>Usado em agrupamentos, filtros e busca.</td>
+                </tr>
+                <tr>
+                  <td><code>region</code></td>
+                  <td>Sim</td>
+                  <td>Texto</td>
+                  <td>Define o agrupamento principal da timeline.</td>
+                </tr>
+                <tr>
+                  <td><code>type</code></td>
+                  <td>Sim</td>
+                  <td>ID de categoria</td>
+                  <td>Controla cor, rótulo e formato visual do evento.</td>
+                </tr>
+                <tr>
+                  <td><code>company</code></td>
+                  <td>Não</td>
+                  <td>Texto ou <code>null</code></td>
+                  <td>Empresa relacionada ao evento.</td>
+                </tr>
+                <tr>
+                  <td><code>wikipedia</code></td>
+                  <td>Não</td>
+                  <td>URL ou <code>null</code></td>
+                  <td>Link de referência dentro do card do evento.</td>
+                </tr>
+                <tr>
+                  <td><code>description</code></td>
+                  <td>Não</td>
+                  <td>Texto</td>
+                  <td>Descrição longa exibida ao abrir o detalhe do evento.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>Exemplo do formato persistido em <code>data/events.json</code>:</p>
+            <pre>{
+  "id": "drake-well-titusville-1859",
+  "title": "Poço Drake: Início da Era do Petróleo",
+  "start_date": "1859-08-27",
+  "end_date": null,
+  "country": "Estados Unidos",
+  "region": "América do Norte",
+  "type": "discovery",
+  "company": "Seneca Oil Company",
+  "wikipedia": "https://en.wikipedia.org/wiki/Drake_Well",
+  "description": "Edwin Drake perfura o primeiro poço de petróleo..."
+}</pre>
+
+            <div class="callout">
+              <strong>Regra prática:</strong> o tipo do evento precisa corresponder a um <code>id</code> existente em
+              <code>data/categories.json</code>. Se você remover uma categoria ainda usada em eventos, o dado continua salvo,
+              mas a interface pode perder o rótulo ou a cor esperada.
+            </div>
+          </section>
+
+          <section id="uso-publico">
+            <h3>5. Como usar o site público</h3>
+
+            <div class="grid-2">
+              <div class="mini-card">
+                <h4>Timeline principal</h4>
+                <ul>
+                  <li>Arraste com o mouse para mover a timeline horizontal e verticalmente.</li>
+                  <li>Use <code>Ctrl + scroll</code> para aplicar zoom temporal.</li>
+                  <li>Use os controles da interface para ampliar, reduzir, resetar ou ajustar a escala.</li>
+                  <li>Passe o mouse para ver a data sincronizada entre timeline e gráfico.</li>
+                  <li>Clique em um evento para abrir o card com título, descrição, país, empresa e link.</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <h4>Filtros e configuração</h4>
+                <ul>
+                  <li>Os filtros trabalham por país, tipo e empresa.</li>
+                  <li>As preferências visuais incluem densidade, tamanho dos marcadores e modo escuro.</li>
+                  <li>A timeline é agrupada por região e país, com distribuição em faixas para evitar sobreposição.</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <h4>Gráfico do petróleo</h4>
+                <ul>
+                  <li>O gráfico usa <code>Recharts</code> e a mesma escala temporal da timeline.</li>
+                  <li>Ele lê dados via <code>/api/oil-prices</code>, com base local de fallback em JSON.</li>
+                  <li>O hover é sincronizado com a timeline para facilitar leitura comparativa.</li>
+                </ul>
+              </div>
+
+              <div class="mini-card">
+                <h4>Página de fontes</h4>
+                <ul>
+                  <li><code>/sources</code> lista livros, sites, datasets e artigos cadastrados em <code>data/sources.json</code>.</li>
+                  <li>Cada item pode exibir ano, tipo, autor, descrição, imagem e URL.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="admin">
+            <h3>6. Área administrativa</h3>
+            <p>
+              A área administrativa fica em <code>/admin</code>. Em ambiente local de desenvolvimento ela é liberada automaticamente.
+              Em produção, o <code>middleware.ts</code> a bloqueia por padrão e só a expõe se <code>ALLOW_ADMIN_ONLINE=1</code> estiver configurado.
+            </p>
+
+            <div class="callout">
+              <strong>Recomendação do próprio projeto:</strong> trate o admin online como exceção. O fluxo confiável é editar localmente,
+              revisar os arquivos modificados e publicar por Git.
+            </div>
+
+            <div class="grid-3">
+              <div class="mini-card">
+                <h4>Eventos</h4>
+                <p>
+                  Tela principal do admin. Mostra contagem total, busca por título ou país, filtro por tipo,
+                  ordenação por colunas e ações de editar ou excluir.
+                </p>
+              </div>
+              <div class="mini-card">
+                <h4>Categorias</h4>
+                <p>
+                  Permite criar e editar categorias em <code>data/categories.json</code>, com <code>id</code>, rótulo,
+                  cor hexadecimal e formato do marcador.
+                </p>
+              </div>
+              <div class="mini-card">
+                <h4>Fontes</h4>
+                <p>
+                  Permite manter <code>data/sources.json</code>, que abastece a página pública de fontes.
+                </p>
+              </div>
+              <div class="mini-card">
+                <h4>Cores & Tema</h4>
+                <p>
+                  Edita variáveis CSS de <code>app/globals.css</code> para os modos claro e escuro.
+                </p>
+              </div>
+              <div class="mini-card">
+                <h4>Editor de Texto</h4>
+                <p>
+                  Abre o conteúdo bruto de <code>data/events.json</code> para edição manual com validação de JSON no salvamento.
+                </p>
+              </div>
+              <div class="mini-card">
+                <h4>Mapa de Plataformas</h4>
+                <p>
+                  Há um atalho no topo do admin para a página <code>/mapaplataformas</code>, aberta em nova aba.
+                </p>
+              </div>
+            </div>
+
+            <p>
+              A persistência dos eventos é feita por <code>lib/adminEvents.ts</code>. As funções principais são
+              <code>listEvents()</code>, <code>addEvent()</code>, <code>updateEvent()</code>, <code>deleteEvent()</code>,
+              <code>readRawEvents()</code> e <code>writeRawEvents()</code>.
+            </p>
+          </section>
+
+          <section id="novo-evento">
+            <h3>7. Como adicionar eventos</h3>
+            <p>O fluxo recomendado para cadastrar um evento novo é usar a tela <code>/admin/events/new</code>.</p>
+
+            <ol class="steps">
+              <li>
+                Abra o projeto localmente com <code>npm run admin</code> ou <code>npm run dev</code> e acesse
+                <code>http://localhost:3000/admin</code>.
+              </li>
+              <li>
+                Clique em <strong>+ Novo Evento</strong>. O formulário usa as categorias existentes e oferece sugestões
+                de países e empresas já presentes na base.
+              </li>
+              <li>
+                Preencha <code>Título</code>, <code>Data de início</code>, <code>País</code>, <code>Região</code> e <code>Tipo</code>.
+                Esses são os campos mínimos para um cadastro consistente.
+              </li>
+              <li>
+                Revise o <code>ID</code>. No modo de criação ele é gerado automaticamente a partir do título e do ano,
+                mas pode ser editado manualmente. O <code>ID</code> precisa ser único.
+              </li>
+              <li>
+                Se o evento for um período, preencha também <code>Data de fim</code>. Se for um fato pontual, deixe esse campo vazio.
+              </li>
+              <li>
+                Preencha os campos opcionais <code>Empresa</code>, <code>Wikipedia</code> e <code>Descrição</code> quando fizer sentido.
+              </li>
+              <li>
+                Salve. O endpoint <code>/api/admin/events</code> grava o conteúdo em <code>data/events.json</code> e reordena os eventos por <code>start_date</code>.
+              </li>
+            </ol>
+
+            <p>Regiões disponíveis hoje no formulário:</p>
+            <ul>
+              <li><code>Global</code></li>
+              <li><code>América Central e do Sul</code></li>
+              <li><code>América do Norte</code></li>
+              <li><code>Oriente Médio</code></li>
+              <li><code>Europa</code></li>
+              <li><code>Ásia</code></li>
+              <li><code>África</code></li>
+              <li><code>Outros</code></li>
+            </ul>
+
+            <div class="callout">
+              <strong>Dica editorial:</strong> use títulos curtos e descrições mais completas. O título precisa funcionar bem na listagem;
+              a descrição é o lugar para contexto histórico.
+            </div>
+          </section>
+
+          <section id="excel">
+            <h3>8. Como usar a planilha <code>events.xlsx</code></h3>
+            <p>
+              O repositório inclui um fluxo formal para trabalhar com Excel. Ele existe para cenários em que editar dezenas de eventos
+              em tabela é mais rápido do que usar o formulário do admin.
+            </p>
+
+            <div class="grid-2">
+              <div class="mini-card">
+                <h4>Comandos principais</h4>
+                <pre>npm run excel:export
+npm run excel:import
+npm run excel:ui</pre>
+              </div>
+              <div class="mini-card">
+                <h4>O que cada um faz</h4>
+                <ul>
+                  <li><code>excel:export</code>: gera ou atualiza <code>data/events.xlsx</code> a partir de <code>data/events.json</code>.</li>
+                  <li><code>excel:import</code>: lê <code>data/events.xlsx</code> e sobrescreve <code>data/events.json</code>.</li>
+                  <li><code>excel:ui</code>: abre um menu simples no terminal para escolher exportar ou importar.</li>
+                </ul>
+              </div>
+            </div>
+
+            <p>As colunas esperadas pela ferramenta Excel são exatamente estas:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Coluna</th>
+                  <th>Obrigatória</th>
+                  <th>Observação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>id</code></td><td>Sim</td><td>Precisa ser único.</td></tr>
+                <tr><td><code>title</code></td><td>Sim</td><td>Título do evento.</td></tr>
+                <tr><td><code>start_date</code></td><td>Sim</td><td>Formato textual esperado: <code>YYYY-MM-DD</code>.</td></tr>
+                <tr><td><code>end_date</code></td><td>Não</td><td>Vazio vira <code>null</code>.</td></tr>
+                <tr><td><code>country</code></td><td>Não na importação, mas recomendado</td><td>Não é obrigatório no parser Excel, mas é obrigatório para um evento consistente na aplicação.</td></tr>
+                <tr><td><code>region</code></td><td>Não na importação, mas recomendado</td><td>Define agrupamento visual.</td></tr>
+                <tr><td><code>type</code></td><td>Não na importação, mas recomendado</td><td>Deve corresponder a uma categoria válida.</td></tr>
+                <tr><td><code>company</code></td><td>Não</td><td>Vazio vira <code>null</code>.</td></tr>
+                <tr><td><code>wikipedia</code></td><td>Não</td><td>Vazio vira <code>null</code>.</td></tr>
+                <tr><td><code>description</code></td><td>Não</td><td>Texto livre.</td></tr>
+              </tbody>
+            </table>
+
+            <p>Fluxo recomendado com Excel:</p>
+            <ol class="steps">
+              <li>Execute <code>npm run excel:export</code> para garantir que a planilha reflita a versão atual do JSON.</li>
+              <li>Abra <code>data/events.xlsx</code> no Excel e faça as alterações em lote.</li>
+              <li>Não mude o nome das colunas. A importação exige os cabeçalhos corretos.</li>
+              <li>Mantenha datas no padrão <code>YYYY-MM-DD</code> para evitar ambiguidade.</li>
+              <li>Ao terminar, rode <code>npm run excel:import</code>.</li>
+              <li>Confirme digitando <code>IMPORTAR</code> quando o script pedir confirmação.</li>
+              <li>Revise o <code>data/events.json</code> gerado e abra o site local para conferir o efeito visual.</li>
+            </ol>
+
+            <div class="callout">
+              <strong>Segurança do fluxo:</strong> no import, a ferramenta cria automaticamente um backup do JSON atual em um arquivo
+              do tipo <code>data/events.json.bak-AAAAMMDD-HHMMSS</code> antes de sobrescrever.
+            </div>
+
+            <p>
+              A importação ignora linhas sem <code>id</code>, <code>title</code> ou <code>start_date</code>.
+              O script também reordena os eventos pela data inicial.
+            </p>
+
+            <p>
+              Se quiser distribuir a ferramenta Excel separadamente para uso local, o projeto também possui
+              <code>npm run excel:exe</code>, que gera <code>dist/events-excel.exe</code>.
+              Se o executável for aberto fora da raiz do projeto, passe a pasta manualmente com
+              <code>--root "C:\caminho\para\Timeline do Petróleo v2"</code>.
+            </p>
+          </section>
+
+          <section id="manutencao">
+            <h3>9. Manutenção de dados e personalização</h3>
+
+            <div class="grid-2">
+              <div class="mini-card">
+                <h4>Categorias</h4>
+                <p>
+                  O editor de categorias salva a lista completa em <code>data/categories.json</code>.
+                  Cada categoria tem <code>id</code>, <code>label</code>, <code>color</code> e <code>shape</code>.
+                </p>
+                <p>
+                  O endpoint de salvamento valida cor em formato <code>#rrggbb</code>, proíbe IDs duplicados e aceita apenas
+                  letras minúsculas, números, hífen e sublinhado no <code>id</code>.
+                </p>
+              </div>
+
+              <div class="mini-card">
+                <h4>Fontes</h4>
+                <p>
+                  O editor de fontes salva tudo em <code>data/sources.json</code>. Os campos usados são:
+                  <code>id</code>, <code>title</code>, <code>author</code>, <code>year</code>, <code>type</code>,
+                  <code>url</code>, <code>imageUrl</code> e <code>description</code>.
+                </p>
+              </div>
+
+              <div class="mini-card">
+                <h4>Tema</h4>
+                <p>
+                  O editor de tema altera variáveis CSS diretamente em <code>app/globals.css</code>, tanto para modo claro quanto escuro.
+                  Depois de salvar, recarregue a página para ver o resultado completo.
+                </p>
+              </div>
+
+              <div class="mini-card">
+                <h4>Editor de Texto</h4>
+                <p>
+                  Use apenas quando precisar de controle total sobre o JSON.
+                  O salvamento passa por <code>writeRawEvents()</code>, então JSON inválido é rejeitado antes de gravar.
+                </p>
+              </div>
+            </div>
+
+            <p>Quando usar cada ferramenta:</p>
+            <ul>
+              <li>Use <strong>Admin</strong> para criar ou ajustar poucos eventos manualmente.</li>
+              <li>Use <strong>Excel</strong> para grandes lotes de edição.</li>
+              <li>Use <strong>Editor de Texto</strong> para correções estruturais, colagens controladas ou operações muito específicas.</li>
+              <li>Use <strong>Categorias</strong> quando surgir um novo tipo de evento ou quando quiser mudar cor/forma existentes.</li>
+              <li>Use <strong>Fontes</strong> para manter a página pública de referências coerente com o conteúdo.</li>
+              <li>Use <strong>Tema</strong> para ajustes visuais globais da aplicação.</li>
+            </ul>
+          </section>
+
+          <section id="publicacao">
+            <h3>10. Publicação e rotina de trabalho</h3>
+            <p>O fluxo esperado de manutenção do conteúdo é local, versionado e revisável.</p>
+
+            <ol class="steps">
+              <li>Edite os dados pelo admin, Excel ou editor bruto.</li>
+              <li>Revise os arquivos alterados, principalmente <code>data/events.json</code>, <code>data/categories.json</code> e <code>data/sources.json</code>.</li>
+              <li>Abra o site localmente para validar se a timeline, os filtros e o gráfico continuam corretos.</li>
+              <li>Faça o commit apenas dos arquivos que realmente devem ir para o repositório.</li>
+              <li>Envie com <code>git push</code>. O deploy do Vercel publica a nova versão do site.</li>
+            </ol>
+
+            <p>Comandos usuais:</p>
+            <pre>git status
+git add data/events.json data/categories.json data/sources.json app/globals.css README.md docs/manual-de-uso.html
+git commit -m "Atualiza conteúdo e documentação"
+git push</pre>
+
+            <div class="callout">
+              <strong>Arquivos locais que normalmente não devem ser publicados:</strong>
+              <code>data/events.xlsx</code>, backups <code>data/*.bak-*</code>, <code>dist/</code> e artefatos temporários.
+            </div>
+          </section>
+
+          <section id="referencia">
+            <h3>11. Referência rápida</h3>
+
+            <div class="grid-2">
+              <div class="mini-card">
+                <h4>Comandos do projeto</h4>
+                <pre>npm install
+npm run dev
+npm run admin
+npm run build
+npm test
+npm run excel:export
+npm run excel:import
+npm run excel:ui
+npm run excel:exe</pre>
+              </div>
+
+              <div class="mini-card">
+                <h4>Checklist antes de publicar</h4>
+                <ul>
+                  <li>O evento tem <code>id</code> único?</li>
+                  <li>As datas estão no formato <code>YYYY-MM-DD</code>?</li>
+                  <li>O <code>type</code> existe em <code>categories.json</code>?</li>
+                  <li>O país e a região estão corretos?</li>
+                  <li>O site local abre sem erro?</li>
+                  <li>Você não está subindo <code>events.xlsx</code> ou backups sem querer?</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="muted">
+              Arquivo pensado para consulta local e como referência principal de operação do projeto.
+              Se a estrutura do repositório mudar, este manual deve ser revisado junto com o <code>README.md</code>.
+            </p>
+          </section>
+        </main>
+      </div>
+
+      <footer class="footer">
+        Manual baseado na estrutura atual do repositório Timeline do Petróleo v2. Arquivo: <code>docs/manual-de-uso.html</code>
+      </footer>
+    </div>
+  </body>
+</html>
