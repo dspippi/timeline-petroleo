@@ -25,14 +25,23 @@ export default function HomePage() {
             Geopolítica energética
           </p>
         </div>
-        <div className="ml-auto flex items-center gap-4">
+        <div className="ml-auto flex items-center gap-2">
+          <Link
+            href="/mapaplataformas"
+            className="text-xs font-medium text-content-tertiary hover:text-gray-900 dark:hover:text-[#f2f7f4] transition-colors bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-md flex items-center gap-1.5"
+          >
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="12" height="12" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.5"/>
+              <path d="M8 1.5C8 1.5 5.5 5 5.5 8s2.5 6.5 2.5 6.5M8 1.5C8 1.5 10.5 5 10.5 8S8 14.5 8 14.5M1.5 8h13"/>
+            </svg>
+            Mapa Offshore Brasil
+          </Link>
           <Link
             href="/sources"
             className="text-xs font-medium text-content-tertiary hover:text-gray-900 dark:hover:text-[#f2f7f4] transition-colors bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-md"
           >
             Fontes
           </Link>
-
         </div>
       </header>
 

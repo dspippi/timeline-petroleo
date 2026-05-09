@@ -1,4 +1,8 @@
-﻿export default function MapaPlataformasPage() {
+﻿export const metadata = {
+  title: "Mapa Offshore Brasil | Timeline do Petróleo",
+};
+
+export default function MapaPlataformasPage() {
   return (
     <iframe
       src="/world-oil-map/index.html"

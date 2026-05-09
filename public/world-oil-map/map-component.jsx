@@ -38,6 +38,8 @@ const shortClass = (c) => {
 
 const normalizeFieldName = (name) => (name || '').trim().replace(/\s+/g, ' ').toUpperCase();
 const normalizeText = (text) => normalizeFieldName(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+// Strip regime/phase suffix from field names (BUZIOS_ECO \u2192 BUZIOS, LULA_NORTE \u2192 LULA)
+const baseFieldName = (name) => (name || '').split('_')[0].trim();
 const FIELD_BASIN_COLORS = {
   'ALAGOAS': '#7c3aed',
   'CAMAMU': '#d97706',
@@ -93,13 +95,14 @@ const DATA_META = {
 
 const FOOTER_TEXT = "Projeto pessoal e independente. Informações baseadas em fontes públicas e literatura especializada — Envie um email caso identifique algum erro, inconsistência ou tenha alguma sugestão de melhoria. O autor não se responsabiliza pelo uso das informações aqui apresentadas.";
 
-function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
+function OilMap({ theme, platforms, fieldFeatures, pipelines, onToggleMode }) {
   const mapEl = useRef(null);
   const mapRef = useRef(null);
   const markersLayer = useRef(null);
   const fieldsLayer = useRef(null);
   const fieldLabelsLayer = useRef(null);
   const platformLabelsLayer = useRef(null);
+  const pipelinesLayer = useRef(null);
 
   // Sidebar widths (resizable)
   const [leftWidth, setLeftWidth] = useState(320);
@@ -118,11 +121,19 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
   const [search, setSearch] = useState('');
   const [showPlatforms, setShowPlatforms] = useState(true);
   const [showFields, setShowFields] = useState(true);
+  const [showPipelines, setShowPipelines] = useState(true);
   const [mapZoom, setMapZoom] = useState(5);
   const [mapViewTick, setMapViewTick] = useState(0);
 
   const [selectedId, setSelectedId] = useState(null);
   const [filtersOpen, setFiltersOpen] = useState(true);
+
+  // Pipelines filters
+  const [selectedDutoTipos, setSelectedDutoTipos] = useState(new Set());
+  const [selectedDutoProdutos, setSelectedDutoProdutos] = useState(new Set());
+  const [selectedDutoOps, setSelectedDutoOps] = useState(new Set());
+  const [diaRange, setDiaRange] = useState(null);
+  const [extRange, setExtRange] = useState(null);
 
   const allOps = useMemo(() => {
     const counts = {};
@@ -199,6 +210,111 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
       .slice(0, limit);
   }, [mapZoom, search, selectedCampos, visibleFieldFeatures]);
 
+  // ---------- Pipelines (dutos) ----------
+  const pipelineFeatures = pipelines && pipelines.features ? pipelines.features : null;
+
+  const dutoBounds = useMemo(() => {
+    if (!pipelineFeatures) return { dMin: 0, dMax: 60, eMin: 0, eMax: 1000 };
+    let dMin = Infinity, dMax = -Infinity, eMin = Infinity, eMax = -Infinity;
+    pipelineFeatures.forEach(f => {
+      const p = f.properties || {};
+      const d = parseFloat(p.diametro_pol);
+      if (!isNaN(d)) { if (d < dMin) dMin = d; if (d > dMax) dMax = d; }
+      const e = Number(p.extensao_km);
+      if (!isNaN(e)) { if (e < eMin) eMin = e; if (e > eMax) eMax = e; }
+    });
+    if (!isFinite(dMin)) { dMin = 0; dMax = 60; }
+    if (!isFinite(eMin)) { eMin = 0; eMax = 1000; }
+    return {
+      dMin: Math.floor(dMin),
+      dMax: Math.ceil(dMax),
+      eMin: Math.floor(eMin),
+      eMax: Math.ceil(eMax),
+    };
+  }, [pipelineFeatures]);
+
+  useEffect(() => {
+    if (pipelineFeatures && diaRange === null) setDiaRange([dutoBounds.dMin, dutoBounds.dMax]);
+  }, [pipelineFeatures, dutoBounds.dMin, dutoBounds.dMax]);
+  useEffect(() => {
+    if (pipelineFeatures && extRange === null) setExtRange([dutoBounds.eMin, dutoBounds.eMax]);
+  }, [pipelineFeatures, dutoBounds.eMin, dutoBounds.eMax]);
+
+  const allDutoTipos = useMemo(() => {
+    if (!pipelineFeatures) return [];
+    return [...new Set(pipelineFeatures.map(f => (f.properties && f.properties.tipo) || 'desconhecido'))].sort();
+  }, [pipelineFeatures]);
+  const dutoTipoCounts = useMemo(() => {
+    const c = {};
+    if (pipelineFeatures) pipelineFeatures.forEach(f => {
+      const t = (f.properties && f.properties.tipo) || 'desconhecido';
+      c[t] = (c[t] || 0) + 1;
+    });
+    return c;
+  }, [pipelineFeatures]);
+  const allDutoProdutos = useMemo(() => {
+    if (!pipelineFeatures) return [];
+    return [...new Set(pipelineFeatures.map(f => (f.properties && f.properties.produto) || '—'))].sort();
+  }, [pipelineFeatures]);
+  const dutoProdutoCounts = useMemo(() => {
+    const c = {};
+    if (pipelineFeatures) pipelineFeatures.forEach(f => {
+      const t = (f.properties && f.properties.produto) || '—';
+      c[t] = (c[t] || 0) + 1;
+    });
+    return c;
+  }, [pipelineFeatures]);
+  const allDutoOps = useMemo(() => {
+    if (!pipelineFeatures) return [];
+    return [...new Set(pipelineFeatures.map(f => (f.properties && f.properties.operador) || '—'))].sort();
+  }, [pipelineFeatures]);
+  const dutoOpCounts = useMemo(() => {
+    const c = {};
+    if (pipelineFeatures) pipelineFeatures.forEach(f => {
+      const t = (f.properties && f.properties.operador) || '—';
+      c[t] = (c[t] || 0) + 1;
+    });
+    return c;
+  }, [pipelineFeatures]);
+
+  const filteredPipelines = useMemo(() => {
+    if (!pipelineFeatures) return [];
+    const q = search ? normalizeText(search) : '';
+    return pipelineFeatures.filter(f => {
+      const p = f.properties || {};
+      const tipo = p.tipo || 'desconhecido';
+      const produto = p.produto || '—';
+      const operador = p.operador || '—';
+      if (selectedDutoTipos.size && !selectedDutoTipos.has(tipo)) return false;
+      if (selectedDutoProdutos.size && !selectedDutoProdutos.has(produto)) return false;
+      if (selectedDutoOps.size && !selectedDutoOps.has(operador)) return false;
+      const d = parseFloat(p.diametro_pol);
+      if (diaRange && !isNaN(d) && (d < diaRange[0] || d > diaRange[1])) return false;
+      const e = Number(p.extensao_km);
+      if (extRange && !isNaN(e) && (e < extRange[0] || e > extRange[1])) return false;
+      if (q) {
+        const hay = normalizeText(`${p.nome || ''} ${p.trecho || ''} ${p.municipio_origem || ''} ${p.municipio_destino || ''} ${operador}`);
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [pipelineFeatures, selectedDutoTipos, selectedDutoProdutos, selectedDutoOps, diaRange, extRange, search]);
+
+  // Zoom-gated pipeline visibility: hide very short dutos in distant view
+  const visiblePipelines = useMemo(() => {
+    if (mapZoom >= 7) return filteredPipelines;
+    const minExt = mapZoom <= 5 ? 30 : 5;
+    return filteredPipelines.filter(f => {
+      const e = Number((f.properties || {}).extensao_km);
+      return !isNaN(e) && e >= minExt;
+    });
+  }, [filteredPipelines, mapZoom]);
+
+  const productColor = useCallback((produto) => {
+    const map = (theme.productColors || {});
+    return map[produto] || map.default || '#64748b';
+  }, [theme.productColors]);
+
   // Stats
   const stats = useMemo(() => {
     const totalCap = filtered.reduce((s, p) => s + (p.capacidade_petroleo_bbl_d || 0), 0);
@@ -218,6 +334,7 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
     });
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     map.createPane('fieldsPane').style.zIndex = 350;
+    map.createPane('pipelinesPane').style.zIndex = 360;
     mapRef.current = map;
     markersLayer.current = L.layerGroup().addTo(map);
     fieldLabelsLayer.current = L.layerGroup().addTo(map);
@@ -247,53 +364,68 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
     if (mapEl.current) mapEl.current.style.background = theme.mapBg;
   }, [theme.tileUrl, theme.mapBg, theme.tileAttribution]);
 
-  // Render markers when filtered changes
+  // Render markers when filtered or zoom changes
   useEffect(() => {
     if (!markersLayer.current) return;
     markersLayer.current.clearLayers();
     if (!showPlatforms) return;
 
+    // Zoom-adaptive base radius: smaller when viewing whole country
+    const zoomRadius = mapZoom <= 5 ? 4 : mapZoom <= 7 ? 5.5 : mapZoom <= 9 ? 6.5 : 7;
+    const distantView = mapZoom <= 6;
+
     filtered.forEach(p => {
       const color = theme.statusColors[p.status];
       const isSel = p.sigla === selectedId;
-      const baseR = theme.markerSize || 7;
-      const radius = isSel ? baseR + 4 : baseR;
-      const style = theme.markerStyle || 'dot';
+      const baseR = zoomRadius;
+      const radius = isSel ? baseR + 3 : baseR;
+      const isDecom = p.status === 'descomissionada';
+
       let marker;
-      if (style === 'pulse') {
-        // Outer halo + inner solid circle, via divIcon
-        const halo = baseR * 2.5;
-        marker = L.marker([p.latitude, p.longitude], {
-          icon: L.divIcon({
-            className: 'oilmap-pulse-wrap',
-            html: `<span class="oilmap-pulse-halo" style="width:${halo*2}px;height:${halo*2}px;background:${color}"></span><span class="oilmap-pulse-core" style="width:${radius*2}px;height:${radius*2}px;background:${color};border-color:${theme.markerStroke}"></span>`,
-            iconSize: [halo*2, halo*2],
-            iconAnchor: [halo, halo],
-          })
+      if (isSel) {
+        // Selected: solid dot with bigger halo stroke
+        marker = L.circleMarker([p.latitude, p.longitude], {
+          radius: radius + 2,
+          color: color,
+          weight: 3,
+          fillColor: color,
+          fillOpacity: 0.95,
         });
-      } else if (style === 'ring') {
+      } else if (isDecom && distantView) {
+        // Descomissionadas in distant zoom: ring only, very subtle
         marker = L.circleMarker([p.latitude, p.longitude], {
           radius,
           color: color,
-          weight: isSel ? 3.5 : 2.25,
+          weight: 1.5,
           fillColor: theme.bg,
-          fillOpacity: 0.85,
+          fillOpacity: 0.7,
+          opacity: 0.4,
+        });
+      } else if (isDecom) {
+        // Descomissionadas up close: ring style
+        marker = L.circleMarker([p.latitude, p.longitude], {
+          radius,
+          color: color,
+          weight: 1.75,
+          fillColor: theme.bg,
+          fillOpacity: 0.8,
+          opacity: 0.65,
         });
       } else {
-        // 'dot' (default)
+        // Active/interrupted: solid dot
         marker = L.circleMarker([p.latitude, p.longitude], {
           radius,
           color: theme.markerStroke,
-          weight: isSel ? 2.5 : 1.25,
+          weight: isSel ? 2.5 : mapZoom <= 6 ? 1 : 1.25,
           fillColor: color,
-          fillOpacity: p.status === 'descomissionada' ? 0.55 : 0.92,
+          fillOpacity: 0.92,
         });
       }
       marker.on('click', () => setSelectedId(p.sigla));
       marker.bindTooltip(`<b>${p.sigla}</b> · ${shortOp(p.operador)}`, { className: `oilmap-tip oilmap-tip-${theme.id}`, direction: 'top', offset: [0, -8] });
       marker.addTo(markersLayer.current);
     });
-  }, [filtered, selectedId, showPlatforms, theme]);
+  }, [filtered, selectedId, showPlatforms, theme, mapZoom]);
 
   useEffect(() => {
     if (fieldsLayer.current && mapRef.current) mapRef.current.removeLayer(fieldsLayer.current);
@@ -302,11 +434,11 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
       style: (feature) => {
         const fieldColor = fieldColorForBasin(feature.properties && feature.properties.NOM_BACIA);
         return {
-        color: fieldColor,
-        weight: 1.7,
-        fillColor: fieldColor,
-        fillOpacity: theme.id === 'dark' ? 0.13 : 0.16,
-        opacity: 0.82,
+          color: fieldColor,
+          weight: 2.0,
+          fillColor: fieldColor,
+          fillOpacity: theme.id === 'dark' ? 0.10 : 0.08,
+          opacity: theme.id === 'dark' ? 0.75 : 0.70,
         };
       },
       pane: 'fieldsPane',
@@ -330,6 +462,108 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
       mapRef.current.removeLayer(fieldsLayer.current);
     }
   }, [showFields]);
+
+  // Pipelines layer
+  useEffect(() => {
+    if (!mapRef.current) return;
+    if (pipelinesLayer.current) {
+      mapRef.current.removeLayer(pipelinesLayer.current);
+      pipelinesLayer.current = null;
+    }
+    if (!visiblePipelines || visiblePipelines.length === 0) return;
+
+    const layer = L.geoJSON({ type: 'FeatureCollection', features: visiblePipelines }, {
+      pane: 'pipelinesPane',
+      style: (feature) => {
+        const p = feature.properties || {};
+        const color = productColor(p.produto);
+        const d = parseFloat(p.diametro_pol);
+        const baseWeight = isNaN(d) ? 1.6 : Math.max(1.4, Math.min(4.5, 1.2 + d / 12));
+        const isIndefin = (p.tipo || '') === 'indefinido';
+        return {
+          color,
+          weight: baseWeight,
+          opacity: theme.id === 'dark' ? 0.78 : 0.85,
+          lineCap: 'round',
+          lineJoin: 'round',
+          dashArray: isIndefin ? '5 4' : null,
+        };
+      },
+      onEachFeature: (feature, lyr) => {
+        const p = feature.properties || {};
+        const color = productColor(p.produto);
+        const d = parseFloat(p.diametro_pol);
+        const baseWeight = isNaN(d) ? 1.6 : Math.max(1.4, Math.min(4.5, 1.2 + d / 12));
+        const ext = (p.extensao_km != null && Number(p.extensao_km) > 0) ? Number(p.extensao_km).toFixed(1) + ' km' : null;
+        const dia = (p.diametro_pol && p.diametro_pol !== '—') ? `Ø ${p.diametro_pol}″` : null;
+        const operador = p.operador && p.operador !== '—' ? p.operador : null;
+
+        const tipParts = [p.tipo, p.produto, dia, ext].filter(Boolean);
+        const tipLine2 = tipParts.join(' · ');
+        const tipHtml = `<b>${p.nome || 'Duto'}</b>${tipLine2 ? `<br>${tipLine2}` : ''}${operador ? `<br>${operador}` : ''}`;
+
+        lyr.bindTooltip(tipHtml,
+          { className: `oilmap-tip oilmap-tip-${theme.id}`, sticky: true, direction: 'top' }
+        );
+
+        const escape = (s) => String(s == null ? '—' : s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+        const row = (lbl, val) => `<div class="oilmap-duto-row"><span class="oilmap-duto-lbl">${lbl}</span><span class="oilmap-duto-val">${escape(val)}</span></div>`;
+        const popupHtml = `
+          <div class="oilmap-duto-popup oilmap-duto-popup-${theme.id}">
+            <div class="oilmap-duto-head" style="--duto-color:${color}">
+              <div class="oilmap-duto-name">${escape(p.nome || 'Duto')}</div>
+              <div class="oilmap-duto-sub">${escape(p.tipo || '—')} · ${escape(p.produto || '—')}</div>
+            </div>
+            <div class="oilmap-duto-body">
+              ${row('Operador', p.operador)}
+              ${row('Proprietário', p.proprietario)}
+              ${row('Origem', p.origem)}
+              ${row('Destino', p.destino)}
+              ${row('Trecho', p.trecho)}
+              ${row('Diâmetro', p.diametro_pol ? `${p.diametro_pol}″` : '—')}
+              ${row('Extensão', p.extensao_km != null ? `${Number(p.extensao_km).toFixed(2)} km` : '—')}
+              ${row('Município origem', p.municipio_origem)}
+              ${row('Município destino', p.municipio_destino)}
+              ${row('Fonte', p.fonte)}
+            </div>
+          </div>
+        `;
+        lyr.bindPopup(popupHtml, { className: `oilmap-duto-popup-wrap oilmap-duto-popup-wrap-${theme.id}`, maxWidth: 320, autoPan: true });
+
+        lyr.on('mouseover', () => {
+          lyr.setStyle({ weight: baseWeight * 1.7, opacity: 1 });
+          if (lyr.bringToFront) lyr.bringToFront();
+        });
+        lyr.on('mouseout', () => {
+          lyr.setStyle({ weight: baseWeight, opacity: theme.id === 'dark' ? 0.78 : 0.85 });
+        });
+      },
+      smoothFactor: 1.5,
+    });
+
+    pipelinesLayer.current = layer;
+    if (showPipelines) layer.addTo(mapRef.current);
+    return () => {
+      if (mapRef.current && pipelinesLayer.current) {
+        mapRef.current.removeLayer(pipelinesLayer.current);
+        pipelinesLayer.current = null;
+      }
+    };
+  }, [visiblePipelines, theme.id, productColor]);
+
+  useEffect(() => {
+    if (!mapRef.current || !pipelinesLayer.current) return;
+    if (showPipelines) pipelinesLayer.current.addTo(mapRef.current);
+    else mapRef.current.removeLayer(pipelinesLayer.current);
+  }, [showPipelines]);
+
+  // Zoom-based opacity on pipeline pane (distant view = more transparent)
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const pane = mapRef.current.getPane('pipelinesPane');
+    if (!pane) return;
+    pane.style.opacity = mapZoom <= 5 ? '0.50' : mapZoom <= 6 ? '0.65' : '1';
+  }, [mapZoom]);
 
   useEffect(() => {
     if (!mapRef.current || !fieldLabelsLayer.current || !platformLabelsLayer.current) return;
@@ -381,8 +615,8 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
       });
     }
 
-    // Campos: aparecem sempre e deslocam para evitar sobreposição com labels de plataforma
-    if (showFields && displayedFieldFeatures && displayedFieldFeatures.length > 0) {
+    // Campos: aparecem a partir de zoom 6, com dedup de sufixos (_ECO, _FAS, etc.)
+    if (showFields && displayedFieldFeatures && displayedFieldFeatures.length > 0 && mapZoom >= 6) {
       const fieldClass = nearPlatformZoom ? 'oilmap-label-field is-near' : 'oilmap-label-field is-mid';
       const fieldPoints = [];
       const minGap = nearPlatformZoom ? 42 : 30;
@@ -408,12 +642,21 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
         return false;
       };
 
+      // Dedup: for each base name keep only the feature with largest area
+      const baseNameBest = new Map();
       displayedFieldFeatures.forEach((feature) => {
         const props = feature.properties || {};
         const rawName = props.NOM_CAMPO || '';
-        const normalized = normalizeFieldName(rawName);
-        if (!normalized) return;
+        if (!rawName) return;
+        const base = baseFieldName(rawName);
+        const area = fieldArea(feature);
+        if (!baseNameBest.has(base) || area > baseNameBest.get(base).area) {
+          baseNameBest.set(base, { feature, area, rawName });
+        }
+      });
 
+      baseNameBest.forEach(({ feature, rawName }, base) => {
+        const props = feature.properties || {};
         const center = L.geoJSON(feature).getBounds().getCenter();
         if (!viewport.contains(center)) return;
 
@@ -429,6 +672,7 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
 
         fieldPoints.push(finalPoint);
         const finalLatLng = map.layerPointToLatLng(finalPoint);
+        const basinColor = fieldColorForBasin(props.NOM_BACIA);
 
         L.marker(finalLatLng, {
           interactive: false,
@@ -436,7 +680,7 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
           zIndexOffset: -100,
           icon: L.divIcon({
             className: `oilmap-label ${fieldClass}`,
-            html: `<span style="--field-color:${fieldColorForBasin(props.NOM_BACIA)}">${rawName}</span>`,
+            html: `<span class="oilmap-field-label-text" style="--field-color:${basinColor}">${base}</span>`,
           }),
         }).addTo(fieldLayer);
       });
@@ -629,7 +873,83 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
                   <input type="checkbox" checked={showFields} onChange={e => setShowFields(e.target.checked)} />
                   <span>Campos</span>
                 </label>
+                <label className="oilmap-toggle-row">
+                  <input type="checkbox" checked={showPipelines} onChange={e => setShowPipelines(e.target.checked)} />
+                  <span>Dutos</span>
+                </label>
               </Section>
+
+              {/* Dutos */}
+              {pipelineFeatures && (
+                <Section title={`Dutos (${filteredPipelines.length} / ${pipelineFeatures.length})`}>
+                  <div className="oilmap-duto-legend">
+                    {[
+                      { label: 'Gás', color: productColor('gas') },
+                      { label: 'Óleo', color: productColor('oil') },
+                      { label: 'Combustíveis', color: productColor('fuel') },
+                      { label: 'Diversos', color: productColor('hydrocarbons') },
+                      { label: 'Indefinido', color: productColor('default'), dash: true },
+                    ].map(item => (
+                      <span key={item.label} className="oilmap-duto-legend-item">
+                        <span className="oilmap-duto-legend-swatch" style={{ background: item.color, ...(item.dash ? { background: 'none', borderTop: `2px dashed ${item.color}`, height: 0, marginTop: 6 } : {}) }}></span>
+                        {item.label}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="oilmap-subhead">Tipo ({selectedDutoTipos.size || 'todos'})</div>
+                  <OperatorDropdown
+                    options={allDutoTipos}
+                    counts={dutoTipoCounts}
+                    selected={selectedDutoTipos}
+                    onToggle={x => toggleSetItem(selectedDutoTipos, setSelectedDutoTipos, x)}
+                    onClear={() => setSelectedDutoTipos(new Set())}
+                    searchPlaceholder="Filtrar tipo…"
+                    allLabel="Todos os tipos"
+                  />
+                  <div className="oilmap-subhead">Produto ({selectedDutoProdutos.size || 'todos'})</div>
+                  <OperatorDropdown
+                    options={allDutoProdutos}
+                    counts={dutoProdutoCounts}
+                    selected={selectedDutoProdutos}
+                    onToggle={x => toggleSetItem(selectedDutoProdutos, setSelectedDutoProdutos, x)}
+                    onClear={() => setSelectedDutoProdutos(new Set())}
+                    searchPlaceholder="Filtrar produto…"
+                    allLabel="Todos os produtos"
+                  />
+                  <div className="oilmap-subhead">Operador / Proprietário ({selectedDutoOps.size || 'todos'})</div>
+                  <OperatorDropdown
+                    options={allDutoOps}
+                    counts={dutoOpCounts}
+                    selected={selectedDutoOps}
+                    onToggle={x => toggleSetItem(selectedDutoOps, setSelectedDutoOps, x)}
+                    onClear={() => setSelectedDutoOps(new Set())}
+                    searchPlaceholder="Filtrar operador…"
+                    allLabel="Todos os operadores"
+                  />
+                  {diaRange && (
+                    <>
+                      <div className="oilmap-subhead">Diâmetro ({diaRange[0]}″ – {diaRange[1]}″)</div>
+                      <DualRange
+                        min={dutoBounds.dMin}
+                        max={dutoBounds.dMax}
+                        value={diaRange}
+                        onChange={setDiaRange}
+                      />
+                    </>
+                  )}
+                  {extRange && (
+                    <>
+                      <div className="oilmap-subhead">Extensão ({extRange[0]} – {extRange[1]} km)</div>
+                      <DualRange
+                        min={dutoBounds.eMin}
+                        max={dutoBounds.eMax}
+                        value={extRange}
+                        onChange={setExtRange}
+                      />
+                    </>
+                  )}
+                </Section>
+              )}
             </div>
           )}
           {/* Resize handle for left sidebar */}
@@ -656,26 +976,40 @@ function OilMap({ theme, platforms, fieldFeatures, onToggleMode }) {
         />
       </div>
 
-      {/* Footer */}
-      <footer className="oilmap-footer">
-        <div className="oilmap-footer-credit">
-          Desenvolvido por{' '}
-          <a href={DATA_META.linkedin} target="_blank" rel="noopener noreferrer" style={{display:'inline-flex', alignItems:'center', gap:'3px'}}>
-            <strong>{DATA_META.autor}</strong>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style={{width:'10px',height:'10px',flexShrink:0}}>
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-          </a>
-          {' · '}
-          <a href={`mailto:${DATA_META.email}`}>{DATA_META.email}</a>
-          {' · '}
-          <span className="oilmap-footer-version">{DATA_META.versao}</span>
-        </div>
-        <div className="oilmap-footer-msg">{FOOTER_TEXT}</div>
-        <div className="oilmap-footer-meta">
-          <span className="oilmap-footer-meta-lbl">Atualização</span>
-          <span className="oilmap-footer-meta-val">{DATA_META.ultima_atualizacao}</span>
-        </div>
+      {/* Footer — collapsed by default, expands on click */}
+      <footer className={`oilmap-footer ${footerExpanded ? 'is-expanded' : ''}`}>
+        <button
+          className="oilmap-footer-toggle"
+          onClick={() => setFooterExpanded(v => !v)}
+          aria-label={footerExpanded ? 'Recolher rodapé' : 'Expandir rodapé'}
+        >
+          <span className="oilmap-footer-toggle-label">
+            {DATA_META.autor} · {DATA_META.versao}
+          </span>
+          <span className="oilmap-footer-toggle-chev">{footerExpanded ? '▾' : '▴'}</span>
+        </button>
+        {footerExpanded && (
+          <div className="oilmap-footer-body">
+            <div className="oilmap-footer-credit">
+              Desenvolvido por{' '}
+              <a href={DATA_META.linkedin} target="_blank" rel="noopener noreferrer" style={{display:'inline-flex', alignItems:'center', gap:'3px'}}>
+                <strong>{DATA_META.autor}</strong>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style={{width:'10px',height:'10px',flexShrink:0}}>
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              {' · '}
+              <a href={`mailto:${DATA_META.email}`}>{DATA_META.email}</a>
+              {' · '}
+              <span className="oilmap-footer-version">{DATA_META.versao}</span>
+            </div>
+            <div className="oilmap-footer-msg">{FOOTER_TEXT}</div>
+            <div className="oilmap-footer-meta">
+              <span className="oilmap-footer-meta-lbl">Atualização</span>
+              <span className="oilmap-footer-meta-val">{DATA_META.ultima_atualizacao}</span>
+            </div>
+          </div>
+        )}
       </footer>
     </div>
   );

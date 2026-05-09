@@ -2,9 +2,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>World Oil Map</title>
+<title>Mapa Offshore Brasil</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<link rel="stylesheet" href="map-styles.css?v=2026042617">
+<link rel="stylesheet" href="map-styles.css?v=2026050903">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   html, body { margin: 0; padding: 0; height: 100%; }
@@ -35,8 +35,9 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 
-<script type="text/babel" src="map-component.jsx?v=2026042617"></script>
+<script type="text/babel" src="map-component.jsx?v=2026050904"></script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel">
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -48,7 +49,7 @@ const lightBase = {
   id: 'light',
   bg: '#ffffff', bg2: '#fafafa', fg: '#111418', fg2: '#6b7280',
   border: '#e5e7eb', card: '#f5f6f8', accent: '#0066ff',
-  brandTitle: 'World Oil Map',
+  brandTitle: 'Mapa Offshore Brasil',
   brandSub: 'Plataformas offshore',
   logoSvg: (
     <svg viewBox="0 0 36 36" fill="none">
@@ -102,16 +103,61 @@ const STATUS_COLORS = {
   dark:  { operando: '#21d07a', interrompida: '#f0b400', descomissionada: '#6e7682' },
 };
 
+const PRODUCT_COLORS = {
+  light: {
+    'Gás':         '#16a34a',
+    'gas':         '#16a34a',
+    'natural_gas': '#16a34a',
+    'GNL':         '#0ea5e9',
+    'Gás Xisto':   '#22c55e',
+    'Óleo':        '#b45309',
+    'oil':         '#b45309',
+    'Petróleo':    '#b45309',
+    'fuel':        '#dc2626',
+    'hydrocarbons':'#7c3aed',
+    'Derivados':   '#7c3aed',
+    'Multiproduto':'#7c3aed',
+    'GLP':         '#0ea5e9',
+    'default':     '#64748b',
+  },
+  dark: {
+    'Gás':         '#21d07a',
+    'gas':         '#21d07a',
+    'natural_gas': '#21d07a',
+    'GNL':         '#38bdf8',
+    'Gás Xisto':   '#4ade80',
+    'Óleo':        '#f0b400',
+    'oil':         '#f0b400',
+    'Petróleo':    '#f0b400',
+    'fuel':        '#f87171',
+    'hydrocarbons':'#a78bfa',
+    'Derivados':   '#a78bfa',
+    'Multiproduto':'#a78bfa',
+    'GLP':         '#38bdf8',
+    'default':     '#94a3b8',
+  },
+};
+
 
 function App() {
   const [data, setData] = React.useState(null);
   const [fieldFeatures, setFieldFeatures] = React.useState([]);
+  const [pipelines, setPipelines] = React.useState(null);
   const [mode, setMode] = React.useState(() => localStorage.getItem('oilmap-mode') || 'light');
   const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
   React.useEffect(() => {
     fetch('/data/platforms.json').then(r => r.json()).then(setData).catch(console.error);
     fetch('/data/fields/campos.json').then(r => r.json()).then(fc => setFieldFeatures(fc.features || [])).catch(console.error);
+    fetch('/data/dutos_brasil_site_v3.topojson')
+      .then(r => r.json())
+      .then(topo => {
+        try {
+          const fc = window.topojson.feature(topo, topo.objects.dutos);
+          setPipelines(fc);
+        } catch (err) { console.error('Falha ao decodificar dutos:', err); }
+      })
+      .catch(console.error);
   }, []);
 
   React.useEffect(() => {
@@ -130,6 +176,7 @@ function App() {
       tileAttribution: tile.tileAttribution,
       mapBg: tile.mapBg,
       statusColors: STATUS_COLORS[mode],
+      productColors: PRODUCT_COLORS[mode],
       markerStroke: mode === 'dark' ? '#0a0d12' : '#ffffff',
       markerStyle: 'dot',
       markerSize: 7,
@@ -140,7 +187,7 @@ function App() {
 
   return (
     <div style={{position:'relative', height:'100%'}}>
-      <OilMap theme={theme} platforms={data} fieldFeatures={fieldFeatures}
+      <OilMap theme={theme} platforms={data} fieldFeatures={fieldFeatures} pipelines={pipelines}
               onToggleMode={() => setMode(mode === 'light' ? 'dark' : 'light')}
               key={mode + '-' + tweaks.cartography}/>
 

@@ -417,37 +417,41 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
 }
 
-.oilmap-label-field span {
+/* Field labels — target the .oilmap-field-label-text span element */
+.oilmap-label-field .oilmap-field-label-text {
   display: inline-flex;
   align-items: center;
   text-transform: uppercase;
-  letter-spacing: 0.11em;
-  font-weight: 800;
+  letter-spacing: 0.10em;
+  font-weight: 700;
   border-radius: 2px;
-  border-color: color-mix(in srgb, var(--field-color, var(--accent)) 55%, var(--border));
-  background: color-mix(in srgb, var(--bg) 84%, var(--field-color, var(--accent)) 16%);
-  color: color-mix(in srgb, var(--fg) 72%, var(--field-color, var(--accent)) 28%);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--bg) 76%, transparent), 0 1px 5px rgba(0, 0, 0, 0.14);
+  border-color: color-mix(in srgb, var(--field-color, var(--accent)) 40%, var(--border));
+  background: color-mix(in srgb, var(--bg) 92%, var(--field-color, var(--accent)) 8%);
+  color: color-mix(in srgb, var(--fg) 80%, var(--field-color, var(--accent)) 20%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--bg) 60%, transparent), 0 1px 4px rgba(0, 0, 0, 0.18);
 }
 
 .oilmap-label-field i {
   display: none;
 }
 
-.oilmap-label-field.is-mid span {
+.oilmap-label-field.is-mid .oilmap-field-label-text {
   font-size: 8px;
   padding: 2px 5px;
 }
 
-.oilmap-label-field.is-near span {
-  font-size: 9px;
+.oilmap-label-field.is-near .oilmap-field-label-text {
+  font-size: 9.5px;
   padding: 3px 7px;
 }
 
+/* Platform labels */
 .oilmap-label-platform span {
-  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
-  color: color-mix(in srgb, var(--fg) 82%, var(--accent));
+  border-color: color-mix(in srgb, var(--accent) 38%, var(--border));
+  color: color-mix(in srgb, var(--fg) 85%, var(--accent));
   font-weight: 600;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
 }
 
 .oilmap-label-platform.is-mid span {
@@ -463,7 +467,15 @@
 .oilmap-label-platform.is-selected span {
   border-color: var(--accent);
   color: var(--accent);
+  background: color-mix(in srgb, var(--bg) 94%, var(--accent) 6%);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent), 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Dark mode — increase background opacity so labels read over dark tiles + satellite */
+.oilmap-dark .oilmap-label span,
+.oilmap-dark .oilmap-label-field .oilmap-field-label-text {
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
 }
 
 /* ---------- Legend ---------- */
@@ -708,15 +720,53 @@
 .oilmap-footer {
   border-top: 1px solid var(--border);
   background: var(--bg2);
-  padding: 6px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 18px;
   font-size: 10px;
   color: var(--fg2);
   line-height: 1.4;
   flex-shrink: 0;
+}
+
+/* Toggle strip — always visible, single line */
+.oilmap-footer-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--fg2);
+  font-family: inherit;
+  font-size: 10px;
+  text-align: left;
+  transition: color 0.15s;
+}
+.oilmap-footer-toggle:hover { color: var(--fg); }
+.oilmap-footer-toggle-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.75;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.02em;
+}
+.oilmap-footer-toggle-chev {
+  font-size: 9px;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* Expanded body */
+.oilmap-footer-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+  padding: 6px 14px 10px;
+  border-top: 1px solid var(--border);
 }
 .oilmap-footer-credit {
   font-size: 10px;
@@ -956,3 +1006,98 @@
   font-family: inherit !important;
 }
 .oilmap-tip::before { display: none !important; }
+
+/* ---------- Dutos (pipelines) ---------- */
+.oilmap-subhead {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg2);
+  margin: 10px 0 4px;
+}
+.oilmap-duto-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.oilmap-duto-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--fg);
+}
+.oilmap-duto-legend-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.oilmap-duto-popup {
+  font-family: inherit;
+  min-width: 240px;
+}
+.oilmap-duto-head {
+  border-left: 4px solid var(--duto-color, #64748b);
+  padding: 2px 0 6px 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.oilmap-duto-popup-dark .oilmap-duto-head {
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+.oilmap-duto-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: #111;
+  letter-spacing: -0.01em;
+}
+.oilmap-duto-popup-dark .oilmap-duto-name { color: #e6edf3; }
+.oilmap-duto-sub {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+.oilmap-duto-popup-dark .oilmap-duto-sub { color: #94a3b8; }
+.oilmap-duto-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
+}
+.oilmap-duto-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 6px;
+  font-size: 11.5px;
+  line-height: 1.35;
+  padding: 2px 0;
+}
+.oilmap-duto-lbl {
+  color: #6b7280;
+  font-weight: 500;
+}
+.oilmap-duto-popup-dark .oilmap-duto-lbl { color: #94a3b8; }
+.oilmap-duto-val {
+  color: #111;
+  word-break: break-word;
+}
+.oilmap-duto-popup-dark .oilmap-duto-val { color: #e6edf3; }
+
+.oilmap-duto-popup-wrap-dark .leaflet-popup-content-wrapper {
+  background: #161b24;
+  color: #e6edf3;
+  border: 1px solid #1f2630;
+}
+.oilmap-duto-popup-wrap-dark .leaflet-popup-tip {
+  background: #161b24;
+}
+.oilmap-duto-popup-wrap .leaflet-popup-content {
+  margin: 12px 14px;
+}
